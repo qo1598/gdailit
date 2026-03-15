@@ -96,54 +96,48 @@ export default function Login({ onLogin }) {
         }
     };
 
-    try {
-      // Reward +3 fragments for first daily login
-      const newFragments = (student.fragments || 0) + 3;
-      const { data, error } = await supabase
-        .from('students')
-        .update({
-          last_attendance: today,
-          fragments: newFragments
-        })
-        .eq('id', student.id)
-        .select()
-        .single();
+    const getKstDate = () => {
+        const now = new Date();
+        const kstString = now.toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' });
+        return kstString.replace(/\. /g, '-').replace(/\./, '');
+    };
 
-      if (error) {
-        console.error('Attendance update error:', error);
-        return student;
-      }
+    const checkAttendance = async (student) => {
+        const today = getKstDate();
 
-      // Set a flag that will be used to show a modal in the Dashboard
-      return { ...data, justAttended: true };
-    } catch (err) {
-      console.error('Unexpected checkAttendance error:', err);
-      return student;
-    }
-  };
+        if (student.last_attendance === today) {
+            return student;
+        }
 
-  // Utility to get today's date in KST (UTC+9)
-  const getKstDate = () => {
-    const now = new Date();
-    // Use Intl to get KST date specifically
-    const kstString = now.toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' });
-    // Format: "2024. 03. 15." -> "2024-03-15"
-    return kstString.replace(/\. /g, '-').replace(/\./, '');
-  };
+        try {
+            const newFragments = (student.fragments || 0) + 3;
+            const { data, error } = await supabase
+                .from('students')
+                .update({
+                    last_attendance: today,
+                    fragments: newFragments
+                })
+                .eq('id', student.id)
+                .select()
+                .single();
 
-  const checkAttendance = async (student) => {
-    const today = getKstDate();
+            if (error) {
+                console.error('Attendance update error:', error);
+                return student;
+            }
 
-    // If already attended today, just return original student data
-    if (student.last_attendance === today) {
-      return student;
-    }
-
+            return { ...data, justAttended: true };
+        } catch (err) {
+            console.error('Unexpected checkAttendance error:', err);
+            return student;
+        }
+    };
 
     const onLoginUserId = (studentData) => {
         onLogin(studentData);
         navigate('/');
     };
+
 
     return (
         <div style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px', background: 'linear-gradient(135deg, #ff9f43 0%, #ff4757 100%)' }}>
