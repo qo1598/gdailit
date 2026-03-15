@@ -151,6 +151,61 @@ const RobotSVG = ({ color = '#00d2ff', modules = [] }) => {
   );
 };
 
+// [마스터피스] 프리미엄 보상 획득 모달
+const RewardModal = ({ info, onClose }) => {
+  if (!info.show) return null;
+
+  return (
+    <div style={{
+      position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
+      backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000,
+      display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px',
+      backdropFilter: 'blur(8px)'
+    }}>
+      <div className="page-enter" style={{
+        background: 'white', padding: '40px 30px', borderRadius: '40px',
+        width: '100%', maxWidth: '380px', textAlign: 'center',
+        boxShadow: '0 30px 60px rgba(0,0,0,0.5)',
+        position: 'relative', overflow: 'hidden'
+      }}>
+        {/* 장식용 배경 광채 */}
+        <div style={{
+          position: 'absolute', top: '-50%', left: '-50%', width: '200%', height: '200%',
+          background: 'radial-gradient(circle, rgba(116, 185, 255, 0.2) 0%, transparent 50%)',
+          animation: 'pulse 3s infinite'
+        }}></div>
+
+        <div style={{ fontSize: '5rem', marginBottom: '20px', filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.1))', animation: 'float 3s ease-in-out infinite' }}>💎</div>
+        
+        <h2 style={{ fontFamily: "'Jua', sans-serif", fontSize: '2.5rem', color: '#2d3436', margin: '0 0 10px 0' }}>데이터 획득!</h2>
+        <div style={{ 
+          fontSize: '1.8rem', fontWeight: '900', color: '#0984e3', 
+          marginBottom: '20px', background: '#e1f5fe', 
+          display: 'inline-block', padding: '5px 20px', borderRadius: '20px' 
+        }}>
+          + {info.amount} Fragments
+        </div>
+        
+        <p style={{ color: '#636e72', fontSize: '1.1rem', marginBottom: '30px', lineHeight: '1.6', fontWeight: 'bold' }}>
+          {info.message}
+        </p>
+
+        <button
+          onClick={onClose}
+          className="btn-primary"
+          style={{ 
+            background: '#2d3436', color: 'white', 
+            boxShadow: '0 6px 0 #000', marginTop: 0,
+            width: '100%', fontSize: '1.2rem'
+          }}
+        >
+          확인했습니다
+        </button>
+      </div>
+    </div>
+  );
+};
+
 function Profile({ userId, userName, fragments, setFragments, avatarConfig, setAvatarConfig, onLogout }) {
   const [isUpdating, setIsUpdating] = React.useState(false);
 
@@ -364,14 +419,20 @@ function App() {
   const [fragments, setFragments] = React.useState(0);
   const [avatarConfig, setAvatarConfig] = React.useState({});
   const [justAttended, setJustAttended] = React.useState(false);
+  const [rewardInfo, setRewardInfo] = React.useState({ show: false, amount: 0, message: '' });
+
+  const handleReward = (amount, message) => {
+    setRewardInfo({ show: true, amount, message });
+  };
 
   const handleLogin = (student) => {
     setUserId(student.id);
     setFragments(student.fragments || 0);
     setAvatarConfig(student.avatar_config || { body: "basic", color: "blue", accessory: "none" });
     if (student.justAttended) {
-      setJustAttended(true);
+      handleReward(3, "오늘의 첫 접속 보상입니다! 반가워요!");
     }
+
 
     // If name is saved in DB, use it, else fallback to parsing ID
     if (student.name) {
@@ -463,12 +524,15 @@ function App() {
 
       <main className="main-content" style={{ paddingBottom: userId ? '100px' : '0', padding: userId ? '20px' : '0' }}>
         <Routes>
-          <Route path="/" element={userId ? <Dashboard missions={missions} refresh={fetchProgress} justAttended={justAttended} setJustAttended={setJustAttended} /> : <Login onLogin={handleLogin} />} />
-          <Route path="/mission/:missionId" element={userId ? <Mission userId={userId} setFragments={setFragments} /> : <Login onLogin={handleLogin} />} />
-          <Route path="/minigame" element={userId ? <MiniGame userId={userId} userName={userName} setFragments={setFragments} /> : <Login onLogin={handleLogin} />} />
+          <Route path="/" element={userId ? <Dashboard missions={missions} refresh={fetchProgress} justAttended={false} setJustAttended={() => {}} /> : <Login onLogin={handleLogin} />} />
+          <Route path="/mission/:missionId" element={userId ? <Mission userId={userId} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
+          <Route path="/minigame" element={userId ? <MiniGame userId={userId} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
           <Route path="/profile" element={userId ? <Profile userId={userId} userName={userName} fragments={fragments} setFragments={setFragments} avatarConfig={avatarConfig} setAvatarConfig={setAvatarConfig} onLogout={handleLogout} /> : <Login onLogin={handleLogin} />} />
         </Routes>
       </main>
+
+      <RewardModal info={rewardInfo} onClose={() => setRewardInfo({ ...rewardInfo, show: false })} />
+
 
       {userId && <Navigation />}
     </Router>

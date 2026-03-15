@@ -96,39 +96,49 @@ export default function Login({ onLogin }) {
         }
     };
 
-    const checkAttendance = async (student) => {
-        const today = new Date().toISOString().split('T')[0];
+    try {
+      // Reward +3 fragments for first daily login
+      const newFragments = (student.fragments || 0) + 3;
+      const { data, error } = await supabase
+        .from('students')
+        .update({
+          last_attendance: today,
+          fragments: newFragments
+        })
+        .eq('id', student.id)
+        .select()
+        .single();
 
-        // If already attended today, just return original student data
-        if (student.last_attendance === today) {
-            return student;
-        }
+      if (error) {
+        console.error('Attendance update error:', error);
+        return student;
+      }
 
-        try {
-            // Reward +3 fragments for first daily login
-            const newFragments = (student.fragments || 0) + 3;
-            const { data, error } = await supabase
-                .from('students')
-                .update({
-                    last_attendance: today,
-                    fragments: newFragments
-                })
-                .eq('id', student.id)
-                .select()
-                .single();
+      // Set a flag that will be used to show a modal in the Dashboard
+      return { ...data, justAttended: true };
+    } catch (err) {
+      console.error('Unexpected checkAttendance error:', err);
+      return student;
+    }
+  };
 
-            if (error) {
-                console.error('Attendance update error:', error);
-                return student;
-            }
+  // Utility to get today's date in KST (UTC+9)
+  const getKstDate = () => {
+    const now = new Date();
+    // Use Intl to get KST date specifically
+    const kstString = now.toLocaleDateString('ko-KR', { timeZone: 'Asia/Seoul', year: 'numeric', month: '2-digit', day: '2-digit' });
+    // Format: "2024. 03. 15." -> "2024-03-15"
+    return kstString.replace(/\. /g, '-').replace(/\./, '');
+  };
 
-            // Set a flag that will be used to show a modal in the Dashboard
-            return { ...data, justAttended: true };
-        } catch (err) {
-            console.error('Unexpected checkAttendance error:', err);
-            return student;
-        }
-    };
+  const checkAttendance = async (student) => {
+    const today = getKstDate();
+
+    // If already attended today, just return original student data
+    if (student.last_attendance === today) {
+      return student;
+    }
+
 
     const onLoginUserId = (studentData) => {
         onLogin(studentData);

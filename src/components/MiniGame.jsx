@@ -7,7 +7,7 @@ const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const MODEL_NAME = import.meta.env.VITE_GEMINI_MODEL || "gemini-2.0-flash-lite";
 const genAI = new GoogleGenerativeAI(API_KEY);
 
-export default function MiniGame({ userId, userName, setFragments }) {
+export default function MiniGame({ userId, userName, setFragments, onReward }) {
     const [dailyWord, setDailyWord] = useState("인공지능스피커");
     const [questions, setQuestions] = useState([]);
     const [currentQuestion, setCurrentQuestion] = useState('');
@@ -194,7 +194,7 @@ export default function MiniGame({ userId, userName, setFragments }) {
             await fetchRankings();
 
             // Reward: +2 fragments for correct guess
-            alert('정답입니다! 데이터 조각 2개를 획득했습니다! 💎');
+            if (onReward) onReward(2, "정답입니다! 당신의 기록이 순위에 반영되었습니다. ✨");
             updateFragments(2);
         } else {
             alert("틀렸습니다! 다시 시도해보세요.");

@@ -138,7 +138,7 @@ const MISSIONS = {
     }
 };
 
-export default function Mission({ userId, setFragments }) {
+export default function Mission({ userId, setFragments, onReward }) {
     const { missionId } = useParams();
     const navigate = useNavigate();
     const mission = MISSIONS[missionId];
@@ -241,7 +241,7 @@ export default function Mission({ userId, setFragments }) {
 
             // Award fragments if it's a new completion
             if (!isEditing) {
-                alert('미션 완료! 데이터 조각 5개를 선물로 드립니다! 💎');
+                if (onReward) onReward(5, "미션 완료! 뱃지를 얻기 위해 선생님의 검토를 기다려주세요. 😊");
                 updateFragments(5);
             }
 
