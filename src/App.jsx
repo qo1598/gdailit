@@ -151,56 +151,85 @@ const RobotSVG = ({ color = '#00d2ff', modules = [] }) => {
   );
 };
 
-// [마스터피스] 프리미엄 보상 획득 모달
 const RewardModal = ({ info, onClose }) => {
   if (!info.show) return null;
 
   return (
     <div style={{
-      position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-      backgroundColor: 'rgba(0,0,0,0.8)', zIndex: 1000,
-      display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px',
-      backdropFilter: 'blur(8px)'
+      position: 'fixed', 
+      top: 0, 
+      left: 0, 
+      right: 0, 
+      bottom: 0,
+      backgroundColor: 'rgba(0,0,0,0.85)', 
+      zIndex: 9999,
+      display: 'flex', 
+      alignItems: 'center', 
+      justifyContent: 'center', 
+      padding: '20px',
+      backdropFilter: 'blur(10px)',
+      WebkitBackdropFilter: 'blur(10px)'
     }}>
       <div className="page-enter" style={{
-        background: 'white', padding: '40px 30px', borderRadius: '40px',
-        width: '100%', maxWidth: '380px', textAlign: 'center',
-        boxShadow: '0 30px 60px rgba(0,0,0,0.5)',
-        position: 'relative', overflow: 'hidden'
+        background: 'white', 
+        padding: '50px 30px', 
+        borderRadius: '50px',
+        width: '100%', 
+        maxWidth: '400px', 
+        textAlign: 'center',
+        boxShadow: '0 40px 100px rgba(0,0,0,0.6)',
+        position: 'relative', 
+        overflow: 'hidden',
+        border: '8px solid rgba(255,255,255,0.1)'
       }}>
         {/* 장식용 배경 광채 */}
         <div style={{
           position: 'absolute', top: '-50%', left: '-50%', width: '200%', height: '200%',
-          background: 'radial-gradient(circle, rgba(116, 185, 255, 0.2) 0%, transparent 50%)',
-          animation: 'pulse 3s infinite'
+          background: 'radial-gradient(circle, rgba(116, 185, 255, 0.3) 0%, transparent 60%)',
+          animation: 'pulse 4s infinite'
         }}></div>
 
-        <div style={{ fontSize: '5rem', marginBottom: '20px', filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.1))', animation: 'float 3s ease-in-out infinite' }}>💎</div>
-        
-        <h2 style={{ fontFamily: "'Jua', sans-serif", fontSize: '2.5rem', color: '#2d3436', margin: '0 0 10px 0' }}>데이터 획득!</h2>
         <div style={{ 
-          fontSize: '1.8rem', fontWeight: '900', color: '#0984e3', 
-          marginBottom: '20px', background: '#e1f5fe', 
-          display: 'inline-block', padding: '5px 20px', borderRadius: '20px' 
-        }}>
-          + {info.amount} Fragments
-        </div>
+          fontSize: '6rem', 
+          marginBottom: '25px', 
+          filter: 'drop-shadow(0 15px 30px rgba(0,0,0,0.2))', 
+          animation: 'float 3s ease-in-out infinite',
+          position: 'relative',
+          zIndex: 1
+        }}>💎</div>
         
-        <p style={{ color: '#636e72', fontSize: '1.1rem', marginBottom: '30px', lineHeight: '1.6', fontWeight: 'bold' }}>
-          {info.message}
-        </p>
+        <div style={{ position: 'relative', zIndex: 1 }}>
+          <h2 style={{ fontFamily: "'Jua', sans-serif", fontSize: '2.8rem', color: '#2d3436', margin: '0 0 10px 0' }}>데이터 획득!</h2>
+          <div style={{ 
+            fontSize: '2rem', fontWeight: '900', color: '#0984e3', 
+            marginBottom: '25px', background: '#e1f5fe', 
+            display: 'inline-block', padding: '10px 30px', borderRadius: '25px',
+            boxShadow: 'inset 0 2px 5px rgba(0,0,0,0.05)'
+          }}>
+            + {info.amount} Fragments
+          </div>
+          
+          <p style={{ color: '#636e72', fontSize: '1.2rem', marginBottom: '35px', lineHeight: '1.7', fontWeight: 'bold' }}>
+            {info.message}
+          </p>
 
-        <button
-          onClick={onClose}
-          className="btn-primary"
-          style={{ 
-            background: '#2d3436', color: 'white', 
-            boxShadow: '0 6px 0 #000', marginTop: 0,
-            width: '100%', fontSize: '1.2rem'
-          }}
-        >
-          확인했습니다
-        </button>
+          <button
+            onClick={onClose}
+            className="btn-primary"
+            style={{ 
+              background: 'linear-gradient(135deg, #2d3436 0%, #000 100%)', 
+              color: 'white', 
+              boxShadow: '0 10px 20px rgba(0,0,0,0.2)', 
+              marginTop: 0,
+              width: '100%', 
+              fontSize: '1.3rem',
+              padding: '20px',
+              borderRadius: '25px'
+            }}
+          >
+            확인했습니다
+          </button>
+        </div>
       </div>
     </div>
   );

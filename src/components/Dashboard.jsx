@@ -82,35 +82,5 @@ export default function Dashboard({ missions, refresh, justAttended, setJustAtte
                 ))}
             </div>
 
-            {/* Attendance Reward Modal */}
-            {showRewardModal && (
-                <div style={{
-                    position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-                    backgroundColor: 'rgba(0,0,0,0.7)', zIndex: 1000,
-                    display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px'
-                }}>
-                    <div style={{
-                        background: 'white', padding: '40px 30px', borderRadius: '30px',
-                        width: '100%', maxWidth: '350px', textAlign: 'center',
-                        boxShadow: '0 20px 50px rgba(0,0,0,0.3)',
-                        animation: 'pop-in 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
-                    }}>
-                        <div style={{ fontSize: '4rem', marginBottom: '20px' }}>💎</div>
-                        <h2 style={{ fontFamily: "'Jua', sans-serif", fontSize: '2rem', color: '#2f3542', marginBottom: '15px' }}>출석 보상!</h2>
-                        <p style={{ color: '#555', fontSize: '1.1rem', marginBottom: '25px', lineHeight: '1.5' }}>
-                            오늘도 만나서 반가워요!<br />
-                            <strong>데이터 조각 3개</strong>를<br />선물로 드립니다!
-                        </p>
-                        <button
-                            onClick={() => setShowRewardModal(false)}
-                            className="btn-primary"
-                            style={{ background: '#0984e3', boxShadow: '0 6px 0 #0764ad', marginTop: 0 }}
-                        >
-                            고마워요!
-                        </button>
-                    </div>
-                </div>
-            )}
-        </div>
     );
 }
