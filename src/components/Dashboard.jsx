@@ -81,6 +81,6 @@ export default function Dashboard({ missions, refresh, justAttended, setJustAtte
                     </div>
                 ))}
             </div>
-
+        </div>
     );
 }
