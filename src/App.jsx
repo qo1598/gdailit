@@ -1,10 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Home, Gamepad2, UserCircle } from 'lucide-react';
+import { Home, Gamepad2, UserCircle, MessageCircle, ClipboardList } from 'lucide-react';
 import Dashboard from './components/Dashboard';
 import Mission from './components/Mission';
 import MiniGame from './components/MiniGame';
 import Login from './components/Login';
+import Discussion from './components/Discussion';
+import Admin from './components/Admin';
 import { supabase } from './supabaseClient';
 import './index.css';
 
@@ -43,6 +45,10 @@ function Navigation() {
       <Link to="/minigame" className={`nav-item ${location.pathname === '/minigame' ? 'active' : ''}`}>
         <div className="nav-icon"><Gamepad2 size={20} /></div>
         <span>미니게임</span>
+      </Link>
+      <Link to="/discussion" className={`nav-item ${location.pathname === '/discussion' ? 'active' : ''}`}>
+        <div className="nav-icon"><MessageCircle size={20} /></div>
+        <span>AI와 토의</span>
       </Link>
       <Link to="/profile" className={`nav-item ${location.pathname === '/profile' ? 'active' : ''}`}>
         <div className="nav-icon"><UserCircle size={20} /></div>
@@ -441,12 +447,27 @@ function Profile({ userId, userName, fragments, setFragments, avatarConfig, setA
   );
 }
 
+// 학년 → 학년군 파싱 (1-2학년: 'lower' / 3-4학년: 'middle' / 5-6학년: 'upper')
+function parseGradeGroup(studentId) {
+  try {
+    if (studentId && studentId.length === 7) {
+      const grade = parseInt(studentId.substring(2, 3), 10);
+      if (grade <= 2) return 'lower';
+      if (grade <= 4) return 'middle';
+      return 'upper';
+    }
+  } catch (e) {}
+  return 'lower';
+}
+
 function App() {
   const [missions, setMissions] = React.useState(INITIAL_MISSIONS);
   const [userId, setUserId] = React.useState(null);
   const [userName, setUserName] = React.useState('');
   const [fragments, setFragments] = React.useState(0);
   const [avatarConfig, setAvatarConfig] = React.useState({});
+  const [schoolId, setSchoolId] = React.useState('gyeongdong');
+  const [gradeGroup, setGradeGroup] = React.useState('lower');
   const [justAttended, setJustAttended] = React.useState(false);
   const [rewardInfo, setRewardInfo] = React.useState({ show: false, amount: 0, message: '' });
 
@@ -458,10 +479,11 @@ function App() {
     setUserId(student.id);
     setFragments(student.fragments || 0);
     setAvatarConfig(student.avatar_config || { body: "basic", color: "blue", accessory: "none" });
+    if (student.schoolId) setSchoolId(student.schoolId);
+    setGradeGroup(parseGradeGroup(student.id));
     if (student.justAttended) {
       handleReward(3, "오늘의 첫 접속 보상입니다! 반가워요!");
     }
-
 
     // If name is saved in DB, use it, else fallback to parsing ID
     if (student.name) {
@@ -487,6 +509,8 @@ function App() {
   const handleLogout = () => {
     setUserId(null);
     setUserName('');
+    setSchoolId('gyeongdong');
+    setGradeGroup('lower');
     setMissions(INITIAL_MISSIONS);
   };
   React.useEffect(() => {
@@ -497,27 +521,40 @@ function App() {
 
   const fetchProgress = async () => {
     try {
-      const { data, error } = await supabase
+      // 1. Fetch user_progress
+      const { data: progressData, error: progError } = await supabase
         .from('user_progress')
         .select('mission_id, completed')
         .eq('user_id', userId);
 
-      if (error) {
-        console.error('Error fetching progress:', error);
-        return;
-      }
+      if (progError) throw progError;
 
-      // Merge fetched data strictly with INITIAL_MISSIONS to reflect DB exactly
+      // 2. Fetch mission_submissions to check for teacher feedback
+      const { data: submissionData, error: subError } = await supabase
+        .from('mission_submissions')
+        .select('mission_id, data')
+        .eq('user_id', userId);
+
+      if (subError) throw subError;
+
+      // Merge fetched data strictly with INITIAL_MISSIONS
       setMissions(INITIAL_MISSIONS.map(m => {
-        const fetchedMission = (data || []).find(d => d.mission_id === m.id);
-        if (fetchedMission) {
-          let newStatus = fetchedMission.completed ? 'completed' : 'pending';
-          return { ...m, status: newStatus };
+        const prog = (progressData || []).find(d => d.mission_id === m.id);
+        const sub = (submissionData || []).find(d => d.mission_id === m.id);
+        
+        if (prog) {
+          if (prog.completed) return { ...m, status: 'completed' };
+          
+          // If not completed, check if teacher feedback exists
+          if (sub?.data?.teacher_feedback) {
+            return { ...m, status: 'supplement' };
+          }
+          return { ...m, status: 'pending' };
         }
         return { ...m, status: 'unlocked' };
       }));
     } catch (err) {
-      console.error('Unexpected error:', err);
+      console.error('Unexpected error fetching progress:', err);
     }
   };
 
@@ -554,9 +591,11 @@ function App() {
       <main className="main-content" style={{ paddingBottom: userId ? '100px' : '0', padding: userId ? '20px' : '0' }}>
         <Routes>
           <Route path="/" element={userId ? <Dashboard missions={missions} refresh={fetchProgress} justAttended={false} setJustAttended={() => {}} /> : <Login onLogin={handleLogin} />} />
-          <Route path="/mission/:missionId" element={userId ? <Mission userId={userId} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
-          <Route path="/minigame" element={userId ? <MiniGame userId={userId} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
+          <Route path="/mission/:missionId" element={userId ? <Mission userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
+          <Route path="/minigame" element={userId ? <MiniGame userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
+          <Route path="/discussion" element={userId ? <Discussion userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
           <Route path="/profile" element={userId ? <Profile userId={userId} userName={userName} fragments={fragments} setFragments={setFragments} avatarConfig={avatarConfig} setAvatarConfig={setAvatarConfig} onLogout={handleLogout} /> : <Login onLogin={handleLogin} />} />
+          <Route path="/admin" element={<Admin />} />
         </Routes>
       </main>
 

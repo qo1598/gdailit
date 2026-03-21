@@ -27,12 +27,14 @@ export default function Dashboard({ missions, refresh, justAttended, setJustAtte
                 {missions.map(mission => {
                     const isCompleted = mission.status === 'completed';
                     const isPending = mission.status === 'pending';
+                    const isSupplement = mission.status === 'supplement';
 
                     return (
                         <div
                             key={mission.id}
-                            className={`badge-card ${isCompleted ? 'completed' : isPending ? 'pending' : 'locked'}`}
+                            className={`badge-card ${isCompleted ? 'completed' : isSupplement ? 'supplement' : isPending ? 'pending' : 'locked'}`}
                             onClick={() => handleMissionClick(mission.id)}
+                            style={isSupplement ? { border: '3px solid #e17055', boxShadow: '0 0 15px rgba(225, 112, 85, 0.3)' } : {}}
                         >
                             <span className="badge-id">{mission.id}</span>
                             <div className="badge-image-container">
@@ -46,7 +48,7 @@ export default function Dashboard({ missions, refresh, justAttended, setJustAtte
 
                                 {!isCompleted && (
                                     <div className="mystery-icon">
-                                        ❓
+                                        {isSupplement ? '✍️' : '❓'}
                                     </div>
                                 )}
                             </div>
@@ -58,12 +60,12 @@ export default function Dashboard({ missions, refresh, justAttended, setJustAtte
                                 fontWeight: '900',
                                 padding: '6px 12px',
                                 borderRadius: '15px',
-                                background: isCompleted ? '#ffeaa7' : isPending ? '#ffeaa7' : '#f1f2f6',
-                                color: isCompleted ? '#d35400' : isPending ? '#e67e22' : '#a4b0be',
+                                background: isCompleted ? '#ffeaa7' : isSupplement ? '#ff7675' : isPending ? '#ffeaa7' : '#f1f2f6',
+                                color: isCompleted ? '#d35400' : isSupplement ? '#fff' : isPending ? '#e67e22' : '#a4b0be',
                                 width: '100%',
                                 textAlign: 'center'
                             }}>
-                                {isCompleted ? '✨ 뱃지 획득!' : isPending ? '⏳ 검토 대기 중' : '🔒 도전하기'}
+                                {isCompleted ? '✨ 뱃지 획득!' : isSupplement ? '✍️ 보충 필요' : isPending ? '⏳ 검토 대기 중' : '🔒 도전하기'}
                             </div>
                         </div>
                     );

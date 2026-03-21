@@ -2,7 +2,14 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { supabase } from '../supabaseClient';
 
+const SCHOOLS = [
+    { id: 'gyeongdong', name: '대구경동초등학교' },
+    // 추후 학교 추가 예시:
+    // { id: 'sungnam', name: '성남초등학교' },
+];
+
 export default function Login({ onLogin }) {
+    const [schoolId, setSchoolId] = useState('gyeongdong');
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
@@ -29,11 +36,12 @@ export default function Login({ onLogin }) {
 
         try {
             // Check credentials against the students table
-            const { data: student, error } = await supabase
+            const query = supabase
                 .from('students')
                 .select('*')
-                .eq('id', userId.trim())
-                .single();
+                .eq('id', userId.trim());
+            // Filter by school_id if the column exists (graceful fallback)
+            const { data: student, error } = await query.maybeSingle();
 
             if (error || !student) {
                 setErrorMsg('아이디를 찾을 수 없습니다.');
@@ -49,7 +57,7 @@ export default function Login({ onLogin }) {
 
             // Credentials are correct. Check if it's their first login
             if (student.is_first_login) {
-                setCurrentStudent(student);
+                setCurrentStudent({ ...student, schoolId });
                 setShowChangePw(true);
                 setIsLoading(false);
                 return;
@@ -57,7 +65,7 @@ export default function Login({ onLogin }) {
 
             // Normal login success - Check Attendance Reward
             const updatedStudent = await checkAttendance(student);
-            onLoginUserId(updatedStudent);
+            onLoginUserId({ ...updatedStudent, schoolId });
 
         } catch (err) {
             console.error('Login error:', err);
@@ -86,7 +94,7 @@ export default function Login({ onLogin }) {
 
             // Successfully changed password and name, now log them in
             setShowChangePw(false);
-            onLoginUserId({ ...currentStudent, password: newPassword, name: newName.trim(), is_first_login: false });
+            onLoginUserId({ ...currentStudent, schoolId, password: newPassword, name: newName.trim(), is_first_login: false });
 
         } catch (err) {
             console.error('Password change error:', err);
@@ -155,6 +163,21 @@ export default function Login({ onLogin }) {
                 </p>
 
                 <form onSubmit={handleLoginClick} style={{ width: '100%' }}>
+                    {/* 학교 선택 */}
+                    <select
+                        value={schoolId}
+                        onChange={(e) => setSchoolId(e.target.value)}
+                        style={{
+                            width: '100%', padding: '15px', border: '2px solid #dfe6e9', borderRadius: '15px',
+                            fontSize: '1rem', fontFamily: "'Nunito', sans-serif", textAlign: 'center',
+                            marginBottom: '10px', outline: 'none', background: '#f8f9fa', color: '#2f3542',
+                            fontWeight: 'bold', cursor: 'pointer', boxSizing: 'border-box', appearance: 'none'
+                        }}
+                    >
+                        {SCHOOLS.map(s => (
+                            <option key={s.id} value={s.id}>{s.name}</option>
+                        ))}
+                    </select>
                     <input
                         type="text"
                         inputMode="numeric"

@@ -7,7 +7,7 @@ const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const MODEL_NAME = import.meta.env.VITE_GEMINI_MODEL || "gemini-2.0-flash-lite";
 const genAI = new GoogleGenerativeAI(API_KEY);
 
-export default function MiniGame({ userId, userName, setFragments, onReward }) {
+export default function MiniGame({ userId, schoolId = 'gyeongdong', gradeGroup = 'lower', userName, setFragments, onReward }) {
     const [dailyWord, setDailyWord] = useState("인공지능스피커");
     const [questions, setQuestions] = useState([]);
     const [currentQuestion, setCurrentQuestion] = useState('');
@@ -242,12 +242,37 @@ export default function MiniGame({ userId, userName, setFragments, onReward }) {
 
         if (error) {
             console.error("Ranking Save Error Detail:", error);
-            // Specifically check for UUID/type error to guide the user
             if (error.code === '22P02') {
                 alert("데이터베이스 설정 오류가 감지되었습니다. 제공해 드린 SQL 명령어를 Supabase SQL Editor에서 실행해 주세요.");
             } else {
                 alert(`저장 중 오류가 발생했습니다: ${error.message || '알 수 없는 오류'}`);
             }
+        }
+
+        // [연구용] activity_logs에 전체 Q&A 턴 JSON 저장
+        try {
+            await supabase.from('activity_logs').insert([{
+                user_id: userId,
+                school_id: schoolId,
+                activity_type: 'minigame',
+                activity_id: today,
+                data: {
+                    date: today,
+                    word: dailyWord,
+                    grade_group: gradeGroup,
+                    turns: questions.map((q, i) => ({
+                        turn: i + 1,
+                        question: q.q,
+                        answer: q.a,
+                        timestamp: q.timestamp || null
+                    })),
+                    total_turns: questions.length,
+                    result: 'solved',
+                    solved_at: new Date().toISOString()
+                }
+            }]);
+        } catch (logErr) {
+            console.warn('activity_logs 저장 실패 (연구 로그):', logErr);
         }
     };
 
