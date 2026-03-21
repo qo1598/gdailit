@@ -13,7 +13,7 @@ import './index.css';
 // We mock the status for the pilot here
 const INITIAL_MISSIONS = [
   { id: 'E-1', title: '우리 주변의 AI 찾기', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e1_find_1773234874913.png' },
-  { id: 'E-2', title: 'AI 답, 그대로 믿어도 될까?', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e2_trust_1773234890193.png', silhouetteUrl: '/e2_silhouette.png' },
+  { id: 'E-2', title: 'AI 답 검증하기', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e2_trust_1773234890193.png', silhouetteUrl: '/e2_silhouette.png' },
   { id: 'E-3', title: '추천은 왜 나에게 왔을까?', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e3_recommend_1773234908058.png' },
   { id: 'E-4', title: 'AI는 누구에게 불공평할까?', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e4_fairness_1773234925903.png' },
 
