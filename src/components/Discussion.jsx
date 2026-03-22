@@ -2,6 +2,8 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Send, Loader2, BookOpen, ChevronRight, CheckCircle } from 'lucide-react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { supabase } from '../supabaseClient';
+import { checkModeration } from '../utils/moderation';
+import VocabHighlighter from './VocabHighlighter';
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const MODEL_NAME = import.meta.env.VITE_GEMINI_MODEL || "gemini-2.0-flash-lite";
@@ -158,6 +160,13 @@ export default function Discussion({ userId, schoolId = 'gyeongdong', gradeGroup
   const [isLoading, setIsLoading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [alreadyDone, setAlreadyDone] = useState(false);
+  
+  // Moderation & Vocab State
+  const [lastMessageText, setLastMessageText] = useState('');
+  const [lastMessageTime, setLastMessageTime] = useState(0);
+  const [vocabModal, setVocabModal] = useState({ show: false, word: '', desc: '' });
+  const [modWarning, setModWarning] = useState({ show: false, message: '' });
+
   const chatEndRef = useRef(null);
 
   useEffect(() => {
@@ -212,6 +221,19 @@ export default function Discussion({ userId, schoolId = 'gyeongdong', gradeGroup
   const handleSendMessage = async (e) => {
     e.preventDefault();
     if (!input.trim() || isLoading) return;
+
+    // Check Moderation
+    const modResult = checkModeration(input, lastMessageText, lastMessageTime);
+    if (!modResult.isValid) {
+      if (modResult.reason !== 'empty') {
+        setModWarning({ show: true, message: modResult.message });
+      }
+      return;
+    }
+
+    // Update moderation states
+    setLastMessageText(input.trim());
+    setLastMessageTime(Date.now());
 
     const userMessage = { role: 'user', content: input.trim(), timestamp: new Date().toISOString() };
     const newMessages = [...messages, userMessage];
@@ -309,6 +331,39 @@ export default function Discussion({ userId, schoolId = 'gyeongdong', gradeGroup
     marginBottom: '12px'
   };
 
+  const sharedModals = (
+    <>
+      {vocabModal.show && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
+          <div className="page-enter" style={{ background: 'white', padding: '30px', borderRadius: '25px', maxWidth: '400px', width: '100%', textAlign: 'center', boxShadow: '0 20px 40px rgba(0,0,0,0.2)' }}>
+            <div style={{ fontSize: '3rem', marginBottom: '10px' }}>💡</div>
+            <h3 style={{ fontFamily: "'Jua', sans-serif", fontSize: '1.8rem', color: '#0984e3', margin: '0 0 15px 0' }}>{vocabModal.word}</h3>
+            <p style={{ color: '#2d3436', fontSize: '1.1rem', fontWeight: 'bold', lineHeight: 1.6, marginBottom: '25px', wordBreak: 'keep-all' }}>
+              {vocabModal.desc}
+            </p>
+            <button onClick={() => setVocabModal({ show: false, word: '', desc: '' })} style={{ background: '#0984e3', color: 'white', border: 'none', padding: '15px', width: '100%', borderRadius: '15px', fontWeight: 'bold', fontSize: '1.1rem', cursor: 'pointer' }}>
+              이해했어요!
+            </button>
+          </div>
+        </div>
+      )}
+      {modWarning.show && (
+        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
+          <div className="page-enter" style={{ background: 'white', padding: '30px', borderRadius: '25px', maxWidth: '400px', width: '100%', textAlign: 'center', boxShadow: '0 20px 40px rgba(0,0,0,0.2)' }}>
+            <div style={{ fontSize: '3rem', marginBottom: '10px' }}>🛑</div>
+            <h3 style={{ fontFamily: "'Jua', sans-serif", fontSize: '1.5rem', color: '#d63031', margin: '0 0 15px 0' }}>안내 메시지</h3>
+            <p style={{ color: '#2d3436', fontSize: '1.1rem', fontWeight: 'bold', lineHeight: 1.6, marginBottom: '25px', wordBreak: 'keep-all' }}>
+              {modWarning.message}
+            </p>
+            <button onClick={() => setModWarning({ show: false, message: '' })} style={{ background: '#d63031', color: 'white', border: 'none', padding: '15px', width: '100%', borderRadius: '15px', fontWeight: 'bold', fontSize: '1.1rem', cursor: 'pointer' }}>
+              네, 알겠습니다!
+            </button>
+          </div>
+        </div>
+      )}
+    </>
+  );
+
   // 이미 완료
   if (alreadyDone && step === STEP.INTRO) {
     return (
@@ -326,11 +381,12 @@ export default function Discussion({ userId, schoolId = 'gyeongdong', gradeGroup
             <div style={{ marginTop: '20px', background: '#f8f9fa', borderRadius: '15px', padding: '15px' }}>
               <div style={topicBadgeStyle}>{todayTopic.area}</div>
               <p style={{ fontWeight: 'bold', color: '#2d3436', fontSize: '1rem' }}>
-                "{todayTopic.topic}"
+                "<VocabHighlighter text={todayTopic.topic} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} />"
               </p>
             </div>
           </div>
         </div>
+        {sharedModals}
       </div>
     );
   }
@@ -351,7 +407,7 @@ export default function Discussion({ userId, schoolId = 'gyeongdong', gradeGroup
         <div style={{ ...cardStyle, border: '3px solid #74b9ff' }}>
           <div style={topicBadgeStyle}>📅 오늘의 주제 · {todayTopic.area}</div>
           <p style={{ fontSize: '1.25rem', fontWeight: '900', color: '#2d3436', lineHeight: 1.5, margin: '10px 0 0' }}>
-            "{todayTopic.topic}"
+            "<VocabHighlighter text={todayTopic.topic} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} />"
           </p>
         </div>
 
@@ -379,6 +435,7 @@ export default function Discussion({ userId, schoolId = 'gyeongdong', gradeGroup
         >
           시작하기 <ChevronRight size={22} />
         </button>
+        {sharedModals}
       </div>
     );
   }
@@ -390,7 +447,7 @@ export default function Discussion({ userId, schoolId = 'gyeongdong', gradeGroup
         <div style={{ ...cardStyle, background: '#e8f4fd', border: '2px solid #74b9ff' }}>
           <div style={topicBadgeStyle}>{todayTopic.area}</div>
           <p style={{ fontWeight: '900', color: '#2d3436', fontSize: '1.05rem', lineHeight: 1.5, margin: 0 }}>
-            "{todayTopic.topic}"
+            "<VocabHighlighter text={todayTopic.topic} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} />"
           </p>
         </div>
 
@@ -416,6 +473,7 @@ export default function Discussion({ userId, schoolId = 'gyeongdong', gradeGroup
             AI와 토의 시작하기 <ChevronRight size={22} />
           </button>
         </div>
+        {sharedModals}
       </div>
     );
   }
@@ -429,7 +487,7 @@ export default function Discussion({ userId, schoolId = 'gyeongdong', gradeGroup
           <div style={{ flex: 1, minWidth: 0 }}>
             <div style={{ ...topicBadgeStyle, marginBottom: '4px' }}>{todayTopic.area}</div>
             <p style={{ fontWeight: '900', color: '#2d3436', fontSize: '0.9rem', margin: 0, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-              {todayTopic.topic}
+              <VocabHighlighter text={todayTopic.topic} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} />
             </p>
           </div>
           <button
@@ -464,7 +522,10 @@ export default function Discussion({ userId, schoolId = 'gyeongdong', gradeGroup
                 <div style={{ alignSelf: 'flex-start', display: 'flex', gap: '8px', alignItems: 'flex-start', maxWidth: '85%' }}>
                   <div style={{ width: '32px', height: '32px', background: '#74b9ff', borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0, fontSize: '1rem' }}>🤖</div>
                   <div style={{ background: 'white', border: '1px solid #dfe6e9', padding: '10px 14px', borderRadius: '5px 18px 18px 18px', fontWeight: 'bold', color: '#2d3436', fontSize: '0.95rem', lineHeight: 1.5 }}>
-                    {m.content}
+                    <VocabHighlighter 
+                      text={m.content} 
+                      onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })}
+                    />
                   </div>
                 </div>
               ) : (
@@ -481,6 +542,8 @@ export default function Discussion({ userId, schoolId = 'gyeongdong', gradeGroup
           )}
           <div ref={chatEndRef} />
         </div>
+
+        {sharedModals}
       </div>
     );
   }
@@ -492,7 +555,7 @@ export default function Discussion({ userId, schoolId = 'gyeongdong', gradeGroup
         <div style={{ ...cardStyle, background: '#e8f4fd', border: '2px solid #74b9ff' }}>
           <div style={topicBadgeStyle}>{todayTopic.area}</div>
           <p style={{ fontWeight: '900', color: '#2d3436', fontSize: '1.05rem', lineHeight: 1.5, margin: 0 }}>
-            "{todayTopic.topic}"
+            "<VocabHighlighter text={todayTopic.topic} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} />"
           </p>
         </div>
 
@@ -526,6 +589,7 @@ export default function Discussion({ userId, schoolId = 'gyeongdong', gradeGroup
             {isSaving ? '저장 중...' : '✅ 토의 완료하고 저장하기'}
           </button>
         </div>
+        {sharedModals}
       </div>
     );
   }

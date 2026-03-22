@@ -108,6 +108,46 @@ const PART_SVGS = {
       <path d="M75 170 L85 190 L95 170" fill="#ff7675" />
       <path d="M105 170 L115 190 L125 170" fill="#ff7675" />
     </g>
+  ),
+  cap: () => (
+    <g>
+      <path d="M75 55 Q100 30 125 55 L135 55 L135 60 L75 60 Z" fill="#3498db" />
+      <path d="M125 55 Q140 55 145 65" stroke="#3498db" strokeWidth="4" strokeLinecap="round" fill="none" />
+    </g>
+  ),
+  sunglasses: () => (
+    <g>
+      <rect x="80" y="60" width="18" height="10" rx="3" fill="#2d3436" />
+      <rect x="102" y="60" width="18" height="10" rx="3" fill="#2d3436" />
+      <path d="M98 62 L102 62" stroke="#2d3436" strokeWidth="2" />
+      <path d="M80 62 L75 60 M120 62 L125 60" stroke="#2d3436" strokeWidth="2" />
+    </g>
+  ),
+  armor: () => (
+    <g>
+      <path d="M75 95 L125 95 L120 145 L100 155 L80 145 Z" fill="#b2bec3" stroke="#636e72" strokeWidth="2" />
+      <path d="M85 110 L115 110 M85 125 L115 125" stroke="#636e72" strokeWidth="2" />
+      <circle cx="100" cy="122" r="8" fill="#0984e3" />
+    </g>
+  ),
+  backpack: () => (
+    <g>
+      <rect x="55" y="100" width="90" height="45" rx="8" fill="#27ae60" opacity="0.8" />
+      <path d="M65 95 L65 110 M135 95 L135 110" stroke="#2d3436" strokeWidth="4" />
+    </g>
+  ),
+  watch: () => (
+    <g>
+      <rect x="53" y="125" width="14" height="6" fill="#e74c3c" />
+      <rect x="56" y="123" width="8" height="10" rx="2" fill="#2d3436" />
+    </g>
+  ),
+  sneakers: () => (
+    <g>
+      <rect x="75" y="165" width="16" height="14" rx="4" fill="#e74c3c" />
+      <rect x="109" y="165" width="16" height="14" rx="4" fill="#e74c3c" />
+      <path d="M75 175 L91 175 M109 175 L125 175" stroke="#fff" strokeWidth="3" />
+    </g>
   )
 };
 
@@ -120,6 +160,7 @@ const RobotSVG = ({ color = '#00d2ff', modules = [] }) => {
       {isEquipped('aura') && PART_SVGS.aura()}
       {isEquipped('flight') && PART_SVGS.flight()}
       {isEquipped('cape') && PART_SVGS.cape()}
+      {isEquipped('backpack') && PART_SVGS.backpack()}
 
       {/* 로봇 본체 */}
       <rect x="65" y="85" width="70" height="75" rx="15" fill="#f5f6fa" stroke="#dcdde1" strokeWidth="2" />
@@ -147,12 +188,17 @@ const RobotSVG = ({ color = '#00d2ff', modules = [] }) => {
 
       {/* 상단 레이어 아이템 */}
       {isEquipped('shield') && PART_SVGS.shield()}
+      {isEquipped('armor') && PART_SVGS.armor()}
       {isEquipped('optics') && PART_SVGS.optics()}
+      {isEquipped('sunglasses') && PART_SVGS.sunglasses()}
       {isEquipped('ears') && PART_SVGS.ears()}
       {isEquipped('brain') && PART_SVGS.brain()}
       {isEquipped('crown') && PART_SVGS.crown()}
+      {isEquipped('cap') && PART_SVGS.cap()}
       {isEquipped('drone') && PART_SVGS.drone()}
+      {isEquipped('watch') && PART_SVGS.watch()}
       {isEquipped('boots') && PART_SVGS.boots()}
+      {isEquipped('sneakers') && PART_SVGS.sneakers()}
     </svg>
   );
 };
@@ -241,21 +287,50 @@ const RewardModal = ({ info, onClose }) => {
   );
 };
 
+const ItemIcon = ({ moduleId }) => {
+  return (
+    <svg viewBox="0 0 200 200" style={{ width: '100%', height: '100%', display: 'block' }}>
+      {/* Faded robot silhouette for context */}
+      <g opacity="0.08">
+        <rect x="65" y="85" width="70" height="75" rx="15" fill="#2d3436" />
+        <rect x="75" y="45" width="50" height="40" rx="20" fill="#2d3436" />
+        <rect x="55" y="105" width="10" height="40" rx="5" fill="#2d3436" />
+        <rect x="135" y="105" width="10" height="40" rx="5" fill="#2d3436" />
+        <circle cx="85" cy="165" r="8" fill="#2d3436" />
+        <circle cx="115" cy="165" r="8" fill="#2d3436" />
+      </g>
+      {/* Actual item */}
+      {PART_SVGS[moduleId] && PART_SVGS[moduleId]()}
+    </svg>
+  );
+};
+
 function Profile({ userId, userName, fragments, setFragments, avatarConfig, setAvatarConfig, onLogout }) {
   const [isUpdating, setIsUpdating] = React.useState(false);
+  const [activeCategory, setActiveCategory] = React.useState('all'); // for inventory filtering
 
-  // [마스터피스] 고품질 업그레이드 모듈 리스트
   const upgradeModules = [
-    { id: 'ears', label: '감정감지 안테나', icon: '🐰', color: '#ff80ab', cost: 10, desc: '친구들의 마음을 읽는 귀여운 귀!' },
-    { id: 'optics', label: '스캔 비전 고글', icon: '🥽', color: '#00d2ff', cost: 10, desc: '숨겨진 데이터를 찾아내는 최첨단 고글!' },
-    { id: 'shield', label: '나노 입자 방패', icon: '🛡️', color: '#74b9ff', cost: 20, desc: '어떤 위험도 막아내는 투명 보호막!' },
-    { id: 'cape', label: '슈퍼 히어로 망토', icon: '🧣', color: '#d63031', cost: 20, desc: '정의의 사도가 된 기분을 느껴봐!' },
-    { id: 'flight', label: '플라즈마 부스터', icon: '🚀', color: '#ff7675', cost: 25, desc: '광속으로 하늘을 가르는 강력한 추진기!' },
-    { id: 'brain', label: '하이퍼 연산 장치', icon: '📡', color: '#a29bfe', cost: 30, desc: '인공지능의 지능이 한계까지 올라가요!' },
-    { id: 'drone', label: '서포트 펫 드론', icon: '🛰️', color: '#55efc4', cost: 35, desc: '모험을 함께할 듬직한 비행 친구!' },
-    { id: 'aura', label: '전설의 황금 오라', icon: '✨', color: '#ffd700', cost: 40, desc: '온몸에서 뿜어져 나오는 승리의 광채!' },
-    { id: 'crown', label: '데이터 마스터 관', icon: '👑', color: '#ffd700', cost: 50, desc: '가장 많은 지식을 쌓은 자의 증표!' },
-    { id: 'boots', label: '중력 제어 슈즈', icon: '👟', color: '#455a64', cost: 15, desc: '땅에서도 하늘만큼 빠르게 달려요!' },
+    { id: 'ears', category: 'head', label: '감정감지 안테나', icon: '🐰', color: '#ff80ab', cost: 10 },
+    { id: 'cap', category: 'head', label: '블루 캡', color: '#3498db', cost: 5 },
+    { id: 'brain', category: 'head', label: '하이퍼 연산 장치', color: '#a29bfe', cost: 30 },
+    { id: 'crown', category: 'head', label: '데이터 관', color: '#ffd700', cost: 50 },
+    
+    { id: 'optics', category: 'face', label: '스캔 고글', color: '#00d2ff', cost: 10 },
+    { id: 'sunglasses', category: 'face', label: '선글라스', color: '#2d3436', cost: 15 },
+    
+    { id: 'shield', category: 'body', label: '방패', color: '#74b9ff', cost: 20 },
+    { id: 'armor', category: 'body', label: '아머 플레이트', color: '#b2bec3', cost: 25 },
+    
+    { id: 'cape', category: 'back', label: '히어로 망토', color: '#d63031', cost: 20 },
+    { id: 'backpack', category: 'back', label: '백팩', color: '#27ae60', cost: 15 },
+    { id: 'flight', category: 'back', label: '플라즈마 부스터', color: '#ff7675', cost: 25 },
+    
+    { id: 'watch', category: 'acc', label: '스마트 워치', color: '#e74c3c', cost: 5 },
+    { id: 'drone', category: 'acc', label: '드론', color: '#55efc4', cost: 35 },
+    { id: 'aura', category: 'acc', label: '황금 오라', color: '#ffd700', cost: 40 },
+    
+    { id: 'sneakers', category: 'feet', label: '스니커즈', color: '#e74c3c', cost: 10 },
+    { id: 'boots', category: 'feet', label: '중력 슈즈', color: '#455a64', cost: 15 },
   ];
 
   const handleToggleModule = async (module) => {
@@ -268,13 +343,23 @@ function Profile({ userId, userName, fragments, setFragments, avatarConfig, setA
 
     setIsUpdating(true);
     let newConfig = { ...avatarConfig };
-    const currentSelected = avatarConfig.selectedModules || [];
+    let currentSelected = [...(avatarConfig.selectedModules || [])];
 
-    if (currentSelected.includes(module.id)) {
-        newConfig.selectedModules = currentSelected.filter(id => id !== module.id);
+    // Check if equipping or unequipping
+    const isCurrentlyEquipped = currentSelected.includes(module.id);
+    
+    if (isCurrentlyEquipped) {
+      // Unequip
+      currentSelected = currentSelected.filter(id => id !== module.id);
     } else {
-        newConfig.selectedModules = [...currentSelected, module.id];
+      // Equip -> But must remove other items of the same category to prevent overlap
+      const moduleCategory = module.category;
+      const sameCategoryItems = upgradeModules.filter(m => m.category === moduleCategory).map(m => m.id);
+      currentSelected = currentSelected.filter(id => !sameCategoryItems.includes(id));
+      currentSelected.push(module.id);
     }
+
+    newConfig.selectedModules = currentSelected;
     
     if (!isUnlocked) {
       newConfig.unlocked = [...(avatarConfig.unlocked || []), module.id];
@@ -303,146 +388,208 @@ function Profile({ userId, userName, fragments, setFragments, avatarConfig, setA
   };
 
   const selectedModules = avatarConfig.selectedModules || [];
+  
+  const getEquippedModule = (category) => {
+    const equippedId = selectedModules.find(id => {
+      const mod = upgradeModules.find(m => m.id === id);
+      return mod && mod.category === category;
+    });
+    return upgradeModules.find(m => m.id === equippedId);
+  };
 
   return (
-    <div className="page-enter" style={{ padding: '20px', paddingBottom: '120px', background: '#f9f9fb', minHeight: '100vh' }}>
-      <div style={{ textAlign: 'center', marginBottom: '25px' }}>
-        <h2 style={{ 
-          fontFamily: "'Jua', sans-serif", 
-          fontSize: '2.4rem', 
-          color: '#1a1a1a',
-          margin: 0,
-          textShadow: '2px 2px 0 #fff, 4px 4px 20px rgba(0,0,0,0.1)'
-        }}>AI 비밀 요원 연구소</h2>
-        <p style={{ color: '#546e7a', fontSize: '1.1rem', fontWeight: 'bold', marginTop: '5px' }}>
-          획득한 데이터 조각으로 당신의 파트너 로봇을 커스터마이징 하세요.
-        </p>
-      </div>
-
-      {/* [마스터피스] 프리미엄 실험실 스테이지 */}
-      <div style={{ 
-        background: 'linear-gradient(135deg, #ffffff 0%, #f1f2f6 100%)', 
-        border: '5px solid #fff',
-        padding: '35px', 
-        borderRadius: '50px', 
-        boxShadow: '0 25px 60px rgba(0,0,0,0.1)', 
-        marginBottom: '30px', 
-        position: 'relative',
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        overflow: 'hidden'
+    <div className="page-enter" style={{ 
+      background: '#fcfcf7', // Light beige matching the image
+      minHeight: '100vh', 
+      width: '100%',
+      maxWidth: '100%',
+      padding: '40px 20px 140px 20px', 
+      display: 'flex', 
+      flexDirection: 'column',
+      position: 'relative',
+      margin: '0 auto'
+    }}>
+      
+      {/* Title */}
+      <h2 style={{
+        textAlign: 'center',
+        fontFamily: "'NanumSquareNeo-Variable', sans-serif",
+        fontSize: '2.2rem',
+        color: '#2d3436',
+        margin: '0 0 40px 0',
+        fontWeight: '900',
+        letterSpacing: '-1.5px'
       }}>
-        {/* 하이테크 격자 배경 */}
-        <div style={{
-          position: 'absolute', top: 0, left: 0, width: '100%', height: '100%',
-          backgroundImage: 'radial-gradient(#dfe6e9 1px, transparent 1px)',
-          backgroundSize: '25px 25px', opacity: 0.3
-        }}></div>
+        [아바타 꾸미기]
+      </h2>
 
-        <div style={{ width: '250px', height: '250px', position: 'relative', zIndex: 1, animation: 'float 5s ease-in-out infinite' }}>
-            <RobotSVG color="#00d2ff" modules={selectedModules} />
-        </div>
-
-        <div style={{ textAlign: 'center', marginTop: '20px', zIndex: 1 }}>
-            <div style={{ 
-                background: '#2d3436', color: '#fff', 
-                padding: '6px 20px', borderRadius: '30px',
-                fontSize: '0.9rem', fontWeight: 'bold',
-                marginBottom: '10px', display: 'inline-block',
-                boxShadow: '0 4px 15px rgba(0,0,0,0.2)'
-            }}>
-                ID: {userName} AGENT
-            </div>
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '12px' }}>
-                <span style={{ fontSize: '2.5rem', animation: 'pulse 1.5s infinite' }}>💎</span>
-                <span style={{ fontSize: '2.2rem', fontWeight: '900', color: '#2d3436' }}>{fragments}</span>
-                <span style={{ fontSize: '1.2rem', color: '#636e72', fontWeight: 'bold' }}>DATA</span>
-            </div>
-        </div>
-      </div>
-
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginLeft: '10px' }}>
-            <span style={{ width: '12px', height: '12px', background: '#00d2ff', borderRadius: '50%' }}></span>
-            <h4 style={{ fontFamily: "'Jua', sans-serif", fontSize: '1.4rem', color: '#2d3436', margin: 0 }}>업그레이드 부품 카탈로그</h4>
-        </div>
+      {/* Avatar Layout Center */}
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '50px', padding: '0 10px' }}>
         
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '18px' }}>
-          {upgradeModules.map(m => {
-            const isActive = selectedModules.includes(m.id);
-            const isUnlocked = avatarConfig.unlocked?.includes(m.id) || m.cost === 0;
+        {/* Left Slots */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          {['head', 'body', 'feet'].map(cat => {
+            const eq = getEquippedModule(cat);
             return (
-              <button 
-                key={m.id}
-                onClick={() => handleToggleModule(m)}
-                disabled={isUpdating}
-                style={{
-                  background: isActive ? '#fff' : '#f8f9fa',
-                  border: isActive ? `4px solid ${m.color}` : '4px solid #fff',
-                  padding: '20px',
-                  borderRadius: '35px',
-                  color: '#2d3436',
-                  cursor: 'pointer',
-                  transition: 'all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275)',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  alignItems: 'center',
-                  gap: '10px',
-                  boxShadow: isActive ? `0 15px 30px ${m.color}33` : '0 8px 0 #dfe6e9',
-                  transform: isActive ? 'translateY(-5px)' : 'none'
-                }}
-              >
-                {/* 1:1 일관성을 위한 SVG 아이콘 */}
-                <div style={{ width: '80px', height: '80px' }}>
-                  <svg viewBox="0 0 200 200" style={{ width: '100%', height: '100%' }}>
-                    {PART_SVGS[m.id]()}
-                  </svg>
-                </div>
-                <div style={{ textAlign: 'center' }}>
-                  <div style={{ fontSize: '1.1rem', fontWeight: '900', fontFamily: "'Jua', sans-serif", marginBottom: '3px' }}>{m.label}</div>
-                  <div style={{ fontSize: '0.8rem', color: '#636e72', lineHeight: '1.3', height: '2.6em', overflow: 'hidden' }}>{m.desc}</div>
-                  
-                  <div style={{ 
-                    marginTop: '12px',
-                    fontSize: '0.85rem', 
-                    padding: '8px 15px', 
-                    borderRadius: '20px',
-                    background: isUnlocked ? (isActive ? m.color : '#2d3436') : '#0984e3',
-                    color: '#fff',
-                    fontWeight: '900',
-                    boxShadow: '0 4px 0 rgba(0,0,0,0.1)'
-                  }}>
-                      {isUnlocked ? (isActive ? '장착 해제' : '장착하기') : `💎 ${m.cost} 소모`}
-                  </div>
-                </div>
-              </button>
+              <div key={cat} style={{
+                width: '75px', height: '75px',
+                background: eq ? '#fff' : '#e0dfd5',
+                border: '4px solid #b2bec3',
+                borderRadius: '18px',
+                display: 'flex', justifyContent: 'center', alignItems: 'center',
+                boxShadow: eq ? `0 0 15px ${eq.color}40` : 'inset 0 4px 6px rgba(0,0,0,0.05)',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }} title={eq ? eq.label : 'Empty'} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
+                {eq ? <div style={{ width: '85%', height: '85%' }}><ItemIcon moduleId={eq.id} /></div> : <span style={{ opacity: 0.2, fontSize: '2.2rem' }}>{cat === 'head' ? '🧢' : cat === 'body' ? '👕' : '👟'}</span>}
+              </div>
             );
           })}
+        </div>
+
+        {/* Robot SVG Center */}
+        <div style={{ width: '220px', height: '220px', position: 'relative' }}>
+          <div style={{ position: 'absolute', bottom: '-20px', left: '10%', width: '80%', height: '25px', background: 'rgba(0,0,0,0.08)', borderRadius: '50%', filter: 'blur(5px)' }}></div>
+          <RobotSVG color="#00d2ff" modules={selectedModules} />
+        </div>
+
+        {/* Right Slots */}
+        <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+          {['face', 'back', 'acc'].map(cat => {
+            const eq = getEquippedModule(cat);
+            return (
+              <div key={cat} style={{
+                width: '75px', height: '75px',
+                background: eq ? '#fff' : '#e0dfd5',
+                border: '4px solid #b2bec3',
+                borderRadius: '18px',
+                display: 'flex', justifyContent: 'center', alignItems: 'center',
+                boxShadow: eq ? `0 0 15px ${eq.color}40` : 'inset 0 4px 6px rgba(0,0,0,0.05)',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }} title={eq ? eq.label : 'Empty'} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}>
+                {eq ? <div style={{ width: '85%', height: '85%' }}><ItemIcon moduleId={eq.id} /></div> : <span style={{ opacity: 0.2, fontSize: '2.2rem' }}>{cat === 'face' ? '👓' : cat === 'back' ? '🎒' : '✨'}</span>}
+              </div>
+            );
+          })}
+        </div>
+      </div>
+
+        {/* Inventory Section (아이템 구비) */}
+        <div style={{ borderTop: '2px solid #e0dfd5', paddingTop: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+            <h3 style={{ margin: 0, fontSize: '1.2rem', fontFamily: "'NanumSquareNeo-Variable', sans-serif", color: '#2d3436', fontWeight: 'bold' }}>아이템 구비</h3>
+            <div style={{ fontSize: '1.1rem', fontWeight: '900', color: '#0984e3', background: '#e1f5fe', padding: '4px 12px', borderRadius: '15px' }}>💎 {fragments}</div>
+          </div>
+
+          <div style={{ display: 'flex', gap: '5px', overflowX: 'auto', paddingBottom: '10px', marginBottom: '10px', msOverflowStyle: 'none', scrollbarWidth: 'none' }} className="hide-scroll">
+            {[
+              { id: 'all', name: '전체' },
+              { id: 'head', name: '머리' },
+              { id: 'face', name: '얼굴' },
+              { id: 'body', name: '몸통' },
+              { id: 'back', name: '등' },
+              { id: 'acc', name: '장신구' },
+              { id: 'feet', name: '신발' }
+            ].map(cat => (
+              <button 
+                key={cat.id} 
+                onClick={() => setActiveCategory(cat.id)}
+                style={{ 
+                  padding: '6px 12px', 
+                  borderRadius: '20px', 
+                  border: 'none',
+                  background: activeCategory === cat.id ? '#0984e3' : '#e0dfd5',
+                  color: activeCategory === cat.id ? '#fff' : '#636e72',
+                  whiteSpace: 'nowrap',
+                  fontWeight: 'bold',
+                  fontSize: '0.9rem',
+                  cursor: 'pointer'
+                }}
+              >
+                {cat.name}
+              </button>
+            ))}
+          </div>
+          
+          <div style={{ 
+            display: 'grid', 
+            gridTemplateColumns: 'repeat(5, 1fr)', 
+            gap: '8px',
+            alignContent: 'start',
+            flex: 1,
+            overflowY: 'auto'
+          }}>
+            {upgradeModules.filter(m => activeCategory === 'all' || m.category === activeCategory).map(m => {
+              const isActive = selectedModules.includes(m.id);
+              const isUnlocked = avatarConfig.unlocked?.includes(m.id) || m.cost === 0;
+
+              return (
+                <button
+                  key={m.id}
+                  onClick={() => handleToggleModule(m)}
+                  disabled={isUpdating}
+                  style={{
+                    width: '100%',
+                    aspectRatio: '1',
+                    background: isActive ? '#fff' : (isUnlocked ? '#fcfcf7' : '#f5f6fa'),
+                    border: isActive ? `3px solid ${m.color}` : '2px solid #b2bec3',
+                    borderRadius: '12px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    cursor: 'pointer',
+                    position: 'relative',
+                    transition: 'all 0.2s',
+                    boxShadow: isActive ? `0 4px 8px ${m.color}60` : '0 2px 4px rgba(0,0,0,0.05)',
+                    padding: '5px'
+                  }}
+                  title={`${m.label} - ${isUnlocked ? '보유중' : m.cost + '💎'}`}
+                >
+                  <div style={{ width: '100%', height: '100%', filter: !isUnlocked ? 'grayscale(100%) opacity(40%)' : 'none' }}>
+                    <ItemIcon moduleId={m.id} />
+                  </div>
+                  
+                  {isActive && (
+                    <div style={{ position: 'absolute', top: '-5px', right: '-5px', background: '#fff', borderRadius: '50%', color: m.color, fontSize: '0.8rem', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `2px solid ${m.color}`, fontWeight: 'bold', zIndex: 10 }}>✓</div>
+                  )}
+
+                  {!isUnlocked && (
+                    <div style={{ position: 'absolute', bottom: '2px', fontSize: '0.7rem', fontWeight: 'bold', color: '#b2bec3', background: 'rgba(255,255,255,0.9)', padding: '0 4px', borderRadius: '4px', zIndex: 10 }}>
+                      {m.cost}💎
+                    </div>
+                  )}
+                </button>
+              );
+            })}
+            
+            {/* Empty filler slots */}
+            {Array.from({ length: Math.max(0, 10 - upgradeModules.filter(m => activeCategory === 'all' || m.category === activeCategory).length) }).map((_, i) => (
+              <div key={`empty-${i}`} style={{ width: '100%', aspectRatio: '1', background: '#e0dfd5', border: '2px solid #b2bec3', borderRadius: '12px', opacity: 0.3 }} />
+            ))}
+          </div>
         </div>
 
         <button 
           onClick={onLogout} 
           style={{ 
-            background: '#ff7675',
-            border: 'none',
-            color: '#fff',
-            padding: '20px',
-            borderRadius: '30px',
-            marginTop: '30px',
+            background: 'transparent',
+            border: '2px solid #ff7675',
+            color: '#ff7675',
+            padding: '12px',
+            borderRadius: '15px',
+            marginTop: '25px',
             cursor: 'pointer',
-            fontWeight: '900',
-            fontFamily: "'Jua', sans-serif",
-            fontSize: '1.3rem',
-            boxShadow: '0 8px 0 #d63031',
-            transition: 'all 0.2s'
+            fontWeight: 'bold',
+            fontSize: '1rem',
+            transition: 'all 0.2s',
+            alignSelf: 'center',
+            width: '80%'
           }}
-          onMouseDown={(e) => { e.currentTarget.style.transform = 'translateY(4px)'; e.currentTarget.style.boxShadow = '0 4px 0 #d63031'; }}
-          onMouseUp={(e) => { e.currentTarget.style.transform = 'none'; e.currentTarget.style.boxShadow = '0 8px 0 #d63031'; }}
         >
-          실험실 기록 저장 및 로그아웃
+          저장하고 실험실 나가기
         </button>
-      </div>
     </div>
   );
 }

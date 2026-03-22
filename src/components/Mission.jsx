@@ -5,6 +5,8 @@ import confetti from 'canvas-confetti';
 import { supabase } from '../supabaseClient';
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
+import { checkModeration } from '../utils/moderation';
+import VocabHighlighter from './VocabHighlighter';
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const MODEL_NAME = import.meta.env.VITE_GEMINI_MODEL || "gemini-2.0-flash-lite";
@@ -323,6 +325,13 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
     const [messages, setMessages] = useState([]);
     const [chatInput, setChatInput] = useState('');
     const [isAIThinking, setIsAIThinking] = useState(false);
+    
+    // Moderation & Vocab State
+    const [lastMessageText, setLastMessageText] = useState('');
+    const [lastMessageTime, setLastMessageTime] = useState(0);
+    const [vocabModal, setVocabModal] = useState({ show: false, word: '', desc: '' });
+    const [modWarning, setModWarning] = useState({ show: false, message: '' });
+
     const chatEndRef = React.useRef(null);
 
     React.useEffect(() => {
@@ -401,6 +410,19 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
     const handleChatSend = async (e) => {
         e.preventDefault();
         if (!chatInput.trim() || isAIThinking) return;
+
+        // Check Moderation
+        const modResult = checkModeration(chatInput, lastMessageText, lastMessageTime);
+        if (!modResult.isValid) {
+            if (modResult.reason !== 'empty') {
+                setModWarning({ show: true, message: modResult.message });
+            }
+            return;
+        }
+
+        // Update moderation states
+        setLastMessageText(chatInput.trim());
+        setLastMessageTime(Date.now());
 
         const userMsg = { role: 'user', content: chatInput.trim(), timestamp: new Date().toISOString() };
         const newMsgs = [...messages, userMsg];
@@ -691,7 +713,12 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                             fontWeight: 'bold',
                                             fontSize: '0.95rem'
                                         }}>
-                                            {m.content}
+                                            {m.role === 'ai' ? (
+                                                <VocabHighlighter 
+                                                    text={m.content} 
+                                                    onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })}
+                                                />
+                                            ) : m.content}
                                         </div>
                                     </div>
                                 ))}
@@ -709,6 +736,36 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                 <button type="submit" style={{ background: '#0984e3', border: 'none', borderRadius: '12px', padding: '0 15px', color: 'white', cursor: 'pointer' }}>내보내기</button>
                             </form>
                             <button onClick={() => handleSubmit()} disabled={messages.length < 3} style={{ margin: '10px', padding: '12px', background: '#00b894', border: 'none', borderRadius: '12px', color: 'white', fontWeight: '900', cursor: messages.length < 3 ? 'not-allowed' : 'pointer', opacity: messages.length < 3 ? 0.6 : 1 }}>성공! 대화 완료하고 제출하기</button>
+
+                            {/* Modals */}
+                            {vocabModal.show && (
+                            <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
+                                <div className="page-enter" style={{ background: 'white', padding: '30px', borderRadius: '25px', maxWidth: '400px', width: '100%', textAlign: 'center', boxShadow: '0 20px 40px rgba(0,0,0,0.2)' }}>
+                                <div style={{ fontSize: '3rem', marginBottom: '10px' }}>💡</div>
+                                <h3 style={{ fontFamily: "'Jua', sans-serif", fontSize: '1.8rem', color: '#0984e3', margin: '0 0 15px 0' }}>{vocabModal.word}</h3>
+                                <p style={{ color: '#2d3436', fontSize: '1.1rem', fontWeight: 'bold', lineHeight: 1.6, marginBottom: '25px', wordBreak: 'keep-all' }}>
+                                    {vocabModal.desc}
+                                </p>
+                                <button type="button" onClick={() => setVocabModal({ show: false, word: '', desc: '' })} style={{ background: '#0984e3', color: 'white', border: 'none', padding: '15px', width: '100%', borderRadius: '15px', fontWeight: 'bold', fontSize: '1.1rem', cursor: 'pointer' }}>
+                                    이해했어요!
+                                </button>
+                                </div>
+                            </div>
+                            )}
+                            {modWarning.show && (
+                            <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, background: 'rgba(0,0,0,0.5)', zIndex: 1000, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '20px' }}>
+                                <div className="page-enter" style={{ background: 'white', padding: '30px', borderRadius: '25px', maxWidth: '400px', width: '100%', textAlign: 'center', boxShadow: '0 20px 40px rgba(0,0,0,0.2)' }}>
+                                <div style={{ fontSize: '3rem', marginBottom: '10px' }}>🛑</div>
+                                <h3 style={{ fontFamily: "'Jua', sans-serif", fontSize: '1.5rem', color: '#d63031', margin: '0 0 15px 0' }}>안내 메시지</h3>
+                                <p style={{ color: '#2d3436', fontSize: '1.1rem', fontWeight: 'bold', lineHeight: 1.6, marginBottom: '25px', wordBreak: 'keep-all' }}>
+                                    {modWarning.message}
+                                </p>
+                                <button type="button" onClick={() => setModWarning({ show: false, message: '' })} style={{ background: '#d63031', color: 'white', border: 'none', padding: '15px', width: '100%', borderRadius: '15px', fontWeight: 'bold', fontSize: '1.1rem', cursor: 'pointer' }}>
+                                    네, 알겠습니다!
+                                </button>
+                                </div>
+                            </div>
+                            )}
                         </div>
                     ) : (
                         <form onSubmit={handleSubmit}>
