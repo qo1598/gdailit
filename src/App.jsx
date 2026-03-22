@@ -588,7 +588,7 @@ function App() {
         </header>
       )}
 
-      <main className="main-content" style={{ paddingBottom: userId ? '150px' : '0', padding: userId ? '20px' : '0' }}>
+      <main className="main-content" style={{ padding: userId ? '20px' : '0', paddingBottom: userId ? '150px' : '0' }}>
         <Routes>
           <Route path="/" element={userId ? <Dashboard missions={missions} refresh={fetchProgress} justAttended={false} setJustAttended={() => {}} /> : <Login onLogin={handleLogin} />} />
           <Route path="/mission/:missionId" element={userId ? <Mission userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
