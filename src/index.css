@@ -42,7 +42,7 @@ body {
   background-color: var(--screen-bg);
   position: relative;
   overflow-x: hidden;
-  overflow-y: auto;
+  overflow-y: hidden;
   display: flex;
   flex-direction: column;
   box-shadow: var(--shadow-md);
@@ -119,7 +119,7 @@ body {
   flex: 1;
   overflow-y: auto;
   padding: 20px;
-  padding-bottom: 100px;
+  padding-bottom: 150px;
 }
 
 /* Badge Grid */
