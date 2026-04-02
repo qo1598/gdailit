@@ -12,25 +12,25 @@ import './index.css';
 
 // We mock the status for the pilot here
 const INITIAL_MISSIONS = [
-  { id: 'E-1', title: '우리 주변의 AI 찾기', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e1_find_1773234874913.png' },
-  { id: 'E-2', title: 'AI 답 검증하기', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e2_trust_1773234890193.png', silhouetteUrl: '/e2_silhouette.png' },
-  { id: 'E-3', title: '추천은 왜 나에게 왔을까?', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e3_recommend_1773234908058.png' },
-  { id: 'E-4', title: 'AI는 누구에게 불공평할까?', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e4_fairness_1773234925903.png' },
+  { id: 'E-1', title: '내 주변 숨은 AI 찾기 대작전!', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e1_find_1773234874913.png' },
+  { id: 'E-2', title: '팩트체크 전문가, AI의 거짓말을 잡아라!', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e2_trust_1773234890193.png', silhouetteUrl: '/e2_silhouette.png' },
+  { id: 'E-3', title: '알고리즘의 꼬리 잡기', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e3_recommend_1773234908058.png' },
+  { id: 'E-4', title: 'AI는 모든 친구에게 친절할까?', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e4_fairness_1773234925903.png' },
 
-  { id: 'C-1', title: 'AI와 이야기 이어쓰기', competency: 'AI와 창의적 활용', status: 'unlocked', imageUrl: '/c1_story_1773234941443.png' },
-  { id: 'C-2', title: 'AI 그림 보고 새 장면 만들기', competency: 'AI와 창의적 활용', status: 'unlocked', imageUrl: '/c2_art_1773234957163.png' },
-  { id: 'C-3', title: 'AI와 홍보물 만들기', competency: 'AI와 창의적 활용', status: 'unlocked', imageUrl: '/c3_poster_1773234969699.png' },
-  { id: 'C-4', title: '누가 만들었을까?', competency: 'AI와 창의적 활용', status: 'unlocked', imageUrl: '/c4_copyright_1773234984925.png' },
+  { id: 'C-1', title: '판타지 릴레이 동화 쓰기!', competency: 'AI와 창의적 활용', status: 'unlocked', imageUrl: '/c1_story_1773234941443.png' },
+  { id: 'C-2', title: '불량 그림 수리 대작전', competency: 'AI와 창의적 활용', status: 'unlocked', imageUrl: '/c2_art_1773234957163.png' },
+  { id: 'C-3', title: '오싹오싹 마법의 카피라이터', competency: 'AI와 창의적 활용', status: 'unlocked', imageUrl: '/c3_poster_1773234969699.png' },
+  { id: 'C-4', title: '도둑맞은 가짜 점수? 내 진짜 점수!', competency: 'AI와 창의적 활용', status: 'unlocked', imageUrl: '/c4_copyright_1773234984925.png' },
 
-  { id: 'M-1', title: '이럴 때 AI를 써도 될까?', competency: 'AI 사용 판단 및 윤리', status: 'unlocked', imageUrl: '/m1_rules_1773234999640.png' },
-  { id: 'M-2', title: '사람이 할 일, AI가 도와줄 일', competency: 'AI 사용 판단 및 윤리', status: 'unlocked', imageUrl: '/m2_roles_1773235015302.png' },
-  { id: 'M-3', title: 'AI에게 정확히 부탁하기', competency: 'AI 사용 판단 및 윤리', status: 'unlocked', imageUrl: '/m3_prompt_1773235032419.png' },
-  { id: 'M-4', title: '우리 반 AI 사용 약속 만들기', competency: 'AI 사용 판단 및 윤리', status: 'unlocked', imageUrl: '/m4_promise_1773235045836.png' },
+  { id: 'M-1', title: '달콤살벌~ 로봇의 은밀한 속삭임', competency: 'AI 사용 판단 및 윤리', status: 'unlocked', imageUrl: '/m1_rules_1773234999640.png' },
+  { id: 'M-2', title: '명확한 선 긋기! 네 일은 네가, 내 일은 내가!', competency: 'AI 사용 판단 및 윤리', status: 'unlocked', imageUrl: '/m2_roles_1773235015302.png' },
+  { id: 'M-3', title: '마법 양탄자를 조종하는 슈퍼 프롬프트!', competency: 'AI 사용 판단 및 윤리', status: 'unlocked', imageUrl: '/m3_prompt_1773235032419.png' },
+  { id: 'M-4', title: '신사숙녀 여러분의 AI 매너 헌장', competency: 'AI 사용 판단 및 윤리', status: 'unlocked', imageUrl: '/m4_promise_1773235045836.png' },
 
-  { id: 'D-1', title: '같은 것끼리 묶어보자', competency: 'AI 원리 체험', status: 'unlocked', imageUrl: '/d1_sort_1773235059334.png' },
-  { id: 'D-2', title: 'AI가 배우는 자료 모으기', competency: 'AI 원리 체험', status: 'unlocked', imageUrl: '/d1_sort_1773235059334.png' },
-  { id: 'D-3', title: '잘못 분류되는 경우 찾기', competency: 'AI 원리 체험', status: 'unlocked', imageUrl: '/d1_sort_1773235059334.png' },
-  { id: 'D-4', title: '우리 학교 문제를 돕는 AI 상상하기', competency: 'AI 원리 체험', status: 'unlocked', imageUrl: '/d1_sort_1773235059334.png' }
+  { id: 'D-1', title: '끼리끼리 유유상종! 우리끼리 묶기 분류 놀이!', competency: 'AI 원리 체험', status: 'unlocked', imageUrl: '/d1_sort_1773235059334.png' },
+  { id: 'D-2', title: '쓰레기를 먹으면 배가 아파요! 깨끗한 데이터 밥 주기', competency: 'AI 원리 체험', status: 'unlocked', imageUrl: '/d1_sort_1773235059334.png' },
+  { id: 'D-3', title: '깡통 로봇 시력 검사용 지옥의 함정 테스트!', competency: 'AI 원리 체험', status: 'unlocked', imageUrl: '/d1_sort_1773235059334.png' },
+  { id: 'D-4', title: '학교 평화 수호의 심장, 천재 AI 설계 마스터 도면 짜기', competency: 'AI 원리 체험', status: 'unlocked', imageUrl: '/d1_sort_1773235059334.png' }
 ];
 
 function Navigation() {
