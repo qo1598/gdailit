@@ -9,7 +9,7 @@ const SCHOOLS = [
 ];
 
 export default function Login({ onLogin }) {
-    const [schoolId, setSchoolId] = useState('gyeongdong');
+    const [schoolId, setSchoolId] = useState('');
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
     const [errorMsg, setErrorMsg] = useState('');
@@ -27,21 +27,25 @@ export default function Login({ onLogin }) {
         e.preventDefault();
         setErrorMsg('');
 
+        if (!schoolId) {
+            setErrorMsg('학교를 먼저 선택해주세요!');
+            return;
+        }
+
         if (!userId.trim() || !password.trim()) {
             setErrorMsg('아이디와 비밀번호를 모두 입력해주세요.');
             return;
         }
 
         setIsLoading(true);
-
+        // ... (rest of logic remains same, just ensuring schoolId check)
         try {
             // Check credentials against the students table
-            const query = supabase
+            const { data: student, error } = await supabase
                 .from('students')
                 .select('*')
-                .eq('id', userId.trim());
-            // Filter by school_id if the column exists (graceful fallback)
-            const { data: student, error } = await query.maybeSingle();
+                .eq('id', userId.trim())
+                .maybeSingle();
 
             if (error || !student) {
                 setErrorMsg('아이디를 찾을 수 없습니다.');
@@ -146,38 +150,49 @@ export default function Login({ onLogin }) {
         navigate('/');
     };
 
+    // 로고 마키를 위한 동일 데이터 반복
+    const MarqueeItems = () => (
+        <div className="marquee-item">
+            <img src="/school_logo_original.png" className="marquee-logo" alt="logo" />
+            <img src="/ko_school_logo.png" className="marquee-logo" alt="logo" />
+            <img src="/school_logo_original.png" className="marquee-logo" alt="logo" />
+            <img src="/ko_school_logo.png" className="marquee-logo" alt="logo" />
+            <img src="/school_logo_original.png" className="marquee-logo" alt="logo" />
+        </div>
+    );
 
     return (
-        <div style={{ height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px', background: 'linear-gradient(135deg, #ff9f43 0%, #ff4757 100%)' }}>
+        <div style={{ position: 'relative', overflow: 'hidden', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px', background: 'linear-gradient(135deg, #ff9f43 0%, #ff4757 100%)' }}>
 
             {/* Login Box */}
-            <div style={{ background: 'white', padding: '40px 30px', borderRadius: '30px', width: '100%', maxWidth: '350px', display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}>
-
-                <div style={{ marginBottom: '15px' }}>
-                    <img src="/school_logo_original.png" alt="School Logo" style={{ width: '80px', height: '80px', objectFit: 'contain', mixBlendMode: 'multiply' }} />
-                </div>
-
-                <h1 style={{ fontFamily: "'Jua', sans-serif", fontSize: '2rem', color: '#2f3542', marginBottom: '10px' }}>AI 리터러시 UP!</h1>
-                <p style={{ color: '#747d8c', marginBottom: '25px', fontWeight: 'bold', textAlign: 'center', fontSize: '0.9rem', lineHeight: '1.4' }}>
-                    다양한 미션을 통해 뱃지를 얻어<br />도감을 완성해보세요.
+            <div style={{ background: 'white', padding: '40px 30px', borderRadius: '30px', width: '100%', maxWidth: '350px', display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: '0 20px 40px rgba(0,0,0,0.1)', position: 'relative', zIndex: 5 }}>
+                
+                <h1 style={{ fontFamily: "'Jua', sans-serif", fontSize: '2.4rem', color: '#2f3542', marginBottom: '10px' }}>Learn Your AILit</h1>
+                <p style={{ color: '#747d8c', marginBottom: '25px', fontWeight: 'bold', textAlign: 'center', fontSize: '0.95rem', lineHeight: '1.6', wordBreak: 'keep-all' }}>
+                    AI 리터러시 관련 미션을 해결하고 뱃지를 얻어 여러분만의 디지털 도감을 완성하세요.
                 </p>
 
                 <form onSubmit={handleLoginClick} style={{ width: '100%' }}>
                     {/* 학교 선택 */}
-                    <select
-                        value={schoolId}
-                        onChange={(e) => setSchoolId(e.target.value)}
-                        style={{
-                            width: '100%', padding: '15px', border: '2px solid #dfe6e9', borderRadius: '15px',
-                            fontSize: '1rem', fontFamily: "'Nunito', sans-serif", textAlign: 'center',
-                            marginBottom: '10px', outline: 'none', background: '#f8f9fa', color: '#2f3542',
-                            fontWeight: 'bold', cursor: 'pointer', boxSizing: 'border-box', appearance: 'none'
-                        }}
-                    >
-                        {SCHOOLS.map(s => (
-                            <option key={s.id} value={s.id}>{s.name}</option>
-                        ))}
-                    </select>
+                    <div style={{ position: 'relative', marginBottom: '10px' }}>
+                        <select
+                            value={schoolId}
+                            onChange={(e) => setSchoolId(e.target.value)}
+                            style={{
+                                width: '100%', padding: '15px', border: '2px solid #dfe6e9', borderRadius: '15px',
+                                fontSize: '1rem', fontFamily: "'Nunito', sans-serif", textAlign: 'center',
+                                outline: 'none', background: '#f8f9fa', color: schoolId ? '#2f3542' : '#a4b0be',
+                                fontWeight: 'bold', cursor: 'pointer', boxSizing: 'border-box', appearance: 'none'
+                            }}
+                        >
+                            <option value="" disabled>-학교를 선택해주세요-</option>
+                            {SCHOOLS.map(s => (
+                                <option key={s.id} value={s.id} style={{ color: '#2f3542' }}>{s.name}</option>
+                            ))}
+                        </select>
+                        <div style={{ position: 'absolute', right: '15px', top: '50%', transform: 'translateY(-50%)', pointerEvents: 'none', color: '#a4b0be' }}>▼</div>
+                    </div>
+
                     <input
                         type="text"
                         inputMode="numeric"
@@ -218,9 +233,17 @@ export default function Login({ onLogin }) {
                 </form>
             </div>
 
+            {/* Bottom Marquee Logos */}
+            <div className="marquee-container">
+                <div className="marquee-content">
+                    <MarqueeItems />
+                    <MarqueeItems />
+                </div>
+            </div>
+
             {/* Password Change Modal Overlay */}
             {showChangePw && (
-                <div className="success-overlay" style={{ background: 'rgba(0,0,0,0.8)' }}>
+                <div className="success-overlay" style={{ background: 'rgba(0,0,0,0.8)', zIndex: 1000 }}>
                     <div style={{ background: 'white', padding: '30px', borderRadius: '25px', width: '90%', maxWidth: '350px', textAlign: 'center' }}>
                         <h2 style={{ fontFamily: "'Jua', sans-serif", color: '#e67e22', marginBottom: '15px' }}>환영합니다!</h2>
                         <p style={{ fontWeight: 'bold', color: '#555', marginBottom: '20px', fontSize: '0.95rem' }}>

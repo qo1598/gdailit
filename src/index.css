@@ -608,3 +608,44 @@ body {
     transform: translateX(0);
   }
 }
+
+/* Logo Marquee */
+.marquee-container {
+  width: 100%;
+  overflow: hidden;
+  padding: 20px 0;
+  background: rgba(255, 255, 255, 0.3);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  backdrop-filter: blur(5px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.marquee-content {
+  display: flex;
+  width: 200%;
+  animation: marquee 30s linear infinite;
+}
+
+.marquee-item {
+  flex-shrink: 0;
+  width: 50%;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.marquee-logo {
+  height: 35px;
+  max-width: 100px;
+  object-fit: contain;
+  filter: grayscale(100%) brightness(1.2);
+  opacity: 0.5;
+  transition: all 0.3s;
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
