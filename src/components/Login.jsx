@@ -150,26 +150,17 @@ export default function Login({ onLogin }) {
         navigate('/');
     };
 
-    // 로고 마키를 위한 동일 데이터 반복
-    const MarqueeItems = () => (
-        <div className="marquee-item">
-            <img src="/school_logo_original.png" className="marquee-logo" alt="logo" />
-            <img src="/ko_school_logo.png" className="marquee-logo" alt="logo" />
-            <img src="/school_logo_original.png" className="marquee-logo" alt="logo" />
-            <img src="/ko_school_logo.png" className="marquee-logo" alt="logo" />
-            <img src="/school_logo_original.png" className="marquee-logo" alt="logo" />
-        </div>
-    );
 
     return (
         <div style={{ position: 'relative', overflow: 'hidden', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center', padding: '20px', background: 'linear-gradient(135deg, #ff9f43 0%, #ff4757 100%)' }}>
 
             {/* Login Box */}
-            <div style={{ background: 'white', padding: '40px 30px', borderRadius: '30px', width: '100%', maxWidth: '350px', display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: '0 20px 40px rgba(0,0,0,0.1)', position: 'relative', zIndex: 5 }}>
+            <div style={{ background: 'white', padding: '40px 30px', borderRadius: '30px', width: '100%', maxWidth: '380px', display: 'flex', flexDirection: 'column', alignItems: 'center', boxShadow: '0 20px 40px rgba(0,0,0,0.1)', position: 'relative', zIndex: 5 }}>
                 
-                <h1 style={{ fontFamily: "'Jua', sans-serif", fontSize: '2.4rem', color: '#2f3542', marginBottom: '10px' }}>Learn Your AILit</h1>
-                <p style={{ color: '#747d8c', marginBottom: '25px', fontWeight: 'bold', textAlign: 'center', fontSize: '0.95rem', lineHeight: '1.6', wordBreak: 'keep-all' }}>
-                    AI 리터러시 관련 미션을 해결하고 뱃지를 얻어 여러분만의 디지털 도감을 완성하세요.
+                <h1 style={{ fontFamily: "'Jua', sans-serif", fontSize: '2.4rem', color: '#2f3542', marginBottom: '10px', whiteSpace: 'nowrap' }}>Learn Your AILit</h1>
+                <p style={{ color: '#747d8c', marginBottom: '25px', fontWeight: 'bold', textAlign: 'center', fontSize: '0.92rem', lineHeight: '1.6' }}>
+                    AI 리터러시 관련 미션을 해결하고 뱃지를 얻어<br />
+                    여러분만의 디지털 도감을 완성하세요.
                 </p>
 
                 <form onSubmit={handleLoginClick} style={{ width: '100%' }}>
@@ -181,6 +172,7 @@ export default function Login({ onLogin }) {
                             style={{
                                 width: '100%', padding: '15px', border: '2px solid #dfe6e9', borderRadius: '15px',
                                 fontSize: '1rem', fontFamily: "'Nunito', sans-serif", textAlign: 'center',
+                                textAlignLast: 'center',
                                 outline: 'none', background: '#f8f9fa', color: schoolId ? '#2f3542' : '#a4b0be',
                                 fontWeight: 'bold', cursor: 'pointer', boxSizing: 'border-box', appearance: 'none'
                             }}
@@ -233,13 +225,6 @@ export default function Login({ onLogin }) {
                 </form>
             </div>
 
-            {/* Bottom Marquee Logos */}
-            <div className="marquee-container">
-                <div className="marquee-content">
-                    <MarqueeItems />
-                    <MarqueeItems />
-                </div>
-            </div>
 
             {/* Password Change Modal Overlay */}
             {showChangePw && (
