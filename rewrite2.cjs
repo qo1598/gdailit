@@ -18,7 +18,7 @@ const NEW_MISSIONS = `const MISSIONS = {
         type: 'upload-text',
         stackedInputs: {
             lower: [{ id: 'location', type: 'text', label: '1. 야호! 어디서 찾았나요?', placeholder: '방금 전 내 주변에서 발견한 위치나 기계의 특징을 적어보세요.' }],
-            middle: [{ id: 'location', type: 'text', label: '1. 어디서 발견했나요?', placeholder: '집이나 학교 등, 이 AI 친구를 만난 정확한 장소를 알려주세요.' }, { id: 'function', type: 'textarea', label: '2. 나에게 어떤 착한 도움을 주나요?', placeholder: '이 AI가 특별히 어떤 귀찮은 일을 알아서 해주는지 생각해 보세요!' }],
+            middle: [{ id: 'location', type: 'text', label: '1. 어디서 발견했나요?', placeholder: '집이나 학교 등, 이 AI 친구를 만난 정확한 장소를 알려주세요.' }, { id: 'function', type: 'textarea', label: '2. 나에게 어떤 도움을 주나요?', placeholder: '이 AI가 특별히 어떤 귀찮은 일을 알아서 해주는지 생각해 보세요!' }],
             upper: [{ id: 'location', type: 'text', label: '1. 발견한 AI 시스템 이름', placeholder: '시스템의 정식 기능명이나 서비스 이름을 명시하세요.' }, { id: 'pros_cons', type: 'textarea', label: '2. 편리함과 동시에 파생되는 한계점', placeholder: '인간의 판단력이나 프라이버시, 보안 측면에서 어떤 부정적 영향을 줄지 분석해 보세요.' }]
         }
     },
@@ -296,7 +296,7 @@ const matchEnd = targetEndRegex.exec(code);
 if (matchStart && matchEnd) {
     const startIndex = matchStart.index;
     const endIndex = matchEnd.index;
-    
+
     const newCode = code.substring(0, startIndex) + NEW_MISSIONS + '\n\n' + code.substring(endIndex);
     fs.writeFileSync(targetPath, newCode, 'utf8');
     console.log('Successfully updated MISSIONS object with Pedagogical Hints.');

@@ -18,7 +18,7 @@ const NEW_MISSIONS = `const MISSIONS = {
         type: 'upload-text',
         stackedInputs: {
             lower: [{ id: 'location', type: 'text', label: '1. 야호! 어디서 찾았나요?', placeholder: '예: 거실 구석에 먼지 먹는 로봇청소기!' }],
-            middle: [{ id: 'location', type: 'text', label: '1. 어디서 발견했나요?', placeholder: '엄마 스마트폰의 음성 비서' }, { id: 'function', type: 'textarea', label: '2. 나에게 어떤 착한 도움을 주나요?', placeholder: '예: 날씨를 물어보면 아주 친절하게 대답해 줘요.' }],
+            middle: [{ id: 'location', type: 'text', label: '1. 어디서 발견했나요?', placeholder: '엄마 스마트폰의 음성 비서' }, { id: 'function', type: 'textarea', label: '2. 나에게 어떤 도움을 주나요?', placeholder: '예: 날씨를 물어보면 아주 친절하게 대답해 줘요.' }],
             upper: [{ id: 'location', type: 'text', label: '1. 발견한 AI 시스템 이름', placeholder: '포털 사이트 외국어 번역기' }, { id: 'pros_cons', type: 'textarea', label: '2. 편리함과 동시에 파생되는 한계점', placeholder: '영어 숙제를 엄청 빨리 끝내주지만, 가끔 앞뒤 문맥에 맞지 않는 엉뚱한 로봇 말투로 번역해서 부자연스러울 때가 있어요.' }]
         }
     },
@@ -296,7 +296,7 @@ const matchEnd = targetEndRegex.exec(code);
 if (matchStart && matchEnd) {
     const startIndex = matchStart.index;
     const endIndex = matchEnd.index;
-    
+
     // Create new code string
     const newCode = code.substring(0, startIndex) + NEW_MISSIONS + '\\n\\n' + code.substring(endIndex);
     fs.writeFileSync(targetPath, newCode, 'utf8');

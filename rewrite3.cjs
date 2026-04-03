@@ -18,7 +18,7 @@ const UPDATED_MISSIONS = `const MISSIONS = {
         type: 'upload-text',
         stackedInputs: {
             lower: [{ id: 'location', type: 'text', label: '1. 야호! 어디서 찾았나요?', placeholder: '방금 전 내 주변에서 발견한 위치나 기계의 특징을 적어보세요.' }],
-            middle: [{ id: 'location', type: 'text', label: '1. 어디서 발견했나요?', placeholder: '집이나 학교 등, 이 AI 친구를 만난 정확한 장소를 알려주세요.' }, { id: 'function', type: 'textarea', label: '2. 나에게 어떤 착한 도움을 주나요?', placeholder: '이 AI가 특별히 어떤 귀찮은 일을 알아서 해주는지 생각해 보세요!' }],
+            middle: [{ id: 'location', type: 'text', label: '1. 어디서 발견했나요?', placeholder: '집이나 학교 등, 이 AI 친구를 만난 정확한 장소를 알려주세요.' }, { id: 'function', type: 'textarea', label: '2. 나에게 어떤 도움을 주나요?', placeholder: '이 AI가 특별히 어떤 귀찮은 일을 알아서 해주는지 생각해 보세요!' }],
             upper: [{ id: 'location', type: 'text', label: '1. 발견한 AI 시스템의 정확한 이름', placeholder: '사람들이나 제조사에서 이 로봇(서비스)을 부르는 이름을 적으세요.' }, { id: 'pros_cons', type: 'textarea', label: '2. 편리함 뒤에 숨겨진 아쉬운 점(한계)', placeholder: '이 기계가 모든 상황에서 완벽할까요? 사람이 직접 해야만 하는 일이나 위험한 점은 없는지 분석해 보세요.' }]
         }
     },
@@ -296,7 +296,7 @@ const matchEnd = targetEndRegex.exec(code);
 if (matchStart && matchEnd) {
     const startIndex = matchStart.index;
     const endIndex = matchEnd.index;
-    
+
     const newCode = code.substring(0, startIndex) + UPDATED_MISSIONS + '\n\n' + code.substring(endIndex);
     fs.writeFileSync(targetPath, newCode, 'utf8');
     console.log('Successfully updated MISSIONS with child-friendly content.');
