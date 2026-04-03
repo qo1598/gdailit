@@ -18,6 +18,13 @@ const MISSIONS = {
         competency: 'AI 인식 및 발견',
         why: '우리 주변엔 이미 똑똑한 AI 친구들이 몰래 숨어있어요! 숨바꼭질하듯 눈을 크게 뜨고 찾아볼까요?',
         example: '로봇청소기, 유튜브 추천 영상, 스마트폰 비서(시리, 빅스비) 등',
+        referenceImage: '/e1_find_1773234874913.png',
+        referenceImageCaption: '🔍 우리 주변에 꼭꼭 숨어있는 AI 친구들을 찾아보세요!',
+        storyMsg: {
+            lower: '안녕! 나는 알리야. 내 주변에 똑똑한 AI 친구들이 숨어있대! 우리 같이 찾아보자! 찰칵! 사진을 찍어줄래?',
+            middle: '안녕 친구! 나는 알리야. 우리 주변에 몰래 숨어서 우리를 도와주는 AI 친구들을 찾아보려고 해. 어떤 일을 도와주고 있는지 탐정처럼 조사해 줄래?',
+            upper: '반가워! 나는 알리야. 우리 일상 곳곳에 숨어있는 AI 시스템을 분석해 보려고 해. 편리함 뒤에 숨겨진 한계점까지 찾아낸다면 넌 정말 멋진 AI 전문가야!'
+        },
         prompts: {
             lower: ['앗! 거실이나 방에 숨어있는 AI 로봇이나 기계를 찾았나요? 찰칵! 사진을 찍고 어디에 숨어 있었는지 당당하게 적어보세요!'],
             middle: ['우리 주변에 몰래 숨어있는 똑똑한 AI를 찾아 사진을 딱! 찍어주세요. 이 친구는 어떤 기능으로 매일 우리를 도와주고 있나요?'],
@@ -662,6 +669,60 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                         {mission.competency.split(' (')[0]}
                     </div>
                 </div>
+
+                {/* Character Storytelling Area */}
+                <div className="character-story-container" style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '20px',
+                    background: 'white',
+                    padding: '20px',
+                    borderRadius: '25px',
+                    border: '3px solid #74b9ff',
+                    marginBottom: '30px',
+                    boxShadow: '0 8px 16px rgba(116, 185, 255, 0.1)',
+                    position: 'relative'
+                }}>
+                    <div style={{ width: '80px', height: '80px', flexShrink: 0, background: '#f0f7ff', borderRadius: '50%', padding: '10px', border: '2px solid #74b9ff' }}>
+                        <img src="/robot_2d_base.png" alt="Alli" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    </div>
+                    <div style={{ position: 'relative', flex: 1 }}>
+                        <div style={{ 
+                            background: '#74b9ff', 
+                            color: 'white', 
+                            padding: '4px 12px', 
+                            borderRadius: '10px', 
+                            fontSize: '0.85rem', 
+                            fontWeight: '900',
+                            display: 'inline-block',
+                            marginBottom: '6px'
+                        }}>알리 (Alli)</div>
+                        <p style={{ 
+                            margin: 0, 
+                            fontSize: '1.1rem', 
+                            fontWeight: 'bold', 
+                            lineHeight: 1.5, 
+                            color: '#2d3436',
+                            wordBreak: 'keep-all'
+                        }}>
+                            {mission.storyMsg ? mission.storyMsg[gradeGroup] : "반가워! 나랑 같이 AI 미션을 해결해 볼래?"}
+                        </p>
+                    </div>
+                </div>
+
+                {/* Reference Image (Common for missions with visual guide) */}
+                {mission.referenceImage && (
+                    <div className="reference-image-container" style={{ marginBottom: '30px', textAlign: 'center' }}>
+                        <div style={{ background: 'white', padding: '15px', borderRadius: '20px', border: '2px solid #dfe6e9', boxShadow: '0 10px 20px rgba(0,0,0,0.05)' }}>
+                            <img src={mission.referenceImage} alt="Reference" style={{ maxWidth: '100%', borderRadius: '12px', marginBottom: '10px' }} />
+                            {mission.referenceImageCaption && (
+                                <p style={{ margin: 0, fontSize: '0.95rem', color: '#636e72', fontWeight: 'bold' }}>
+                                    {mission.referenceImageCaption}
+                                </p>
+                            )}
+                        </div>
+                    </div>
+                )}
 
                 {/* Educational Content */}
                 <div className="edu-card why">
