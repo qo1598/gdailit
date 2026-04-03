@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Home, Gamepad2, UserCircle, MessageCircle, ClipboardList } from 'lucide-react';
+import { Home, Gamepad2, UserCircle, MessageCircle, ClipboardList, Cpu } from 'lucide-react';
 import Dashboard from './components/Dashboard';
 import Mission from './components/Mission';
 import MiniGame from './components/MiniGame';
@@ -57,6 +57,17 @@ function Navigation() {
     </nav>
   );
 }
+
+// [마스터피스] 칩 아이콘 (반도체 부품 디자인으로 개편)
+const ChipIcon = ({ size = 20, color = "#00d2ff", style = {} }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ verticalAlign: 'middle', display: 'inline-block', ...style }}>
+    <rect x="5" y="5" width="14" height="14" rx="2" fill={color} fillOpacity="0.1" stroke={color} strokeWidth="2"/>
+    <rect x="9" y="9" width="6" height="6" rx="1" fill={color}/>
+    {/* 반도체 핀(Pins) 표현 */}
+    <path d="M9 2V5M15 2V5M9 19V22M15 19V22M2 9H5M2 15H5M19 9H22M19 15H22" stroke={color} strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+
 // [마스터피스] 1:1 일관성을 위한 공유 SVG 부품 정의
 const PART_SVGS = {
   ears: () => (
@@ -242,13 +253,16 @@ const RewardModal = ({ info, onClose }) => {
         }}></div>
 
         <div style={{ 
-          fontSize: '6rem', 
           marginBottom: '25px', 
-          filter: 'drop-shadow(0 15px 30px rgba(0,0,0,0.2))', 
+          filter: 'drop-shadow(0 15px 30px rgba(0,210,255,0.4))', 
           animation: 'float 3s ease-in-out infinite',
           position: 'relative',
-          zIndex: 1
-        }}>💎</div>
+          zIndex: 1,
+          display: 'flex',
+          justifyContent: 'center'
+        }}>
+          <ChipIcon size={120} color="#00d2ff" />
+        </div>
         
         <div style={{ position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontFamily: "'Jua', sans-serif", fontSize: '2.8rem', color: '#2d3436', margin: '0 0 10px 0' }}>데이터 획득!</h2>
@@ -479,7 +493,9 @@ function Profile({ userId, userName, fragments, setFragments, avatarConfig, setA
         <div style={{ borderTop: '2px solid #e0dfd5', paddingTop: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
             <h3 style={{ margin: 0, fontSize: '1.2rem', fontFamily: "'NanumSquareNeo-Variable', sans-serif", color: '#2d3436', fontWeight: 'bold' }}>아이템 구비</h3>
-            <div style={{ fontSize: '1.1rem', fontWeight: '900', color: '#0984e3', background: '#e1f5fe', padding: '4px 12px', borderRadius: '15px' }}>💎 {fragments}</div>
+            <div style={{ fontSize: '1.1rem', fontWeight: '900', color: '#0984e3', background: '#e1f5fe', padding: '4px 12px', borderRadius: '15px' }}>
+              <ChipIcon size={18} style={{ marginRight: '6px' }} /> {fragments}
+            </div>
           </div>
 
           <div style={{ display: 'flex', gap: '5px', overflowX: 'auto', paddingBottom: '10px', marginBottom: '10px', msOverflowStyle: 'none', scrollbarWidth: 'none' }} className="hide-scroll">
@@ -545,7 +561,7 @@ function Profile({ userId, userName, fragments, setFragments, avatarConfig, setA
                     boxShadow: isActive ? `0 4px 8px ${m.color}60` : '0 2px 4px rgba(0,0,0,0.05)',
                     padding: '5px'
                   }}
-                  title={`${m.label} - ${isUnlocked ? '보유중' : m.cost + '💎'}`}
+                  title={`${m.label} - ${isUnlocked ? '보유중' : m.cost + ' Chips'}`}
                 >
                   <div style={{ width: '100%', height: '100%', filter: !isUnlocked ? 'grayscale(100%) opacity(40%)' : 'none' }}>
                     <ItemIcon moduleId={m.id} />
@@ -557,7 +573,7 @@ function Profile({ userId, userName, fragments, setFragments, avatarConfig, setA
 
                   {!isUnlocked && (
                     <div style={{ position: 'absolute', bottom: '2px', fontSize: '0.7rem', fontWeight: 'bold', color: '#b2bec3', background: 'rgba(255,255,255,0.9)', padding: '0 4px', borderRadius: '4px', zIndex: 10 }}>
-                      {m.cost}💎
+                      <ChipIcon size={12} style={{ marginRight: '3px' }} /> {m.cost}
                     </div>
                   )}
                 </button>
@@ -721,7 +737,7 @@ function App() {
                   {userName}
                 </div>
                 <div style={{ background: '#74b9ff', color: 'white', padding: '6px 14px', borderRadius: '20px', fontWeight: '900', boxShadow: '0 4px 6px rgba(116, 185, 255, 0.3)', fontSize: '0.9rem' }}>
-                  💎 {fragments}
+                  <ChipIcon size={18} color="white" style={{ marginRight: '6px' }} /> {fragments}
                 </div>
               </div>
               <div style={{ background: '#ffa502', color: 'white', padding: '6px 14px', borderRadius: '20px', fontWeight: '900', boxShadow: '0 4px 6px rgba(255, 165, 2, 0.3)', fontSize: '0.9rem', marginTop: '8px' }}>

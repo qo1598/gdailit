@@ -18,17 +18,22 @@ const MISSIONS = {
         competency: 'AI 인식 및 발견',
         why: '우리 주변엔 이미 똑똑한 AI 친구들이 몰래 숨어있어요! 숨바꼭질하듯 눈을 크게 뜨고 찾아볼까요?',
         example: '로봇청소기, 유튜브 추천 영상, 스마트폰 비서(시리, 빅스비) 등',
-        referenceImage: '/e1_find_1773234874913.png',
-        referenceImageCaption: '🔍 우리 주변에 꼭꼭 숨어있는 AI 친구들을 찾아보세요!',
-        storyMsg: {
-            lower: '안녕! 나는 알리야. 내 주변에 똑똑한 AI 친구들이 숨어있대! 우리 같이 찾아보자! 찰칵! 사진을 찍어줄래?',
-            middle: '안녕 친구! 나는 알리야. 우리 주변에 몰래 숨어서 우리를 도와주는 AI 친구들을 찾아보려고 해. 어떤 일을 도와주고 있는지 탐정처럼 조사해 줄래?',
-            upper: '반가워! 나는 알리야. 우리 일상 곳곳에 숨어있는 AI 시스템을 분석해 보려고 해. 편리함 뒤에 숨겨진 한계점까지 찾아낸다면 넌 정말 멋진 AI 전문가야!'
-        },
-        prompts: {
-            lower: ['앗! 거실이나 방에 숨어있는 AI 로봇이나 기계를 찾았나요? 찰칵! 사진을 찍고 어디에 숨어 있었는지 당당하게 적어보세요!'],
-            middle: ['우리 주변에 몰래 숨어있는 똑똑한 AI를 찾아 사진을 딱! 찍어주세요. 이 친구는 어떤 기능으로 매일 우리를 도와주고 있나요?'],
-            upper: ['주변에서 AI 기술이 들어간 기계나 서비스를 찾아 사진을 찍으세요. 이 AI 시스템의 정확한 이름은 무엇이며, 우리를 편리하게 해주는 장점 뒤에 숨겨진 "아쉬운 한계점"은 무엇일까요?']
+        storySteps: {
+            lower: [
+                { text: '안녕! 나는 꼬마 AI 로봇 알리야. 내 주변에 똑똑한 AI 친구들이 몰래 숨어있대!', image: '/robot_2d_base.png' },
+                { text: '우리 주변 어디에 숨어있는지 탐정처럼 눈을 크게 뜨고 찾아볼래?', image: '/e1_find_1773234874913.png' },
+                { text: '찾았다면 찰칵! 사진을 찍어서 나에게 보여줘. 어디에 숨어있었는지도 궁금해!', image: '/robot_2d_base.png' }
+            ],
+            middle: [
+                { text: '안녕 친구! 나는 알리야. 우리 주변엔 몰래 숨어서 우리를 도와주는 AI 친구들이 아주 많아.', image: '/robot_2d_base.png' },
+                { text: '로봇청소기나 유튜브 추천 영상처럼 우리 생활 곳곳에 숨어있는 AI를 탐정처럼 조사해 줄래?', image: '/e1_find_1773234874913.png' },
+                { text: '발견한 장소와 그 친구가 어떤 착한 일을 하고 있는지 나에게 자세히 들려줘!', image: '/robot_2d_base.png' }
+            ],
+            upper: [
+                { text: '반가워! 나는 알리야. 우리 일상 곳곳에 깊숙이 들어와 있는 AI 시스템을 함께 분석해 보자.', image: '/robot_2d_base.png' },
+                { text: '스마트 기기나 서비스 속에 숨겨진 AI 기술을 찾아 사진을 찍고, 그 정체를 파헤쳐 봐!', image: '/e1_find_1773234874913.png' },
+                { text: '편리함 뒤에 숨겨진 한계점까지 찾아낸다면 넌 정말 멋진 AI 전문가가 될 수 있어. 시작해 볼까?', image: '/robot_2d_base.png' }
+            ]
         },
         type: 'upload-text',
         stackedInputs: {
@@ -287,7 +292,23 @@ const MISSIONS = {
         title: '학교 평화 수호의 심장, 천재 AI 설계 마스터 도면 짜기',
         competency: 'AI 원리 체험',
         why: '세상의 불편한 점을 보며 불평만 하면 평범한 사람! 우리가 즐겁게 배운 강력한 AI 지식을 총동원하여, 그 불편함을 단숨에 없앨 멋진 시스템을 내 손으로 그려 기획합니다.',
-        example: '화장실 휴지가 떨어지면 로봇이 짖으며 알리는 센서 봇, 잔반 급식을 분석해 맛있는 반찬만 추천하는 요리 로봇',
+        storySteps: {
+            lower: [
+                { text: '안녕! 나는 AI 탐정 알리야. 우리 학교에 불편한 점이 너무 많지 않니?', image: '/robot_2d_base.png' },
+                { text: '화장실 휴지가 없거나, 급식 줄이 너무 길 때 정말 속상하잖아!', image: '/robot_2d_base.png' },
+                { text: '이제 네가 가진 AI 지식으로 이 불편함을 해결할 슈퍼 로봇을 설계해 볼 거야!', image: '/robot_2d_base.png' }
+            ],
+            middle: [
+                { text: '안녕! 나는 AI 탐정 알리야. 우리 학교의 불편함을 해결할 시스템을 기획해 보자.', image: '/robot_2d_base.png' },
+                { text: '단순히 로봇을 만드는 게 아니라, 어떤 데이터를 학습시켜야 똑똑해질지 고민해야 해.', image: '/robot_2d_base.png' },
+                { text: '자, 이제 우리 학교를 위한 최고의 AI 발명품을 설계할 준비 됐니?', image: '/robot_2d_base.png' }
+            ],
+            upper: [
+                { text: '안녕! 나는 AI 탐정 알리야. 오늘은 학교의 문제를 해결할 시스템을 설계할 거야.', image: '/robot_2d_base.png' },
+                { text: '하지만 AI가 폭주하지 않도록 안전장치를 만드는 게 무엇보다 중요해.', image: '/robot_2d_base.png' },
+                { text: '책임감 있는 AI 설계자로서, 비상 정지 망치를 포함한 완벽한 시스템을 기획해 보자!', image: '/robot_2d_base.png' }
+            ]
+        },
         prompts: {
             lower: ['"아 진짜 짜증 폭발이야! 요술봉 짠 하면 매일 해결되는 요술 로봇이 있으면 좋겠다!" 했던 불편한 순간을 떠올리고, 그 한을 풀어줄 슈퍼 로봇의 이름과 능력을 기획해 보세요.'],
             middle: ['내가 만든 최첨단 로봇이 똑똑하게 돌아가려면 수없이 방대한 지식 정보를 먹여줘야 해요! 로봇 두뇌에 어떤 비밀 정보(공부 자료나 데이터)를 모아서 매일 학습시킬지 꿀 아이디어를 내보세요.'],
@@ -325,6 +346,26 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
     const [isEditing, setIsEditing] = useState(false);
     const [isLoadingInitial, setIsLoadingInitial] = useState(true);
     const [teacherFeedback, setTeacherFeedback] = useState('');
+    
+    // Carousel Storytelling State
+    const [currentStep, setCurrentStep] = useState(0);
+    const [showTask, setShowTask] = useState(false);
+
+    const steps = mission.storySteps ? mission.storySteps[gradeGroup] : null;
+
+    const handleNextStep = () => {
+        if (steps && currentStep < steps.length - 1) {
+            setCurrentStep(currentStep + 1);
+        } else {
+            setShowTask(true);
+        }
+    };
+
+    const handlePrevStep = () => {
+        if (currentStep > 0) {
+            setCurrentStep(currentStep - 1);
+        }
+    };
     
     // --- [연구용 데이터: Telemetry & Micro-Survey] ---
     const [startTime] = useState(Date.now());
@@ -670,58 +711,161 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                     </div>
                 </div>
 
-                {/* Character Storytelling Area */}
-                <div className="character-story-container" style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '20px',
-                    background: 'white',
-                    padding: '20px',
-                    borderRadius: '25px',
-                    border: '3px solid #74b9ff',
-                    marginBottom: '30px',
-                    boxShadow: '0 8px 16px rgba(116, 185, 255, 0.1)',
-                    position: 'relative'
-                }}>
-                    <div style={{ width: '80px', height: '80px', flexShrink: 0, background: '#f0f7ff', borderRadius: '50%', padding: '10px', border: '2px solid #74b9ff' }}>
-                        <img src="/robot_2d_base.png" alt="Alli" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                    </div>
-                    <div style={{ position: 'relative', flex: 1 }}>
-                        <div style={{ 
-                            background: '#74b9ff', 
-                            color: 'white', 
-                            padding: '4px 12px', 
-                            borderRadius: '10px', 
-                            fontSize: '0.85rem', 
-                            fontWeight: '900',
-                            display: 'inline-block',
-                            marginBottom: '6px'
-                        }}>알리 (Alli)</div>
-                        <p style={{ 
-                            margin: 0, 
-                            fontSize: '1.1rem', 
-                            fontWeight: 'bold', 
-                            lineHeight: 1.5, 
-                            color: '#2d3436',
-                            wordBreak: 'keep-all'
-                        }}>
-                            {mission.storyMsg ? mission.storyMsg[gradeGroup] : "반가워! 나랑 같이 AI 미션을 해결해 볼래?"}
-                        </p>
-                    </div>
-                </div>
+                {!showTask && steps ? (
+                    /* Carousel Storytelling Section */
+                    <div className="discovery-carousel-container" style={{
+                        background: 'white',
+                        borderRadius: '35px',
+                        padding: '30px 20px',
+                        border: '4px solid #74b9ff',
+                        boxShadow: '0 15px 35px rgba(116, 185, 255, 0.15)',
+                        textAlign: 'center',
+                        position: 'relative',
+                        minHeight: '450px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'space-between',
+                        animation: 'slideUpFade 0.6s ease-out'
+                    }}>
+                        {/* Progress Dots */}
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginBottom: '20px' }}>
+                            {steps.map((_, idx) => (
+                                <div key={idx} style={{
+                                    width: idx === currentStep ? '24px' : '8px',
+                                    height: '8px',
+                                    borderRadius: '4px',
+                                    background: idx === currentStep ? '#74b9ff' : '#dcdde1',
+                                    transition: 'all 0.3s ease'
+                                }} />
+                            ))}
+                        </div>
 
-                {/* Reference Image (Common for missions with visual guide) */}
-                {mission.referenceImage && (
-                    <div className="reference-image-container" style={{ marginBottom: '30px', textAlign: 'center' }}>
-                        <div style={{ background: 'white', padding: '15px', borderRadius: '20px', border: '2px solid #dfe6e9', boxShadow: '0 10px 20px rgba(0,0,0,0.05)' }}>
-                            <img src={mission.referenceImage} alt="Reference" style={{ maxWidth: '100%', borderRadius: '12px', marginBottom: '10px' }} />
-                            {mission.referenceImageCaption && (
-                                <p style={{ margin: 0, fontSize: '0.95rem', color: '#636e72', fontWeight: 'bold' }}>
-                                    {mission.referenceImageCaption}
-                                </p>
+                        {/* Character/Image Area */}
+                        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '25px', position: 'relative' }}>
+                            <img 
+                                src={steps[currentStep].image || '/robot_2d_base.png'} 
+                                alt="Step Illustration" 
+                                style={{ 
+                                    maxWidth: '200px', 
+                                    maxHeight: '200px', 
+                                    objectFit: 'contain',
+                                    filter: steps[currentStep].image?.includes('robot') ? 'none' : 'drop-shadow(0 10px 15px rgba(0,0,0,0.1))',
+                                    animation: 'float 3s ease-in-out infinite'
+                                }} 
+                            />
+                        </div>
+
+                        {/* Story Text */}
+                        <div style={{ marginBottom: '30px' }}>
+                            <div style={{ 
+                                background: '#74b9ff', 
+                                color: 'white', 
+                                padding: '4px 15px', 
+                                borderRadius: '12px', 
+                                fontSize: '0.9rem', 
+                                fontWeight: '900',
+                                display: 'inline-block',
+                                marginBottom: '12px'
+                            }}>알리 (Alli)</div>
+                            <p style={{ 
+                                margin: 0, 
+                                fontSize: '1.25rem', 
+                                fontWeight: '800', 
+                                lineHeight: 1.6, 
+                                color: '#2d3436',
+                                wordBreak: 'keep-all'
+                            }}>
+                                {steps[currentStep].text}
+                            </p>
+                        </div>
+
+                        {/* Control Buttons */}
+                        <div style={{ display: 'flex', gap: '15px' }}>
+                            {currentStep > 0 && (
+                                <button onClick={handlePrevStep} style={{
+                                    flex: 1,
+                                    padding: '18px',
+                                    borderRadius: '20px',
+                                    border: 'none',
+                                    background: '#f1f2f6',
+                                    color: '#747d8c',
+                                    fontSize: '1.1rem',
+                                    fontWeight: 'bold',
+                                    cursor: 'pointer'
+                                }}>이전</button>
                             )}
+                            <button onClick={handleNextStep} style={{
+                                flex: 2,
+                                padding: '18px',
+                                borderRadius: '20px',
+                                border: 'none',
+                                background: 'linear-gradient(135deg, #74b9ff 0%, #0984e3 100%)',
+                                color: 'white',
+                                fontSize: '1.1rem',
+                                fontWeight: 'bold',
+                                cursor: 'pointer',
+                                boxShadow: '0 8px 15px rgba(9, 132, 227, 0.2)'
+                            }}>
+                                {currentStep === steps.length - 1 ? '미션 시작하기!' : '다음 단계로'}
+                            </button>
                         </div>
                     </div>
+                ) : (
+                    <>
+                        {/* Original Mission Content (Only shown after carousel) */}
+                        <div className="character-story-container" style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '20px',
+                            background: 'white',
+                            padding: '20px',
+                            borderRadius: '25px',
+                            border: '3px solid #74b9ff',
+                            marginBottom: '30px',
+                            boxShadow: '0 8px 16px rgba(116, 185, 255, 0.1)',
+                            position: 'relative'
+                        }}>
+                            <div style={{ width: '80px', height: '80px', flexShrink: 0, background: '#f0f7ff', borderRadius: '50%', padding: '10px', border: '2px solid #74b9ff' }}>
+                                <img src="/robot_2d_base.png" alt="Alli" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                            </div>
+                            <div style={{ position: 'relative', flex: 1 }}>
+                                <div style={{ 
+                                    background: '#74b9ff', 
+                                    color: 'white', 
+                                    padding: '4px 12px', 
+                                    borderRadius: '10px', 
+                                    fontSize: '0.85rem', 
+                                    fontWeight: '900',
+                                    display: 'inline-block',
+                                    marginBottom: '6px'
+                                }}>알리 (Alli)</div>
+                                <p style={{ 
+                                    margin: 0, 
+                                    fontSize: '1.1rem', 
+                                    fontWeight: 'bold', 
+                                    lineHeight: 1.5, 
+                                    color: '#2d3436',
+                                    wordBreak: 'keep-all'
+                                }}>
+                                    {steps ? "자, 이제 네가 찾은 AI 친구를 알려줘!" : "반가워! 나랑 같이 AI 미션을 해결해 볼래?"}
+                                </p>
+                            </div>
+                        </div>
+
+                        {/* Reference Image (Common for missions with visual guide) */}
+                        {mission.referenceImage && (
+                            <div className="reference-image-container" style={{ marginBottom: '30px', textAlign: 'center' }}>
+                                <div style={{ background: 'white', padding: '15px', borderRadius: '20px', border: '2px solid #dfe6e9', boxShadow: '0 10px 20px rgba(0,0,0,0.05)' }}>
+                                    <img src={mission.referenceImage} alt="Reference" style={{ maxWidth: '100%', borderRadius: '12px', marginBottom: '10px' }} />
+                                    {mission.referenceImageCaption && (
+                                        <p style={{ margin: 0, fontSize: '0.95rem', color: '#636e72', fontWeight: 'bold' }}>
+                                            {mission.referenceImageCaption}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+                    </>
                 )}
 
                 {/* Educational Content */}
