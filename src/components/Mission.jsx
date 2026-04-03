@@ -869,16 +869,18 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                     </>
                 )}
 
-                {/* Educational Content */}
-                <div className="edu-card why">
-                    <h3 style={{ color: '#0984e3' }}><Target size={24} /> 왜 중요할까요?</h3>
-                    <p><VocabHighlighter text={mission.why} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} /></p>
-                </div>
+                {/* Educational Content & Task (Only shown in Task Phase) */}
+                {(showTask || !steps) && (
+                    <>
+                        <div className="edu-card why">
+                            <h3 style={{ color: '#0984e3' }}><Target size={24} /> 왜 중요할까요?</h3>
+                            <p><VocabHighlighter text={mission.why} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} /></p>
+                        </div>
 
-                <div className="edu-card example">
-                    <h3 style={{ color: '#00b894' }}><Lightbulb size={24} /> 예를 들어볼까요?</h3>
-                    <p><VocabHighlighter text={mission.example} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} /></p>
-                </div>
+                        <div className="edu-card example">
+                            <h3 style={{ color: '#00b894' }}><Lightbulb size={24} /> 예를 들어볼까요?</h3>
+                            <p><VocabHighlighter text={mission.example} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} /></p>
+                        </div>
 
                 {/* Action Form */}
                 <div className="mission-task">
@@ -1108,7 +1110,7 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                             className="kid-input"
                                             value={rule3}
                                             onChange={e => handleRuleChange(setRule3, e.target.value)}
-                                            placeholder="내가 만든 기준을 하나 더 적어보세요."
+                                            placeholder=""
                                             required
                                         />
                                     </div>
@@ -1121,6 +1123,8 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                         </form>
                     )}
                 </div>
+            </>
+        )}
             </div>
 
             {showSurvey && (
