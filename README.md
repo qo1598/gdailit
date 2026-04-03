@@ -1,16 +1,44 @@
-# React + Vite
+# AI Literacy Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This project is a React + Vite application for an AI Literacy platform.
 
-Currently, two official plugins are available:
+## Setup Instructions for New Machines
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Follow these steps to set up the project on a new computer:
 
-## React Compiler
+### 1. Prerequisites
+- Ensure you have **Git** installed.
+- Ensure you have **Node.js** installed. We recommend using `nvm` to manage Node versions.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 2. Clone the Repository
+```bash
+git clone https://github.com/qo1598/gdailit.git
+cd ai-literacy-platform
+```
 
-## Expanding the ESLint configuration
+### 3. Node.js Version
+Use the version specified in `.nvmrc`:
+```bash
+nvm use
+```
+*If you don't have the version installed, run `nvm install`.*
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### 4. Install Dependencies
+```bash
+npm install
+```
+
+### 5. Environment Variables
+Create a `.env` file in the root directory and fill in the required values from `.env.example`:
+```bash
+cp .env.example .env
+```
+Update `.env` with your actual Supabase and Gemini API keys.
+
+### 6. Run the Project
+```bash
+npm run dev
+```
+
+## Deployment
+The project is configured for Vercel. Pushing to the `main` branch will trigger a deployment.
