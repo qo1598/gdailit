@@ -71,7 +71,7 @@ body {
 .app-header {
   background: var(--pokedex-red);
   color: white;
-  padding: 25px 20px 30px;
+  padding: 15px 20px;
   border-bottom-left-radius: var(--radius-lg);
   border-bottom-right-radius: var(--radius-lg);
   box-shadow: 0 8px 15px rgba(255, 71, 87, 0.3);
@@ -83,12 +83,12 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
 }
 
 .app-title {
   font-family: 'Jua', sans-serif;
-  font-size: 2rem;
+  font-size: 1.6rem;
   letter-spacing: 1px;
   margin: 0;
 }
@@ -98,10 +98,10 @@ body {
   align-items: center;
   gap: 8px;
   background: rgba(255, 255, 255, 0.25);
-  padding: 8px 16px;
+  padding: 6px 12px;
   border-radius: 30px;
   font-weight: bold;
-  font-size: 0.95rem;
+  font-size: 0.85rem;
 }
 
 .grade-badge {
@@ -118,8 +118,8 @@ body {
 .main-content {
   flex: 1;
   overflow-y: auto;
-  padding: 20px;
-  padding-bottom: 150px;
+  padding: 15px;
+  padding-bottom: 100px;
 }
 
 /* Badge Grid */
@@ -396,8 +396,8 @@ body {
 .edu-card {
   background: white;
   border-radius: var(--radius-md);
-  padding: 25px 20px;
-  margin-bottom: 20px;
+  padding: 18px 20px;
+  margin-bottom: 12px;
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.04);
   border: 2px solid #f1f2f6;
 }
@@ -406,17 +406,17 @@ body {
   font-family: 'Jua', sans-serif;
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 12px;
-  font-size: 1.3rem;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 1.2rem;
 }
 
 .mission-task {
   background: #fffcf0;
   border: 3px solid #ffeaa7;
   border-radius: 24px;
-  padding: 25px;
-  margin-top: 30px;
+  padding: 20px;
+  margin-top: 15px;
 }
 
 .mission-task-header {

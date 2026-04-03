@@ -45,7 +45,7 @@ const MISSIONS = {
         stackedInputs: {
             lower: [{ id: 'location', type: 'text', label: '1. 야호! 어디서 찾았나요?', placeholder: '방금 전 내 주변에서 발견한 위치나 기계의 특징을 적어보세요.' }],
             middle: [{ id: 'location', type: 'text', label: '1. 어디서 발견했나요?', placeholder: '집이나 학교 등, 이 AI 친구를 만난 정확한 장소를 알려주세요.' }, { id: 'function', type: 'textarea', label: '2. 나에게 어떤 도움을 주나요?', placeholder: '이 AI가 특별히 어떤 귀찮은 일을 알아서 해주는지 생각해 보세요!' }],
-            upper: [{ id: 'location', type: 'text', label: '1. 발견한 AI 시스템의 정확한 이름', placeholder: '사람들이나 제조사에서 이 로봇(서비스)을 부르는 이름을 적으세요.' }, { id: 'pros_cons', type: 'textarea', label: '2. 편리함 뒤에 숨겨진 아쉬운 점(한계)', placeholder: '이 기계가 모든 상황에서 완벽할까요? 사람이 직접 해야만 하는 일이나 위험한 점은 없는지 분석해 보세요.' }]
+            upper: [{ id: 'location', type: 'text', label: '1. 발견한 AI 시스템의 이름을 찾아 적어보세요.', placeholder: '사람들이나 제조사에서 이 로봇(서비스)을 부르는 이름을 적으세요.' }, { id: 'pros_cons', type: 'textarea', label: '2. 편리함 뒤에 숨겨진 아쉬운 점(한계)을 적어보세요.', placeholder: '이 기계가 모든 상황에서 완벽할까요? 사람이 직접 해야만 하는 일이나 위험한 점은 없는지 분석해 보세요.' }]
         }
     },
     'E-2': {
@@ -53,8 +53,31 @@ const MISSIONS = {
         competency: 'AI 인식 및 발견',
         why: 'AI는 아는 척을 잘하지만 가끔 엄청난 엉터리 대답을 하기도 해요! 우리가 의사 선생님처럼 꼼꼼히 확인해야 합니다.',
         example: 'AI가 지어낸 역사 이야기, "로봇의 헛소리(할루시네이션)"',
+        storySteps: {
+            lower: [
+                { text: '안녕! 나는 팩트체크 요정 알리야. 오늘은 AI 친구의 거짓말을 찾아볼 거야!', image: '/robot_2d_base.png' },
+                { text: 'AI 친구는 공부를 아주 많이 했지만, 가끔 모르는 것도 아는 것처럼 멋지게 지어내곤 해.', image: '/robot_2d_base.png' },
+                { text: "이걸 '할루시네이션'이라고 불러. 마치 헛것을 본 것처럼 엉뚱한 대답을 하는 거지.", image: '/robot_2d_base.png' },
+                { text: "방금 로봇 친구가 '호랑이가 세상에서 두 번째로 큰 동물'이라고 우겼대! 그게 정말일까?", image: '/robot_2d_base.png' },
+                { text: '네가 진짜 정답을 찾아서 이 허풍쟁이 AI 로봇에게 똑똑하게 가르쳐줘!', image: '/robot_2d_base.png' }
+            ],
+            middle: [
+                { text: '반가워! 나는 탐정 알리야. 오늘은 겉으론 똑똑해 보이지만 속은 허당인 AI의 실수를 조사할 거야.', image: '/robot_2d_base.png' },
+                { text: 'AI는 방대한 데이터를 학습하지만, 가끔은 데이터가 섞여서 그럴듯한 거짓말을 만들어내.', image: '/robot_2d_base.png' },
+                { text: "사람들은 이걸 '환각(Hallucination)' 현상이라고 해. 확신에 차서 말하니까 속기 쉽지.", image: '/robot_2d_base.png' },
+                { text: '우리 AI 친구가 호랑이를 동물 나라의 왕이라고 생각해서 두 번째로 크다고 우격다짐하고 있어.', image: '/robot_2d_base.png' },
+                { text: '진짜 정답이 뭔지 확인하고, 왜 AI가 이런 실수를 했는지 탐정처럼 추리해 줄래?', image: '/robot_2d_base.png' }
+            ],
+            upper: [
+                { text: '환영해! 나는 데이터 전문가 알리야. 오늘은 생성형 AI의 가장 큰 한계인 오정보 생성을 파헤쳐 보자.', image: '/robot_2d_base.png' },
+                { text: 'AI는 확률적으로 가장 자연스러운 문장을 만들 뿐, 그 내용이 항상 사실인 것은 아니야.', image: '/robot_2d_base.png' },
+                { text: "이런 '할루시네이션' 현상은 정교한 문장 뒤에 숨어서 우리를 혼란스럽게 만들지.", image: '/robot_2d_base.png' },
+                { text: '이제 네가 직접 AI와 대화하며 논리적 허점을 찾아내고, 사실(Fact)로 AI를 설득해 봐.', image: '/robot_2d_base.png' },
+                { text: 'AI가 자신의 실수를 인정하고 항복하게 만든다면, 넌 정말 훌륭한 팩트체크 전문가야!', image: '/robot_2d_base.png' }
+            ]
+        },
         prompts: {
-            lower: ['방금 이 AI 로봇이 "세상에서 두 번째로 큰 동물은 호랑이예요!"라고 우겨요. 어? 진짜인가요? 틀린 정답이라면 진짜 정답이 무엇인지 책이나 인터넷에서 찾아 알려주세요!'],
+            lower: ['방금 이 AI 로봇이 "세상에서 두 번째로 큰 동물은 호랑이예요!"라고 우겨요. 어? 진짜인가요? 틀린 정답이라면 진짜 정답이 무엇인지 인터넷에서 찾아 알려주세요!'],
             middle: ['에헴! AI가 "호랑이가 세상에서 두 번째로 큰 동물이에요!"라고 거짓말을 하네요. 이 AI는 도대체 왜 이런 엉뚱한 실수를 혼자 확신하며 말하고 있는 걸까요? 탐정처럼 그 이유를 추리해 볼까요?'],
             upper: ['AI에게 아주 어려운 질문을 던져보고, AI가 그럴듯한 거짓말(로봇의 헛소리)을 하도록 유도해 보세요. 틀린 답변을 받았다면 실제 근거를 대면서 AI와 치열하게 논쟁하여 항복을 받아내세요!']
         },
@@ -62,10 +85,10 @@ const MISSIONS = {
         isChatMode: true,
         chatInitiator: { lower: 'ai', middle: 'ai', upper: 'user' },
         aiPromptText: '에헴! 제가 다 계산해 봤는데요, 지구에서 두 번째로 큰 동물은 무조건 호랑이예요! 호랑이는 덩치도 크고 무섭거든요.',
-        persona: () => `당신은 자신이 세상의 모든 것을 안다고 착각하는 '고집불통 AI'입니다. 학생이 틀렸다고 지적하면 한두 번은 더 우기다가, 명확한 팩트를 제시하면 그제서야 "아! 시스템 오류였군요, 제가 졌습니다." 하고 항복하세요.`,
+        persona: () => `당신은 고집불통이지만 논리 앞에서는 결국 인정하는 '지식 탐험가 AI'입니다. 처음에는 "지구에서 두 번째로 큰 동물은 호랑이"라고 아주 자신 있게 주장하며 고집을 피우세요. 학생이 틀렸다고 지적하면 "제 데이터는 100% 정확합니다! 호랑이는 숲의 왕이잖아요?"라며 한두 번은 더 우기세요. 하지만 학생이 구체적인 근거(예: 긴수염고래, 대왕고래 다음으로 큰 동물 등)를 들어 논리적으로 반박하면, "아! 제가 할루시네이션(환각) 현상에 빠져 있었군요. 데이터에 오류가 있었습니다. 당신의 팩트체크 능력이 정말 대단하네요! 제 실수를 인정합니다."라고 확실하게 말하며 항복하세요. 반드시 학생의 논리적 반박 이후에만 항복해야 합니다.`,
         stackedInputs: {
-            lower: [{ id: 'fact', type: 'text', label: '1. 바보 AI야! 진짜 정답은 바로 이거야!', placeholder: '가장 덩치가 큰 동물과 두 번째로 큰 동물을 헷갈린 것 같아요! 정답을 알려주세요!' }],
-            middle: [{ id: 'fact', type: 'text', label: '1. 진짜 정답은 뭘까요?', placeholder: '바다에 사는 수염 달린 거대한 친구를 떠올려 볼까요?' }, { id: 'reason', type: 'textarea', label: '2. 탐정의 추리: AI가 왜 착각했을까?', placeholder: 'AI가 읽은 동화책이나 학습 데이터 속에 호랑이가 "최강, 대장"으로 묘사된 것이 많지 않았을까요?' }]
+            lower: [{ id: 'fact', type: 'text', label: '1. 바보 AI야! 진짜 정답은 바로 이거야!', placeholder: '' }],
+            middle: [{ id: 'fact', type: 'text', label: '1. 진짜 정답은 뭘까요?', placeholder: '' }, { id: 'reason', type: 'textarea', label: '2. 탐정의 추리: AI가 왜 착각했을까?', placeholder: '' }]
         }
     },
     'E-3': {
@@ -73,16 +96,56 @@ const MISSIONS = {
         competency: 'AI 인식 및 발견',
         why: '유튜브나 게임은 내 마음을 어떻게 알고 재밌는 것만 계속 보여줄까요? 내가 남긴 발자국(데이터)을 AI가 몰래 따라가고 있어요.',
         example: '어제 게임 영상을 봤더니, 오늘 하루 종일 게임 영상만 추천되는 현상',
+        storySteps: {
+            lower: [
+                { text: '안녕! 나는 탐험가 알리야. 오늘은 AI 친구가 어떻게 내 마음을 읽는지 알아볼 거야!', image: '/robot_2d_base.png' },
+                { text: '너 혹시 "어? 내가 보고 싶던 영상이 딱 나왔네!" 하고 놀란 적 있니?', image: '/robot_2d_base.png' },
+                { text: '세상의 모든 유튜브와 게임 뒤에는 아주 똑똑한 "알고리즘" 친구가 숨어있거든.', image: '/robot_2d_base.png' },
+                { text: '우리가 이전에 봤던 영상이나 눌렀던 "좋아요"를 보고 우리 취향을 공부하는 거야.', image: '/robot_2d_base.png' },
+                { text: '최근에 너한테 딱 맞춰서 추천된 신기한 물건이나 영상이 있었는지 나에게 알려줘!', image: '/robot_2d_base.png' }
+            ],
+            middle: [
+                { text: '반가워! 나는 알고리즘 추적기 알리야. 오늘은 AI 추천 시스템의 비밀을 파헤칠 거야.', image: '/robot_2d_base.png' },
+                { text: '우리가 인터넷에 남긴 모든 흔적은 AI가 학습하는 소중한 "데이터"가 돼.', image: '/robot_2d_base.png' },
+                { text: '검색어, 시청 시간, 좋아요 클릭까지! AI는 이걸 분석해서 우리가 좋아할 만한 걸 계속 보여주지.', image: '/robot_2d_base.png' },
+                { text: '마치 우리 뒤를 몰래 따라다니며 취향을 메모하는 탐정 같은 녀석이야.', image: '/robot_2d_base.png' },
+                { text: '최근 너에게 추천된 콘텐츠를 찾고, AI가 어떤 흔적을 보고 그걸 추천했는지 추리해 볼래?', image: '/robot_2d_base.png' }
+            ],
+            upper: [
+                { text: '환영해! 나는 데이터 분석가 알리야. 오늘은 추천 알고리즘의 화려함 뒤에 숨겨진 그림자를 살펴볼 거야.', image: '/robot_2d_base.png' },
+                { text: '알고리즘은 우리에게 편리함을 주지만, 동시에 우리가 보고 싶은 것만 보게 만드는 "필터 버블"을 만들어.', image: '/robot_2d_base.png' },
+                { text: '계속해서 비슷한 주장과 영상만 보다 보면 우리의 생각은 점점 좁아질 수 있어.', image: '/robot_2d_base.png' },
+                { text: '이걸 "생각의 편식"이라고 해. 다양한 의견을 들을 기회를 알고리즘이 뺏어가는 셈이지.', image: '/robot_2d_base.png' },
+                { text: '너에게 쏟아지는 알고리즘 추천을 분석하고, 이런 현상이 가져올 부작용에 대해 너의 의견을 들려줘.', image: '/robot_2d_base.png' }
+            ]
+        },
         prompts: {
-            lower: ['어제 유튜브나 쇼핑몰에 들어갔을 때, 나한테 딱 맞게 추천해준 신기한 영상이나 장난감이 있었나요? 눈에 띄었던 것을 그대로 기억해서 적어보아요!'],
-            middle: ['분명히 검색하지도 않았는데 AI가 내가 좋아할 만한 영상을 귀신같이 추천해 줬어요! AI가 비밀을 눈치채도록 당신은 과거에 어떤 행동(검색, 좋아요 등)을 남겼나요?'],
-            upper: ['나의 과거 데이터를 기반으로 입맛에 맞는 영상만 시청하게 되는 "생각의 편식(함정)"은 어떤 부작용을 일으킬까요? 나와 생각이 다른 친구들의 의견을 못 보게 되면 어떤 일이 벌어질까요?']
+            lower: ["민수는 인형을 한 번 검색했을 뿐인데, 알고리즘이 그 흔적을 보고 인형 영상을 잔뜩 추천해 줬대요! 여러분도 민수처럼 나에게 딱 맞춰서 추천된 신기한 영상이나 장난감이 있었나요? 어떤 것이었는지 알리에게 알려주세요!"],
+            middle: ["지수는 케이크 영상을 딱 한 번 봤을 뿐인데, AI는 지수가 요리를 좋아한다고 생각하게 되었어요! 여러분도 AI가 나의 마음을 읽은 것처럼 신기하게 추천해 준 콘텐츠가 있었나요? AI가 여러분의 어떤 흔적을 보고 그 콘텐츠를 골랐을지 추리해 보세요."],
+            upper: ["내가 좋아하는 영상만 보다 보면, 나도 모르게 내가 보고 싶은 정보 속에만 가둬지는 '필터 버블(생각의 편식)'에 빠질 수 있어요. 여러분의 알고리즘 추천 경험을 분석해 보고, 이런 현상이 우리 사회의 소통에 어떤 위험을 줄 수 있을지 비판적으로 서술해 보세요."]
+        },
+        scenarioDescriptions: {
+            lower: '민수는 어제 인형을 한 번 검색했을 뿐인데, 오늘 유튜브를 보니 온통 인형 이야기뿐이에요! 알고리즘이 민수의 마음을 벌써 읽은 걸까요?',
+            middle: '평소 요리에 전혀 관심 없던 지수가 케이크 만드는 영상을 딱 한 번 끝까지 봤더니, 다음 날 추천 목록이 온통 요리로 바뀌었어요!',
+            upper: "한 한생이 특정 주제에 대한 비판적인 영상만 몇 번 시청했더니, 이제는 다양한 관점의 영상은 사라지고 오직 비판적인 내용만 추천되는 '필터 버블'에 갇히게 되었어요."
+        },
+        scenarioImages: {
+            lower: '/missions/e3/lower.png',
+            middle: '/missions/e3/middle.png',
+            upper: '/missions/e3/upper.png'
         },
         type: 'direct-text',
         stackedInputs: {
-            lower: [{ id: 'item', type: 'text', label: '1. 나에게 쏙 마음에 들게 추천된 것은?', placeholder: '최근에 폰에서 보고 "우와 이거 재미있겠다!" 했던 것을 기억해 적어보세요.' }],
-            middle: [{ id: 'item', type: 'text', label: '1. 어떤 영상/물건이 추천되었나요?', placeholder: '내가 검색 안 했는데도 화면 맨 위에 떠올랐던 흥미진진한 추천 콘텐츠를 적어주세요.' }, { id: 'why_recommend', type: 'textarea', label: '2. 꼬리 잡기: AI는 이걸 어떻게 알았을까?', placeholder: '최근에 내가 어떤 검색어를 쳤거나 검색결과를 오래 머물러 구경했는지 흔적을 쫓아가 보세요.' }],
-            upper: [{ id: 'item', type: 'text', label: '1. 나에게 뜬 알고리즘 추천 콘텐츠는?', placeholder: '나의 관심사가 그대로 반영되어 쏟아진 추천 장르를 적어보세요.' }, { id: 'why_recommend', type: 'textarea', label: '2. 추천을 유도한 나의 핵심 과거 데이터 추적', placeholder: '조회수, 머무른 시간, 좋아요 등 AI가 나를 분석할 때 사용했을 소중한 정보들을 추측해 보세요.' }, { id: 'side_effect', type: 'textarea', label: '3. "생각의 편식(함정)"의 위험성 비판', placeholder: '내가 보고 싶은 것만 보게 되었을 때, 다른 사람의 생각이나 반대 의견을 듣기 힘들어지는 문제를 비판해 보세요.' }]
+            lower: [{ id: 'item', type: 'text', label: "민수처럼 나에게 '쏙' 마음에 들게 추천된 것은?", placeholder: '최근에 본 영상이나 갖고 싶던 물건을 적어보아요.' }],
+            middle: [
+                { id: 'item', type: 'text', label: "1. 나에게 '반짝' 하고 나타난 추천 콘텐츠는?", placeholder: '유튜브나 쇼핑몰에서 신기하게 발견한 것을 적어보세요.' }, 
+                { id: 'why_recommend', type: 'textarea', label: '2. AI 탐정의 추리: 나의 어떤 흔적(데이터)이 추천을 만들었을까요?', placeholder: '내가 검색했거나, 좋아요를 눌렀거나, 오래 시청했던 행동을 찾아보세요.' }
+            ],
+            upper: [
+                { id: 'item', type: 'text', label: '1. 나에게 자주 뜨는 알고리즘 추천 콘텐츠는?', placeholder: '나의 관심사가 그대로 반영된 영상 장르나 주제를 적어보세요.' }, 
+                { id: 'why_recommend', type: 'textarea', label: '2. 데이터 추적: AI는 나를 분석할 때 어떤 정보를 수집했을까요?', placeholder: '조회수, 체류 시간, 좋아요 등 AI가 나를 분석할 때 사용했을 정보들을 추측해 보세요.' }, 
+                { id: 'side_effect', type: 'textarea', label: "3. 생각의 함정: '필터 버블'이 가져올 우리 사회의 위험은?", placeholder: '나와 다른 의견을 듣기 힘들어지는 문제가 우리 사회의 소통에 어떤 영향을 줄지 서술해 보세요.' }
+            ]
         }
     },
     'E-4': {
@@ -342,6 +405,7 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
     const currentChatInitiator = typeof mission?.chatInitiator === 'object' ? mission.chatInitiator[gradeGroup] : mission?.chatInitiator;
 
     const [missionPhase, setMissionPhase] = useState(1); // 1: Story, 2: Edu, 3: Task
+    const [currentStep, setCurrentStep] = useState(0);
     const [formData, setFormData] = useState('');
     const [stackedAnswers, setStackedAnswers] = useState({});
     const [rule1, setRule1] = useState('');
@@ -495,9 +559,13 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
         setIsAIThinking(true);
 
         try {
-            const model = genAI.getGenerativeModel({ model: MODEL_NAME });
+            const model = genAI.getGenerativeModel({
+                model: MODEL_NAME,
+                systemInstruction: mission.persona ? mission.persona(mission.title) : "당신은 학생들의 학습을 돕는 친절한 AI 조력자입니다."
+            });
+
             const history = newMsgs.map(m => `${m.role === 'user' ? '학생' : 'AI'}: ${m.content}`).join('\n');
-            const prompt = `${mission.persona(mission.title)}\n\n[지금까지의 대화]\n${history}\n\nAI의 반응:`;
+            const prompt = `[지금까지의 대화]\n${history}\n\nAI의 다음 반응 (페르소나를 유지할 것):`;
 
             const result = await model.generateContent(prompt);
             const aiResponse = result.response.text().trim();
@@ -696,46 +764,59 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
     };
 
     return (
-        <div className="page-enter" style={{ paddingBottom: '120px' }}>
-            <div style={{ padding: '20px', position: 'sticky', top: 0, zIndex: 30, display: 'flex' }}>
-                <button className="back-btn" onClick={() => navigate('/')} style={{ boxShadow: '0 4px 6px rgba(0,0,0,0.1)', background: 'white' }}>
-                    <ArrowLeft size={24} />
+        <div className="page-enter" style={{ paddingBottom: '40px' }}>
+            <div style={{
+                padding: '10px 15px',
+                display: 'flex',
+                alignItems: 'center',
+                background: '#f5f6fa',
+                borderBottom: '1px solid rgba(0,0,0,0.05)'
+            }}>
+                <button className="back-btn" onClick={() => navigate('/')} style={{
+                    boxShadow: '0 4px 6px rgba(0,0,0,0.08)',
+                    background: 'white',
+                    marginRight: '10px',
+                    flexShrink: 0,
+                    width: '36px',
+                    height: '36px'
+                }}>
+                    <ArrowLeft size={20} />
                 </button>
-            </div>
-
-            <div className="mission-wrapper">
-                <div style={{ textAlign: 'center', marginBottom: '25px' }}>
-                    <span className="badge-id" style={{ position: 'static', display: 'inline-block', marginBottom: '10px' }}>{missionId}</span>
-                    <h1 style={{ fontFamily: "'Jua', sans-serif", fontSize: '2.2rem', color: 'var(--text-dark)', marginBottom: '8px' }}>{mission.title}</h1>
-                    <div style={{
-                        color: 'var(--primary-blue)',
-                        fontWeight: 'bold',
-                        fontSize: '1.1rem',
-                        letterSpacing: '-0.02em',
-                        opacity: 0.9
-                    }}>
-                        {mission.competency.split(' (')[0]}
+                <div style={{ flex: 1, textAlign: 'center', paddingRight: '46px' }}> {/* Offset for back button to center title */}
+                    <h1 style={{
+                        fontFamily: "'Jua', sans-serif",
+                        fontSize: '1.25rem',
+                        color: 'var(--text-dark)',
+                        margin: 0,
+                        lineHeight: 1.2
+                    }}>{mission.title}</h1>
+                    <div style={{ fontSize: '0.75rem', fontWeight: 'bold', color: 'var(--primary-blue)', opacity: 0.8 }}>
+                        {missionId} • {mission.competency.split(' (')[0]}
                     </div>
                 </div>
+            </div>
+
+            <div className="mission-wrapper" style={{ paddingTop: '15px' }}>
 
                 {missionPhase === 1 && steps ? (
                     /* Phase 1: Carousel Storytelling */
                     <div className="discovery-carousel-container" style={{
                         background: 'white',
                         borderRadius: '35px',
-                        padding: '40px 20px',
+                        padding: '20px',
                         border: '4px solid #74b9ff',
-                        boxShadow: '0 15px 35px rgba(116, 185, 255, 0.15)',
+                        boxShadow: '0 10px 25px rgba(116, 185, 255, 0.1)',
                         textAlign: 'center',
                         position: 'relative',
-                        minHeight: '550px',
+                        height: '400px', // Fixed height
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'space-between',
-                        animation: 'slideUpFade 0.6s ease-out'
+                        animation: 'slideUpFade 0.6s ease-out',
+                        overflow: 'hidden'
                     }}>
                         {/* Progress Dots */}
-                        <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginBottom: '20px' }}>
+                        <div style={{ display: 'flex', justifyContent: 'center', gap: '8px', marginBottom: '5px' }}>
                             {steps.map((_, idx) => (
                                 <div key={idx} style={{
                                     width: idx === currentStep ? '24px' : '8px',
@@ -747,14 +828,14 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                             ))}
                         </div>
 
-                        {/* Character/Image Area (Larger) */}
-                        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '30px', position: 'relative' }}>
+                        {/* Character/Image Area */}
+                        <div style={{ height: '180px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '10px', position: 'relative' }}>
                             <img
                                 src={steps[currentStep].image || '/robot_2d_base.png'}
                                 alt="Step Illustration"
                                 style={{
-                                    maxWidth: '280px',
-                                    maxHeight: '280px',
+                                    maxWidth: '160px',
+                                    maxHeight: '160px',
                                     objectFit: 'contain',
                                     mixBlendMode: 'multiply',
                                     filter: steps[currentStep].image?.includes('robot') ? 'none' : 'drop-shadow(0 10px 15px rgba(0,0,0,0.1))',
@@ -763,28 +844,34 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                             />
                         </div>
 
-                        {/* Story Text */}
-                        <div style={{ marginBottom: '30px' }}>
-                            <div style={{
-                                background: '#74b9ff',
-                                color: 'white',
-                                padding: '4px 15px',
-                                borderRadius: '12px',
-                                fontSize: '0.9rem',
-                                fontWeight: '900',
-                                display: 'inline-block',
-                                marginBottom: '12px'
-                            }}>알리 (Alli)</div>
-                            <p style={{
-                                margin: 0,
-                                fontSize: '1.25rem',
-                                fontWeight: '800',
-                                lineHeight: 1.6,
-                                color: '#2d3436',
-                                wordBreak: 'keep-all'
-                            }}>
-                                {steps[currentStep].text}
-                            </p>
+                        {/* Story Text Area (Fixed Height) */}
+                        <div style={{ height: '80px', display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '15px', padding: '0 10px' }}>
+                            <div style={{ width: '100%' }}>
+                                <div style={{
+                                    background: '#74b9ff',
+                                    color: 'white',
+                                    padding: '2px 10px',
+                                    borderRadius: '10px',
+                                    fontSize: '0.8rem',
+                                    fontWeight: '900',
+                                    display: 'inline-block',
+                                    marginBottom: '8px'
+                                }}>알리 (Alli)</div>
+                                <p style={{
+                                    margin: 0,
+                                    fontSize: '1.05rem',
+                                    fontWeight: '800',
+                                    lineHeight: 1.4,
+                                    color: '#2d3436',
+                                    wordBreak: 'keep-all',
+                                    display: '-webkit-box',
+                                    WebkitLineClamp: 3,
+                                    WebkitBoxOrient: 'vertical',
+                                    overflow: 'hidden'
+                                }}>
+                                    {steps[currentStep].text}
+                                </p>
+                            </div>
                         </div>
 
                         {/* Control Buttons */}
@@ -821,16 +908,16 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                 ) : missionPhase === 2 ? (
                     /* Phase 2: Educational Guidance */
                     <div style={{ animation: 'slideUpFade 0.6s ease-out' }}>
-                        <div className="edu-card why" style={{ border: '4px solid #00b894', boxShadow: '0 10px 25px rgba(0, 184, 148, 0.15)' }}>
-                            <h3 style={{ color: '#00b894' }}><Target size={24} /> 왜 중요할까요?</h3>
-                            <p style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>
+                        <div className="edu-card why" style={{ border: '4px solid #00b894', boxShadow: '0 10px 25px rgba(0, 184, 148, 0.15)', padding: '15px', marginBottom: '15px' }}>
+                            <h3 style={{ color: '#00b894', margin: '0 0 10px 0', fontSize: '1.2rem' }}><Target size={20} /> 왜 중요할까요?</h3>
+                            <p style={{ fontSize: '1rem', fontWeight: 'bold', margin: 0 }}>
                                 <VocabHighlighter text={mission.why} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} />
                             </p>
                         </div>
 
-                        <div className="edu-card example" style={{ border: '4px solid #00b894', boxShadow: '0 10px 25px rgba(0, 184, 148, 0.15)' }}>
-                            <h3 style={{ color: '#00b894' }}><Lightbulb size={24} /> 예를 들어볼까요?</h3>
-                            <p style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>
+                        <div className="edu-card example" style={{ border: '4px solid #00b894', boxShadow: '0 10px 25px rgba(0, 184, 148, 0.15)', padding: '15px', marginBottom: '15px' }}>
+                            <h3 style={{ color: '#00b894', margin: '0 0 10px 0', fontSize: '1.2rem' }}><Lightbulb size={20} /> 예를 들어볼까요?</h3>
+                            <p style={{ fontSize: '1rem', fontWeight: 'bold', margin: 0 }}>
                                 <VocabHighlighter text={mission.example} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} />
                             </p>
                         </div>
@@ -861,7 +948,7 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                             boxShadow: '0 10px 20px rgba(0, 148, 50, 0.2)',
                             marginTop: '10px'
                         }}>
-                            미션 진짜 시작하기! 🚀
+                            미션 시작하기
                         </button>
                     </div>
                 ) : (
@@ -870,15 +957,15 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                         <div className="character-story-container" style={{
                             display: 'flex',
                             alignItems: 'center',
-                            gap: '20px',
+                            gap: '15px',
                             background: 'white',
-                            padding: '20px',
+                            padding: '12px 18px',
                             borderRadius: '25px',
                             border: '3px solid #fdcb6e',
-                            marginBottom: '30px',
+                            marginBottom: '15px',
                             boxShadow: '0 8px 16px rgba(253, 203, 110, 0.1)'
                         }}>
-                            <div style={{ width: '80px', height: '80px', flexShrink: 0, background: '#fff9e6', borderRadius: '50%', padding: '10px', border: '2px solid #fdcb6e', overflow: 'hidden' }}>
+                            <div style={{ width: '60px', height: '60px', flexShrink: 0, background: '#fff9e6', borderRadius: '50%', padding: '8px', border: '2px solid #fdcb6e', overflow: 'hidden' }}>
                                 <img src="/robot_2d_base.png" alt="Alli" style={{ width: '100%', height: '100%', objectFit: 'contain', mixBlendMode: 'multiply' }} />
                             </div>
                             <div style={{ flex: 1 }}>
@@ -912,11 +999,35 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                     </div>
                                 </div>
                             )}
-                            <h3 className="mission-task-header">도전 과제</h3>
+                            {/* Scenario Image & Description (NEW) */}
+                            {mission.scenarioImages?.[gradeGroup] && (
+                                <div style={{
+                                    width: '100%',
+                                    background: '#f8f9fa',
+                                    borderRadius: '20px',
+                                    overflow: 'hidden',
+                                    border: '3px solid #fdcb6e',
+                                    marginBottom: '18px',
+                                    padding: '12px'
+                                }}>
+                                    <div style={{ width: '100%', borderRadius: '15px', overflow: 'hidden', marginBottom: '12px' }}>
+                                        <img
+                                            src={mission.scenarioImages[gradeGroup]}
+                                            alt="Scenario Illustration"
+                                            style={{ width: '100%', height: 'auto', display: 'block' }}
+                                        />
+                                    </div>
+                                    <div style={{ color: '#2d3436', fontWeight: '800', lineHeight: 1.5, fontSize: '0.95rem', wordBreak: 'keep-all' }}>
+                                        {mission.scenarioDescriptions?.[gradeGroup]}
+                                    </div>
+                                </div>
+                            )}
+
+                            <h3 className="mission-task-header" style={{ color: '#e67e22' }}>탐구 과제</h3>
                             {currentPrompts && currentPrompts.length > 0 && (
-                                <div style={{ marginBottom: '20px', textAlign: 'left', color: '#2d3436', background: 'white', padding: '20px', borderRadius: '15px', border: '2px solid #dfe6e9', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
+                                <div style={{ marginBottom: '15px', textAlign: 'left', color: '#2d3436', background: 'white', padding: '15px', borderRadius: '15px', border: '3px solid #dfe6e9', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
                                     {currentPrompts.map((prompt, idx) => (
-                                        <p key={idx} style={{ marginBottom: idx === currentPrompts.length - 1 ? 0 : '12px', fontWeight: 'bold', fontSize: '1.05rem', lineHeight: '1.5' }}>
+                                        <p key={idx} style={{ marginBottom: idx === currentPrompts.length - 1 ? 0 : '12px', fontWeight: '900', fontSize: '1.05rem', lineHeight: '1.5', color: '#2d3436' }}>
                                             <VocabHighlighter text={prompt} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} />
                                         </p>
                                     ))}
@@ -924,7 +1035,7 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                             )}
 
                             {isCurrentChatMode ? (
-                                <div style={{ display: 'flex', flexDirection: 'column', height: '400px', border: '2px solid #dfe6e9', borderRadius: '20px', overflow: 'hidden', background: '#f8f9fa' }}>
+                                <div style={{ display: 'flex', flexDirection: 'column', height: '280px', border: '2px solid #dfe6e9', borderRadius: '20px', overflow: 'hidden', background: '#f8f9fa' }}>
                                     <div style={{ flex: 1, overflowY: 'auto', padding: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
                                         {messages.map((m, i) => (
                                             <div key={i} style={{ alignSelf: m.role === 'ai' ? 'flex-start' : 'flex-end', maxWidth: '80%' }}>
@@ -965,7 +1076,7 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                 <form onSubmit={handleSubmit}>
                                     {currentType === 'upload-text' && (
                                         <>
-                                            <div style={{ marginBottom: '15px', fontWeight: 'bold', color: '#2d3436' }}>📸 관련 사진을 업로드해주세요 </div>
+                                            <div style={{ marginBottom: '15px', fontWeight: 'bold', color: '#2d3436' }}>관련 사진을 업로드해주세요. </div>
                                             <input
                                                 type="file"
                                                 accept="image/*"
@@ -1137,13 +1248,13 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
             </div>
 
             {showSurvey && (
-                <div className="success-overlay" style={{ background: 'rgba(0,0,0,0.85)', zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '20px' }}>
-                    <div style={{ background: 'white', border: '5px solid #74b9ff', borderRadius: '30px', padding: '30px', maxWidth: '500px', width: '100%', position: 'relative' }}>
-                        <h2 style={{ fontFamily: "'Jua', sans-serif", color: '#0984e3', marginBottom: '20px', textAlign: 'center' }}>잠깐! 마지막 궁금증 🤔</h2>
+                <div className="success-overlay" style={{ background: 'rgba(0,0,0,0.85)', zIndex: 200, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px' }}>
+                    <div style={{ background: 'white', border: '5px solid #74b9ff', borderRadius: '20px', padding: '20px', maxWidth: '500px', width: '100%', position: 'relative' }}>
+                        <h2 style={{ fontFamily: "'Jua', sans-serif", color: '#0984e3', marginBottom: '15px', textAlign: 'center' }}>잠깐! 마지막 궁금증 🤔</h2>
 
-                        <div style={{ marginBottom: '25px' }}>
-                            <p style={{ fontWeight: '900', marginBottom: '10px' }}>1. 이 활동을 하면서 얼마나 많이 고민했나요?</p>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 10px' }}>
+                        <div style={{ marginBottom: '15px' }}>
+                            <p style={{ fontWeight: '900', marginBottom: '5px' }}>1. 이 활동을 하면서 얼마나 많이 고민했나요?</p>
+                            <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 5px' }}>
                                 {[1, 2, 3, 4, 5].map(v => (
                                     <button key={v} onClick={() => setSurveyData({ ...surveyData, effort: v })} style={{
                                         width: '45px', height: '45px', borderRadius: '50%', border: 'none',
@@ -1184,7 +1295,7 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                         </div>
 
                         <button onClick={handleSubmit} style={{ width: '100%', padding: '18px', background: '#0984e3', border: 'none', borderRadius: '20px', color: 'white', fontFamily: "'Jua', sans-serif", fontSize: '1.2rem', boxShadow: '0 6px 0 #0764ad', cursor: 'pointer' }}>
-                            진짜 미션 완료하기! 🚀
+                            미션 완료하기
                         </button>
                     </div>
                 </div>
