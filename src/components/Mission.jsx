@@ -20,19 +20,25 @@ const MISSIONS = {
         example: '로봇청소기, 유튜브 추천 영상, 스마트폰 비서(시리, 빅스비) 등',
         storySteps: {
             lower: [
-                { text: '안녕! 나는 꼬마 AI 로봇 알리야. 내 주변에 똑똑한 AI 친구들이 몰래 숨어있대!', image: '/robot_2d_base.png' },
+                { text: '안녕! 나는 꼬마 AI 로봇 알리야. 만나서 정말 반가워!', image: '/robot_2d_base.png' },
+                { text: '우리 집이랑 학교에는 똑똑한 AI 친구들이 몰래 숨어있대.', image: '/e1_mission_v3.png' },
+                { text: '로봇청소기처럼 스스로 움직이거나, 내 목소리를 알아듣는 친구들이 다 AI야!', image: '/robot_2d_base.png' },
                 { text: '우리 주변 어디에 숨어있는지 탐정처럼 눈을 크게 뜨고 찾아볼래?', image: '/e1_mission_v3.png' },
-                { text: '찾았다면 찰칵! 사진을 찍어서 나에게 보여줘. 어디에 숨어있었는지도 궁금해!', image: '/robot_2d_base.png' }
+                { text: '찾았다면 찰칵! 사진을 찍어서 나에게 보여줘. 어떤 도움을 주는지도 궁금해!', image: '/robot_2d_base.png' }
             ],
             middle: [
                 { text: '안녕 친구! 나는 알리야. 우리 주변엔 몰래 숨어서 우리를 도와주는 AI 친구들이 아주 많아.', image: '/robot_2d_base.png' },
-                { text: '로봇청소기나 유튜브 추천 영상처럼 우리 생활 곳곳에 숨어있는 AI를 탐정처럼 조사해 줄래?', image: '/e1_mission_v3.png' },
-                { text: '발견한 장소와 그 친구가 어떤 착한 일을 하고 있는지 나에게 자세히 들려줘!', image: '/robot_2d_base.png' }
+                { text: '유튜브 추천 영상이나 날씨를 알려주는 스피커도 모두 AI 기술로 만들어졌어.', image: '/e1_mission_v3.png' },
+                { text: 'AI는 우리가 무엇을 좋아하는지, 무엇이 필요한지 스스로 학습하고 판단해.', image: '/robot_2d_base.png' },
+                { text: '이제 네가 탐정이 되어 우리 생활 곳곳에 숨어있는 AI를 조사해 줄래?', image: '/e1_mission_v3.png' },
+                { text: '어떤 AI를 발견했는지, 그 친구가 어떤 착한 일을 하고 있는지 나에게 상세히 들려줘!', image: '/robot_2d_base.png' }
             ],
             upper: [
-                { text: '반가워! 나는 알리야. 우리 일상 곳곳에 깊숙이 들어와 있는 AI 시스템을 함께 분석해 보자.', image: '/robot_2d_base.png' },
-                { text: '스마트 기기나 서비스 속에 숨겨진 AI 기술을 찾아 사진을 찍고, 그 정체를 파헤쳐 봐!', image: '/e1_mission_v3.png' },
-                { text: '편리함 뒤에 숨겨진 한계점까지 찾아낸다면 넌 정말 멋진 AI 전문가가 될 수 있어. 시작해 볼까?', image: '/robot_2d_base.png' }
+                { text: '반가워! 나는 알리야. 현대 사회의 일상 곳곳에는 수많은 AI 시스템이 이미 깊숙이 들어와 있어.', image: '/robot_2d_base.png' },
+                { text: '스마트홈, 자율주행, 정교한 알고리즘 서비스 등이 우리 삶을 더 편리하게 만들고 있지.', image: '/e1_mission_v3.png' },
+                { text: '하지만 익숙함 때문에 우리는 그 속에 숨겨진 AI의 정체를 놓치곤 해.', image: '/robot_2d_base.png' },
+                { text: '이제 한 명의 AI 전문가로서 우리 일상 속 AI 기술을 찾아 사진을 찍고 분석해 봐!', image: '/e1_mission_v3.png' },
+                { text: '편리함뿐만 아니라 그 뒤에 숨겨진 작동 원리와 한계점까지 찾아낸다면 넌 정말 멋진 전문가야.', image: '/robot_2d_base.png' }
             ]
         },
         type: 'upload-text',
@@ -330,11 +336,12 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
 
     // --- [Dynamic Grade Resolution] ---
     const currentType = typeof mission?.type === 'object' ? mission.type[gradeGroup] : mission?.type;
-    const currentPrompts = mission?.prompts ? mission.prompts[gradeGroup] : [mission?.description];
+    const currentPrompts = mission?.prompts ? mission.prompts[gradeGroup] : (mission?.description ? [mission.description] : []);
     const currentStackedInputs = mission?.stackedInputs ? mission.stackedInputs[gradeGroup] : [];
     const isCurrentChatMode = currentType === 'chat' || mission?.isChatMode;
     const currentChatInitiator = typeof mission?.chatInitiator === 'object' ? mission.chatInitiator[gradeGroup] : mission?.chatInitiator;
 
+    const [missionPhase, setMissionPhase] = useState(1); // 1: Story, 2: Edu, 3: Task
     const [formData, setFormData] = useState('');
     const [stackedAnswers, setStackedAnswers] = useState({});
     const [rule1, setRule1] = useState('');
@@ -347,17 +354,13 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
     const [isLoadingInitial, setIsLoadingInitial] = useState(true);
     const [teacherFeedback, setTeacherFeedback] = useState('');
 
-    // Carousel Storytelling State
-    const [currentStep, setCurrentStep] = useState(0);
-    const [showTask, setShowTask] = useState(false);
-
     const steps = mission.storySteps ? mission.storySteps[gradeGroup] : null;
 
     const handleNextStep = () => {
         if (steps && currentStep < steps.length - 1) {
             setCurrentStep(currentStep + 1);
         } else {
-            setShowTask(true);
+            setMissionPhase(2);
         }
     };
 
@@ -365,6 +368,10 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
         if (currentStep > 0) {
             setCurrentStep(currentStep - 1);
         }
+    };
+
+    const startTask = () => {
+        setMissionPhase(3);
     };
 
     // --- [연구용 데이터: Telemetry & Micro-Survey] ---
@@ -711,17 +718,17 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                     </div>
                 </div>
 
-                {!showTask && steps ? (
-                    /* Carousel Storytelling Section */
+                {missionPhase === 1 && steps ? (
+                    /* Phase 1: Carousel Storytelling */
                     <div className="discovery-carousel-container" style={{
                         background: 'white',
                         borderRadius: '35px',
-                        padding: '30px 20px',
-                        border: currentStep === 0 ? '4px solid #74b9ff' : '4px solid #00b894',
-                        boxShadow: currentStep === 0 ? '0 15px 35px rgba(116, 185, 255, 0.15)' : '0 15px 35px rgba(0, 184, 148, 0.15)',
+                        padding: '40px 20px',
+                        border: '4px solid #74b9ff',
+                        boxShadow: '0 15px 35px rgba(116, 185, 255, 0.15)',
                         textAlign: 'center',
                         position: 'relative',
-                        minHeight: '450px',
+                        minHeight: '550px',
                         display: 'flex',
                         flexDirection: 'column',
                         justifyContent: 'space-between',
@@ -734,20 +741,20 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                     width: idx === currentStep ? '24px' : '8px',
                                     height: '8px',
                                     borderRadius: '4px',
-                                    background: idx === currentStep ? (currentStep === 0 ? '#74b9ff' : '#00b894') : '#dcdde1',
+                                    background: idx === currentStep ? '#74b9ff' : '#dcdde1',
                                     transition: 'all 0.3s ease'
                                 }} />
                             ))}
                         </div>
 
-                        {/* Character/Image Area */}
-                        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '25px', position: 'relative' }}>
+                        {/* Character/Image Area (Larger) */}
+                        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '30px', position: 'relative' }}>
                             <img
                                 src={steps[currentStep].image || '/robot_2d_base.png'}
                                 alt="Step Illustration"
                                 style={{
-                                    maxWidth: '200px',
-                                    maxHeight: '200px',
+                                    maxWidth: '280px',
+                                    maxHeight: '280px',
                                     objectFit: 'contain',
                                     mixBlendMode: 'multiply',
                                     filter: steps[currentStep].image?.includes('robot') ? 'none' : 'drop-shadow(0 10px 15px rgba(0,0,0,0.1))',
@@ -800,20 +807,66 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                 padding: '18px',
                                 borderRadius: '20px',
                                 border: 'none',
-                                background: currentStep === 0 ? 'linear-gradient(135deg, #74b9ff 0%, #0984e3 100%)' : 'linear-gradient(135deg, #00b894 0%, #009432 100%)',
+                                background: 'linear-gradient(135deg, #74b9ff 0%, #0984e3 100%)',
                                 color: 'white',
                                 fontSize: '1.1rem',
                                 fontWeight: 'bold',
                                 cursor: 'pointer',
                                 boxShadow: '0 8px 15px rgba(9, 132, 227, 0.2)'
                             }}>
-                                {currentStep === 0 ? '미션 알아보기' : '미션 시작하기!'}
+                                {currentStep === steps.length - 1 ? '학습 내용 확인하기' : '다음 단계로'}
                             </button>
                         </div>
                     </div>
+                ) : missionPhase === 2 ? (
+                    /* Phase 2: Educational Guidance */
+                    <div style={{ animation: 'slideUpFade 0.6s ease-out' }}>
+                        <div className="edu-card why" style={{ border: '4px solid #00b894', boxShadow: '0 10px 25px rgba(0, 184, 148, 0.15)' }}>
+                            <h3 style={{ color: '#00b894' }}><Target size={24} /> 왜 중요할까요?</h3>
+                            <p style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>
+                                <VocabHighlighter text={mission.why} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} />
+                            </p>
+                        </div>
+
+                        <div className="edu-card example" style={{ border: '4px solid #00b894', boxShadow: '0 10px 25px rgba(0, 184, 148, 0.15)' }}>
+                            <h3 style={{ color: '#00b894' }}><Lightbulb size={24} /> 예를 들어볼까요?</h3>
+                            <p style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>
+                                <VocabHighlighter text={mission.example} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} />
+                            </p>
+                        </div>
+
+                        {mission.referenceImage && (
+                            <div className="reference-image-container" style={{ marginBottom: '30px', textAlign: 'center' }}>
+                                <div style={{ background: 'white', padding: '15px', borderRadius: '25px', border: '4px solid #00b894', boxShadow: '0 10px 20px rgba(0, 184, 148, 0.1)' }}>
+                                    <img src={mission.referenceImage} alt="Reference" style={{ maxWidth: '100%', borderRadius: '12px', marginBottom: '10px' }} />
+                                    {mission.referenceImageCaption && (
+                                        <p style={{ margin: 0, fontSize: '1rem', color: '#636e72', fontWeight: 'bold' }}>
+                                            {mission.referenceImageCaption}
+                                        </p>
+                                    )}
+                                </div>
+                            </div>
+                        )}
+
+                        <button onClick={startTask} style={{
+                            width: '100%',
+                            padding: '22px',
+                            borderRadius: '25px',
+                            border: 'none',
+                            background: 'linear-gradient(135deg, #00b894 0%, #009432 100%)',
+                            color: 'white',
+                            fontSize: '1.25rem',
+                            fontWeight: '900',
+                            cursor: 'pointer',
+                            boxShadow: '0 10px 20px rgba(0, 148, 50, 0.2)',
+                            marginTop: '10px'
+                        }}>
+                            미션 진짜 시작하기! 🚀
+                        </button>
+                    </div>
                 ) : (
-                    <>
-                        {/* Original Mission Content (Only shown after carousel) */}
+                    /* Phase 3: Mission Task */
+                    <div style={{ animation: 'slideUpFade 0.6s ease-out' }}>
                         <div className="character-story-container" style={{
                             display: 'flex',
                             alignItems: 'center',
@@ -823,308 +876,264 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                             borderRadius: '25px',
                             border: '3px solid #fdcb6e',
                             marginBottom: '30px',
-                            boxShadow: '0 8px 16px rgba(253, 203, 110, 0.1)',
-                            position: 'relative'
+                            boxShadow: '0 8px 16px rgba(253, 203, 110, 0.1)'
                         }}>
-                            <div style={{ width: '80px', height: '80px', flexShrink: 0, background: '#f0f7ff', borderRadius: '50%', padding: '10px', border: '2px solid #74b9ff', overflow: 'hidden' }}>
+                            <div style={{ width: '80px', height: '80px', flexShrink: 0, background: '#fff9e6', borderRadius: '50%', padding: '10px', border: '2px solid #fdcb6e', overflow: 'hidden' }}>
                                 <img src="/robot_2d_base.png" alt="Alli" style={{ width: '100%', height: '100%', objectFit: 'contain', mixBlendMode: 'multiply' }} />
                             </div>
-                            <div style={{ position: 'relative', flex: 1 }}>
+                            <div style={{ flex: 1 }}>
+                                <div style={{ background: '#fdcb6e', color: 'white', padding: '4px 12px', borderRadius: '10px', fontSize: '0.85rem', fontWeight: '900', display: 'inline-block', marginBottom: '6px' }}>알리 (Alli)</div>
+                                <p style={{ margin: 0, fontSize: '1.1rem', fontWeight: 'bold', color: '#2d3436', wordBreak: 'keep-all' }}>
+                                    좋아! 이제 본격적으로 미션을 수행해 보자. 화이팅!
+                                </p>
+                            </div>
+                        </div>
+
+                        <div className="mission-task">
+                            {teacherFeedback && (
                                 <div style={{
-                                    background: '#fdcb6e',
-                                    color: 'white',
-                                    padding: '4px 12px',
-                                    borderRadius: '10px',
-                                    fontSize: '0.85rem',
-                                    fontWeight: '900',
-                                    display: 'inline-block',
-                                    marginBottom: '6px'
-                                }}>알리 (Alli)</div>
-                                <p style={{
-                                    margin: 0,
-                                    fontSize: '1.1rem',
-                                    fontWeight: 'bold',
-                                    lineHeight: 1.5,
-                                    color: '#2d3436',
-                                    wordBreak: 'keep-all'
+                                    background: '#fff3f0',
+                                    border: '2px solid #e17055',
+                                    borderRadius: '15px',
+                                    padding: '15px',
+                                    marginBottom: '20px',
+                                    display: 'flex',
+                                    flexDirection: 'column',
+                                    gap: '8px'
                                 }}>
-                                    {steps ? "자, 이제 네가 찾은 AI 친구를 알려줘!" : "반가워! 나랑 같이 AI 미션을 해결해 볼래?"}
-                                </p>
-                            </div>
-                        </div>
-
-                        {/* Reference Image (Common for missions with visual guide) */}
-                        {mission.referenceImage && (
-                            <div className="reference-image-container" style={{ marginBottom: '30px', textAlign: 'center' }}>
-                                <div style={{ background: 'white', padding: '15px', borderRadius: '20px', border: '2px solid #dfe6e9', boxShadow: '0 10px 20px rgba(0,0,0,0.05)' }}>
-                                    <img src={mission.referenceImage} alt="Reference" style={{ maxWidth: '100%', borderRadius: '12px', marginBottom: '10px' }} />
-                                    {mission.referenceImageCaption && (
-                                        <p style={{ margin: 0, fontSize: '0.95rem', color: '#636e72', fontWeight: 'bold' }}>
-                                            {mission.referenceImageCaption}
-                                        </p>
-                                    )}
-                                </div>
-                            </div>
-                        )}
-                    </>
-                )}
-
-                {/* Educational Content & Task (Only shown in Task Phase) */}
-                {(showTask || !steps) && (
-                    <>
-                        <div className="edu-card why">
-                            <h3 style={{ color: '#0984e3' }}><Target size={24} /> 왜 중요할까요?</h3>
-                            <p><VocabHighlighter text={mission.why} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} /></p>
-                        </div>
-
-                        <div className="edu-card example">
-                            <h3 style={{ color: '#00b894' }}><Lightbulb size={24} /> 예를 들어볼까요?</h3>
-                            <p><VocabHighlighter text={mission.example} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} /></p>
-                        </div>
-
-                {/* Action Form */}
-                <div className="mission-task">
-                    {teacherFeedback && (
-                        <div style={{
-                            background: '#fff3f0',
-                            border: '2px solid #e17055',
-                            borderRadius: '15px',
-                            padding: '15px',
-                            marginBottom: '20px',
-                            display: 'flex',
-                            flexDirection: 'column',
-                            gap: '8px'
-                        }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#e17055', fontWeight: '900' }}>
-                                <AlertCircle size={20} /> 전문가 선생님의 도움말
-                            </div>
-                            <p style={{ margin: 0, color: '#2d3436', fontWeight: 'bold', fontSize: '1rem', lineHeight: 1.5 }}>
-                                "{teacherFeedback}"
-                            </p>
-                            <div style={{ fontSize: '0.85rem', color: '#636e72', fontStyle: 'italic' }}>
-                                * 위 내용을 참고해서 미션 내용을 수정해 보세요!
-                            </div>
-                        </div>
-                    )}
-                    <h3 className="mission-task-header">도전 과제</h3>
-                    {currentPrompts && currentPrompts.length > 0 && (
-                        <div style={{ marginBottom: '20px', textAlign: 'left', color: '#2d3436', background: 'white', padding: '20px', borderRadius: '15px', border: '2px solid #dfe6e9', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
-                            {currentPrompts.map((prompt, idx) => (
-                                <p key={idx} style={{ marginBottom: idx === currentPrompts.length - 1 ? 0 : '12px', fontWeight: 'bold', fontSize: '1.05rem', lineHeight: '1.5' }}>
-                                    <VocabHighlighter text={prompt} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} />
-                                </p>
-                            ))}
-                        </div>
-                    )}
-
-                    {isCurrentChatMode ? (
-                        <div style={{ display: 'flex', flexDirection: 'column', height: '400px', border: '2px solid #dfe6e9', borderRadius: '20px', overflow: 'hidden', background: '#f8f9fa' }}>
-                            <div style={{ flex: 1, overflowY: 'auto', padding: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                {messages.map((m, i) => (
-                                    <div key={i} style={{ alignSelf: m.role === 'ai' ? 'flex-start' : 'flex-end', maxWidth: '80%' }}>
-                                        <div style={{
-                                            background: m.role === 'ai' ? 'white' : '#74b9ff',
-                                            color: m.role === 'ai' ? '#2d3436' : 'white',
-                                            padding: '10px 15px',
-                                            borderRadius: m.role === 'ai' ? '5px 15px 15px 15px' : '15px 15px 5px 15px',
-                                            boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
-                                            fontWeight: 'bold',
-                                            fontSize: '0.95rem'
-                                        }}>
-                                            {m.role === 'ai' ? (
-                                                <VocabHighlighter
-                                                    text={m.content}
-                                                    onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })}
-                                                />
-                                            ) : m.content}
-                                        </div>
+                                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#e17055', fontWeight: '900' }}>
+                                        <AlertCircle size={20} /> 전문가 선생님의 도움말
                                     </div>
-                                ))}
-                                {isAIThinking && <div style={{ color: '#636e72', fontSize: '0.8rem', fontStyle: 'italic' }}>AI가 생각 중...</div>}
-                                <div ref={chatEndRef} />
-                            </div>
-                            <form onSubmit={handleChatSend} style={{ display: 'flex', gap: '8px', padding: '10px', background: 'white', borderTop: '1px solid #eee' }}>
-                                <input
-                                    type="text"
-                                    value={chatInput}
-                                    onChange={e => setChatInput(e.target.value)}
-                                    placeholder=""
-                                    style={{ flex: 1, border: '1px solid #dfe6e9', borderRadius: '12px', padding: '10px' }}
-                                />
-                                <button type="submit" style={{ background: '#0984e3', border: 'none', borderRadius: '12px', padding: '0 15px', color: 'white', cursor: 'pointer' }}>내보내기</button>
-                            </form>
-                            <button onClick={() => handleSubmit()} disabled={messages.length < 3} style={{ margin: '10px', padding: '12px', background: '#00b894', border: 'none', borderRadius: '12px', color: 'white', fontWeight: '900', cursor: messages.length < 3 ? 'not-allowed' : 'pointer', opacity: messages.length < 3 ? 0.6 : 1 }}>성공! 대화 완료하고 제출하기</button>
-
-
-                        </div>
-                    ) : (
-                        <form onSubmit={handleSubmit}>
-                            {currentType === 'upload-text' && (
-                                <>
-                                    <div style={{ marginBottom: '15px', fontWeight: 'bold', color: '#2d3436' }}>📸 관련 사진을 업로드해주세요 </div>
-                                    <input
-                                        type="file"
-                                        accept="image/*"
-                                        onChange={(e) => setFile(e.target.files[0])}
-                                        style={{ width: '100%', padding: '15px', background: 'white', borderRadius: '12px', border: '2px solid #dfe6e9', marginBottom: '10px' }}
-                                    />
-                                    {file && (
-                                        <div style={{ marginBottom: '20px', fontSize: '0.9rem', color: '#0984e3', fontWeight: 'bold' }}>
-                                            📎 {file.name} (선택됨)
-                                        </div>
-                                    )}
-                                </>
+                                    <p style={{ margin: 0, color: '#2d3436', fontWeight: 'bold', fontSize: '1rem', lineHeight: 1.5 }}>
+                                        "{teacherFeedback}"
+                                    </p>
+                                    <div style={{ fontSize: '0.85rem', color: '#636e72', fontStyle: 'italic' }}>
+                                        * 위 내용을 참고해서 미션 내용을 수정해 보세요!
+                                    </div>
+                                </div>
                             )}
-
-                            {currentStackedInputs?.length > 0 ? (
-                                <div className="stacked-inputs-container" style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '20px' }}>
-                                    {currentStackedInputs.map((inputDef) => (
-                                        <div key={inputDef.id} className="stacked-input-group">
-                                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                                                {inputDef.label && <div style={{ fontWeight: 'bold', color: '#2d3436', fontSize: '1.05rem' }}>{inputDef.label}</div>}
-                                                {inputDef.placeholder && (
-                                                    <button
-                                                        type="button"
-                                                        onClick={() => toggleHint(inputDef.id)}
-                                                        style={{
-                                                            background: 'none', border: 'none', cursor: 'pointer',
-                                                            fontSize: '1.3rem', padding: '0 5px', opacity: 0.8,
-                                                            transition: 'transform 0.2s',
-                                                            transform: visibleHints[inputDef.id] ? 'scale(1.15)' : 'scale(1)'
-                                                        }}
-                                                        title="힌트 보기"
-                                                    >
-                                                        💡
-                                                    </button>
-                                                )}
-                                            </div>
-                                            {visibleHints[inputDef.id] && inputDef.placeholder && (
-                                                <div style={{
-                                                    background: '#fff9c4', border: '2px dashed #fbc02d', borderRadius: '10px',
-                                                    padding: '12px 15px', marginBottom: '15px', color: '#f57f17', fontSize: '0.95rem',
-                                                    display: 'flex', alignItems: 'flex-start', gap: '8px', lineHeight: 1.5,
-                                                    boxShadow: '0 4px 6px rgba(0,0,0,0.05)', animation: 'fadeIn 0.3s ease-in'
-                                                }}>
-                                                    <span style={{ fontSize: '1.2rem', marginTop: '-2px' }}>💁</span>
-                                                    <span><strong>힌트 도우미:</strong> <VocabHighlighter text={inputDef.placeholder} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} /></span>
-                                                </div>
-                                            )}
-                                            {inputDef.type === 'textarea' ? (
-                                                <textarea
-                                                    rows={3}
-                                                    value={stackedAnswers[inputDef.id] || ''}
-                                                    onChange={(e) => handleStackedChange(inputDef.id, e.target.value)}
-                                                    placeholder=""
-                                                    style={{ width: '100%', padding: '15px', borderRadius: '12px', border: '2px solid #dfe6e9', fontSize: '1.05rem', fontFamily: "'Nunito', sans-serif" }}
-                                                    required
-                                                />
-                                            ) : (
-                                                <input
-                                                    type="text"
-                                                    value={stackedAnswers[inputDef.id] || ''}
-                                                    onChange={(e) => handleStackedChange(inputDef.id, e.target.value)}
-                                                    placeholder=""
-                                                    style={{ width: '100%', padding: '15px', borderRadius: '12px', border: '2px solid #dfe6e9', fontSize: '1.05rem', fontFamily: "'Nunito', sans-serif" }}
-                                                    required
-                                                />
-                                            )}
-                                        </div>
+                            <h3 className="mission-task-header">도전 과제</h3>
+                            {currentPrompts && currentPrompts.length > 0 && (
+                                <div style={{ marginBottom: '20px', textAlign: 'left', color: '#2d3436', background: 'white', padding: '20px', borderRadius: '15px', border: '2px solid #dfe6e9', boxShadow: '0 4px 6px rgba(0,0,0,0.02)' }}>
+                                    {currentPrompts.map((prompt, idx) => (
+                                        <p key={idx} style={{ marginBottom: idx === currentPrompts.length - 1 ? 0 : '12px', fontWeight: 'bold', fontSize: '1.05rem', lineHeight: '1.5' }}>
+                                            <VocabHighlighter text={prompt} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} />
+                                        </p>
                                     ))}
                                 </div>
-                            ) : (
-                                currentType !== 'rules' && (
-                                    <>
-                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
-                                            <div style={{ fontWeight: 'bold', color: '#2d3436' }}>📝 미션 답변 쓰기</div>
-                                            {mission.example && (
-                                                <button
-                                                    type="button"
-                                                    onClick={() => toggleHint('main_hint')}
-                                                    style={{
-                                                        background: 'none', border: 'none', cursor: 'pointer',
-                                                        fontSize: '1.3rem', padding: '0 5px', opacity: 0.8,
-                                                        transition: 'transform 0.2s',
-                                                        transform: visibleHints['main_hint'] ? 'scale(1.15)' : 'scale(1)'
-                                                    }}
-                                                    title="힌트 보기"
-                                                >
-                                                    💡
-                                                </button>
-                                            )}
-                                        </div>
-                                        {visibleHints['main_hint'] && mission.example && (
-                                            <div style={{
-                                                background: '#fff9c4', border: '2px dashed #fbc02d', borderRadius: '10px',
-                                                padding: '12px 15px', marginBottom: '15px', color: '#f57f17', fontSize: '0.95rem',
-                                                display: 'flex', alignItems: 'flex-start', gap: '8px', lineHeight: 1.5,
-                                                boxShadow: '0 4px 6px rgba(0,0,0,0.05)', animation: 'fadeIn 0.3s ease-in'
-                                            }}>
-                                                <span style={{ fontSize: '1.2rem', marginTop: '-2px' }}>💁</span>
-                                                <span><strong>힌트 도우미:</strong> <VocabHighlighter text={mission.example} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} /></span>
+                            )}
+
+                            {isCurrentChatMode ? (
+                                <div style={{ display: 'flex', flexDirection: 'column', height: '400px', border: '2px solid #dfe6e9', borderRadius: '20px', overflow: 'hidden', background: '#f8f9fa' }}>
+                                    <div style={{ flex: 1, overflowY: 'auto', padding: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                        {messages.map((m, i) => (
+                                            <div key={i} style={{ alignSelf: m.role === 'ai' ? 'flex-start' : 'flex-end', maxWidth: '80%' }}>
+                                                <div style={{
+                                                    background: m.role === 'ai' ? 'white' : '#74b9ff',
+                                                    color: m.role === 'ai' ? '#2d3436' : 'white',
+                                                    padding: '10px 15px',
+                                                    borderRadius: m.role === 'ai' ? '5px 15px 15px 15px' : '15px 15px 5px 15px',
+                                                    boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+                                                    fontWeight: 'bold',
+                                                    fontSize: '0.95rem'
+                                                }}>
+                                                    {m.role === 'ai' ? (
+                                                        <VocabHighlighter
+                                                            text={m.content}
+                                                            onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })}
+                                                        />
+                                                    ) : m.content}
+                                                </div>
                                             </div>
-                                        )}
-                                        <textarea
-                                            rows={4}
-                                            value={formData}
-                                            onChange={(e) => handleTextChange(e.target.value)}
-                                            placeholder=""
-                                            style={{ width: '100%', padding: '15px', borderRadius: '12px', border: '2px solid #dfe6e9', fontSize: '1.05rem', fontFamily: "'Nunito', sans-serif" }}
-                                            required
-                                        />
-                                    </>
-                                )
-                            )}
-
-                            {currentType === 'rules' && (
-                                <div className="form-group-list">
-                                    <div style={{ fontWeight: 'bold', marginBottom: '10px' }}>나만의 AI 사용 기준 3가지를 적어주세요.</div>
-
-                                    <div className="kid-input-wrapper">
-                                        <span className="kid-input-number">1.</span>
+                                        ))}
+                                        {isAIThinking && <div style={{ color: '#636e72', fontSize: '0.8rem', fontStyle: 'italic' }}>AI가 생각 중...</div>}
+                                        <div ref={chatEndRef} />
+                                    </div>
+                                    <form onSubmit={handleChatSend} style={{ display: 'flex', gap: '8px', padding: '10px', background: 'white', borderTop: '1px solid #eee' }}>
                                         <input
                                             type="text"
-                                            className="kid-input"
-                                            value={rule1}
-                                            onChange={e => handleRuleChange(setRule1, e.target.value)}
+                                            value={chatInput}
+                                            onChange={e => setChatInput(e.target.value)}
                                             placeholder=""
-                                            required
+                                            style={{ flex: 1, border: '1px solid #dfe6e9', borderRadius: '12px', padding: '10px' }}
                                         />
-                                    </div>
-
-                                    <div className="kid-input-wrapper">
-                                        <span className="kid-input-number">2.</span>
-                                        <input
-                                            type="text"
-                                            className="kid-input"
-                                            value={rule2}
-                                            onChange={e => handleRuleChange(setRule2, e.target.value)}
-                                            placeholder=""
-                                            required
-                                        />
-                                    </div>
-
-                                    <div className="kid-input-wrapper">
-                                        <span className="kid-input-number">3.</span>
-                                        <input
-                                            type="text"
-                                            className="kid-input"
-                                            value={rule3}
-                                            onChange={e => handleRuleChange(setRule3, e.target.value)}
-                                            placeholder=""
-                                            required
-                                        />
-                                    </div>
+                                        <button type="submit" style={{ background: '#0984e3', border: 'none', borderRadius: '12px', padding: '0 15px', color: 'white', cursor: 'pointer' }}>내보내기</button>
+                                    </form>
+                                    <button onClick={() => handleSubmit()} disabled={messages.length < 3} style={{ margin: '10px', padding: '12px', background: '#00b894', border: 'none', borderRadius: '12px', color: 'white', fontWeight: '900', cursor: messages.length < 3 ? 'not-allowed' : 'pointer', opacity: messages.length < 3 ? 0.6 : 1 }}>성공! 대화 완료하고 제출하기</button>
                                 </div>
-                            )}
+                            ) : (
+                                <form onSubmit={handleSubmit}>
+                                    {currentType === 'upload-text' && (
+                                        <>
+                                            <div style={{ marginBottom: '15px', fontWeight: 'bold', color: '#2d3436' }}>📸 관련 사진을 업로드해주세요 </div>
+                                            <input
+                                                type="file"
+                                                accept="image/*"
+                                                onChange={(e) => setFile(e.target.files[0])}
+                                                style={{ width: '100%', padding: '15px', background: 'white', borderRadius: '12px', border: '2px solid #dfe6e9', marginBottom: '10px' }}
+                                            />
+                                            {file && (
+                                                <div style={{ marginBottom: '20px', fontSize: '0.9rem', color: '#0984e3', fontWeight: 'bold' }}>
+                                                    📎 {file.name} (선택됨)
+                                                </div>
+                                            )}
+                                        </>
+                                    )}
 
-                            <button type="submit" className="btn-primary" disabled={isSubmitting || isLoadingInitial}>
-                                {isSubmitting ? '저장 중...' : (isEditing ? '미션 내용 수정하기!' : '미션 제출하기!')}
-                            </button>
-                        </form>
-                    )}
-                </div>
-            </>
-        )}
+                                    {currentStackedInputs?.length > 0 ? (
+                                        <div className="stacked-inputs-container" style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '20px' }}>
+                                            {currentStackedInputs.map((inputDef) => (
+                                                <div key={inputDef.id} className="stacked-input-group">
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                                                        {inputDef.label && <div style={{ fontWeight: 'bold', color: '#2d3436', fontSize: '1.05rem' }}>{inputDef.label}</div>}
+                                                        {inputDef.placeholder && (
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => toggleHint(inputDef.id)}
+                                                                style={{
+                                                                    background: 'none', border: 'none', cursor: 'pointer',
+                                                                    fontSize: '1.3rem', padding: '0 5px', opacity: 0.8,
+                                                                    transition: 'transform 0.2s',
+                                                                    transform: visibleHints[inputDef.id] ? 'scale(1.15)' : 'scale(1)'
+                                                                }}
+                                                                title="힌트 보기"
+                                                            >
+                                                                💡
+                                                            </button>
+                                                        )}
+                                                    </div>
+                                                    {visibleHints[inputDef.id] && inputDef.placeholder && (
+                                                        <div style={{
+                                                            background: '#fff9c4', border: '2px dashed #fbc02d', borderRadius: '10px',
+                                                            padding: '12px 15px', marginBottom: '15px', color: '#f57f17', fontSize: '0.95rem',
+                                                            display: 'flex', alignItems: 'flex-start', gap: '8px', lineHeight: 1.5,
+                                                            boxShadow: '0 4px 6px rgba(0,0,0,0.05)', animation: 'fadeIn 0.3s ease-in'
+                                                        }}>
+                                                            <span style={{ fontSize: '1.2rem', marginTop: '-2px' }}>💁</span>
+                                                            <span><strong>힌트 도우미:</strong> <VocabHighlighter text={inputDef.placeholder} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} /></span>
+                                                        </div>
+                                                    )}
+                                                    {inputDef.type === 'textarea' ? (
+                                                        <textarea
+                                                            rows={3}
+                                                            value={stackedAnswers[inputDef.id] || ''}
+                                                            onChange={(e) => handleStackedChange(inputDef.id, e.target.value)}
+                                                            placeholder=""
+                                                            style={{ width: '100%', padding: '15px', borderRadius: '12px', border: '2px solid #dfe6e9', fontSize: '1.05rem', fontFamily: "'Nunito', sans-serif" }}
+                                                            required
+                                                        />
+                                                    ) : (
+                                                        <input
+                                                            type="text"
+                                                            value={stackedAnswers[inputDef.id] || ''}
+                                                            onChange={(e) => handleStackedChange(inputDef.id, e.target.value)}
+                                                            placeholder=""
+                                                            style={{ width: '100%', padding: '15px', borderRadius: '12px', border: '2px solid #dfe6e9', fontSize: '1.05rem', fontFamily: "'Nunito', sans-serif" }}
+                                                            required
+                                                        />
+                                                    )}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    ) : (
+                                        currentType !== 'rules' && (
+                                            <>
+                                                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+                                                    <div style={{ fontWeight: 'bold', color: '#2d3436' }}>📝 미션 답변 쓰기</div>
+                                                    {mission.example && (
+                                                        <button
+                                                            type="button"
+                                                            onClick={() => toggleHint('main_hint')}
+                                                            style={{
+                                                                background: 'none', border: 'none', cursor: 'pointer',
+                                                                fontSize: '1.3rem', padding: '0 5px', opacity: 0.8,
+                                                                transition: 'transform 0.2s',
+                                                                transform: visibleHints['main_hint'] ? 'scale(1.15)' : 'scale(1)'
+                                                            }}
+                                                            title="힌트 보기"
+                                                        >
+                                                            💡
+                                                        </button>
+                                                    )}
+                                                </div>
+                                                {visibleHints['main_hint'] && mission.example && (
+                                                    <div style={{
+                                                        background: '#fff9c4', border: '2px dashed #fbc02d', borderRadius: '10px',
+                                                        padding: '12px 15px', marginBottom: '15px', color: '#f57f17', fontSize: '0.95rem',
+                                                        display: 'flex', alignItems: 'flex-start', gap: '8px', lineHeight: 1.5,
+                                                        boxShadow: '0 4px 6px rgba(0,0,0,0.05)', animation: 'fadeIn 0.3s ease-in'
+                                                    }}>
+                                                        <span style={{ fontSize: '1.2rem', marginTop: '-2px' }}>💁</span>
+                                                        <span><strong>힌트 도우미:</strong> <VocabHighlighter text={mission.example} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} /></span>
+                                                    </div>
+                                                )}
+                                                <textarea
+                                                    rows={4}
+                                                    value={formData}
+                                                    onChange={(e) => handleTextChange(e.target.value)}
+                                                    placeholder=""
+                                                    style={{ width: '100%', padding: '15px', borderRadius: '12px', border: '2px solid #dfe6e9', fontSize: '1.05rem', fontFamily: "'Nunito', sans-serif" }}
+                                                    required
+                                                />
+                                            </>
+                                        )
+                                    )}
+
+                                    {currentType === 'rules' && (
+                                        <div className="form-group-list">
+                                            <div style={{ fontWeight: 'bold', marginBottom: '10px' }}>나만의 AI 사용 기준 3가지를 적어주세요.</div>
+
+                                            <div className="kid-input-wrapper">
+                                                <span className="kid-input-number">1.</span>
+                                                <input
+                                                    type="text"
+                                                    className="kid-input"
+                                                    value={rule1}
+                                                    onChange={e => handleRuleChange(setRule1, e.target.value)}
+                                                    placeholder=""
+                                                    required
+                                                />
+                                            </div>
+
+                                            <div className="kid-input-wrapper">
+                                                <span className="kid-input-number">2.</span>
+                                                <input
+                                                    type="text"
+                                                    className="kid-input"
+                                                    value={rule2}
+                                                    onChange={e => handleRuleChange(setRule2, e.target.value)}
+                                                    placeholder=""
+                                                    required
+                                                />
+                                            </div>
+
+                                            <div className="kid-input-wrapper">
+                                                <span className="kid-input-number">3.</span>
+                                                <input
+                                                    type="text"
+                                                    className="kid-input"
+                                                    value={rule3}
+                                                    onChange={e => handleRuleChange(setRule3, e.target.value)}
+                                                    placeholder=""
+                                                    required
+                                                />
+                                            </div>
+                                        </div>
+                                    )}
+
+                                    <button type="submit" className="btn-primary" disabled={isSubmitting || isLoadingInitial} style={{
+                                        background: 'linear-gradient(135deg, #fdcb6e 0%, #f9ca24 100%)',
+                                        color: '#2d3436',
+                                        border: 'none',
+                                        boxShadow: '0 8px 15px rgba(253, 203, 110, 0.3)'
+                                    }}>
+                                        {isSubmitting ? '저장 중...' : (isEditing ? '미션 내용 수정하기!' : '미션 제출하기!')}
+                                    </button>
+                                </form>
+                            )}
+                        </div>
+                    </div>
+                )}
             </div>
 
             {showSurvey && (
