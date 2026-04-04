@@ -59,172 +59,93 @@ const MissionHeader = ({
     const theme = getThemeColors(missionId);
 
     return (
-        <div style={{
-            background: theme.gradient,
-            borderRadius: '20px',
-            padding: '25px',
-            marginBottom: '25px',
-            color: 'white',
-            position: 'relative',
-            overflow: 'hidden'
-        }}>
-            {/* 배경 장식 */}
-            <div style={{
-                position: 'absolute',
-                top: '-20px',
-                right: '-20px',
-                width: '100px',
-                height: '100px',
-                background: 'rgba(255,255,255,0.1)',
-                borderRadius: '50%'
-            }} />
-            
-            <div style={{
-                position: 'absolute',
-                bottom: '-30px',
-                left: '-30px',
-                width: '80px',
-                height: '80px',
-                background: 'rgba(255,255,255,0.05)',
-                borderRadius: '50%'
-            }} />
-
-            <div style={{ position: 'relative', zIndex: 1 }}>
-                {/* 뒤로가기 버튼 */}
-                <button
-                    onClick={onBack}
-                    style={{
-                        background: 'rgba(255,255,255,0.2)',
-                        border: 'none',
-                        borderRadius: '10px',
-                        padding: '8px 12px',
-                        color: 'white',
-                        cursor: 'pointer',
-                        marginBottom: '15px',
-                        fontSize: '0.9rem',
-                        fontWeight: 'bold'
-                    }}
-                >
-                    ← 대시보드로
-                </button>
-
-                {/* 미션 제목 */}
-                <h1 style={{
-                    margin: '0 0 10px 0',
-                    fontSize: '1.8rem',
-                    fontWeight: 'bold',
-                    textShadow: '0 2px 4px rgba(0,0,0,0.3)'
-                }}>
-                    {mission.title}
-                </h1>
-
-                {/* 미션 ID와 학년군 */}
+        <div>
+            {/* Why 섹션 - 초록색 테두리 */}
+            {currentWhy && (
                 <div style={{
-                    display: 'flex',
-                    gap: '10px',
-                    marginBottom: '15px',
-                    flexWrap: 'wrap'
+                    background: 'white',
+                    border: '3px solid #00b894',
+                    borderRadius: '20px',
+                    padding: '20px',
+                    marginBottom: '20px'
                 }}>
-                    <span style={{
-                        background: 'rgba(255,255,255,0.2)',
-                        padding: '4px 12px',
-                        borderRadius: '20px',
-                        fontSize: '0.85rem',
-                        fontWeight: 'bold'
-                    }}>
-                        {missionId}
-                    </span>
-                    <span style={{
-                        background: 'rgba(255,255,255,0.2)',
-                        padding: '4px 12px',
-                        borderRadius: '20px',
-                        fontSize: '0.85rem',
-                        fontWeight: 'bold'
-                    }}>
-                        {getGradeGroupName(gradeGroup)}
-                    </span>
-                    <span style={{
-                        background: 'rgba(255,255,255,0.2)',
-                        padding: '4px 12px',
-                        borderRadius: '20px',
-                        fontSize: '0.85rem',
-                        fontWeight: 'bold'
-                    }}>
-                        {mission.competency}
-                    </span>
-                </div>
-
-                {/* Why 섹션 */}
-                {currentWhy && (
                     <div style={{
-                        background: 'rgba(255,255,255,0.15)',
-                        borderRadius: '12px',
-                        padding: '15px',
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
                         marginBottom: '15px'
                     }}>
+                        <div style={{ fontSize: '24px' }}>🤔</div>
                         <div style={{
-                            fontSize: '0.9rem',
+                            fontSize: '1.2rem',
                             fontWeight: 'bold',
-                            marginBottom: '8px',
-                            opacity: 0.9
+                            color: '#00b894'
                         }}>
-                            🎯 이 미션을 하는 이유
-                        </div>
-                        <div style={{
-                            fontSize: '1rem',
-                            lineHeight: '1.5',
-                            fontWeight: '500'
-                        }}>
-                            {currentWhy}
+                            왜 중요한가요?
                         </div>
                     </div>
-                )}
-
-                {/* Example 섹션 */}
-                {currentExample && (
                     <div style={{
-                        background: 'rgba(255,255,255,0.15)',
-                        borderRadius: '12px',
-                        padding: '15px'
+                        fontSize: '1rem',
+                        lineHeight: '1.5',
+                        color: '#2d3436'
                     }}>
+                        {currentWhy}
+                    </div>
+                </div>
+            )}
+
+            {/* Example 섹션 - 초록색 테두리 */}
+            {currentExample && (
+                <div style={{
+                    background: 'white',
+                    border: '3px solid #00b894',
+                    borderRadius: '20px',
+                    padding: '20px',
+                    marginBottom: '20px'
+                }}>
+                    <div style={{
+                        display: 'flex',
+                        alignItems: 'center',
+                        gap: '10px',
+                        marginBottom: '15px'
+                    }}>
+                        <div style={{ fontSize: '24px' }}>💡</div>
                         <div style={{
-                            fontSize: '0.9rem',
+                            fontSize: '1.2rem',
                             fontWeight: 'bold',
-                            marginBottom: '8px',
-                            opacity: 0.9
+                            color: '#00b894'
                         }}>
-                            💡 예시
-                        </div>
-                        <div style={{
-                            fontSize: '1rem',
-                            lineHeight: '1.5',
-                            fontWeight: '500'
-                        }}>
-                            {currentExample}
+                            예를 들어볼까요?
                         </div>
                     </div>
-                )}
-
-                {/* 다음 단계 버튼 */}
-                <div style={{ textAlign: 'center', marginTop: '20px' }}>
-                    <button
-                        onClick={onComplete}
-                        style={{
-                            background: 'rgba(255,255,255,0.9)',
-                            color: theme.buttonColor,
-                            border: 'none',
-                            borderRadius: '25px',
-                            padding: '12px 30px',
-                            fontSize: '1.1rem',
-                            fontWeight: 'bold',
-                            cursor: 'pointer',
-                            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
-                            transition: 'all 0.3s'
-                        }}
-                    >
-                        🎯 미션 시작하기
-                    </button>
+                    <div style={{
+                        fontSize: '1rem',
+                        lineHeight: '1.5',
+                        color: '#2d3436'
+                    }}>
+                        {currentExample}
+                    </div>
                 </div>
+            )}
+
+            {/* 다음 단계 버튼 */}
+            <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                <button
+                    onClick={onComplete}
+                    style={{
+                        background: '#00b894',
+                        color: 'white',
+                        border: 'none',
+                        borderRadius: '25px',
+                        padding: '15px 40px',
+                        fontSize: '1.2rem',
+                        fontWeight: 'bold',
+                        cursor: 'pointer',
+                        width: '100%'
+                    }}
+                >
+                    미션 시작하기
+                </button>
             </div>
         </div>
     );

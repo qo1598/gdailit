@@ -214,19 +214,70 @@ const StackedInputs = ({
         }
     };
 
+    const [visibleHints, setVisibleHints] = React.useState({});
+
+    const toggleHint = (inputId) => {
+        setVisibleHints(prev => ({
+            ...prev,
+            [inputId]: !prev[inputId]
+        }));
+    };
+
     return (
         <div>
             {stackedInputs.map((inputDef, index) => (
                 <div key={inputDef.id} style={{ marginBottom: '25px' }}>
-                    <label style={{
-                        display: 'block',
-                        fontWeight: 'bold',
-                        marginBottom: '10px',
-                        color: '#2d3436',
-                        fontSize: '1.1rem'
+                    <div style={{ 
+                        display: 'flex', 
+                        justifyContent: 'space-between', 
+                        alignItems: 'center', 
+                        marginBottom: '10px' 
                     }}>
-                        {inputDef.label}
-                    </label>
+                        <label style={{
+                            fontWeight: 'bold',
+                            color: '#2d3436',
+                            fontSize: '1.1rem'
+                        }}>
+                            {inputDef.label}
+                        </label>
+                        {inputDef.placeholder && (
+                            <button
+                                type="button"
+                                onClick={() => toggleHint(inputDef.id)}
+                                style={{
+                                    background: 'none',
+                                    border: 'none',
+                                    cursor: 'pointer',
+                                    fontSize: '1.3rem',
+                                    padding: '0 5px',
+                                    opacity: 0.8
+                                }}
+                                title="힌트 보기"
+                            >
+                                💡
+                            </button>
+                        )}
+                    </div>
+                    
+                    {visibleHints[inputDef.id] && inputDef.placeholder && (
+                        <div style={{
+                            background: '#fff9c4',
+                            border: '2px dashed #fbc02d',
+                            borderRadius: '10px',
+                            padding: '12px 15px',
+                            marginBottom: '15px',
+                            color: '#f57f17',
+                            fontSize: '0.95rem',
+                            display: 'flex',
+                            alignItems: 'flex-start',
+                            gap: '8px',
+                            lineHeight: 1.5
+                        }}>
+                            <span style={{ fontSize: '1.2rem', marginTop: '-2px' }}>🎯</span>
+                            <span><strong>힌트 도우미</strong> {inputDef.placeholder}</span>
+                        </div>
+                    )}
+                    
                     {renderInput(inputDef)}
                 </div>
             ))}

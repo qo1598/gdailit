@@ -14,66 +14,143 @@ const DirectTextMode = ({
     
     return (
         <div className="max-w-4xl mx-auto p-6">
-            {/* E-1 미션의 특별한 AI 탐정 UI */}
-            {missionId === 'E-1' && (
+            {/* 알리 AI 말풍선 */}
+            <div style={{
+                background: '#fdcb6e',
+                border: '3px solid #e17055',
+                borderRadius: '20px',
+                padding: '20px',
+                marginBottom: '20px',
+                position: 'relative'
+            }}>
                 <div style={{
-                    background: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
-                    borderRadius: '20px',
-                    padding: '20px',
-                    marginBottom: '25px',
-                    color: 'white',
-                    boxShadow: '0 8px 32px rgba(79, 172, 254, 0.3)',
-                    position: 'relative'
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '15px',
+                    marginBottom: '15px'
                 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+                    <div style={{
+                        width: '50px',
+                        height: '50px',
+                        background: '#e17055',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '24px'
+                    }}>
+                        🤖
+                    </div>
+                    <div>
                         <div style={{
-                            width: '60px',
-                            height: '60px',
-                            background: 'rgba(255,255,255,0.2)',
-                            borderRadius: '50%',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            fontSize: '24px',
-                            border: '2px solid rgba(255,255,255,0.3)'
+                            background: '#e17055',
+                            color: 'white',
+                            padding: '4px 12px',
+                            borderRadius: '15px',
+                            fontSize: '14px',
+                            fontWeight: 'bold',
+                            display: 'inline-block'
                         }}>
-                            🕵️‍♀️
-                        </div>
-                        <div>
-                            <div style={{ fontSize: '1.3rem', fontWeight: 'bold', marginBottom: '5px' }}>
-                                🔍 AI 전문가 탐정 미션
-                            </div>
-                            <div style={{ fontSize: '0.95rem', opacity: 0.9 }}>
-                                일상 속 숨겨진 AI 기술을 찾아 분석해보세요!
-                            </div>
+                            알리 (AI)
                         </div>
                     </div>
                 </div>
-            )}
+                <div style={{
+                    color: '#2d3436',
+                    fontSize: '1rem',
+                    lineHeight: '1.5'
+                }}>
+                    좋아! 이제 본격적으로 미션을 수행해 보자. 파이팅!
+                </div>
+            </div>
 
-            <div className="bg-white rounded-lg shadow-lg p-6">
-                <div className="mb-6 p-4 bg-gradient-to-r from-blue-50 to-cyan-50 rounded-lg border-l-4 border-blue-500">
-                    <p className="text-blue-800 font-semibold">
-                        {currentPrompts && currentPrompts[0]}
-                    </p>
+            {/* 탐구 과제 섹션 - 노란색 테두리 */}
+            <div style={{
+                background: '#fff9e6',
+                border: '3px solid #fdcb6e',
+                borderRadius: '20px',
+                padding: '25px',
+                marginBottom: '20px'
+            }}>
+                <div style={{
+                    fontSize: '1.3rem',
+                    fontWeight: 'bold',
+                    color: '#e17055',
+                    marginBottom: '20px',
+                    textAlign: 'center'
+                }}>
+                    탐구 과제
                 </div>
 
-                <StackedInputs
-                    missionId={missionId}
-                    gradeGroup={gradeGroup}
-                    stackedInputs={currentStackedInputs}
-                    stackedAnswers={stackedAnswers}
-                    onStackedChange={onStackedChange}
-                />
+                <form onSubmit={onSubmit}>
+                    {/* 파일 업로드 섹션 */}
+                    <div style={{ marginBottom: '20px' }}>
+                        <div style={{ 
+                            marginBottom: '10px', 
+                            fontWeight: 'bold', 
+                            color: '#2d3436' 
+                        }}>
+                            관련 사진을 업로드해주세요. 📸
+                        </div>
+                        <div style={{
+                            border: '2px dashed #fdcb6e',
+                            borderRadius: '12px',
+                            padding: '20px',
+                            textAlign: 'center',
+                            background: 'white',
+                            marginBottom: '20px'
+                        }}>
+                            <input
+                                type="file"
+                                accept="image/*"
+                                onChange={(e) => {
+                                    console.log('파일 선택:', e.target.files[0]);
+                                }}
+                                style={{ 
+                                    width: '100%',
+                                    padding: '10px',
+                                    border: 'none',
+                                    background: 'transparent'
+                                }}
+                            />
+                            <div style={{
+                                color: '#666',
+                                fontSize: '14px',
+                                marginTop: '10px'
+                            }}>
+                                파일을 선택하거나 여기로 드래그하세요
+                            </div>
+                        </div>
+                    </div>
 
-                <div className="mt-6 text-center">
-                    <button
-                        onClick={onSubmit}
-                        className="px-8 py-3 bg-gradient-to-r from-blue-600 to-cyan-600 text-white rounded-lg hover:from-blue-700 hover:to-cyan-700 transition-all transform hover:scale-105 shadow-lg"
-                    >
-                        {missionId === 'E-1' ? '🔍 탐정 보고서 제출하기' : '답변 제출하기'}
-                    </button>
-                </div>
+                    {/* 입력 필드들 */}
+                    <StackedInputs
+                        missionId={missionId}
+                        gradeGroup={gradeGroup}
+                        stackedInputs={currentStackedInputs}
+                        stackedAnswers={stackedAnswers}
+                        onStackedChange={onStackedChange}
+                    />
+
+                    <div style={{ textAlign: 'center', marginTop: '30px' }}>
+                        <button
+                            type="submit"
+                            style={{
+                                background: '#fdcb6e',
+                                color: 'white',
+                                border: 'none',
+                                borderRadius: '25px',
+                                padding: '15px 40px',
+                                fontSize: '1.2rem',
+                                fontWeight: 'bold',
+                                cursor: 'pointer',
+                                width: '100%'
+                            }}
+                        >
+                            미션 내용 수정하기!
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
     );

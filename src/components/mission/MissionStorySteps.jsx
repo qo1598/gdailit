@@ -54,14 +54,43 @@ const MissionStorySteps = ({
 
     return (
         <div style={{
-            background: theme.gradient,
+            background: 'white',
+            border: '3px solid #74b9ff',
             borderRadius: '20px',
             padding: '25px',
             marginBottom: '25px',
-            color: 'white',
             textAlign: 'center',
-            boxShadow: `0 10px 30px ${theme.shadow}`
+            boxShadow: '0 4px 12px rgba(116, 185, 255, 0.1)'
         }}>
+            {/* 로봇 캐릭터 */}
+            <div style={{ marginBottom: '20px' }}>
+                <div style={{
+                    width: '80px',
+                    height: '80px',
+                    background: '#74b9ff',
+                    borderRadius: '50%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: '40px',
+                    margin: '0 auto',
+                    marginBottom: '10px'
+                }}>
+                    🤖
+                </div>
+                <div style={{
+                    background: '#74b9ff',
+                    color: 'white',
+                    padding: '8px 16px',
+                    borderRadius: '20px',
+                    fontSize: '14px',
+                    fontWeight: 'bold',
+                    display: 'inline-block'
+                }}>
+                    알리 (AI)
+                </div>
+            </div>
+
             {step.image && (
                 <div style={{ marginBottom: '20px' }}>
                     <img 
@@ -71,7 +100,7 @@ const MissionStorySteps = ({
                             maxWidth: '200px', 
                             height: 'auto', 
                             borderRadius: '15px',
-                            boxShadow: '0 5px 15px rgba(0,0,0,0.2)'
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                         }} 
                     />
                 </div>
@@ -81,7 +110,8 @@ const MissionStorySteps = ({
                 fontSize: '1.1rem',
                 lineHeight: '1.6',
                 marginBottom: '20px',
-                fontWeight: '500'
+                fontWeight: '500',
+                color: '#2d3436'
             }}>
                 {step.text}
             </div>
@@ -96,11 +126,11 @@ const MissionStorySteps = ({
                     onClick={onPrevStep}
                     disabled={currentStep === 0}
                     style={{
-                        background: currentStep === 0 ? 'rgba(255,255,255,0.3)' : 'rgba(255,255,255,0.8)',
+                        background: currentStep === 0 ? '#ddd' : '#74b9ff',
                         border: 'none',
                         borderRadius: '10px',
                         padding: '8px 15px',
-                        color: currentStep === 0 ? 'rgba(255,255,255,0.7)' : '#2d3436',
+                        color: 'white',
                         cursor: currentStep === 0 ? 'not-allowed' : 'pointer',
                         fontWeight: 'bold'
                     }}
@@ -120,7 +150,7 @@ const MissionStorySteps = ({
                                 width: '10px',
                                 height: '10px',
                                 borderRadius: '50%',
-                                background: index === currentStep ? 'white' : 'rgba(255,255,255,0.4)',
+                                background: index === currentStep ? '#74b9ff' : '#ddd',
                                 transition: 'all 0.3s ease'
                             }}
                         />
@@ -130,17 +160,16 @@ const MissionStorySteps = ({
                 <button
                     onClick={isLastStep ? onComplete : onNextStep}
                     style={{
-                        background: 'rgba(255,255,255,0.9)',
+                        background: '#74b9ff',
                         border: 'none',
                         borderRadius: '10px',
                         padding: '8px 15px',
-                        color: '#2d3436',
+                        color: 'white',
                         cursor: 'pointer',
-                        fontWeight: 'bold',
-                        boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                        fontWeight: 'bold'
                     }}
                 >
-                    {isLastStep ? '미션 시작!' : '다음 →'}
+                    {isLastStep ? '다음 단계로' : '다음 →'}
                 </button>
             </div>
         </div>

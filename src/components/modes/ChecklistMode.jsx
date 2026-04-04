@@ -17,58 +17,117 @@ const ChecklistMode = ({
 
     return (
         <div className="max-w-4xl mx-auto p-6">
-            {/* M-1 미션의 특별한 유혹 시나리오 UI */}
-            {missionId === 'M-1' && (
+            {/* 알리 AI 말풍선 */}
+            <div style={{
+                background: '#fdcb6e',
+                border: '3px solid #e17055',
+                borderRadius: '20px',
+                padding: '20px',
+                marginBottom: '20px'
+            }}>
                 <div style={{
-                    background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-                    borderRadius: '20px',
-                    padding: '20px',
-                    marginBottom: '25px',
-                    color: 'white',
-                    boxShadow: '0 8px 32px rgba(102, 126, 234, 0.3)',
-                    position: 'relative'
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '15px',
+                    marginBottom: '15px'
                 }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
-                        <img
-                            src={mission.scenarioImages?.[gradeGroup] || '/m1_temptation_villain_1775273041480.png'}
-                            alt="유혹 AI"
-                            style={{ 
-                                width: '80px', 
-                                height: '80px', 
-                                borderRadius: '50%',
-                                border: '3px solid white',
-                                boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
-                            }}
-                        />
-                        <div>
-                            <div style={{ fontSize: '1.3rem', fontWeight: 'bold', marginBottom: '5px' }}>
-                                🎭 유혹하는 AI의 달콤한 제안
-                            </div>
-                            <div style={{ fontSize: '0.95rem', opacity: 0.9 }}>
-                                {mission.scenarioDescriptions?.[gradeGroup]}
-                            </div>
+                    <div style={{
+                        width: '50px',
+                        height: '50px',
+                        background: '#e17055',
+                        borderRadius: '50%',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: '24px'
+                    }}>
+                        🤖
+                    </div>
+                    <div>
+                        <div style={{
+                            background: '#e17055',
+                            color: 'white',
+                            padding: '4px 12px',
+                            borderRadius: '15px',
+                            fontSize: '14px',
+                            fontWeight: 'bold',
+                            display: 'inline-block'
+                        }}>
+                            알리 (AI)
                         </div>
                     </div>
                 </div>
-            )}
+                <div style={{
+                    color: '#2d3436',
+                    fontSize: '1rem',
+                    lineHeight: '1.5'
+                }}>
+                    좋아! 이제 본격적으로 미션을 수행해 보자. 파이팅!
+                </div>
+            </div>
 
-            <div className="bg-white rounded-lg shadow-lg p-6">
-                <div className="mb-6 p-4 bg-blue-50 rounded-lg">
-                    <p className="text-blue-800 font-semibold">
-                        {currentPrompts && currentPrompts[0]}
-                    </p>
+            {/* 탐구 과제 섹션 - 노란색 테두리 */}
+            <div style={{
+                background: '#fff9e6',
+                border: '3px solid #fdcb6e',
+                borderRadius: '20px',
+                padding: '25px',
+                marginBottom: '20px'
+            }}>
+                <div style={{
+                    fontSize: '1.3rem',
+                    fontWeight: 'bold',
+                    color: '#e17055',
+                    marginBottom: '20px',
+                    textAlign: 'center'
+                }}>
+                    탐구 과제
                 </div>
 
+                {currentPrompts && currentPrompts.length > 0 && (
+                    <div style={{
+                        background: '#74b9ff',
+                        color: 'white',
+                        borderRadius: '15px',
+                        padding: '15px',
+                        marginBottom: '20px',
+                        textAlign: 'center'
+                    }}>
+                        <div style={{
+                            fontSize: '1.1rem',
+                            fontWeight: 'bold',
+                            lineHeight: '1.5'
+                        }}>
+                            {currentPrompts[0]}
+                        </div>
+                    </div>
+                )}
+
                 {currentStackedInputs?.map((inputDef, index) => (
-                    <div key={inputDef.id} className="mb-6">
-                        <label className="block text-lg font-semibold mb-3 text-gray-700">
+                    <div key={inputDef.id} style={{ marginBottom: '25px' }}>
+                        <label style={{
+                            display: 'block',
+                            fontSize: '1.1rem',
+                            fontWeight: 'bold',
+                            marginBottom: '15px',
+                            color: '#2d3436'
+                        }}>
                             {inputDef.label}
                         </label>
                         
                         {inputDef.type === 'checklist' && (
-                            <div className="grid gap-3">
+                            <div style={{ display: 'grid', gap: '10px' }}>
                                 {inputDef.list?.map((item, itemIndex) => (
-                                    <label key={itemIndex} className="flex items-center p-3 border rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                                    <label key={itemIndex} style={{
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        padding: '15px',
+                                        border: '2px solid #ddd',
+                                        borderRadius: '12px',
+                                        background: 'white',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.2s'
+                                    }}>
                                         <input
                                             type="checkbox"
                                             checked={stackedAnswers[inputDef.id]?.includes(item) || false}
@@ -79,9 +138,9 @@ const ChecklistMode = ({
                                                     : currentSelected.filter(selected => selected !== item);
                                                 handleChecklistChange(inputDef.id, newSelected);
                                             }}
-                                            className="mr-3 w-4 h-4 text-blue-600"
+                                            style={{ marginRight: '12px', width: '16px', height: '16px' }}
                                         />
-                                        <span className="text-gray-700">{item}</span>
+                                        <span style={{ color: '#2d3436' }}>{item}</span>
                                     </label>
                                 ))}
                             </div>
@@ -92,19 +151,37 @@ const ChecklistMode = ({
                                 value={stackedAnswers[inputDef.id] || ''}
                                 onChange={(e) => onStackedChange(inputDef.id, e.target.value)}
                                 placeholder={inputDef.placeholder}
-                                className="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+                                style={{
+                                    width: '100%',
+                                    padding: '15px',
+                                    border: '2px solid #ddd',
+                                    borderRadius: '12px',
+                                    fontSize: '1rem',
+                                    minHeight: '120px',
+                                    resize: 'vertical'
+                                }}
                                 rows={4}
                             />
                         )}
                     </div>
                 ))}
 
-                <div className="mt-6 text-center">
+                <div style={{ textAlign: 'center', marginTop: '30px' }}>
                     <button
                         onClick={onSubmit}
-                        className="px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all transform hover:scale-105 shadow-lg"
+                        style={{
+                            background: '#fdcb6e',
+                            color: 'white',
+                            border: 'none',
+                            borderRadius: '25px',
+                            padding: '15px 40px',
+                            fontSize: '1.2rem',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            width: '100%'
+                        }}
                     >
-                        {missionId === 'M-1' ? '나의 선택 완료!' : '선택 완료하기'}
+                        미션 내용 수정하기!
                     </button>
                 </div>
             </div>
