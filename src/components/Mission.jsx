@@ -1,6 +1,5 @@
 ﻿import React, { useState } from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { ArrowLeft } from 'lucide-react';
 import { MISSIONS } from '../data/missions';
 import { useGradeLogic } from '../hooks/useGradeLogic';
 import { useFormHandling } from '../hooks/useFormHandling';
@@ -108,39 +107,33 @@ const Mission = ({ userName }) => {
     if (missionPhase === 'story') {
         return (
             <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
-                <div className="p-4">
-                    <button
-                        onClick={handleBack}
-                        style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: '8px',
-                            padding: '12px 20px',
-                            background: 'white',
-                            border: '2px solid #74b9ff',
-                            borderRadius: '25px',
-                            color: '#74b9ff',
-                            fontSize: '16px',
-                            fontWeight: 'bold',
-                            cursor: 'pointer',
-                            boxShadow: '0 2px 8px rgba(116, 185, 255, 0.2)',
-                            transition: 'all 0.2s'
-                        }}
-                        onMouseOver={(e) => {
-                            e.target.style.background = '#74b9ff';
-                            e.target.style.color = 'white';
-                        }}
-                        onMouseOut={(e) => {
-                            e.target.style.background = 'white';
-                            e.target.style.color = '#74b9ff';
-                        }}
-                    >
-                        <ArrowLeft size={20} />
-                        뒤로가기
-                    </button>
-                </div>
                 <div className="max-w-4xl mx-auto p-6">
-                    <h2 className="text-3xl font-bold text-center mb-6 text-gray-800">{mission.title}</h2>
+                    {/* 미션 제목 헤더 */}
+                    <div style={{
+                        textAlign: 'center',
+                        marginBottom: '30px',
+                        padding: '20px',
+                        background: 'white',
+                        borderRadius: '15px',
+                        boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
+                    }}>
+                        <div style={{
+                            fontSize: '1.8rem',
+                            fontWeight: 'bold',
+                            color: '#2d3436',
+                            marginBottom: '8px'
+                        }}>
+                            {mission.title}
+                        </div>
+                        <div style={{
+                            fontSize: '1rem',
+                            color: '#636e72',
+                            marginBottom: '5px'
+                        }}>
+                            {missionId} | {mission.competency}
+                        </div>
+                    </div>
+
                     <MissionStorySteps
                         steps={mission.storySteps?.[gradeGroup] || []}
                         currentStep={currentStep}
@@ -213,15 +206,6 @@ const Mission = ({ userName }) => {
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
-            <div className="p-4">
-                <button
-                    onClick={handleBack}
-                    className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
-                >
-                    <ArrowLeft size={20} />
-                    뒤로가기
-                </button>
-            </div>
             {renderMissionMode()}
         </div>
     );

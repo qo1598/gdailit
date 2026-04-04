@@ -60,38 +60,11 @@ const MissionStorySteps = ({
             padding: '25px',
             marginBottom: '25px',
             textAlign: 'center',
-            boxShadow: '0 4px 12px rgba(116, 185, 255, 0.1)'
+            boxShadow: '0 4px 12px rgba(116, 185, 255, 0.1)',
+            width: '100%',
+            maxWidth: '800px',
+            margin: '0 auto'
         }}>
-            {/* 알리 캐릭터 */}
-            <div style={{ marginBottom: '20px' }}>
-                <div style={{
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
-                    gap: '10px'
-                }}>
-                    <img 
-                        src="/robot_2d_base.png" 
-                        alt="알리 캐릭터" 
-                        style={{ 
-                            width: '120px', 
-                            height: '120px',
-                            objectFit: 'contain'
-                        }} 
-                    />
-                    <div style={{
-                        background: '#74b9ff',
-                        color: 'white',
-                        padding: '8px 16px',
-                        borderRadius: '20px',
-                        fontSize: '16px',
-                        fontWeight: 'bold',
-                        display: 'inline-block'
-                    }}>
-                        알리 (AIli)
-                    </div>
-                </div>
-            </div>
 
             {step.image && (
                 <div style={{ marginBottom: '20px' }}>
@@ -99,7 +72,7 @@ const MissionStorySteps = ({
                         src={step.image} 
                         alt="스토리 이미지" 
                         style={{ 
-                            maxWidth: '200px', 
+                            maxWidth: '300px', 
                             height: 'auto', 
                             borderRadius: '15px',
                             boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
@@ -107,6 +80,20 @@ const MissionStorySteps = ({
                     />
                 </div>
             )}
+            
+            {/* 알리 이름표를 캐릭터 이미지 밑에 배치 */}
+            <div style={{
+                background: '#74b9ff',
+                color: 'white',
+                padding: '8px 16px',
+                borderRadius: '20px',
+                fontSize: '16px',
+                fontWeight: 'bold',
+                display: 'inline-block',
+                marginBottom: '20px'
+            }}>
+                알리
+            </div>
             
             <div style={{
                 fontSize: '1.3rem',
@@ -130,12 +117,13 @@ const MissionStorySteps = ({
                     style={{
                         background: currentStep === 0 ? '#ddd' : '#74b9ff',
                         border: 'none',
-                        borderRadius: '15px',
-                        padding: '15px 25px',
+                        borderRadius: '25px',
+                        padding: '15px 40px',
                         color: 'white',
                         cursor: currentStep === 0 ? 'not-allowed' : 'pointer',
                         fontWeight: 'bold',
-                        fontSize: '16px'
+                        fontSize: '16px',
+                        minWidth: '120px'
                     }}
                 >
                     ← 이전
@@ -165,15 +153,16 @@ const MissionStorySteps = ({
                     style={{
                         background: '#74b9ff',
                         border: 'none',
-                        borderRadius: '15px',
-                        padding: '15px 25px',
+                        borderRadius: '25px',
+                        padding: '15px 40px',
                         color: 'white',
                         cursor: 'pointer',
                         fontWeight: 'bold',
-                        fontSize: '16px'
+                        fontSize: '16px',
+                        minWidth: '120px'
                     }}
                 >
-                    {isLastStep ? '다음 단계로' : '다음 →'}
+                    {isLastStep ? '다음 →' : '다음 →'}
                 </button>
             </div>
         </div>

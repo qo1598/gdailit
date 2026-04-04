@@ -34,26 +34,27 @@ const DirectTextMode = ({
                         style={{ 
                             width: '60px', 
                             height: '60px',
-                            objectFit: 'contain'
+                            objectFit: 'contain',
+                            background: 'transparent'
                         }} 
                     />
-                    <div style={{
-                        background: '#fdcb6e',
-                        color: 'white',
-                        padding: '6px 14px',
-                        borderRadius: '15px',
-                        fontSize: '14px',
-                        fontWeight: 'bold',
-                        marginRight: '15px'
-                    }}>
-                        알리 (AIli)
-                    </div>
                     <div style={{
                         color: '#2d3436',
                         fontSize: '1rem',
                         lineHeight: '1.5',
                         flex: 1
                     }}>
+                        <span style={{
+                            background: '#fdcb6e',
+                            color: 'white',
+                            padding: '6px 14px',
+                            borderRadius: '15px',
+                            fontSize: '14px',
+                            fontWeight: 'bold',
+                            marginRight: '15px'
+                        }}>
+                            알리
+                        </span>
                         좋아! 이제 본격적으로 미션을 수행해 보자. 파이팅!
                     </div>
                 </div>
