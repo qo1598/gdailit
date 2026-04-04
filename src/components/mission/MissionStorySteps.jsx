@@ -62,32 +62,34 @@ const MissionStorySteps = ({
             textAlign: 'center',
             boxShadow: '0 4px 12px rgba(116, 185, 255, 0.1)'
         }}>
-            {/* 로봇 캐릭터 */}
+            {/* 알리 캐릭터 */}
             <div style={{ marginBottom: '20px' }}>
                 <div style={{
-                    width: '80px',
-                    height: '80px',
-                    background: '#74b9ff',
-                    borderRadius: '50%',
                     display: 'flex',
+                    flexDirection: 'column',
                     alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: '40px',
-                    margin: '0 auto',
-                    marginBottom: '10px'
+                    gap: '10px'
                 }}>
-                    🤖
-                </div>
-                <div style={{
-                    background: '#74b9ff',
-                    color: 'white',
-                    padding: '8px 16px',
-                    borderRadius: '20px',
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    display: 'inline-block'
-                }}>
-                    알리 (AI)
+                    <img 
+                        src="/robot_2d_base.png" 
+                        alt="알리 캐릭터" 
+                        style={{ 
+                            width: '120px', 
+                            height: '120px',
+                            objectFit: 'contain'
+                        }} 
+                    />
+                    <div style={{
+                        background: '#74b9ff',
+                        color: 'white',
+                        padding: '8px 16px',
+                        borderRadius: '20px',
+                        fontSize: '16px',
+                        fontWeight: 'bold',
+                        display: 'inline-block'
+                    }}>
+                        알리 (AIli)
+                    </div>
                 </div>
             </div>
 
@@ -107,7 +109,7 @@ const MissionStorySteps = ({
             )}
             
             <div style={{
-                fontSize: '1.1rem',
+                fontSize: '1.3rem',
                 lineHeight: '1.6',
                 marginBottom: '20px',
                 fontWeight: '500',
@@ -128,11 +130,12 @@ const MissionStorySteps = ({
                     style={{
                         background: currentStep === 0 ? '#ddd' : '#74b9ff',
                         border: 'none',
-                        borderRadius: '10px',
-                        padding: '8px 15px',
+                        borderRadius: '15px',
+                        padding: '15px 25px',
                         color: 'white',
                         cursor: currentStep === 0 ? 'not-allowed' : 'pointer',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        fontSize: '16px'
                     }}
                 >
                     ← 이전
@@ -162,11 +165,12 @@ const MissionStorySteps = ({
                     style={{
                         background: '#74b9ff',
                         border: 'none',
-                        borderRadius: '10px',
-                        padding: '8px 15px',
+                        borderRadius: '15px',
+                        padding: '15px 25px',
                         color: 'white',
                         cursor: 'pointer',
-                        fontWeight: 'bold'
+                        fontWeight: 'bold',
+                        fontSize: '16px'
                     }}
                 >
                     {isLastStep ? '다음 단계로' : '다음 →'}

@@ -111,7 +111,29 @@ const Mission = ({ userName }) => {
                 <div className="p-4">
                     <button
                         onClick={handleBack}
-                        className="flex items-center gap-2 px-4 py-2 text-gray-600 hover:text-gray-800 transition-colors"
+                        style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '8px',
+                            padding: '12px 20px',
+                            background: 'white',
+                            border: '2px solid #74b9ff',
+                            borderRadius: '25px',
+                            color: '#74b9ff',
+                            fontSize: '16px',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            boxShadow: '0 2px 8px rgba(116, 185, 255, 0.2)',
+                            transition: 'all 0.2s'
+                        }}
+                        onMouseOver={(e) => {
+                            e.target.style.background = '#74b9ff';
+                            e.target.style.color = 'white';
+                        }}
+                        onMouseOut={(e) => {
+                            e.target.style.background = 'white';
+                            e.target.style.color = '#74b9ff';
+                        }}
                     >
                         <ArrowLeft size={20} />
                         뒤로가기
