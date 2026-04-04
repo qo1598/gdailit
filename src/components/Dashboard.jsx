@@ -65,7 +65,7 @@ export default function Dashboard({ missions, refresh, justAttended, setJustAtte
                                 width: '100%',
                                 textAlign: 'center'
                             }}>
-                                {isCompleted ? '✨ 뱃지 획득!' : isSupplement ? '✍️ 보충 필요' : isPending ? '⏳ 검토 대기 중' : '🔒 도전하기'}
+                                {isCompleted ? '뱃지 획득' : isSupplement ? '보충 필요' : isPending ? '검토 대기 중' : '도전하기'}
                             </div>
                         </div>
                     );

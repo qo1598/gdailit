@@ -13,16 +13,16 @@ import './index.css';
 // We mock the status for the pilot here
 const INITIAL_MISSIONS = [
   { id: 'E-1', title: '내 주변 숨은 AI 찾기 대작전!', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e1_find_1773234874913.png' },
-  { id: 'E-2', title: '팩트체크 전문가, AI의 거짓말을 잡아라!', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e2_trust_1773234890193.png', silhouetteUrl: '/e2_silhouette.png' },
+  { id: 'E-2', title: '사실 확인 전문가, AI의 거짓말을 잡아라!', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e2_trust_1773234890193.png', silhouetteUrl: '/e2_silhouette.png' },
   { id: 'E-3', title: '알고리즘의 꼬리 잡기', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e3_recommend_1773234908058.png' },
   { id: 'E-4', title: 'AI는 모든 친구에게 친절할까?', competency: 'AI 인식 및 발견', status: 'unlocked', imageUrl: '/e4_fairness_1773234925903.png' },
 
   { id: 'C-1', title: '판타지 릴레이 동화 쓰기!', competency: 'AI와 창의적 활용', status: 'unlocked', imageUrl: '/c1_story_1773234941443.png' },
   { id: 'C-2', title: '불량 그림 수리 대작전', competency: 'AI와 창의적 활용', status: 'unlocked', imageUrl: '/c2_art_1773234957163.png' },
   { id: 'C-3', title: '오싹오싹 마법의 카피라이터', competency: 'AI와 창의적 활용', status: 'unlocked', imageUrl: '/c3_poster_1773234969699.png' },
-  { id: 'C-4', title: '도둑맞은 가짜 점수? 내 진짜 점수!', competency: 'AI와 창의적 활용', status: 'unlocked', imageUrl: '/c4_copyright_1773234984925.png' },
+  { id: 'C-4', title: '나의 노력, 정직한 마침표', competency: 'AI와 창의적 활용', status: 'unlocked', imageUrl: '/c4_copyright_1773234984925.png' },
 
-  { id: 'M-1', title: '달콤살벌~ 로봇의 은밀한 속삭임', competency: 'AI 사용 판단 및 윤리', status: 'unlocked', imageUrl: '/m1_rules_1773234999640.png' },
+  { id: 'M-1', title: '생각 지휘본부, 나의 주도권을 지켜라!', competency: 'AI 사용 판단 및 윤리', status: 'unlocked', imageUrl: '/m1_rules_1773234999640.png' },
   { id: 'M-2', title: '명확한 선 긋기! 네 일은 네가, 내 일은 내가!', competency: 'AI 사용 판단 및 윤리', status: 'unlocked', imageUrl: '/m2_roles_1773235015302.png' },
   { id: 'M-3', title: '마법 양탄자를 조종하는 슈퍼 프롬프트!', competency: 'AI 사용 판단 및 윤리', status: 'unlocked', imageUrl: '/m3_prompt_1773235032419.png' },
   { id: 'M-4', title: '신사숙녀 여러분의 AI 매너 헌장', competency: 'AI 사용 판단 및 윤리', status: 'unlocked', imageUrl: '/m4_promise_1773235045836.png' },
@@ -61,10 +61,10 @@ function Navigation() {
 // [마스터피스] 칩 아이콘 (반도체 부품 디자인으로 개편)
 const ChipIcon = ({ size = 20, color = "#00d2ff", style = {} }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ verticalAlign: 'middle', display: 'inline-block', ...style }}>
-    <rect x="5" y="5" width="14" height="14" rx="2" fill={color} fillOpacity="0.1" stroke={color} strokeWidth="2"/>
-    <rect x="9" y="9" width="6" height="6" rx="1" fill={color}/>
+    <rect x="5" y="5" width="14" height="14" rx="2" fill={color} fillOpacity="0.1" stroke={color} strokeWidth="2" />
+    <rect x="9" y="9" width="6" height="6" rx="1" fill={color} />
     {/* 반도체 핀(Pins) 표현 */}
-    <path d="M9 2V5M15 2V5M9 19V22M15 19V22M2 9H5M2 15H5M19 9H22M19 15H22" stroke={color} strokeWidth="2" strokeLinecap="round"/>
+    <path d="M9 2V5M15 2V5M9 19V22M15 19V22M2 9H5M2 15H5M19 9H22M19 15H22" stroke={color} strokeWidth="2" strokeLinecap="round" />
   </svg>
 );
 
@@ -82,8 +82,8 @@ const PART_SVGS = {
     <rect x="78" y="60" width="44" height="10" rx="5" fill="rgba(255, 118, 117, 0.3)" stroke="#ff7675" strokeWidth="1" />
   ),
   shield: () => (
-    <path d="M50 80 Q100 60 150 80 Q160 130 100 170 Q40 130 50 80" 
-          fill="rgba(116, 185, 255, 0.15)" stroke="#74b9ff" strokeWidth="2" strokeDasharray="4 2" />
+    <path d="M50 80 Q100 60 150 80 Q160 130 100 170 Q40 130 50 80"
+      fill="rgba(116, 185, 255, 0.15)" stroke="#74b9ff" strokeWidth="2" strokeDasharray="4 2" />
   ),
   cape: () => (
     <path d="M65 95 Q30 95 20 160 Q100 180 180 160 Q170 95 135 95" fill="#ff7675" opacity="0.9" />
@@ -164,7 +164,7 @@ const PART_SVGS = {
 
 const RobotSVG = ({ color = '#00d2ff', modules = [] }) => {
   const isEquipped = (id) => modules.includes(id);
-  
+
   return (
     <svg viewBox="0 0 200 200" style={{ width: '100%', height: '100%', filter: 'drop-shadow(0 0 10px rgba(0,210,255,0.4))' }}>
       {/* 부속 아이템 렌더링 */}
@@ -219,29 +219,29 @@ const RewardModal = ({ info, onClose }) => {
 
   return (
     <div style={{
-      position: 'fixed', 
-      top: 0, 
-      left: 0, 
-      right: 0, 
+      position: 'fixed',
+      top: 0,
+      left: 0,
+      right: 0,
       bottom: 0,
-      backgroundColor: 'rgba(0,0,0,0.85)', 
+      backgroundColor: 'rgba(0,0,0,0.85)',
       zIndex: 9999,
-      display: 'flex', 
-      alignItems: 'center', 
-      justifyContent: 'center', 
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
       padding: '20px',
       backdropFilter: 'blur(10px)',
       WebkitBackdropFilter: 'blur(10px)'
     }}>
       <div className="page-enter" style={{
-        background: 'white', 
-        padding: '50px 30px', 
+        background: 'white',
+        padding: '50px 30px',
         borderRadius: '50px',
-        width: '100%', 
-        maxWidth: '400px', 
+        width: '100%',
+        maxWidth: '400px',
         textAlign: 'center',
         boxShadow: '0 40px 100px rgba(0,0,0,0.6)',
-        position: 'relative', 
+        position: 'relative',
         overflow: 'hidden',
         border: '8px solid rgba(255,255,255,0.1)'
       }}>
@@ -252,9 +252,9 @@ const RewardModal = ({ info, onClose }) => {
           animation: 'pulse 4s infinite'
         }}></div>
 
-        <div style={{ 
-          marginBottom: '25px', 
-          filter: 'drop-shadow(0 15px 30px rgba(0,210,255,0.4))', 
+        <div style={{
+          marginBottom: '25px',
+          filter: 'drop-shadow(0 15px 30px rgba(0,210,255,0.4))',
           animation: 'float 3s ease-in-out infinite',
           position: 'relative',
           zIndex: 1,
@@ -263,18 +263,18 @@ const RewardModal = ({ info, onClose }) => {
         }}>
           <ChipIcon size={120} color="#00d2ff" />
         </div>
-        
+
         <div style={{ position: 'relative', zIndex: 1 }}>
           <h2 style={{ fontFamily: "'Jua', sans-serif", fontSize: '2.8rem', color: '#2d3436', margin: '0 0 10px 0' }}>데이터 획득!</h2>
-          <div style={{ 
-            fontSize: '2rem', fontWeight: '900', color: '#0984e3', 
-            marginBottom: '25px', background: '#e1f5fe', 
+          <div style={{
+            fontSize: '2rem', fontWeight: '900', color: '#0984e3',
+            marginBottom: '25px', background: '#e1f5fe',
             display: 'inline-block', padding: '10px 30px', borderRadius: '25px',
             boxShadow: 'inset 0 2px 5px rgba(0,0,0,0.05)'
           }}>
             + {info.amount} Fragments
           </div>
-          
+
           <p style={{ color: '#636e72', fontSize: '1.2rem', marginBottom: '35px', lineHeight: '1.7', fontWeight: 'bold' }}>
             {info.message}
           </p>
@@ -282,12 +282,12 @@ const RewardModal = ({ info, onClose }) => {
           <button
             onClick={onClose}
             className="btn-primary"
-            style={{ 
-              background: 'linear-gradient(135deg, #2d3436 0%, #000 100%)', 
-              color: 'white', 
-              boxShadow: '0 10px 20px rgba(0,0,0,0.2)', 
+            style={{
+              background: 'linear-gradient(135deg, #2d3436 0%, #000 100%)',
+              color: 'white',
+              boxShadow: '0 10px 20px rgba(0,0,0,0.2)',
               marginTop: 0,
-              width: '100%', 
+              width: '100%',
               fontSize: '1.3rem',
               padding: '20px',
               borderRadius: '25px'
@@ -328,28 +328,28 @@ function Profile({ userId, userName, fragments, setFragments, avatarConfig, setA
     { id: 'cap', category: 'head', label: '블루 캡', color: '#3498db', cost: 5 },
     { id: 'brain', category: 'head', label: '하이퍼 연산 장치', color: '#a29bfe', cost: 30 },
     { id: 'crown', category: 'head', label: '데이터 관', color: '#ffd700', cost: 50 },
-    
+
     { id: 'optics', category: 'face', label: '스캔 고글', color: '#00d2ff', cost: 10 },
     { id: 'sunglasses', category: 'face', label: '선글라스', color: '#2d3436', cost: 15 },
-    
+
     { id: 'shield', category: 'body', label: '방패', color: '#74b9ff', cost: 20 },
     { id: 'armor', category: 'body', label: '아머 플레이트', color: '#b2bec3', cost: 25 },
-    
+
     { id: 'cape', category: 'back', label: '히어로 망토', color: '#d63031', cost: 20 },
     { id: 'backpack', category: 'back', label: '백팩', color: '#27ae60', cost: 15 },
     { id: 'flight', category: 'back', label: '플라즈마 부스터', color: '#ff7675', cost: 25 },
-    
+
     { id: 'watch', category: 'acc', label: '스마트 워치', color: '#e74c3c', cost: 5 },
     { id: 'drone', category: 'acc', label: '드론', color: '#55efc4', cost: 35 },
     { id: 'aura', category: 'acc', label: '황금 오라', color: '#ffd700', cost: 40 },
-    
+
     { id: 'sneakers', category: 'feet', label: '스니커즈', color: '#e74c3c', cost: 10 },
     { id: 'boots', category: 'feet', label: '중력 슈즈', color: '#455a64', cost: 15 },
   ];
 
   const handleToggleModule = async (module) => {
     const isUnlocked = avatarConfig.unlocked?.includes(module.id) || module.cost === 0;
-    
+
     if (fragments < module.cost && !isUnlocked) {
       alert('데이터 조각이 부족합니다! 미션을 더 수행해서 조각을 채취해올까요? 💪');
       return;
@@ -361,7 +361,7 @@ function Profile({ userId, userName, fragments, setFragments, avatarConfig, setA
 
     // Check if equipping or unequipping
     const isCurrentlyEquipped = currentSelected.includes(module.id);
-    
+
     if (isCurrentlyEquipped) {
       // Unequip
       currentSelected = currentSelected.filter(id => id !== module.id);
@@ -374,7 +374,7 @@ function Profile({ userId, userName, fragments, setFragments, avatarConfig, setA
     }
 
     newConfig.selectedModules = currentSelected;
-    
+
     if (!isUnlocked) {
       newConfig.unlocked = [...(avatarConfig.unlocked || []), module.id];
     }
@@ -383,7 +383,7 @@ function Profile({ userId, userName, fragments, setFragments, avatarConfig, setA
       const actualCost = isUnlocked ? 0 : module.cost;
       const { error } = await supabase
         .from('students')
-        .update({ 
+        .update({
           avatar_config: newConfig,
           fragments: fragments - actualCost
         })
@@ -402,7 +402,7 @@ function Profile({ userId, userName, fragments, setFragments, avatarConfig, setA
   };
 
   const selectedModules = avatarConfig.selectedModules || [];
-  
+
   const getEquippedModule = (category) => {
     const equippedId = selectedModules.find(id => {
       const mod = upgradeModules.find(m => m.id === id);
@@ -412,18 +412,18 @@ function Profile({ userId, userName, fragments, setFragments, avatarConfig, setA
   };
 
   return (
-    <div className="page-enter" style={{ 
+    <div className="page-enter" style={{
       background: '#fcfcf7', // Light beige matching the image
-      minHeight: '100vh', 
+      minHeight: '100vh',
       width: '100%',
       maxWidth: '100%',
-      padding: '40px 20px 140px 20px', 
-      display: 'flex', 
+      padding: '40px 20px 140px 20px',
+      display: 'flex',
       flexDirection: 'column',
       position: 'relative',
       margin: '0 auto'
     }}>
-      
+
       {/* Title */}
       <h2 style={{
         textAlign: 'center',
@@ -439,7 +439,7 @@ function Profile({ userId, userName, fragments, setFragments, avatarConfig, setA
 
       {/* Avatar Layout Center */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '50px', padding: '0 10px' }}>
-        
+
         {/* Left Slots */}
         <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
           {['head', 'body', 'feet'].map(cat => {
@@ -489,123 +489,123 @@ function Profile({ userId, userName, fragments, setFragments, avatarConfig, setA
         </div>
       </div>
 
-        {/* Inventory Section (아이템 구비) */}
-        <div style={{ borderTop: '2px solid #e0dfd5', paddingTop: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
-            <h3 style={{ margin: 0, fontSize: '1.2rem', fontFamily: "'NanumSquareNeo-Variable', sans-serif", color: '#2d3436', fontWeight: 'bold' }}>아이템 구비</h3>
-            <div style={{ fontSize: '1.1rem', fontWeight: '900', color: '#0984e3', background: '#e1f5fe', padding: '4px 12px', borderRadius: '15px' }}>
-              <ChipIcon size={18} style={{ marginRight: '6px' }} /> {fragments}
-            </div>
-          </div>
-
-          <div style={{ display: 'flex', gap: '5px', overflowX: 'auto', paddingBottom: '10px', marginBottom: '10px', msOverflowStyle: 'none', scrollbarWidth: 'none' }} className="hide-scroll">
-            {[
-              { id: 'all', name: '전체' },
-              { id: 'head', name: '머리' },
-              { id: 'face', name: '얼굴' },
-              { id: 'body', name: '몸통' },
-              { id: 'back', name: '등' },
-              { id: 'acc', name: '장신구' },
-              { id: 'feet', name: '신발' }
-            ].map(cat => (
-              <button 
-                key={cat.id} 
-                onClick={() => setActiveCategory(cat.id)}
-                style={{ 
-                  padding: '6px 12px', 
-                  borderRadius: '20px', 
-                  border: 'none',
-                  background: activeCategory === cat.id ? '#0984e3' : '#e0dfd5',
-                  color: activeCategory === cat.id ? '#fff' : '#636e72',
-                  whiteSpace: 'nowrap',
-                  fontWeight: 'bold',
-                  fontSize: '0.9rem',
-                  cursor: 'pointer'
-                }}
-              >
-                {cat.name}
-              </button>
-            ))}
-          </div>
-          
-          <div style={{ 
-            display: 'grid', 
-            gridTemplateColumns: 'repeat(5, 1fr)', 
-            gap: '8px',
-            alignContent: 'start',
-            flex: 1,
-            overflowY: 'auto'
-          }}>
-            {upgradeModules.filter(m => activeCategory === 'all' || m.category === activeCategory).map(m => {
-              const isActive = selectedModules.includes(m.id);
-              const isUnlocked = avatarConfig.unlocked?.includes(m.id) || m.cost === 0;
-
-              return (
-                <button
-                  key={m.id}
-                  onClick={() => handleToggleModule(m)}
-                  disabled={isUpdating}
-                  style={{
-                    width: '100%',
-                    aspectRatio: '1',
-                    background: isActive ? '#fff' : (isUnlocked ? '#fcfcf7' : '#f5f6fa'),
-                    border: isActive ? `3px solid ${m.color}` : '2px solid #b2bec3',
-                    borderRadius: '12px',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    cursor: 'pointer',
-                    position: 'relative',
-                    transition: 'all 0.2s',
-                    boxShadow: isActive ? `0 4px 8px ${m.color}60` : '0 2px 4px rgba(0,0,0,0.05)',
-                    padding: '5px'
-                  }}
-                  title={`${m.label} - ${isUnlocked ? '보유중' : m.cost + ' Chips'}`}
-                >
-                  <div style={{ width: '100%', height: '100%', filter: !isUnlocked ? 'grayscale(100%) opacity(40%)' : 'none' }}>
-                    <ItemIcon moduleId={m.id} />
-                  </div>
-                  
-                  {isActive && (
-                    <div style={{ position: 'absolute', top: '-5px', right: '-5px', background: '#fff', borderRadius: '50%', color: m.color, fontSize: '0.8rem', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `2px solid ${m.color}`, fontWeight: 'bold', zIndex: 10 }}>✓</div>
-                  )}
-
-                  {!isUnlocked && (
-                    <div style={{ position: 'absolute', bottom: '2px', fontSize: '0.7rem', fontWeight: 'bold', color: '#b2bec3', background: 'rgba(255,255,255,0.9)', padding: '0 4px', borderRadius: '4px', zIndex: 10 }}>
-                      <ChipIcon size={12} style={{ marginRight: '3px' }} /> {m.cost}
-                    </div>
-                  )}
-                </button>
-              );
-            })}
-            
-            {/* Empty filler slots */}
-            {Array.from({ length: Math.max(0, 10 - upgradeModules.filter(m => activeCategory === 'all' || m.category === activeCategory).length) }).map((_, i) => (
-              <div key={`empty-${i}`} style={{ width: '100%', aspectRatio: '1', background: '#e0dfd5', border: '2px solid #b2bec3', borderRadius: '12px', opacity: 0.3 }} />
-            ))}
+      {/* Inventory Section (아이템 구비) */}
+      <div style={{ borderTop: '2px solid #e0dfd5', paddingTop: '20px', flex: 1, display: 'flex', flexDirection: 'column' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '15px' }}>
+          <h3 style={{ margin: 0, fontSize: '1.2rem', fontFamily: "'NanumSquareNeo-Variable', sans-serif", color: '#2d3436', fontWeight: 'bold' }}>아이템 구비</h3>
+          <div style={{ fontSize: '1.1rem', fontWeight: '900', color: '#0984e3', background: '#e1f5fe', padding: '4px 12px', borderRadius: '15px' }}>
+            <ChipIcon size={18} style={{ marginRight: '6px' }} /> {fragments}
           </div>
         </div>
 
-        <button 
-          onClick={onLogout} 
-          style={{ 
-            background: 'transparent',
-            border: '2px solid #ff7675',
-            color: '#ff7675',
-            padding: '12px',
-            borderRadius: '15px',
-            marginTop: '25px',
-            cursor: 'pointer',
-            fontWeight: 'bold',
-            fontSize: '1rem',
-            transition: 'all 0.2s',
-            alignSelf: 'center',
-            width: '80%'
-          }}
-        >
-          저장하고 실험실 나가기
-        </button>
+        <div style={{ display: 'flex', gap: '5px', overflowX: 'auto', paddingBottom: '10px', marginBottom: '10px', msOverflowStyle: 'none', scrollbarWidth: 'none' }} className="hide-scroll">
+          {[
+            { id: 'all', name: '전체' },
+            { id: 'head', name: '머리' },
+            { id: 'face', name: '얼굴' },
+            { id: 'body', name: '몸통' },
+            { id: 'back', name: '등' },
+            { id: 'acc', name: '장신구' },
+            { id: 'feet', name: '신발' }
+          ].map(cat => (
+            <button
+              key={cat.id}
+              onClick={() => setActiveCategory(cat.id)}
+              style={{
+                padding: '6px 12px',
+                borderRadius: '20px',
+                border: 'none',
+                background: activeCategory === cat.id ? '#0984e3' : '#e0dfd5',
+                color: activeCategory === cat.id ? '#fff' : '#636e72',
+                whiteSpace: 'nowrap',
+                fontWeight: 'bold',
+                fontSize: '0.9rem',
+                cursor: 'pointer'
+              }}
+            >
+              {cat.name}
+            </button>
+          ))}
+        </div>
+
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(5, 1fr)',
+          gap: '8px',
+          alignContent: 'start',
+          flex: 1,
+          overflowY: 'auto'
+        }}>
+          {upgradeModules.filter(m => activeCategory === 'all' || m.category === activeCategory).map(m => {
+            const isActive = selectedModules.includes(m.id);
+            const isUnlocked = avatarConfig.unlocked?.includes(m.id) || m.cost === 0;
+
+            return (
+              <button
+                key={m.id}
+                onClick={() => handleToggleModule(m)}
+                disabled={isUpdating}
+                style={{
+                  width: '100%',
+                  aspectRatio: '1',
+                  background: isActive ? '#fff' : (isUnlocked ? '#fcfcf7' : '#f5f6fa'),
+                  border: isActive ? `3px solid ${m.color}` : '2px solid #b2bec3',
+                  borderRadius: '12px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  cursor: 'pointer',
+                  position: 'relative',
+                  transition: 'all 0.2s',
+                  boxShadow: isActive ? `0 4px 8px ${m.color}60` : '0 2px 4px rgba(0,0,0,0.05)',
+                  padding: '5px'
+                }}
+                title={`${m.label} - ${isUnlocked ? '보유중' : m.cost + ' Chips'}`}
+              >
+                <div style={{ width: '100%', height: '100%', filter: !isUnlocked ? 'grayscale(100%) opacity(40%)' : 'none' }}>
+                  <ItemIcon moduleId={m.id} />
+                </div>
+
+                {isActive && (
+                  <div style={{ position: 'absolute', top: '-5px', right: '-5px', background: '#fff', borderRadius: '50%', color: m.color, fontSize: '0.8rem', width: '20px', height: '20px', display: 'flex', alignItems: 'center', justifyContent: 'center', border: `2px solid ${m.color}`, fontWeight: 'bold', zIndex: 10 }}>✓</div>
+                )}
+
+                {!isUnlocked && (
+                  <div style={{ position: 'absolute', bottom: '2px', fontSize: '0.7rem', fontWeight: 'bold', color: '#b2bec3', background: 'rgba(255,255,255,0.9)', padding: '0 4px', borderRadius: '4px', zIndex: 10 }}>
+                    <ChipIcon size={12} style={{ marginRight: '3px' }} /> {m.cost}
+                  </div>
+                )}
+              </button>
+            );
+          })}
+
+          {/* Empty filler slots */}
+          {Array.from({ length: Math.max(0, 10 - upgradeModules.filter(m => activeCategory === 'all' || m.category === activeCategory).length) }).map((_, i) => (
+            <div key={`empty-${i}`} style={{ width: '100%', aspectRatio: '1', background: '#e0dfd5', border: '2px solid #b2bec3', borderRadius: '12px', opacity: 0.3 }} />
+          ))}
+        </div>
+      </div>
+
+      <button
+        onClick={onLogout}
+        style={{
+          background: 'transparent',
+          border: '2px solid #ff7675',
+          color: '#ff7675',
+          padding: '12px',
+          borderRadius: '15px',
+          marginTop: '25px',
+          cursor: 'pointer',
+          fontWeight: 'bold',
+          fontSize: '1rem',
+          transition: 'all 0.2s',
+          alignSelf: 'center',
+          width: '80%'
+        }}
+      >
+        저장하고 실험실 나가기
+      </button>
     </div>
   );
 }
@@ -619,7 +619,7 @@ function parseGradeGroup(studentId) {
       if (grade <= 4) return 'middle';
       return 'upper';
     }
-  } catch (e) {}
+  } catch (e) { }
   return 'lower';
 }
 
@@ -704,10 +704,10 @@ function App() {
       setMissions(INITIAL_MISSIONS.map(m => {
         const prog = (progressData || []).find(d => d.mission_id === m.id);
         const sub = (submissionData || []).find(d => d.mission_id === m.id);
-        
+
         if (prog) {
           if (prog.completed) return { ...m, status: 'completed' };
-          
+
           // If not completed, check if teacher feedback exists
           if (sub?.data?.teacher_feedback) {
             return { ...m, status: 'supplement' };
@@ -753,8 +753,8 @@ function App() {
 
       <main className="main-content" style={{ padding: userId ? '20px' : '0', paddingBottom: userId ? '150px' : '0' }}>
         <Routes>
-          <Route path="/" element={userId ? <Dashboard missions={missions} refresh={fetchProgress} justAttended={false} setJustAttended={() => {}} /> : <Login onLogin={handleLogin} />} />
-          <Route path="/mission/:missionId" element={userId ? <Mission userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
+          <Route path="/" element={userId ? <Dashboard missions={missions} refresh={fetchProgress} justAttended={false} setJustAttended={() => { }} /> : <Login onLogin={handleLogin} />} />
+          <Route path="/mission/:missionId" element={userId ? <Mission userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
           <Route path="/minigame" element={userId ? <MiniGame userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
           <Route path="/discussion" element={userId ? <Discussion userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
           <Route path="/profile" element={userId ? <Profile userId={userId} userName={userName} fragments={fragments} setFragments={setFragments} avatarConfig={avatarConfig} setAvatarConfig={setAvatarConfig} onLogout={handleLogout} /> : <Login onLogin={handleLogin} />} />
