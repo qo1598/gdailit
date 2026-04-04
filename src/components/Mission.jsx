@@ -1,5 +1,5 @@
 ﻿import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { MISSIONS } from '../data/missions';
 import { useGradeLogic } from '../hooks/useGradeLogic';
@@ -18,12 +18,17 @@ import ChecklistMode from './modes/ChecklistMode';
 const Mission = ({ userName }) => {
     const { missionId, gradeGroup } = useParams();
     const navigate = useNavigate();
+    const location = useLocation();
     
     const mission = MISSIONS[missionId];
     const { currentType, currentWhy, currentExample } = useGradeLogic(mission, gradeGroup);
     const { stackedAnswers, handleStackedChange, handleSubmit, validateForm } = useFormHandling();
     
-    const [missionPhase, setMissionPhase] = useState('story');
+    // URL 파라미터에서 phase 확인
+    const urlParams = new URLSearchParams(location.search);
+    const initialPhase = urlParams.get('phase') || 'story';
+    
+    const [missionPhase, setMissionPhase] = useState(initialPhase);
     const [currentStep, setCurrentStep] = useState(0);
 
     if (!mission) {
