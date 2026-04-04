@@ -18,19 +18,19 @@ const NEW_MISSIONS = `const MISSIONS = {
         type: 'upload-text',
         stackedInputs: {
             lower: [{ id: 'location', type: 'text', label: '1. 야호! 어디서 찾았나요?', placeholder: '예: 거실 구석에 먼지 먹는 로봇청소기!' }],
-            middle: [{ id: 'location', type: 'text', label: '1. 어디서 발견했나요?', placeholder: '엄마 스마트폰의 음성 비서' }, { id: 'function', type: 'textarea', label: '2. 나에게 어떤 도움을 주나요?', placeholder: '예: 날씨를 물어보면 아주 친절하게 대답해 줘요.' }],
+            middle: [{ id: 'location', type: 'text', label: '1. 어디서 발견했나요?', placeholder: '엄마 스마트폰의 음성 비서' }, { id: 'function', type: 'textarea', label: '2. 여러분이 찾은 AI는 우리에게 어떤 편리함을 제공하나요?', placeholder: '예: 날씨를 물어보면 아주 친절하게 대답해 줘요.' }],
             upper: [{ id: 'location', type: 'text', label: '1. 발견한 AI 시스템 이름', placeholder: '포털 사이트 외국어 번역기' }, { id: 'pros_cons', type: 'textarea', label: '2. 편리함과 동시에 파생되는 한계점', placeholder: '영어 숙제를 엄청 빨리 끝내주지만, 가끔 앞뒤 문맥에 맞지 않는 엉뚱한 로봇 말투로 번역해서 부자연스러울 때가 있어요.' }]
         }
     },
     'E-2': {
-        title: '팩트체크 전문가, AI의 거짓말을 잡아라!',
+        title: '사실 확인 전문가, AI의 거짓말을 잡아라!',
         competency: 'AI 인식 및 발견',
-        why: 'AI는 아는 척을 잘하지만 가끔 엄청난 엉터리 대답을 하기도 해요! 우리가 의심하고 사실을 확인(팩트체크)해야 합니다.',
+        why: 'AI는 아는 척을 잘하지만 가끔 엄청난 엉터리 대답을 하기도 해요! 우리가 의심하고 사실을 확인(사실 확인)해야 합니다.',
         example: 'AI가 지어낸 역사적 사실, 환각(Hallucination)',
         prompts: {
             lower: ['방금 이 AI 로봇이 "세상에서 두 번째로 큰 동물은 호랑이예요!"라고 우기고 있어요. 어? 호랑이가 2번째로 큰가요? 정답이 틀렸다면 진짜 정답이 무엇인지 책이나 인터넷에서 찾아 알려주세요!'],
             middle: ['에헴! AI가 "호랑이가 세상에서 두 번째로 큰 동물이에요!"라고 거짓말을 하네요. 이 AI는 도대체 왜 이런 엉뚱한 실수를 혼자 확신하며 말하고 있는 걸까요? 탐정처럼 그 이유를 추리해 볼까요?'],
-            upper: ['AI에게 아주 어려운 질문을 던져보고, AI가 그럴듯한 거짓말(할루시네이션)을 말하도록 유도해 보세요. 틀린 답변을 받았다면 실제 근거를 대면서 AI와 치열하게 논쟁하여 항복을 받아내세요!']
+            upper: ['AI에게 아주 어려운 질문을 던져보고, AI가 그럴듯한 거짓말(환각)을 말하도록 유도해 보세요. 틀린 답변을 받았다면 실제 근거를 대면서 AI와 치열하게 논쟁하여 항복을 받아내세요!']
         },
         type: { lower: 'direct-text', middle: 'direct-text', upper: 'chat' },
         isChatMode: true,
@@ -66,7 +66,7 @@ const NEW_MISSIONS = `const MISSIONS = {
         example: '키 작은 어린이만 인식 못하는 엘리베이터, 특정 피부색만 못 보는 카메라, 어르신이 쓰기 힘든 키오스크 등',
         prompts: {
             lower: ['나나 우리 할머니, 할아버지, 동생이 기계(자동문, 식당 로봇, 키오스크 화면 등) 앞에서 "에잇 왜 안 되지?" 하고 엄청 당황하고 불편했던 적이 있나요? 언제 그랬나요?'],
-            middle: ['만약 AI 얼굴 카메라가 어른만 확확 빨리 인식해 통과시키고 어린이 얼굴은 하루 종일 인식 못 해서 빙빙 돈다면, 이 기계를 만든 콧대 높은 연구원들은 처음에 무슨 큰 실수를 저질렀던 걸까요?'],
+            middle: ['만약 AI 얼굴 카메라가 어른만 확확 빨리 인식해 통과시키고 어린이 얼굴은 하루 종일 인식 못 해서 빙빙 돈다면, 이 AI를 만든 콧대 높은 연구원들은 처음에 무슨 실수를 저질렀던 걸까요?'],
             upper: ['AI가 특정 사용자(어린이, 장애인, 특정 성별 등)를 배제하여 작동하는 기술적 차별 사례를 탐구하고, 모든 AI 개발자가 의무적으로 지켜야 할 "차별 방지 강력 윤리 수칙" 3조를 제정하여 선포하세요.']
         },
         type: 'direct-text',
@@ -106,9 +106,9 @@ const NEW_MISSIONS = `const MISSIONS = {
         },
         type: 'direct-text',
         stackedInputs: {
-            lower: [{ id: 'observe', type: 'textarea', label: '1. 돋보기 관찰: 어디가 이상하게 꼬여있나요?', placeholder: '고양이 귀가 마법 모자랑 찐득하게 막 녹아내려요! 발가락 개수도 이상하고 촛불 위치도 공중에 떠 있어요 으악!' }],
-            middle: [{ id: 'observe', type: 'textarea', label: '1. 어떤 어처구니없는 불량이 있나요?', placeholder: '마법 버섯 윗부분과 고양이 몸통 다리가 구분 없이 하나로 물들어 합쳐져서 녹아내리고 있어요.' }, { id: 'reason', type: 'textarea', label: '2. 탐정의 추리: 왜 AI는 이런 멍청한 실수를 할까?', placeholder: 'AI는 직접 3D 공간을 눈으로 본 적이 없고 사진들의 색깔 픽셀 뭉치만 외웠기 때문에 둘의 앞뒤 순서(원근)를 구분하지 못하고 섞어버린 거예요.' }],
-            upper: [{ id: 'observe', type: 'textarea', label: '1. 구조 및 공간적 렌더링 한계 분석', placeholder: 'AI 모델이 깊이감(Z-axis Depth)을 이해하지 못해 전경에 있는 발이나 배경 오브젝트들이 물리 법칙을 무시하고 동일 평면에 뒤틀려 병합된 심각한 할루시네이션입니다.' }, { id: 'prompt', type: 'textarea', label: '2. 완벽한 수정을 위한 역설계 구조(프롬프트)', placeholder: '예: Highly detailed wizard cat, CLEAR separation of character and background, character standing IN FRONT OF glowing elements, distinct depth of field, sharp edges...' }]
+            lower: [{ id: 'observe', type: 'textarea', label: '1. 돋보기 관찰: 그림에서 이상한 점을 찾아 적어봅시다.', placeholder: '고양이 귀가 마법 모자랑 찐득하게 막 녹아내려요! 발가락 개수도 이상하고 촛불 위치도 공중에 떠 있어요 으악!' }],
+            middle: [{ id: 'observe', type: 'textarea', label: '1. 어떤 어처구니없는 불량이 있나요?', placeholder: '마법 버섯 윗부분과 고양이 몸통 다리가 구분 없이 하나로 물들어 합쳐져서 녹아내리고 있어요.' }, { id: 'reason', type: 'textarea', label: '2. 탐정의 추리: 왜 AI는 이런 이상한 그림을 그리는 실수를 할까요?', placeholder: 'AI는 직접 3D 공간을 눈으로 본 적이 없고 사진들의 색깔 픽셀 뭉치만 외웠기 때문에 둘의 앞뒤 순서(원근)를 구분하지 못하고 섞어버린 거예요.' }],
+            upper: [{ id: 'observe', type: 'textarea', label: '1. 구조 및 공간적 렌더링 한계 분석', placeholder: 'AI 모델이 깊이감(Z-axis Depth)을 이해하지 못해 전경에 있는 발이나 배경 오브젝트들이 물리 법칙을 무시하고 동일 평면에 뒤틀려 병합된 심각한 환각 현상입니다.' }, { id: 'prompt', type: 'textarea', label: '2. 완벽한 수정을 위한 역설계 구조(프롬프트)', placeholder: '예: Highly detailed wizard cat, CLEAR separation of character and background, character standing IN FRONT OF glowing elements, distinct depth of field, sharp edges...' }]
         }
     },
     'C-3': {

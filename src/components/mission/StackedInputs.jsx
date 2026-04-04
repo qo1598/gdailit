@@ -1,4 +1,5 @@
 import React from 'react';
+import ImageGenerator from './ImageGenerator';
 
 /**
  * 스택된 입력 필드들을 렌더링하는 컴포넌트
@@ -79,88 +80,101 @@ const StackedInputs = ({
                 );
 
             case 'checklist':
+                // 백업 파일과 동일한 카드 색상 배열
                 const cardColors = [
-                    { bg: '#fff5f5', border: '#fed7d7', accent: '#e53e3e' },
-                    { bg: '#fffaf0', border: '#fbd38d', accent: '#dd6b20' },
-                    { bg: '#f0fff4', border: '#9ae6b4', accent: '#38a169' },
-                    { bg: '#ebf8ff', border: '#90cdf4', accent: '#3182ce' },
-                    { bg: '#faf5ff', border: '#d6bcfa', accent: '#805ad5' },
-                    { bg: '#fffbf0', border: '#f6e05e', accent: '#d69e2e' }
+                    { bg: '#e8f4fd', border: '#74b9ff', accent: '#0984e3' },
+                    { bg: '#fef7e8', border: '#fdcb6e', accent: '#e17055' },
+                    { bg: '#f0e8ff', border: '#a29bfe', accent: '#6c5ce7' },
+                    { bg: '#e8f8f5', border: '#00b894', accent: '#00a085' },
+                    { bg: '#ffe8f7', border: '#fd79a8', accent: '#e84393' },
+                    { bg: '#fff0e8', border: '#ff7675', accent: '#d63031' }
                 ];
 
                 return (
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                    <div style={{ 
+                        display: 'grid', 
+                        gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
                         gap: '15px',
-                        marginTop: '10px'
+                        padding: '10px 0'
                     }}>
-                        {inputDef.list.map((item, index) => {
-                            const isChecked = (stackedAnswers[inputId] || []).includes(item);
-                            const colors = cardColors[index % cardColors.length];
+                        {inputDef.list.map((item, idx) => {
+                            const currentAnswers = Array.isArray(stackedAnswers[inputId])
+                                ? stackedAnswers[inputId]
+                                : [];
+                            const isChecked = currentAnswers.includes(item);
+                            
+                            const cardColor = cardColors[idx % cardColors.length];
                             
                             return (
                                 <div
-                                    key={index}
+                                    key={idx}
                                     onClick={() => handleChecklistChange(inputId, item, !isChecked)}
                                     style={{
-                                        background: isChecked ? colors.bg : 'white',
-                                        border: `3px solid ${isChecked ? colors.accent : colors.border}`,
-                                        borderRadius: '15px',
+                                        background: isChecked ? cardColor.bg : 'white',
+                                        border: `3px solid ${isChecked ? cardColor.accent : cardColor.border}`,
+                                        borderRadius: '20px',
                                         padding: '20px',
                                         cursor: 'pointer',
-                                        transition: 'all 0.3s ease',
-                                        transform: isChecked ? 'translateY(-2px)' : 'translateY(0)',
+                                        transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                        transform: isChecked ? 'translateY(-3px) scale(1.02)' : 'translateY(0) scale(1)',
                                         boxShadow: isChecked 
-                                            ? `0 8px 25px ${colors.accent}30` 
-                                            : '0 2px 8px rgba(0,0,0,0.1)',
+                                            ? `0 12px 35px ${cardColor.accent}25, 0 8px 15px ${cardColor.accent}15` 
+                                            : '0 4px 12px rgba(0,0,0,0.08)',
                                         position: 'relative',
-                                        minHeight: '80px',
+                                        minHeight: '85px',
                                         display: 'flex',
                                         alignItems: 'center',
                                         justifyContent: 'center',
-                                        textAlign: 'center'
+                                        textAlign: 'center',
+                                        fontFamily: "'Nunito', -apple-system, BlinkMacSystemFont, sans-serif",
+                                        userSelect: 'none'
                                     }}
                                 >
+                                    {/* 선택 표시 */}
                                     {isChecked && (
                                         <>
                                             <div style={{
                                                 position: 'absolute',
-                                                top: '10px',
-                                                right: '10px',
-                                                width: '24px',
-                                                height: '24px',
-                                                background: colors.accent,
+                                                top: '12px',
+                                                right: '12px',
+                                                width: '28px',
+                                                height: '28px',
+                                                background: cardColor.accent,
                                                 borderRadius: '50%',
                                                 display: 'flex',
                                                 alignItems: 'center',
                                                 justifyContent: 'center',
                                                 color: 'white',
-                                                fontSize: '14px',
-                                                fontWeight: 'bold'
+                                                fontSize: '16px',
+                                                fontWeight: 'bold',
+                                                boxShadow: `0 4px 12px ${cardColor.accent}40`
                                             }}>
                                                 ✓
                                             </div>
                                             <div style={{
                                                 position: 'absolute',
-                                                bottom: '8px',
-                                                right: '8px',
-                                                background: colors.accent,
+                                                bottom: '10px',
+                                                right: '10px',
+                                                background: cardColor.accent,
                                                 color: 'white',
-                                                padding: '2px 8px',
-                                                borderRadius: '12px',
+                                                padding: '4px 10px',
+                                                borderRadius: '15px',
                                                 fontSize: '0.75rem',
-                                                fontWeight: 'bold'
+                                                fontWeight: 'bold',
+                                                boxShadow: `0 2px 8px ${cardColor.accent}30`
                                             }}>
                                                 선택됨 ✨
                                             </div>
                                         </>
                                     )}
+                                    
+                                    {/* 카드 내용 */}
                                     <div style={{
-                                        fontSize: '1rem',
+                                        fontSize: '1.05rem',
                                         fontWeight: '600',
-                                        color: isChecked ? colors.accent : '#2d3436',
-                                        lineHeight: '1.4'
+                                        color: isChecked ? cardColor.accent : '#2d3436',
+                                        lineHeight: '1.5',
+                                        padding: '0 10px'
                                     }}>
                                         {item}
                                     </div>
@@ -216,6 +230,13 @@ const StackedInputs = ({
                     {renderInput(inputDef)}
                 </div>
             ))}
+            
+            {/* M-3 미션 이미지 생성 기능 */}
+            <ImageGenerator
+                missionId={missionId}
+                gradeGroup={gradeGroup}
+                stackedAnswers={stackedAnswers}
+            />
         </div>
     );
 };

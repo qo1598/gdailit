@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function Dashboard({ missions, refresh, justAttended, setJustAttended }) {
+export default function Dashboard({ missions, refresh, justAttended, setJustAttended, gradeGroup }) {
     const navigate = useNavigate();
     const [showRewardModal, setShowRewardModal] = React.useState(false);
 
@@ -16,7 +16,7 @@ export default function Dashboard({ missions, refresh, justAttended, setJustAtte
     }, [justAttended, setJustAttended, refresh]);
 
     const handleMissionClick = (id) => {
-        navigate(`/mission/${id}`);
+        navigate(`/mission/${id}/${gradeGroup}`);
     };
 
     const completedCount = missions.filter(m => m.completed).length;

@@ -104,6 +104,25 @@ export const useFormHandling = (initialValues = {}) => {
         return submissionData;
     };
 
+    // 제출 핸들러
+    const handleSubmit = async (submissionData) => {
+        setIsSubmitting(true);
+        try {
+            // 여기에 실제 제출 로직을 추가할 수 있습니다
+            // 예: await submitToDatabase(submissionData);
+            console.log('제출 데이터:', submissionData);
+            
+            // 성공 시뮬레이션
+            await new Promise(resolve => setTimeout(resolve, 1000));
+            setShowSuccess(true);
+        } catch (error) {
+            console.error('제출 실패:', error);
+            throw error;
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
+
     return {
         // 상태
         formData,
@@ -118,9 +137,10 @@ export const useFormHandling = (initialValues = {}) => {
         
         // 핸들러
         handleTextChange,
-        handleStackedAnswerChange,
+        handleStackedChange: handleStackedAnswerChange,
         handleRuleChange,
         handleFileChange,
+        handleSubmit,
         
         // 유틸리티
         resetForm,

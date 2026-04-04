@@ -18,15 +18,15 @@ const UPDATED_MISSIONS = `const MISSIONS = {
         type: 'upload-text',
         stackedInputs: {
             lower: [{ id: 'location', type: 'text', label: '1. 야호! 어디서 찾았나요?', placeholder: '방금 전 내 주변에서 발견한 위치나 기계의 특징을 적어보세요.' }],
-            middle: [{ id: 'location', type: 'text', label: '1. 어디서 발견했나요?', placeholder: '집이나 학교 등, 이 AI 친구를 만난 정확한 장소를 알려주세요.' }, { id: 'function', type: 'textarea', label: '2. 나에게 어떤 도움을 주나요?', placeholder: '이 AI가 특별히 어떤 귀찮은 일을 알아서 해주는지 생각해 보세요!' }],
+            middle: [{ id: 'location', type: 'text', label: '1. 어디서 발견했나요?', placeholder: '집이나 학교 등, 이 AI 친구를 만난 정확한 장소를 알려주세요.' }, { id: 'function', type: 'textarea', label: '2. 여러분이 찾은 AI는 우리에게 어떤 편리함을 제공하나요?', placeholder: '이 AI가 특별히 어떤 귀찮은 일을 알아서 해주는지 생각해 보세요!' }],
             upper: [{ id: 'location', type: 'text', label: '1. 발견한 AI 시스템의 정확한 이름', placeholder: '사람들이나 제조사에서 이 로봇(서비스)을 부르는 이름을 적으세요.' }, { id: 'pros_cons', type: 'textarea', label: '2. 편리함 뒤에 숨겨진 아쉬운 점(한계)', placeholder: '이 기계가 모든 상황에서 완벽할까요? 사람이 직접 해야만 하는 일이나 위험한 점은 없는지 분석해 보세요.' }]
         }
     },
     'E-2': {
-        title: '팩트체크 전문가, AI의 거짓말을 잡아라!',
+        title: '사실 확인 전문가, AI의 거짓말을 잡아라!',
         competency: 'AI 인식 및 발견',
         why: 'AI는 아는 척을 잘하지만 가끔 엄청난 엉터리 대답을 하기도 해요! 우리가 의사 선생님처럼 꼼꼼히 확인해야 합니다.',
-        example: 'AI가 지어낸 역사 이야기, "로봇의 헛소리(할루시네이션)"',
+        example: 'AI가 지어낸 역사 이야기, "로봇의 헛소리(환각)"',
         prompts: {
             lower: ['방금 이 AI 로봇이 "세상에서 두 번째로 큰 동물은 호랑이예요!"라고 우겨요. 어? 진짜인가요? 틀린 정답이라면 진짜 정답이 무엇인지 책이나 인터넷에서 찾아 알려주세요!'],
             middle: ['에헴! AI가 "호랑이가 세상에서 두 번째로 큰 동물이에요!"라고 거짓말을 하네요. 이 AI는 도대체 왜 이런 엉뚱한 실수를 혼자 확신하며 말하고 있는 걸까요? 탐정처럼 그 이유를 추리해 볼까요?'],
@@ -66,7 +66,7 @@ const UPDATED_MISSIONS = `const MISSIONS = {
         example: '키 작은 어린이만 인식 못하는 엘리베이터, 특정 피부색만 못 보는 카메라 등',
         prompts: {
             lower: ['나나 우리 할아버지, 할머니, 동생이 기계(자동문, 식당 로봇, 키오스크 등) 앞에서 "어? 왜 안 되지?" 하고 당황하거나 불편했던 적이 있나요?'],
-            middle: ['만약 AI 얼굴 카메라가 어른만 빨리 인식해 통과시키고 어린이 얼굴은 하루 종일 인식 못 한다면, 이 기계를 만든 연구원들은 처음에 무슨 큰 실수를 저질렀던 걸까요?'],
+            middle: ['만약 AI 얼굴 카메라가 어른만 빨리 인식해 통과시키고 어린이 얼굴은 하루 종일 인식 못 한다면, 이 AI를 만든 연구원들은 무슨 실수를 한걸까요?'],
             upper: ['AI가 특정 사용자(어린이, 장애인 등)를 차별하여 작동하는 사례를 탐구해 보세요. 모든 AI 개발자가 의무적으로 지켜야 할 "차별 방지 약속" 3가지를 제안해 볼까요?']
         },
         type: 'direct-text',
@@ -106,8 +106,8 @@ const UPDATED_MISSIONS = `const MISSIONS = {
         },
         type: 'direct-text',
         stackedInputs: {
-            lower: [{ id: 'observe', type: 'textarea', label: '1. 돋보기 관찰: 어디가 이상하게 꼬여있나요?', placeholder: '고양이의 귀 끝부분이나 모자와 다리가 이어지는 부분을 아주 자세히 살펴보세요!' }],
-            middle: [{ id: 'observe', type: 'textarea', label: '1. 어떤 어처구니없는 불량이 있나요?', placeholder: '그림의 앞과 뒤(원근감)가 무시되고 서로 섞이거나 녹아내린 곳을 찾으세요.' }, { id: 'reason', type: 'textarea', label: '2. 탐정의 추리: 왜 AI는 이런 멍청한 실수를 할까?', placeholder: 'AI는 3차원 세상을 직접 본 적이 없고 이차원 그림으로만 외워서 그런 건 아닐까요?' }],
+            lower: [{ id: 'observe', type: 'textarea', label: '1. 돋보기 관찰: 그림에서 이상한 점을 찾아 적어봅시다.', placeholder: '고양이의 귀 끝부분이나 모자와 다리가 이어지는 부분을 아주 자세히 살펴보세요!' }],
+            middle: [{ id: 'observe', type: 'textarea', label: '1. 어떤 어처구니없는 불량이 있나요?', placeholder: '그림의 앞과 뒤(원근감)가 무시되고 서로 섞이거나 녹아내린 곳을 찾으세요.' }, { id: 'reason', type: 'textarea', label: '2. 탐정의 추리: 왜 AI는 이런 이상한 그림을 그리는 실수를 할까요?', placeholder: 'AI는 3차원 세상을 직접 본 적이 없고 이차원 그림으로만 외워서 그런 건 아닐까요?' }],
             upper: [{ id: 'observe', type: 'textarea', label: '1. 그림의 구조적 결함 분석', placeholder: '물체 사이의 경계가 희미하거나 공간 배치가 엉망인 부분을 콕 집어내 보세요.' }, { id: 'prompt', type: 'textarea', label: '2. 완벽한 수정을 위한 비법 레시피(명령어)', placeholder: '전경과 배경을 명확히 구분하고 털의 결까지 살리도록 명령어를 새로 만들어 보세요.' }]
         }
     },

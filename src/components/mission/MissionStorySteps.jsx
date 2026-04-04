@@ -9,7 +9,8 @@ const MissionStorySteps = ({
     onNextStep, 
     onPrevStep, 
     onComplete,
-    setVocabModal 
+    setVocabModal,
+    missionId 
 }) => {
     if (!steps || steps.length === 0) {
         return null;
@@ -18,15 +19,48 @@ const MissionStorySteps = ({
     const step = steps[currentStep];
     const isLastStep = currentStep === steps.length - 1;
 
+    // 미션별 테마 색상
+    const getThemeColors = (missionId) => {
+        switch (missionId) {
+            case 'E-1':
+                return {
+                    gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                    shadow: 'rgba(79, 172, 254, 0.3)'
+                };
+            case 'M-1':
+                return {
+                    gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    shadow: 'rgba(102, 126, 234, 0.3)'
+                };
+            case 'M-2':
+                return {
+                    gradient: 'linear-gradient(135deg, #ff7675 0%, #fd79a8 100%)',
+                    shadow: 'rgba(255, 118, 117, 0.3)'
+                };
+            case 'M-3':
+                return {
+                    gradient: 'linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%)',
+                    shadow: 'rgba(162, 155, 254, 0.3)'
+                };
+            default:
+                return {
+                    gradient: 'linear-gradient(135deg, #74b9ff 0%, #0984e3 100%)',
+                    shadow: 'rgba(116, 185, 255, 0.3)'
+                };
+        }
+    };
+
+    const theme = getThemeColors(missionId);
+
     return (
         <div style={{
-            background: 'linear-gradient(135deg, #74b9ff 0%, #0984e3 100%)',
+            background: theme.gradient,
             borderRadius: '20px',
             padding: '25px',
             marginBottom: '25px',
             color: 'white',
             textAlign: 'center',
-            boxShadow: '0 10px 30px rgba(116, 185, 255, 0.3)'
+            boxShadow: `0 10px 30px ${theme.shadow}`
         }}>
             {step.image && (
                 <div style={{ marginBottom: '20px' }}>

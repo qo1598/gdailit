@@ -9,7 +9,8 @@ const MissionHeader = ({
     gradeGroup, 
     currentWhy, 
     currentExample,
-    onBack 
+    onBack,
+    onComplete
 }) => {
     if (!mission) {
         return null;
@@ -24,9 +25,42 @@ const MissionHeader = ({
         }
     };
 
+    // 미션별 테마 색상
+    const getThemeColors = (missionId) => {
+        switch (missionId) {
+            case 'E-1':
+                return {
+                    gradient: 'linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)',
+                    buttonColor: '#4facfe'
+                };
+            case 'M-1':
+                return {
+                    gradient: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+                    buttonColor: '#667eea'
+                };
+            case 'M-2':
+                return {
+                    gradient: 'linear-gradient(135deg, #ff7675 0%, #fd79a8 100%)',
+                    buttonColor: '#ff7675'
+                };
+            case 'M-3':
+                return {
+                    gradient: 'linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%)',
+                    buttonColor: '#a29bfe'
+                };
+            default:
+                return {
+                    gradient: 'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%)',
+                    buttonColor: '#6c5ce7'
+                };
+        }
+    };
+
+    const theme = getThemeColors(missionId);
+
     return (
         <div style={{
-            background: 'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%)',
+            background: theme.gradient,
             borderRadius: '20px',
             padding: '25px',
             marginBottom: '25px',
@@ -170,6 +204,27 @@ const MissionHeader = ({
                         </div>
                     </div>
                 )}
+
+                {/* 다음 단계 버튼 */}
+                <div style={{ textAlign: 'center', marginTop: '20px' }}>
+                    <button
+                        onClick={onComplete}
+                        style={{
+                            background: 'rgba(255,255,255,0.9)',
+                            color: theme.buttonColor,
+                            border: 'none',
+                            borderRadius: '25px',
+                            padding: '12px 30px',
+                            fontSize: '1.1rem',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            boxShadow: '0 4px 12px rgba(0,0,0,0.2)',
+                            transition: 'all 0.3s'
+                        }}
+                    >
+                        🎯 미션 시작하기
+                    </button>
+                </div>
             </div>
         </div>
     );

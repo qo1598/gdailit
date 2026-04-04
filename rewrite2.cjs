@@ -18,19 +18,19 @@ const NEW_MISSIONS = `const MISSIONS = {
         type: 'upload-text',
         stackedInputs: {
             lower: [{ id: 'location', type: 'text', label: '1. 야호! 어디서 찾았나요?', placeholder: '방금 전 내 주변에서 발견한 위치나 기계의 특징을 적어보세요.' }],
-            middle: [{ id: 'location', type: 'text', label: '1. 어디서 발견했나요?', placeholder: '집이나 학교 등, 이 AI 친구를 만난 정확한 장소를 알려주세요.' }, { id: 'function', type: 'textarea', label: '2. 나에게 어떤 도움을 주나요?', placeholder: '이 AI가 특별히 어떤 귀찮은 일을 알아서 해주는지 생각해 보세요!' }],
+            middle: [{ id: 'location', type: 'text', label: '1. 어디서 발견했나요?', placeholder: '집이나 학교 등, 이 AI 친구를 만난 정확한 장소를 알려주세요.' }, { id: 'function', type: 'textarea', label: '2. 여러분이 찾은 AI는 우리에게 어떤 편리함을 제공하나요?', placeholder: '이 AI가 특별히 어떤 귀찮은 일을 알아서 해주는지 생각해 보세요!' }],
             upper: [{ id: 'location', type: 'text', label: '1. 발견한 AI 시스템 이름', placeholder: '시스템의 정식 기능명이나 서비스 이름을 명시하세요.' }, { id: 'pros_cons', type: 'textarea', label: '2. 편리함과 동시에 파생되는 한계점', placeholder: '인간의 판단력이나 프라이버시, 보안 측면에서 어떤 부정적 영향을 줄지 분석해 보세요.' }]
         }
     },
     'E-2': {
-        title: '팩트체크 전문가, AI의 거짓말을 잡아라!',
+        title: '사실 확인 전문가, AI의 거짓말을 잡아라!',
         competency: 'AI 인식 및 발견',
-        why: 'AI는 아는 척을 잘하지만 가끔 엄청난 엉터리 대답을 하기도 해요! 우리가 의심하고 사실을 확인(팩트체크)해야 합니다.',
+        why: 'AI는 아는 척을 잘하지만 가끔 엄청난 엉터리 대답을 하기도 해요! 우리가 의심하고 사실을 확인(사실 확인)해야 합니다.',
         example: 'AI가 지어낸 역사적 사실, 환각(Hallucination)',
         prompts: {
             lower: ['방금 이 AI 로봇이 "세상에서 두 번째로 큰 동물은 호랑이예요!"라고 우기고 있어요. 어? 호랑이가 2번째로 큰가요? 정답이 틀렸다면 진짜 정답이 무엇인지 책이나 인터넷에서 찾아 알려주세요!'],
             middle: ['에헴! AI가 "호랑이가 세상에서 두 번째로 큰 동물이에요!"라고 거짓말을 하네요. 이 AI는 도대체 왜 이런 엉뚱한 실수를 혼자 확신하며 말하고 있는 걸까요? 탐정처럼 그 이유를 추리해 볼까요?'],
-            upper: ['AI에게 아주 어려운 질문을 던져보고, AI가 그럴듯한 거짓말(할루시네이션)을 말하도록 유도해 보세요. 틀린 답변을 받았다면 실제 근거를 대면서 AI와 치열하게 논쟁하여 항복을 받아내세요!']
+            upper: ['AI에게 아주 어려운 질문을 던져보고, AI가 그럴듯한 거짓말(환각)을 말하도록 유도해 보세요. 틀린 답변을 받았다면 실제 근거를 대면서 AI와 치열하게 논쟁하여 항복을 받아내세요!']
         },
         type: { lower: 'direct-text', middle: 'direct-text', upper: 'chat' },
         isChatMode: true,
@@ -66,7 +66,7 @@ const NEW_MISSIONS = `const MISSIONS = {
         example: '키 작은 어린이만 인식 못하는 엘리베이터, 특정 피부색만 못 보는 카메라, 어르신이 쓰기 힘든 키오스크 등',
         prompts: {
             lower: ['나나 우리 할머니, 할아버지, 동생이 기계(자동문, 식당 로봇, 키오스크 화면 등) 앞에서 "에잇 왜 안 되지?" 하고 엄청 당황하고 불편했던 적이 있나요? 언제 그랬나요?'],
-            middle: ['만약 AI 얼굴 카메라가 어른만 확확 빨리 인식해 통과시키고 어린이 얼굴은 하루 종일 인식 못 해서 빙빙 돈다면, 이 기계를 만든 콧대 높은 연구원들은 처음에 무슨 큰 실수를 저질렀던 걸까요?'],
+            middle: ['만약 AI 얼굴 카메라가 어른만 확확 빨리 인식해 통과시키고 어린이 얼굴은 하루 종일 인식 못 해서 빙빙 돈다면, 이 AI를 만든 콧대 높은 연구원들은 처음에 무슨 실수를 저질렀던 걸까요?'],
             upper: ['AI가 특정 사용자(어린이, 장애인, 특정 성별 등)를 배제하여 작동하는 기술적 차별 사례를 탐구하고, 모든 AI 개발자가 의무적으로 지켜야 할 "차별 방지 강력 윤리 수칙" 3조를 제정하여 선포하세요.']
         },
         type: 'direct-text',
@@ -106,8 +106,8 @@ const NEW_MISSIONS = `const MISSIONS = {
         },
         type: 'direct-text',
         stackedInputs: {
-            lower: [{ id: 'observe', type: 'textarea', label: '1. 돋보기 관찰: 어디가 이상하게 꼬여있나요?', placeholder: '고양이의 귀 끝부분이나 모자와 다리가 이어지는 부분을 아주 자세히 살펴보세요!' }],
-            middle: [{ id: 'observe', type: 'textarea', label: '1. 어떤 어처구니없는 불량이 있나요?', placeholder: '그림의 앞과 뒤(원근감)가 무시되고 서로 섞이거나 녹아내린 곳을 찾으세요.' }, { id: 'reason', type: 'textarea', label: '2. 탐정의 추리: 왜 AI는 이런 멍청한 실수를 할까?', placeholder: 'AI는 3차원 세상을 직접 본 적이 없고 이차원 그림으로만 외워서 그런 건 아닐까요?' }],
+            lower: [{ id: 'observe', type: 'textarea', label: '1. 돋보기 관찰: 그림에서 이상한 점을 찾아 적어봅시다.', placeholder: '고양이의 귀 끝부분이나 모자와 다리가 이어지는 부분을 아주 자세히 살펴보세요!' }],
+            middle: [{ id: 'observe', type: 'textarea', label: '1. 어떤 어처구니없는 불량이 있나요?', placeholder: '그림의 앞과 뒤(원근감)가 무시되고 서로 섞이거나 녹아내린 곳을 찾으세요.' }, { id: 'reason', type: 'textarea', label: '2. 탐정의 추리: 왜 AI는 이런 이상한 그림을 그리는 실수를 할까요?', placeholder: 'AI는 3차원 세상을 직접 본 적이 없고 이차원 그림으로만 외워서 그런 건 아닐까요?' }],
             upper: [{ id: 'observe', type: 'textarea', label: '1. 구조 및 공간적 렌더링 한계 분석', placeholder: '깊이(Depth) 인식 오류, 객체간 구분(Segmentation) 실패 등을 비판적으로 적시하세요.' }, { id: 'prompt', type: 'textarea', label: '2. 완벽한 수정을 위한 역설계 구조(프롬프트)', placeholder: '전경 요소와 배경 요소를 명확히 구분하고 엣지(Edge)를 살리도록 프롬프트를 재구성해 보세요.' }]
         }
     },

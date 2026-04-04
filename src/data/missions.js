@@ -1,7 +1,3 @@
-// AI 리터러시 미션 데이터
-export const MISSIONS = {
-    // 미션 데이터는 Mission.jsx에서 이곳으로 이동 예정
-    // 현재는 임시로 빈 객체
-};
-
-export default MISSIONS;
+// 모든 미션 데이터를 통합하여 export
+export { MISSIONS } from './missions/index.js';
+export { default } from './missions/index.js';

@@ -633,24 +633,40 @@ function App() {
   const [gradeGroup, setGradeGroup] = React.useState('lower');
   const [justAttended, setJustAttended] = React.useState(false);
   const [rewardInfo, setRewardInfo] = React.useState({ show: false, amount: 0, message: '' });
+  const [isLoading, setIsLoading] = React.useState(true);
 
   const handleReward = (amount, message) => {
     setRewardInfo({ show: true, amount, message });
   };
 
   const handleLogin = (student) => {
-    setUserId(student.id);
-    setFragments(student.fragments || 0);
-    setAvatarConfig(student.avatar_config || { body: "basic", color: "blue", accessory: "none" });
-    if (student.schoolId) setSchoolId(student.schoolId);
-    setGradeGroup(parseGradeGroup(student.id));
+    const userId = student.id;
+    const fragments = student.fragments || 0;
+    const avatarConfig = student.avatar_config || { body: "basic", color: "blue", accessory: "none" };
+    const schoolId = student.schoolId || 'gyeongdong';
+    const gradeGroup = parseGradeGroup(student.id);
+    
+    setUserId(userId);
+    setFragments(fragments);
+    setAvatarConfig(avatarConfig);
+    setSchoolId(schoolId);
+    setGradeGroup(gradeGroup);
+    
+    // 로컬 스토리지에 세션 저장
+    localStorage.setItem('userId', userId);
+    localStorage.setItem('fragments', fragments.toString());
+    localStorage.setItem('avatarConfig', JSON.stringify(avatarConfig));
+    localStorage.setItem('schoolId', schoolId);
+    localStorage.setItem('gradeGroup', gradeGroup);
+    
     if (student.justAttended) {
       handleReward(3, "오늘의 첫 접속 보상입니다! 반가워요!");
     }
 
     // If name is saved in DB, use it, else fallback to parsing ID
+    let userName;
     if (student.name) {
-      setUserName(student.name);
+      userName = student.name;
     } else {
       // Parse ID: 26 (year) + 1 (grade) + 01 (class) + 01 (number)
       try {
@@ -659,14 +675,17 @@ function App() {
           const grade = id.substring(2, 3);
           const classNum = parseInt(id.substring(3, 5), 10);
           const studentNum = parseInt(id.substring(5, 7), 10);
-          setUserName(`${grade}학년 ${classNum}반 ${studentNum}번`);
+          userName = `${grade}학년 ${classNum}반 ${studentNum}번`;
         } else {
-          setUserName(id);
+          userName = id;
         }
       } catch (e) {
-        setUserName('학생');
+        userName = '학생';
       }
     }
+    
+    setUserName(userName);
+    localStorage.setItem('userName', userName);
   };
 
   const handleLogout = () => {
@@ -675,7 +694,39 @@ function App() {
     setSchoolId('gyeongdong');
     setGradeGroup('lower');
     setMissions(INITIAL_MISSIONS);
+    
+    // 로컬 스토리지 클리어
+    localStorage.removeItem('userId');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('fragments');
+    localStorage.removeItem('avatarConfig');
+    localStorage.removeItem('schoolId');
+    localStorage.removeItem('gradeGroup');
   };
+  // 페이지 로드 시 세션 복원
+  React.useEffect(() => {
+    const restoreSession = () => {
+      const savedUserId = localStorage.getItem('userId');
+      const savedUserName = localStorage.getItem('userName');
+      const savedFragments = localStorage.getItem('fragments');
+      const savedAvatarConfig = localStorage.getItem('avatarConfig');
+      const savedSchoolId = localStorage.getItem('schoolId');
+      const savedGradeGroup = localStorage.getItem('gradeGroup');
+
+      if (savedUserId) {
+        setUserId(savedUserId);
+        setUserName(savedUserName || '');
+        setFragments(parseInt(savedFragments) || 0);
+        setAvatarConfig(savedAvatarConfig ? JSON.parse(savedAvatarConfig) : {});
+        setSchoolId(savedSchoolId || 'gyeongdong');
+        setGradeGroup(savedGradeGroup || 'lower');
+      }
+      setIsLoading(false);
+    };
+
+    restoreSession();
+  }, []);
+
   React.useEffect(() => {
     if (userId) {
       fetchProgress();
@@ -752,14 +803,20 @@ function App() {
       )}
 
       <main className="main-content" style={{ padding: userId ? '20px' : '0', paddingBottom: userId ? '150px' : '0' }}>
-        <Routes>
-          <Route path="/" element={userId ? <Dashboard missions={missions} refresh={fetchProgress} justAttended={false} setJustAttended={() => { }} /> : <Login onLogin={handleLogin} />} />
-          <Route path="/mission/:missionId" element={userId ? <Mission userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
-          <Route path="/minigame" element={userId ? <MiniGame userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
-          <Route path="/discussion" element={userId ? <Discussion userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
-          <Route path="/profile" element={userId ? <Profile userId={userId} userName={userName} fragments={fragments} setFragments={setFragments} avatarConfig={avatarConfig} setAvatarConfig={setAvatarConfig} onLogout={handleLogout} /> : <Login onLogin={handleLogin} />} />
-          <Route path="/admin" element={<Admin />} />
-        </Routes>
+        {isLoading ? (
+          <div className="flex items-center justify-center min-h-screen">
+            <div className="text-lg">로딩 중...</div>
+          </div>
+        ) : (
+          <Routes>
+            <Route path="/" element={userId ? <Dashboard missions={missions} refresh={fetchProgress} justAttended={false} setJustAttended={() => { }} gradeGroup={gradeGroup} /> : <Login onLogin={handleLogin} />} />
+            <Route path="/mission/:missionId/:gradeGroup" element={userId ? <Mission userName={userName} /> : <Login onLogin={handleLogin} />} />
+            <Route path="/minigame" element={userId ? <MiniGame userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
+            <Route path="/discussion" element={userId ? <Discussion userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
+            <Route path="/profile" element={userId ? <Profile userId={userId} userName={userName} fragments={fragments} setFragments={setFragments} avatarConfig={avatarConfig} setAvatarConfig={setAvatarConfig} onLogout={handleLogout} /> : <Login onLogin={handleLogin} />} />
+            <Route path="/admin" element={<Admin />} />
+          </Routes>
+        )}
       </main>
 
       <RewardModal info={rewardInfo} onClose={() => setRewardInfo({ ...rewardInfo, show: false })} />
