@@ -32,17 +32,15 @@ const ChatInterface = ({
 
     // 초기 메시지 설정
     useEffect(() => {
-        if (messages.length === 0) {
-            if (currentChatInitiator === 'ai' || !currentChatInitiator) {
-                const initialMessage = {
-                    role: 'ai',
-                    content: mission.aiPromptText || `안녕! ${mission.title} 미션에 온 걸 환영해. 같이 시작해볼까?`,
-                    timestamp: new Date().toISOString()
-                };
-                setMessages([initialMessage]);
-            }
+        if (messages.length === 0 && mission && (currentChatInitiator === 'ai' || !currentChatInitiator)) {
+            const initialMessage = {
+                role: 'ai',
+                content: mission.aiPromptText || `안녕! ${mission.title} 미션에 온 걸 환영해. 같이 시작해볼까?`,
+                timestamp: new Date().toISOString()
+            };
+            setMessages([initialMessage]);
         }
-    }, [mission, messages.length, currentChatInitiator]);
+    }, [mission, currentChatInitiator, messages.length]);
 
     // 자동 스크롤
     useEffect(() => {
@@ -130,8 +128,10 @@ const ChatInterface = ({
                     padding: '15px',
                     display: 'flex',
                     flexDirection: 'column',
-                    gap: '10px'
+                    gap: '10px',
+                    minHeight: '200px'
                 }}>
+                    
                     {messages.map((message, index) => (
                         <div
                             key={index}

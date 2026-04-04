@@ -39,7 +39,7 @@ export const E2_MISSION = {
         middle: ['앗! AI가 "호랑이가 세상에서 두 번째로 빠른 동물이에요"라고 거짓말을 하네요! 이 AI는 도대체 왜 이런 엉뚱한 실수를 천연덕스럽게 말하고 있는 걸까요? 탐정처럼 그 이유를 추리해 볼까요?'],
         upper: ['AI에게 아주 어려운 질문을 던져보고, AI가 그럴듯한 거짓말(환각)을 하도록 유도해 보세요. 틀린 답변을 받았다면 실제 근거를 대면서 AI와 치열하게 논쟁하여 항복을 받아내세요.']
     },
-    type: { lower: 'direct-text', middle: 'direct-text', upper: 'chat' },
+    type: { lower: 'chat', middle: 'chat', upper: 'chat' },
     isChatMode: true,
     chatInitiator: { lower: 'ai', middle: 'ai', upper: 'user' },
     aiPromptText: '에헴! 제가 다 계산해 봤는데요, 지구에서 두 번째로 빠른 동물은 무조건 호랑이예요. 호랑이는 덩치가 크고 무섭거든요!',

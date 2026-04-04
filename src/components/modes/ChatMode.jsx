@@ -32,7 +32,8 @@ const ChatMode = ({
                         style={{ 
                             width: '60px', 
                             height: '60px',
-                            objectFit: 'contain'
+                            objectFit: 'contain',
+                            background: 'transparent'
                         }} 
                     />
                     <div style={{
@@ -50,7 +51,7 @@ const ChatMode = ({
                             fontWeight: 'bold',
                             marginRight: '15px'
                         }}>
-                            알리(Alli)
+                            알리
                         </span>
                         좋아! 이제 본격적으로 미션을 수행해 보자. 파이팅!
                     </div>
