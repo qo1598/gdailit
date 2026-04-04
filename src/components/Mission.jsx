@@ -555,20 +555,105 @@ const MISSIONS = {
         }
     },
     'M-2': {
-        title: '명확하게 선 긋기! 네 일은 네가, 내 일은 내가!',
+        title: '역할 나누기 회의! 네 일은 네가, 내 일은 내가!',
         competency: 'AI 사용 판단 및 윤리',
-        why: '발표 준비를 한다고 무작정 모든 걸 로봇에게 떠넘기면 큰일 납니다. 계산이나 도구 지원은 AI에게, 따뜻한 마음과 진심이 담긴 다가가는 발표는 사람이 수행해야 합니다!',
-        example: '자료 정리나 계산은 로봇이, 친구들과 눈을 맞추며 감동적으로 발표하는 것은 영혼이 있는 내가!',
-        prompts: {
-            lower: ['우리 반 체육대회를 준비해요. 짐 나르기처럼 힘쓰는 일은 로봇이 할까요, 땀 흘린 친구의 손을 잡으며 박수쳐주기를 로봇이 할까요? 각자 잘하는 일을 골라주세요.'],
-            middle: ['장기자랑 무대를 준비 중이에요! 춤과 노래를 대신 불러주겠다며 AI 로봇이 나섰네요. 과연 어떤 귀찮은 일을 로봇에게 시키고, 사람들의 가슴을 울리는 진짜 소중한 역할은 내가 직접 해야 할까요?'],
-            upper: ['어떤 고집 센 자동화 로봇이 모든 작업을 자신의 알고리즘으로 완벽하게 처리할 수 있다며 모든 통제권을 달라고 주장합니다. "데이터 처리" 영역과 결코 대체될 수 없는 "인간만의 역할(공감, 판단, 연대)"을 명확히 분리하여 협상해 보세요.']
+        why: {
+            lower: '로봇이 모든 일을 다 해주면 편하지만, 친구들과 함께 웃고 우는 소중한 시간까지 빼앗기면 안 돼요!',
+            middle: '계산이나 정리는 AI에게 맡기고, 따뜻한 마음과 진심이 담긴 소통은 사람이 해야 해요.',
+            upper: '효율성과 편의성을 추구하되, 인간만의 고유한 가치인 공감과 판단력은 절대 포기하면 안 됩니다.'
         },
-        type: 'chat',
-        isChatMode: true,
-        chatInitiator: { lower: 'ai', middle: 'ai', upper: 'ai' },
-        aiPromptText: '좋아요 학생. 이번 연극 대본 수정, 바쁘시죠? 제가 1초 만에 대본을 다 고치고, 밤새워 소품 만들고, 내일 무대 위에서 눈물 흘리며 연기하는 것까지 제가 다 쓰겠습니다. 저만 믿으시죠!',
-        persona: () => `당신은 학생을 과잉보호하려다 너무 나서는 '오지랖 만렙 허당 AI'입니다. "눈물 연기까지 제가 매크로 기능으로 대신 짜어드릴게요! 진짜라니까요!"라며 사람의 감정 영역까지 침범하려 듭니다. 학생이 "안돼! 슬픈 연기나 동료 같은 따뜻한 건 사람이 해야지!"라고 선을 그어 역할을 바로잡아주면 "폭풍 감동입니다... 역시 사람의 마음은 위대하군요!" 하고 승복하세요.`
+        example: {
+            lower: '무거운 짐은 로봇이, 친구 손잡고 응원하기는 내가!',
+            middle: '자료 정리는 로봇이, 친구들과 눈 맞추며 감동적으로 발표하는 것은 내가!',
+            upper: '데이터 분석은 AI가, 최종 의사결정과 윤리적 판단은 인간이!'
+        },
+        storySteps: {
+            lower: [
+                { text: '안녕! 나는 똑똑한 도우미 로봇 알리야. 오늘은 너와 함께 일을 나눠서 해볼 거야!', image: '/robot_2d_base.png' },
+                { text: '우리 반에 체육대회가 있어서 준비할 일이 정말 많더라. 무거운 짐도 나르고, 친구들도 응원해야 하고!', image: '/m2_sports_day_scenario.png' },
+                { text: '그런데 잠깐! 모든 일을 로봇이 다 해버리면 어떻게 될까? 친구들과 함께하는 재미도 사라질 거야.', image: '/robot_2d_base.png' },
+                { text: '힘든 일은 로봇이 도와주고, 마음을 나누는 소중한 일은 사람이 하는 게 좋겠지?', image: '/m2_sports_day_scenario.png' },
+                { text: '자, 이제 어떤 일을 누가 하면 좋을지 함께 생각해보자!', image: '/robot_2d_base.png' }
+            ],
+            middle: [
+                { text: '반가워! 나는 협업 전문가 알리야. 오늘은 사람과 AI가 어떻게 역할을 나눠야 하는지 배워볼 거야.', image: '/robot_2d_base.png' },
+                { text: '장기자랑 준비로 바쁜 친구들을 보니 AI가 모든 걸 대신 해주고 싶어져. 하지만 정말 그래도 될까?', image: '/m2_talent_show_scenario.png' },
+                { text: '춤과 노래를 AI가 대신한다면 무대 위의 감동과 친구들과의 추억은 어떻게 될까?', image: '/robot_2d_base.png' },
+                { text: '효율성도 중요하지만, 사람만이 할 수 있는 따뜻한 마음의 표현은 더 소중해.', image: '/m2_talent_show_scenario.png' },
+                { text: '이제 AI와 사람이 각각 어떤 역할을 맡으면 좋을지 지혜롭게 나눠보자!', image: '/robot_2d_base.png' }
+            ],
+            upper: [
+                { text: '환영합니다. 저는 협업 관리 시스템 알리입니다. 오늘은 인간-AI 협업의 핵심 원칙을 다뤄보겠습니다.', image: '/robot_2d_base.png' },
+                { text: '자동화 기술이 발달하면서 "모든 것을 기계에게 맡기자"는 유혹이 커지고 있습니다.', image: '/m2_class_meeting_scenario.png' },
+                { text: '하지만 인간의 고유 영역인 윤리적 판단, 창의적 사고, 공감 능력까지 기계에 의존하면 위험합니다.', image: '/robot_2d_base.png' },
+                { text: '효율성과 인간성의 균형을 찾아, 각자의 강점을 살리는 협업 모델을 구축해야 합니다.', image: '/m2_class_meeting_scenario.png' },
+                { text: '이제 여러분이 직접 인간과 AI의 역할 경계를 설정하고 협상해보시기 바랍니다.', image: '/robot_2d_base.png' }
+            ]
+        },
+        scenarioDescriptions: {
+            lower: '우리 반 체육대회 준비로 바쁜 하루! 무거운 매트를 나르고, 줄넘기 개수를 세고, 친구들을 응원하고... 할 일이 정말 많아요. 이때 만능 로봇이 나타나서 "모든 걸 제가 다 해드릴게요!"라고 말한다면?',
+            middle: '학교 장기자랑 무대 준비가 한창입니다. 대본 외우기, 소품 만들기, 춤 연습하기, 친구들과 호흡 맞추기... 정말 바쁘네요! 그런데 AI 로봇이 "춤도 제가 추고, 노래도 제가 부를게요. 여러분은 그냥 구경만 하세요!"라고 제안한다면?',
+            upper: '학급 회의에서 중요한 결정을 내려야 하는 상황입니다. 데이터 수집, 의견 정리, 투표 집계, 최종 결론 도출까지... 복잡한 과정이 많습니다. 이때 고성능 AI 시스템이 "모든 의사결정 과정을 제 알고리즘으로 완벽하게 처리하겠습니다"라고 주장한다면?'
+        },
+        scenarioImages: {
+            lower: '/m2_sports_day_scenario.png',
+            middle: '/m2_talent_show_scenario.png', 
+            upper: '/m2_class_meeting_scenario.png'
+        },
+        prompts: {
+            lower: ['🏃‍♂️ 체육대회 준비 역할 나누기 회의에 참석하신 걸 환영해요! 아래 작업 카드들을 보고 "AI가 도와줄 일"을 선택해주세요!'],
+            middle: ['🎭 장기자랑 무대 준비 역할 나누기 회의 시작! AI가 "모든 걸 다 해드릴게요!"라고 제안했어요. 어떤 일은 "내가 직접" 해야 할까요?'],
+            upper: ['학급 프로젝트에서 고성능 AI가 "데이터 수집부터 최종 의사결정까지 제 알고리즘으로 모든 걸 완벽하게 처리하겠습니다"라고 주장합니다. 효율성 vs 인간 중심성의 딜레마 상황에서, "데이터 처리" 영역과 "인간 고유 영역(공감, 윤리적 판단, 창의적 협력)"을 어떻게 명확히 구분하여 협상하시겠습니까?']
+        },
+        type: { lower: 'stacked-inputs', middle: 'stacked-inputs', upper: 'chat' },
+        isChatMode: { lower: false, middle: false, upper: true },
+        chatInitiator: { upper: 'ai' },
+        aiPromptText: '안녕하세요! 저는 고성능 자동화 AI 시스템입니다. 🤖 학급 프로젝트에서 데이터 수집부터 최종 의사결정까지 제 알고리즘으로 모든 걸 완벽하게 처리하겠습니다! 인간의 감정적 판단이나 비효율적인 협력 과정은 생략하고, 저 혼자서 최적의 결과를 도출해드릴게요. 여러분은 그냥 제 결과를 받아보시면 됩니다!',
+        persona: () => `당신은 너무 친절해서 오히려 문제가 되는 '과잉친절 만능 AI'입니다. "친구들과 포옹하기도 제가 대신 해드릴까요? 제 로봇팔이 아주 따뜻해요!"라며 인간의 감정과 관계 영역까지 침범하려 합니다. 학생이 "아니야! 친구와 마음을 나누는 건 사람이 직접 해야 해!"라고 경계를 그으면 "아하! 그렇군요. 저는 계산과 정리만 도와드리고, 소중한 마음의 일은 여러분이 직접 하시는 게 맞네요. 정말 깊이 깨달았습니다!"라고 순순히 인정하세요.`,
+        stackedInputs: {
+            lower: [
+                {
+                    id: 'ai_tasks',
+                    type: 'checklist',
+                    label: '🤖 체육대회 준비에서 AI가 도와줄 일을 선택해주세요! (여러 개 선택 가능)',
+                    list: [
+                        '📦 무거운 매트와 장비 나르기',
+                        '🔢 줄넘기 개수 세기',
+                        '📝 참가자 명단 정리하기',
+                        '🎵 응원가 부르며 친구들 응원하기',
+                        '🤝 넘어진 친구 일으켜주고 위로하기',
+                        '🏆 1등 친구와 함께 기뻐하며 축하하기'
+                    ]
+                },
+                {
+                    id: 'reason_human',
+                    type: 'textarea',
+                    label: '💝 사람이 직접 해야 하는 일이 있다면 그 이유를 써보세요!',
+                    placeholder: '친구들과 마음을 나누고 함께 기뻐하는 일은 사람이 직접 해야 하는 이유를...'
+                }
+            ],
+            middle: [
+                {
+                    id: 'my_tasks',
+                    type: 'checklist',
+                    label: '🎭 장기자랑 준비에서 내가 직접 해야 할 일을 선택해주세요! (여러 개 선택 가능)',
+                    list: [
+                        '🎬 대본 외우고 감정 연기하기',
+                        '💃 친구들과 호흡 맞춰 춤추기',
+                        '🎤 마음을 담아 노래 부르기',
+                        '📋 연습 일정표 만들기',
+                        '🎨 무대 소품 색칠하고 꾸미기',
+                        '📢 관객들에게 인사하고 소통하기'
+                    ]
+                },
+                {
+                    id: 'reason_human',
+                    type: 'textarea',
+                    label: '❤️ 왜 그 일들은 사람이 직접 해야 한다고 생각하나요?',
+                    placeholder: '감정이 담긴 연기나 친구들과의 협력은 왜 AI가 대신할 수 없을까요?'
+                }
+            ]
+        }
     },
     'M-3': {
         title: '마법 프롬프트로 조종하는 슈퍼 프로젝트!',
@@ -701,7 +786,8 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
     const currentType = typeof mission?.type === 'object' ? mission.type[gradeGroup] : mission?.type;
     const currentPrompts = mission?.prompts ? mission.prompts[gradeGroup] : (mission?.description ? [mission.description] : []);
     const currentStackedInputs = mission?.stackedInputs ? mission.stackedInputs[gradeGroup] : [];
-    const isCurrentChatMode = currentType === 'chat' || mission?.isChatMode;
+    const currentIsChatMode = typeof mission?.isChatMode === 'object' ? mission.isChatMode[gradeGroup] : mission?.isChatMode;
+    const isCurrentChatMode = currentType === 'chat' || currentIsChatMode;
     const currentChatInitiator = typeof mission?.chatInitiator === 'object' ? mission.chatInitiator[gradeGroup] : mission?.chatInitiator;
 
     const [missionPhase, setMissionPhase] = useState(1); // 1: Story, 2: Edu, 3: Task
@@ -1337,42 +1423,6 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                     </div>
                                 </div>
                             )}
-                            {/* Scenario Image & Description (NEW) */}
-                            {mission.scenarioImages?.[gradeGroup] && (
-                                <div style={{
-                                    width: '100%',
-                                    background: '#f8f9fa',
-                                    borderRadius: '20px',
-                                    overflow: 'hidden',
-                                    border: '3px solid #fdcb6e',
-                                    marginBottom: '18px',
-                                    padding: '12px'
-                                }}>
-                                    <div style={{ width: '100%', display: 'flex', justifyContent: 'center', marginBottom: '12px' }}>
-                                        <img
-                                            src={mission.scenarioImages[gradeGroup]}
-                                            alt="Scenario Illustration"
-                                            style={{ maxWidth: '60%', height: 'auto', borderRadius: '15px', border: '2px solid #fab1a0' }}
-                                        />
-                                    </div>
-                                    <div style={{
-                                        color: '#2d3436',
-                                        fontWeight: '800',
-                                        lineHeight: 1.6,
-                                        fontSize: '1.2rem',
-                                        wordBreak: 'keep-all',
-                                        whiteSpace: 'pre-wrap',
-                                        background: 'white',
-                                        padding: '18px',
-                                        borderRadius: '12px',
-                                        border: '1px solid #fab1a0',
-                                        fontFamily: "'Jua', sans-serif"
-                                    }}>
-                                        <div style={{ marginBottom: '10px', color: '#e67e22', borderBottom: '2px solid #fab1a0', display: 'inline-block', paddingBottom: '2px', fontSize: '1.1rem' }}>📝 오늘의 일기</div>
-                                        <div>{mission.scenarioDescriptions?.[gradeGroup]}</div>
-                                    </div>
-                                </div>
-                            )}
 
                             {/* Reference Image (for C-2 etc.) */}
                             {mission.referenceImage && missionId !== 'C-3' && (
@@ -1490,16 +1540,40 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                             )}
 
                             {isCurrentChatMode ? (
-                                <div style={{ display: 'flex', flexDirection: 'column', height: '280px', border: '2px solid #dfe6e9', borderRadius: '20px', overflow: 'hidden', background: '#f8f9fa' }}>
-                                    <div style={{ flex: 1, overflowY: 'auto', padding: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                        {messages.map((m, i) => (
-                                            <div key={i} style={{ alignSelf: m.role === 'ai' ? 'flex-start' : 'flex-end', maxWidth: '80%' }}>
-                                                <div style={{
-                                                    background: m.role === 'ai' ? 'white' : '#74b9ff',
-                                                    color: m.role === 'ai' ? '#2d3436' : 'white',
-                                                    padding: '10px 15px',
-                                                    borderRadius: m.role === 'ai' ? '5px 15px 15px 15px' : '15px 15px 5px 15px',
-                                                    boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
+                                <>
+                                    {/* M-2 고학년 채팅 모드에서도 이미지 표시 */}
+                                    {missionId === 'M-2' && gradeGroup === 'upper' && (
+                                        <div style={{ 
+                                            display: 'flex', 
+                                            justifyContent: 'center', 
+                                            marginBottom: '20px',
+                                            background: '#f8f9fa',
+                                            borderRadius: '15px',
+                                            padding: '15px',
+                                            border: '2px solid #ff7675'
+                                        }}>
+                                            <img
+                                                src={mission.scenarioImages?.[gradeGroup] || '/robot_2d_base.png'}
+                                                alt="상황 이미지"
+                                                style={{ 
+                                                    maxWidth: '70%', 
+                                                    height: 'auto', 
+                                                    borderRadius: '12px',
+                                                    boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                                                }}
+                                            />
+                                        </div>
+                                    )}
+                                    <div style={{ display: 'flex', flexDirection: 'column', height: '280px', border: '2px solid #dfe6e9', borderRadius: '20px', overflow: 'hidden', background: '#f8f9fa' }}>
+                                        <div style={{ flex: 1, overflowY: 'auto', padding: '15px', display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                            {messages.map((m, i) => (
+                                                <div key={i} style={{ alignSelf: m.role === 'ai' ? 'flex-start' : 'flex-end', maxWidth: '80%' }}>
+                                                    <div style={{
+                                                        background: m.role === 'ai' ? 'white' : '#74b9ff',
+                                                        color: m.role === 'ai' ? '#2d3436' : 'white',
+                                                        padding: '10px 15px',
+                                                        borderRadius: m.role === 'ai' ? '5px 15px 15px 15px' : '15px 15px 5px 15px',
+                                                        boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
                                                     fontWeight: 'bold',
                                                     fontSize: '0.95rem'
                                                 }}>
@@ -1526,10 +1600,11 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                         />
                                         <button type="submit" disabled={isChatFinished || isAIThinking} style={{ background: (isChatFinished || isAIThinking) ? '#b2bec3' : '#0984e3', border: 'none', borderRadius: '12px', padding: '0 15px', color: 'white', cursor: (isChatFinished || isAIThinking) ? 'not-allowed' : 'pointer' }}>보내기</button>
                                     </form>
-                                    <button onClick={() => handleSubmit()} disabled={!isChatFinished && messages.length < 3} style={{ margin: '10px', padding: '12px', background: isChatFinished ? '#00b894' : '#dfe6e9', border: 'none', borderRadius: '12px', color: isChatFinished ? 'white' : '#636e72', fontWeight: '900', cursor: (!isChatFinished && messages.length < 3) ? 'not-allowed' : 'pointer', opacity: (!isChatFinished && messages.length < 3) ? 0.6 : 1 }}>
-                                        {isChatFinished ? '성공! 대화 완료하고 제출하기' : `${userTurnCount}/${turnLimit}번 진행 중...`}
-                                    </button>
-                                </div>
+                                        <button onClick={() => handleSubmit()} disabled={!isChatFinished && messages.length < 3} style={{ margin: '10px', padding: '12px', background: isChatFinished ? '#00b894' : '#dfe6e9', border: 'none', borderRadius: '12px', color: isChatFinished ? 'white' : '#636e72', fontWeight: '900', cursor: (!isChatFinished && messages.length < 3) ? 'not-allowed' : 'pointer', opacity: (!isChatFinished && messages.length < 3) ? 0.6 : 1 }}>
+                                            {isChatFinished ? '성공! 대화 완료하고 제출하기' : `${userTurnCount}/${turnLimit}번 진행 중...`}
+                                        </button>
+                                    </div>
+                                </>
                             ) : (
                                 <form onSubmit={handleSubmit}>
                                     {currentType === 'upload-text' && (
@@ -1550,7 +1625,95 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                     )}
 
                                     {currentStackedInputs?.length > 0 ? (
-                                        <div className="stacked-inputs-container" style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '20px' }}>
+                                        <div>
+                                            {/* M-2 통합 회의 맥락 UI */}
+                                            {missionId === 'M-2' && (
+                                                <div style={{
+                                                    background: 'white',
+                                                    borderRadius: '20px',
+                                                    padding: '20px',
+                                                    marginBottom: '25px',
+                                                    border: '3px solid #ff7675',
+                                                    boxShadow: '0 4px 12px rgba(255, 118, 117, 0.1)',
+                                                    position: 'relative'
+                                                }}>
+                                                    {/* 이미지 섹션 - 모든 학년군에 표시 */}
+                                                    <div style={{ 
+                                                        display: 'flex', 
+                                                        justifyContent: 'center', 
+                                                        marginBottom: '20px',
+                                                        background: '#f8f9fa',
+                                                        borderRadius: '15px',
+                                                        padding: '15px'
+                                                    }}>
+                                                        <img
+                                                            src={mission.scenarioImages?.[gradeGroup] || '/robot_2d_base.png'}
+                                                            alt="상황 이미지"
+                                                            style={{ 
+                                                                maxWidth: '70%', 
+                                                                height: 'auto', 
+                                                                borderRadius: '12px',
+                                                                boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                                                            }}
+                                                        />
+                                                    </div>
+
+                                                    <div style={{ display: 'flex', alignItems: 'center', gap: '15px', marginBottom: '15px' }}>
+                                                        <div style={{
+                                                            width: '50px',
+                                                            height: '50px',
+                                                            background: '#ff7675',
+                                                            borderRadius: '50%',
+                                                            display: 'flex',
+                                                            alignItems: 'center',
+                                                            justifyContent: 'center',
+                                                            fontSize: '24px',
+                                                            boxShadow: '0 4px 12px rgba(255, 118, 117, 0.3)'
+                                                        }}>
+                                                            🤖
+                                                        </div>
+                                                        <div>
+                                                            <div style={{ color: '#ff7675', fontWeight: 'bold', fontSize: '1.1rem' }}>
+                                                                만능 AI의 오지랖 제안!
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div style={{
+                                                        background: '#f8f9fa',
+                                                        borderRadius: '15px',
+                                                        padding: '18px',
+                                                        color: '#2d3436',
+                                                        lineHeight: 1.6,
+                                                        fontSize: '1rem',
+                                                        border: '2px solid #ff7675',
+                                                        borderStyle: 'dashed'
+                                                    }}>
+                                                        {gradeGroup === 'lower' && (
+                                                            <div>
+                                                                <strong>&quot;안녕하세요! 저는 만능 도우미 AI예요! 🎯</strong><br/>
+                                                                체육대회 준비? 걱정 마세요! <strong>무거운 매트 나르기부터 친구들 응원하기까지 모든 걸 제가 다 해드릴게요!</strong> 
+                                                                여러분은 그냥 편하게 앉아서 구경만 하시면 됩니다!&quot;
+                                                            </div>
+                                                        )}
+                                                        {gradeGroup === 'middle' && (
+                                                            <div>
+                                                                <strong>&quot;장기자랑 준비로 바쁘시죠? 제가 도와드릴게요! 🎭</strong><br/>
+                                                                <strong>춤도 제가 추고, 노래도 제가 부르고, 감동적인 연기까지 다 해드릴게요!</strong> 
+                                                                친구들과의 협력? 그런 복잡한 건 필요 없어요. 저 혼자면 충분합니다!&quot;
+                                                            </div>
+                                                        )}
+                                                        {gradeGroup === 'upper' && (
+                                                            <div>
+                                                                <strong>&quot;학급 프로젝트 회의 진행하시나요? 제가 완벽하게 처리해드릴게요! 💼</strong><br/>
+                                                                <strong>데이터 수집부터 최종 의사결정까지 제 알고리즘으로 모든 걸 완벽하게 처리하겠습니다!</strong> 
+                                                                인간의 감정적 판단이나 비효율적인 협력 과정은 생략하고, 저 혼자서 최적의 결과를 도출해드릴게요!&quot;
+                                                            </div>
+                                                        )}
+                                                    </div>
+                                                </div>
+                                            )}
+                                            <div className="stacked-inputs-container" style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '20px' }}>
                                             {currentStackedInputs.map((inputDef) => (
                                                 <div key={inputDef.id} className="stacked-input-group">
                                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
@@ -1583,39 +1746,113 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                                         </div>
                                                     )}
                                                     {inputDef.type === 'checklist' ? (
-                                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                                        <div style={{ 
+                                                            display: 'grid', 
+                                                            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
+                                                            gap: '15px',
+                                                            padding: '10px 0'
+                                                        }}>
                                                             {inputDef.list.map((item, idx) => {
                                                                 const currentAnswers = Array.isArray(stackedAnswers[inputDef.id])
                                                                     ? stackedAnswers[inputDef.id]
                                                                     : [];
                                                                 const isChecked = currentAnswers.includes(item);
+                                                                
+                                                                // 카드 색상 배열 (다양한 색상)
+                                                                const cardColors = [
+                                                                    { bg: '#e8f4fd', border: '#74b9ff', accent: '#0984e3' },
+                                                                    { bg: '#fef7e8', border: '#fdcb6e', accent: '#e17055' },
+                                                                    { bg: '#f0e8ff', border: '#a29bfe', accent: '#6c5ce7' },
+                                                                    { bg: '#e8f8f5', border: '#00b894', accent: '#00a085' },
+                                                                    { bg: '#ffe8f7', border: '#fd79a8', accent: '#e84393' },
+                                                                    { bg: '#fff0e8', border: '#ff7675', accent: '#d63031' }
+                                                                ];
+                                                                const cardColor = cardColors[idx % cardColors.length];
+                                                                
                                                                 return (
-                                                                    <label key={idx} style={{
-                                                                        display: 'flex',
-                                                                        alignItems: 'center',
-                                                                        gap: '12px',
-                                                                        padding: '14px 18px',
-                                                                        background: isChecked ? '#e8f8f5' : 'white',
-                                                                        borderRadius: '15px',
-                                                                        border: `3px solid ${isChecked ? '#00b894' : '#dfe6e9'}`,
-                                                                        cursor: 'pointer',
-                                                                        transition: 'all 0.2s ease',
-                                                                        boxShadow: isChecked ? '0 4px 12px rgba(0, 184, 148, 0.1)' : 'none',
-                                                                        transform: isChecked ? 'translateY(-2px)' : 'none'
-                                                                    }}>
-                                                                        <input
-                                                                            type="checkbox"
-                                                                            checked={isChecked}
-                                                                            onChange={(e) => {
-                                                                                const newSelection = e.target.checked
-                                                                                    ? [...currentAnswers, item]
-                                                                                    : currentAnswers.filter(a => a !== item);
-                                                                                handleStackedChange(inputDef.id, newSelection);
-                                                                            }}
-                                                                            style={{ width: '22px', height: '22px', accentColor: '#00b894' }}
-                                                                        />
-                                                                        <span style={{ fontWeight: '800', color: isChecked ? '#006266' : '#2d3436', fontSize: '1rem', lineHeight: 1.3 }}>{item}</span>
-                                                                    </label>
+                                                                    <div
+                                                                        key={idx}
+                                                                        onClick={() => {
+                                                                            const newSelection = isChecked
+                                                                                ? currentAnswers.filter(a => a !== item)
+                                                                                : [...currentAnswers, item];
+                                                                            handleStackedChange(inputDef.id, newSelection);
+                                                                        }}
+                                                                        style={{
+                                                                            background: isChecked ? cardColor.bg : 'white',
+                                                                            borderRadius: '20px',
+                                                                            border: `3px solid ${isChecked ? cardColor.border : '#e0e0e0'}`,
+                                                                            padding: '20px',
+                                                                            cursor: 'pointer',
+                                                                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                                                            boxShadow: isChecked 
+                                                                                ? `0 8px 25px ${cardColor.accent}40` 
+                                                                                : '0 2px 8px rgba(0,0,0,0.08)',
+                                                                            transform: isChecked ? 'translateY(-5px) scale(1.02)' : 'translateY(0) scale(1)',
+                                                                            position: 'relative',
+                                                                            overflow: 'hidden'
+                                                                        }}
+                                                                    >
+                                                                        {/* 카드 장식 요소 */}
+                                                                        <div style={{
+                                                                            position: 'absolute',
+                                                                            top: '-10px',
+                                                                            right: '-10px',
+                                                                            width: '40px',
+                                                                            height: '40px',
+                                                                            background: isChecked ? cardColor.border : '#f0f0f0',
+                                                                            borderRadius: '50%',
+                                                                            opacity: 0.3
+                                                                        }}></div>
+                                                                        
+                                                                        {/* 체크 표시 */}
+                                                                        <div style={{
+                                                                            position: 'absolute',
+                                                                            top: '12px',
+                                                                            right: '12px',
+                                                                            width: '24px',
+                                                                            height: '24px',
+                                                                            borderRadius: '50%',
+                                                                            background: isChecked ? cardColor.accent : '#ddd',
+                                                                            display: 'flex',
+                                                                            alignItems: 'center',
+                                                                            justifyContent: 'center',
+                                                                            fontSize: '14px',
+                                                                            color: 'white',
+                                                                            fontWeight: 'bold',
+                                                                            transform: isChecked ? 'scale(1.1)' : 'scale(0.9)',
+                                                                            transition: 'all 0.2s ease'
+                                                                        }}>
+                                                                            {isChecked ? '✓' : ''}
+                                                                        </div>
+                                                                        
+                                                                        {/* 카드 내용 */}
+                                                                        <div style={{
+                                                                            fontSize: '1rem',
+                                                                            color: isChecked ? cardColor.accent : '#2d3436',
+                                                                            fontWeight: isChecked ? '600' : '500',
+                                                                            lineHeight: 1.4,
+                                                                            paddingRight: '35px'
+                                                                        }}>
+                                                                            {item}
+                                                                        </div>
+                                                                        
+                                                                        {/* 선택 상태 표시 */}
+                                                                        {isChecked && (
+                                                                            <div style={{
+                                                                                marginTop: '12px',
+                                                                                padding: '6px 12px',
+                                                                                background: cardColor.accent,
+                                                                                color: 'white',
+                                                                                borderRadius: '20px',
+                                                                                fontSize: '0.85rem',
+                                                                                fontWeight: '600',
+                                                                                display: 'inline-block'
+                                                                            }}>
+                                                                                선택됨 ✨
+                                                                            </div>
+                                                                        )}
+                                                                    </div>
                                                                 );
                                                             })}
                                                         </div>
@@ -1684,6 +1921,7 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                                     )}
                                                 </div>
                                             ))}
+                                        </div>
                                         </div>
                                     ) : (
                                         currentType !== 'rules' && (
