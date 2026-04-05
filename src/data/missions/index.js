@@ -14,6 +14,7 @@ import { M4_MISSION } from './M-4.js';
 import { D1_MISSION } from './D-1.js';
 import { D2_MISSION } from './D-2.js';
 import { D3_MISSION } from './D-3.js';
+import { D4_MISSION } from './D-4.js';
 
 export const MISSIONS = {
     'E-1': E1_MISSION,
@@ -30,7 +31,8 @@ export const MISSIONS = {
     'M-4': M4_MISSION,
     'D-1': D1_MISSION,
     'D-2': D2_MISSION,
-    'D-3': D3_MISSION
+    'D-3': D3_MISSION,
+    'D-4': D4_MISSION
 };
 
 export default MISSIONS;
