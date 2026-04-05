@@ -1,5 +1,7 @@
 import React from 'react';
 import ImageGenerator from './ImageGenerator';
+import D1LowerBasketDnD from './d1/D1LowerBasketDnD';
+import D1MiddleGroupsDnD from './d1/D1MiddleGroupsDnD';
 
 /**
  * 스택된 입력 필드들을 렌더링하는 컴포넌트
@@ -50,11 +52,15 @@ const StackedInputs = ({
                         placeholder={inputDef.placeholder}
                         style={{
                             width: '100%',
-                            padding: '15px',
-                            borderRadius: '12px',
+                            padding: 'clamp(14px, 3.5vw, 16px)',
+                            borderRadius: '14px',
                             border: '2px solid #dfe6e9',
-                            fontSize: '1.05rem',
-                            fontFamily: "'Nunito', sans-serif"
+                            fontSize: 'max(16px, 1.05rem)',
+                            fontFamily: "'Nunito', sans-serif",
+                            minHeight: '48px',
+                            boxSizing: 'border-box',
+                            WebkitTapHighlightColor: 'transparent',
+                            touchAction: 'manipulation'
                         }}
                         required
                     />
@@ -70,13 +76,16 @@ const StackedInputs = ({
                             placeholder={inputDef.placeholder}
                             style={{
                                 width: '100%',
-                                padding: '15px',
-                                borderRadius: '12px',
+                                padding: 'clamp(14px, 3.5vw, 16px)',
+                                borderRadius: '14px',
                                 border: '2px solid #dfe6e9',
-                                fontSize: '1.05rem',
+                                fontSize: 'max(16px, 1.05rem)',
                                 fontFamily: "'Nunito', sans-serif",
                                 resize: 'vertical',
-                                minHeight: '120px'
+                                minHeight: '120px',
+                                boxSizing: 'border-box',
+                                WebkitTapHighlightColor: 'transparent',
+                                touchAction: 'manipulation'
                             }}
                             required
                         />
@@ -216,6 +225,34 @@ const StackedInputs = ({
                     </div>
                 );
 
+            case 'd1-lower-basket-dnd':
+                return (
+                    <D1LowerBasketDnD
+                        value={currentValue}
+                        onAnswerChange={(v) => onAnswerChange(inputId, v)}
+                    />
+                );
+
+            case 'd1-middle-drag':
+                return (
+                    <D1MiddleGroupsDnD
+                        value={currentValue}
+                        onAnswerChange={(v) => onAnswerChange(inputId, v)}
+                        dndVariant={inputDef.dndVariant}
+                        dndLabels={inputDef.dndLabels}
+                    />
+                );
+
+            case 'd1-upper-drag':
+                return (
+                    <D1MiddleGroupsDnD
+                        value={currentValue}
+                        onAnswerChange={(v) => onAnswerChange(inputId, v)}
+                        dndVariant="upper"
+                        dndLabels={inputDef.dndLabels}
+                    />
+                );
+
             case 'multi-text':
                 return (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
@@ -259,37 +296,40 @@ const StackedInputs = ({
         <div>
             {stackedInputs.map((inputDef, index) => (
                 <div key={inputDef.id} style={{ marginBottom: '25px' }}>
-                    <div style={{ 
-                        display: 'flex', 
-                        justifyContent: 'space-between', 
-                        alignItems: 'center', 
-                        marginBottom: '10px' 
-                    }}>
-                        <label style={{
-                            fontWeight: 'bold',
-                            color: '#2d3436',
-                            fontSize: '1.1rem'
+                    {!inputDef.omitLabel && (
+                        <div style={{ 
+                            display: 'flex', 
+                            justifyContent: 'space-between', 
+                            alignItems: 'center', 
+                            marginBottom: '10px' 
                         }}>
-                            {inputDef.label}
-                        </label>
-                        {inputDef.placeholder && (
-                            <button
-                                type="button"
-                                onClick={() => toggleHint(inputDef.id)}
-                                style={{
-                                    background: 'none',
-                                    border: 'none',
-                                    cursor: 'pointer',
-                                    fontSize: '1.3rem',
-                                    padding: '0 5px',
-                                    opacity: 0.8
-                                }}
-                                title="힌트 보기"
-                            >
-                                💡
-                            </button>
-                        )}
-                    </div>
+                            <label style={{
+                                fontWeight: 'bold',
+                                color: '#2d3436',
+                                fontSize: 'clamp(1rem, 3.6vw, 1.1rem)'
+                            }}>
+                                {inputDef.label}
+                            </label>
+                            {inputDef.placeholder && (
+                                <button
+                                    type="button"
+                                    onClick={() => toggleHint(inputDef.id)}
+                                    style={{
+                                        background: 'none',
+                                        border: 'none',
+                                        cursor: 'pointer',
+                                        fontSize: '1.3rem',
+                                        padding: '0 5px',
+                                        opacity: 0.8,
+                                        touchAction: 'manipulation'
+                                    }}
+                                    title="힌트 보기"
+                                >
+                                    💡
+                                </button>
+                            )}
+                        </div>
+                    )}
                     
                     {visibleHints[inputDef.id] && inputDef.placeholder && (
                         <div style={{

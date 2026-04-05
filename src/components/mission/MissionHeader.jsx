@@ -48,6 +48,16 @@ const MissionHeader = ({
                     gradient: 'linear-gradient(135deg, #a29bfe 0%, #6c5ce7 100%)',
                     buttonColor: '#a29bfe'
                 };
+            case 'M-4':
+                return {
+                    gradient: 'linear-gradient(135deg, #fdcba0 0%, #fab1a0 100%)',
+                    buttonColor: '#e17055'
+                };
+            case 'D-1':
+                return {
+                    gradient: 'linear-gradient(135deg, #00cec9 0%, #55efc4 100%)',
+                    buttonColor: '#00b894'
+                };
             default:
                 return {
                     gradient: 'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%)',

@@ -20,15 +20,18 @@ const StackedInputsMode = ({
     
     // 모든 미션에 동일한 노란색 테두리 적용
     
+    const cardRadius = 'clamp(16px, 4vw, 22px)';
+
     return (
-        <div className="max-w-4xl mx-auto p-6">
+        <div className="max-w-4xl mx-auto w-full px-3 py-4 sm:px-6 sm:py-6 box-border">
             {/* 알리 AI 말풍선 */}
             <div style={{
                 background: '#fff9e6',
                 border: '3px solid #fdcb6e',
-                borderRadius: '20px',
-                padding: '20px',
-                marginBottom: '20px'
+                borderRadius: cardRadius,
+                padding: 'clamp(14px, 4vw, 22px)',
+                marginBottom: 'clamp(12px, 3vw, 20px)',
+                WebkitTapHighlightColor: 'transparent'
             }}>
                 <div style={{
                     display: 'flex',
@@ -47,18 +50,22 @@ const StackedInputsMode = ({
                     />
                     <div style={{
                         color: '#2d3436',
-                        fontSize: '1rem',
-                        lineHeight: '1.5',
-                        flex: 1
+                        fontSize: 'clamp(0.92rem, 3.5vw, 1rem)',
+                        lineHeight: 1.55,
+                        flex: 1,
+                        minWidth: 0
                     }}>
                         <span style={{
                             background: '#fdcb6e',
                             color: 'white',
-                            padding: '6px 14px',
+                            padding: '6px 12px',
                             borderRadius: '15px',
-                            fontSize: '14px',
+                            fontSize: 'clamp(12px, 3.2vw, 14px)',
                             fontWeight: 'bold',
-                            marginRight: '15px'
+                            marginRight: '8px',
+                            display: 'inline-block',
+                            marginBottom: '6px',
+                            verticalAlign: 'middle'
                         }}>
                             알리(Alli)
                         </span>
@@ -71,17 +78,18 @@ const StackedInputsMode = ({
             <div style={{
                 background: '#fff9e6',
                 border: '3px solid #fdcb6e',
-                borderRadius: '20px',
-                padding: '25px',
-                marginBottom: '20px'
+                borderRadius: cardRadius,
+                padding: 'clamp(14px, 4vw, 26px)',
+                marginBottom: 'clamp(12px, 3vw, 20px)',
+                WebkitTapHighlightColor: 'transparent'
             }}>
                 <h3
                     className="mission-task-header"
                     style={{
                         color: '#e67e22',
-                        fontSize: '1.3rem',
+                        fontSize: 'clamp(1.1rem, 4.2vw, 1.35rem)',
                         fontWeight: 'bold',
-                        marginBottom: '20px',
+                        marginBottom: 'clamp(14px, 4vw, 20px)',
                         textAlign: 'center'
                     }}
                 >
@@ -100,7 +108,7 @@ const StackedInputsMode = ({
                             textAlign: 'left',
                             color: '#2d3436',
                             background: 'white',
-                            padding: '18px',
+                            padding: 'clamp(14px, 3.8vw, 18px)',
                             borderRadius: '15px',
                             border: '3px solid #dfe6e9',
                             boxShadow: '0 4px 6px rgba(0,0,0,0.02)'
@@ -112,8 +120,8 @@ const StackedInputsMode = ({
                                 style={{
                                     marginBottom: idx === currentPrompts.length - 1 ? 0 : '12px',
                                     fontWeight: '900',
-                                    fontSize: '1.2rem',
-                                    lineHeight: '1.5',
+                                    fontSize: 'clamp(1rem, 4vw, 1.2rem)',
+                                    lineHeight: 1.5,
                                     color: '#2d3436'
                                 }}
                             >
@@ -131,19 +139,23 @@ const StackedInputsMode = ({
                     onAnswerChange={onStackedChange}
                 />
 
-                <div style={{ textAlign: 'center', marginTop: '30px' }}>
+                <div style={{ textAlign: 'center', marginTop: 'clamp(20px, 5vw, 30px)' }}>
                     <button
+                        type="button"
                         onClick={onSubmit}
                         style={{
-                            background: '#fdcb6e',
+                            background: 'linear-gradient(180deg, #fdcb6e 0%, #f39c12 100%)',
                             color: 'white',
                             border: 'none',
-                            borderRadius: '25px',
-                            padding: '15px 40px',
-                            fontSize: '1.2rem',
+                            borderRadius: '999px',
+                            padding: 'clamp(14px, 3.5vw, 16px) clamp(24px, 6vw, 40px)',
+                            fontSize: 'clamp(1.02rem, 3.8vw, 1.2rem)',
                             fontWeight: 'bold',
                             cursor: 'pointer',
-                            width: '100%'
+                            width: '100%',
+                            minHeight: '52px',
+                            boxShadow: '0 8px 22px rgba(243, 156, 18, 0.35)',
+                            touchAction: 'manipulation'
                         }}
                     >
                         미션 내용 수정하기!

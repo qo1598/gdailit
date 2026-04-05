@@ -1,4 +1,8 @@
 import { useState } from 'react';
+import {
+    isCompleteD1MiddleGroups,
+    isCompleteD1UpperGroups
+} from '../components/mission/d1/d1-fruits.js';
 
 /**
  * 폼 처리 로직을 담당하는 커스텀 훅
@@ -77,6 +81,12 @@ export const useFormHandling = (initialValues = {}) => {
                     return input.fields.every(field => 
                         answer && answer[field.id] && answer[field.id].trim()
                     );
+                } else if (input.type === 'd1-middle-drag') {
+                    return isCompleteD1MiddleGroups(answer);
+                } else if (input.type === 'd1-upper-drag') {
+                    return isCompleteD1UpperGroups(answer);
+                } else if (input.type === 'd1-lower-basket-dnd') {
+                    return Boolean(answer && answer.toString().trim());
                 } else {
                     return answer && answer.toString().trim();
                 }
