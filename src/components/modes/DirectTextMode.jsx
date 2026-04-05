@@ -3,6 +3,10 @@ import { GoogleGenAI } from '@google/genai';
 import { useGradeLogic } from '../../hooks/useGradeLogic';
 import StackedInputs from '../mission/StackedInputs';
 import MissionScenarioPanel from '../mission/MissionScenarioPanel';
+import {
+    AomoriAppleHelpModal,
+    renderAomoriFragments
+} from '../mission/d2/AomoriAppleHelpModal';
 import C3PosterPreview from '../mission/C3PosterPreview';
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const genAI2 = new GoogleGenAI({ apiKey: API_KEY });
@@ -26,6 +30,13 @@ const DirectTextMode = ({
 
     const [isGeneratingC3Image, setIsGeneratingC3Image] = useState(false);
     const [generatedC3ImageUrl, setGeneratedC3ImageUrl] = useState('');
+    const [aomoriHelpOpen, setAomoriHelpOpen] = useState(false);
+
+    const openAomoriHelp = useCallback(() => setAomoriHelpOpen(true), []);
+    const closeAomoriHelp = useCallback(() => setAomoriHelpOpen(false), []);
+
+    const d2UpperAomoriScenario =
+        missionId === 'D-2' && gradeGroup === 'upper' && typeof currentScenarioDescription === 'string';
 
     const generateC3Poster = useCallback(async () => {
         const prompt = stackedAnswers.creative_edit;
@@ -197,8 +208,17 @@ const DirectTextMode = ({
 
                 <MissionScenarioPanel
                     imageUrl={currentScenarioImage}
-                    description={currentScenarioDescription}
+                    description={d2UpperAomoriScenario ? '' : currentScenarioDescription}
+                    descriptionNode={
+                        d2UpperAomoriScenario
+                            ? renderAomoriFragments(currentScenarioDescription, openAomoriHelp)
+                            : undefined
+                    }
                 />
+
+                {missionId === 'D-2' && gradeGroup === 'upper' && (
+                    <AomoriAppleHelpModal open={aomoriHelpOpen} onClose={closeAomoriHelp} />
+                )}
 
                 {currentPrompts && currentPrompts.length > 0 && (
                     <div
@@ -288,6 +308,9 @@ const DirectTextMode = ({
                         onAnswerChange={onStackedChange}
                         onC3GeneratePoster={missionId === 'C-3' ? generateC3Poster : undefined}
                         isGeneratingC3Image={missionId === 'C-3' ? isGeneratingC3Image : undefined}
+                        onRequestAomoriHelp={
+                            missionId === 'D-2' && gradeGroup === 'upper' ? openAomoriHelp : undefined
+                        }
                     />
 
                     <div style={{ textAlign: 'center', marginTop: 'clamp(20px, 5vw, 30px)' }}>

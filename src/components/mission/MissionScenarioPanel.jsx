@@ -2,9 +2,12 @@ import React from 'react';
 
 /**
  * mission.scenarioImages / scenarioDescriptions 를 탐구 과제 상단에 표시
+ * @param {React.ReactNode} [descriptionNode] — 있으면 description 대신 렌더 (D-2 아오리 용어 링크 등)
  */
-const MissionScenarioPanel = ({ imageUrl, description }) => {
-    const hasText = typeof description === 'string' ? description.trim().length > 0 : Boolean(description);
+const MissionScenarioPanel = ({ imageUrl, description, descriptionNode }) => {
+    const hasString = typeof description === 'string' ? description.trim().length > 0 : false;
+    const hasNode = descriptionNode != null;
+    const hasText = hasString || hasNode;
     if (!imageUrl && !hasText) return null;
 
     return (
@@ -14,7 +17,7 @@ const MissionScenarioPanel = ({ imageUrl, description }) => {
                     style={{
                         display: 'flex',
                         justifyContent: 'center',
-                        marginBottom: description ? '12px' : 0,
+                        marginBottom: hasText ? '12px' : 0,
                         background: 'linear-gradient(180deg, #f8f9fa 0%, #fff 100%)',
                         borderRadius: 'clamp(12px, 3vw, 16px)',
                         padding: 'clamp(10px, 3vw, 16px)',
@@ -50,7 +53,7 @@ const MissionScenarioPanel = ({ imageUrl, description }) => {
                         fontWeight: '600'
                     }}
                 >
-                    {description}
+                    {hasNode ? descriptionNode : description}
                 </div>
             )}
         </div>

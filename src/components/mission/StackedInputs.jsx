@@ -2,6 +2,7 @@ import React from 'react';
 import ImageGenerator from './ImageGenerator';
 import D1LowerBasketDnD from './d1/D1LowerBasketDnD';
 import D1MiddleGroupsDnD from './d1/D1MiddleGroupsDnD';
+import { renderAomoriFragments } from './d2/AomoriAppleHelpModal';
 
 /**
  * 스택된 입력 필드들을 렌더링하는 컴포넌트
@@ -13,7 +14,8 @@ const StackedInputs = ({
     missionId,
     gradeGroup,
     onC3GeneratePoster,
-    isGeneratingC3Image
+    isGeneratingC3Image,
+    onRequestAomoriHelp
 }) => {
     if (!stackedInputs || stackedInputs.length === 0) {
         return null;
@@ -256,8 +258,20 @@ const StackedInputs = ({
             case 'multi-text':
                 return (
                     <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
-                        {inputDef.fields.map((field, index) => (
+                        {inputDef.fields.map((field) => (
                             <div key={field.id}>
+                                {field.label && (
+                                    <div
+                                        style={{
+                                            fontWeight: 700,
+                                            fontSize: 'clamp(0.92rem, 3.2vw, 1rem)',
+                                            color: '#2d3436',
+                                            marginBottom: '8px'
+                                        }}
+                                    >
+                                        {field.label}
+                                    </div>
+                                )}
                                 <input
                                     type="text"
                                     value={(stackedAnswers[inputId] || {})[field.id] || ''}
@@ -265,11 +279,15 @@ const StackedInputs = ({
                                     placeholder={field.placeholder}
                                     style={{
                                         width: '100%',
-                                        padding: '15px',
+                                        padding: 'clamp(12px, 3.2vw, 15px)',
                                         borderRadius: '12px',
                                         border: '2px solid #dfe6e9',
-                                        fontSize: '1.05rem',
-                                        fontFamily: "'Nunito', sans-serif"
+                                        fontSize: 'max(16px, 1.05rem)',
+                                        fontFamily: "'Nunito', sans-serif",
+                                        minHeight: '48px',
+                                        boxSizing: 'border-box',
+                                        WebkitTapHighlightColor: 'transparent',
+                                        touchAction: 'manipulation'
                                     }}
                                     required
                                 />
@@ -294,7 +312,18 @@ const StackedInputs = ({
 
     return (
         <div>
-            {stackedInputs.map((inputDef, index) => (
+            {stackedInputs.map((inputDef, index) => {
+                const labelStyle = {
+                    fontWeight: 'bold',
+                    color: '#2d3436',
+                    fontSize: 'clamp(1rem, 3.6vw, 1.1rem)'
+                };
+                const aomoriLabel =
+                    typeof inputDef.label === 'string' &&
+                    inputDef.label.includes('{{AOMORI}}') &&
+                    onRequestAomoriHelp;
+
+                return (
                 <div key={inputDef.id} style={{ marginBottom: '25px' }}>
                     {!inputDef.omitLabel && (
                         <div style={{ 
@@ -303,13 +332,15 @@ const StackedInputs = ({
                             alignItems: 'center', 
                             marginBottom: '10px' 
                         }}>
-                            <label style={{
-                                fontWeight: 'bold',
-                                color: '#2d3436',
-                                fontSize: 'clamp(1rem, 3.6vw, 1.1rem)'
-                            }}>
+                            {aomoriLabel ? (
+                                <div style={labelStyle}>
+                                    {renderAomoriFragments(inputDef.label, onRequestAomoriHelp)}
+                                </div>
+                            ) : (
+                            <label style={labelStyle}>
                                 {inputDef.label}
                             </label>
+                            )}
                             {inputDef.placeholder && (
                                 <button
                                     type="button"
@@ -352,7 +383,8 @@ const StackedInputs = ({
                     
                     {renderInput(inputDef)}
                 </div>
-            ))}
+                );
+            })}
             
             {/* M-3 미션 이미지 생성 기능 */}
             <ImageGenerator
