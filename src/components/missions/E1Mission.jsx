@@ -84,7 +84,7 @@ const E1Mission = ({ mission, missionId, gradeGroup, userName }) => {
                         gradeGroup={gradeGroup}
                         stackedInputs={currentStackedInputs}
                         stackedAnswers={stackedAnswers}
-                        onStackedChange={handleStackedChange}
+                        onAnswerChange={handleStackedChange}
                     />
 
                     <div className="mt-6 text-center">

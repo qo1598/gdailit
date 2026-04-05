@@ -20,7 +20,13 @@ const Mission = ({ userName }) => {
     const location = useLocation();
     
     const mission = MISSIONS[missionId];
-    const { currentType, currentWhy, currentExample } = useGradeLogic(mission, gradeGroup);
+    const {
+        currentType,
+        currentWhy,
+        currentExample,
+        currentStackedInputs,
+        isCurrentChatMode
+    } = useGradeLogic(mission, gradeGroup);
     const { stackedAnswers, handleStackedChange, handleSubmit, validateForm } = useFormHandling();
     
     // URL 파라미터에서 phase 확인
@@ -59,7 +65,7 @@ const Mission = ({ userName }) => {
     };
 
     const handleMissionSubmit = async () => {
-        if (!validateForm()) return;
+        if (!validateForm(currentType, currentStackedInputs)) return;
         
         try {
             const submissionData = {
@@ -177,28 +183,38 @@ const Mission = ({ userName }) => {
             onSubmit: handleMissionSubmit
         };
 
+        if (isCurrentChatMode) {
+            return (
+                <ChatMode
+                    {...modeProps}
+                    userName={userName}
+                    onComplete={handleChatComplete}
+                />
+            );
+        }
+
         switch (currentType) {
             case 'direct-text':
                 return <DirectTextMode {...modeProps} />;
-            
+
             case 'chat':
                 return (
-                    <ChatMode 
-                        {...modeProps} 
+                    <ChatMode
+                        {...modeProps}
                         userName={userName}
                         onComplete={handleChatComplete}
                     />
                 );
-            
+
             case 'stacked-inputs':
                 return <StackedInputsMode {...modeProps} />;
-            
+
             case 'checklist':
                 return <ChecklistMode {...modeProps} />;
-            
+
             case 'upload-text':
-                return <StackedInputsMode {...modeProps} />;
-            
+                return <DirectTextMode {...modeProps} />;
+
             default:
                 return <DirectTextMode {...modeProps} />;
         }

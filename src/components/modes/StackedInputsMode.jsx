@@ -1,7 +1,7 @@
 import React from 'react';
 import { useGradeLogic } from '../../hooks/useGradeLogic';
 import StackedInputs from '../mission/StackedInputs';
-import ImageGenerator from '../mission/ImageGenerator';
+import MissionScenarioPanel from '../mission/MissionScenarioPanel';
 
 const StackedInputsMode = ({ 
     mission, 
@@ -11,7 +11,12 @@ const StackedInputsMode = ({
     onStackedChange, 
     onSubmit 
 }) => {
-    const { currentStackedInputs, currentPrompts } = useGradeLogic(mission, gradeGroup);
+    const {
+        currentStackedInputs,
+        currentPrompts,
+        currentScenarioImage,
+        currentScenarioDescription
+    } = useGradeLogic(mission, gradeGroup);
     
     // 모든 미션에 동일한 노란색 테두리 적용
     
@@ -70,32 +75,51 @@ const StackedInputsMode = ({
                 padding: '25px',
                 marginBottom: '20px'
             }}>
-                <div style={{
-                    fontSize: '1.3rem',
-                    fontWeight: 'bold',
-                    color: '#e17055',
-                    marginBottom: '20px',
-                    textAlign: 'center'
-                }}>
-                    탐구 과제
-                </div>
-
-                {currentPrompts && currentPrompts.length > 0 && (
-                    <div style={{
-                        background: '#74b9ff',
-                        color: 'white',
-                        borderRadius: '15px',
-                        padding: '15px',
+                <h3
+                    className="mission-task-header"
+                    style={{
+                        color: '#e67e22',
+                        fontSize: '1.3rem',
+                        fontWeight: 'bold',
                         marginBottom: '20px',
                         textAlign: 'center'
-                    }}>
-                        <div style={{
-                            fontSize: '1.1rem',
-                            fontWeight: 'bold',
-                            lineHeight: '1.5'
-                        }}>
-                            {currentPrompts[0]}
-                        </div>
+                    }}
+                >
+                    탐구 과제
+                </h3>
+
+                <MissionScenarioPanel
+                    imageUrl={currentScenarioImage}
+                    description={currentScenarioDescription}
+                />
+
+                {currentPrompts && currentPrompts.length > 0 && (
+                    <div
+                        style={{
+                            marginBottom: '15px',
+                            textAlign: 'left',
+                            color: '#2d3436',
+                            background: 'white',
+                            padding: '18px',
+                            borderRadius: '15px',
+                            border: '3px solid #dfe6e9',
+                            boxShadow: '0 4px 6px rgba(0,0,0,0.02)'
+                        }}
+                    >
+                        {currentPrompts.map((prompt, idx) => (
+                            <p
+                                key={idx}
+                                style={{
+                                    marginBottom: idx === currentPrompts.length - 1 ? 0 : '12px',
+                                    fontWeight: '900',
+                                    fontSize: '1.2rem',
+                                    lineHeight: '1.5',
+                                    color: '#2d3436'
+                                }}
+                            >
+                                {prompt}
+                            </p>
+                        ))}
                     </div>
                 )}
 
@@ -104,8 +128,7 @@ const StackedInputsMode = ({
                     gradeGroup={gradeGroup}
                     stackedInputs={currentStackedInputs}
                     stackedAnswers={stackedAnswers}
-                    onStackedChange={onStackedChange}
-                    onSubmit={onSubmit}
+                    onAnswerChange={onStackedChange}
                 />
 
                 <div style={{ textAlign: 'center', marginTop: '30px' }}>

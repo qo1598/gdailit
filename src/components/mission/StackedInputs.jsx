@@ -9,7 +9,9 @@ const StackedInputs = ({
     stackedAnswers, 
     onAnswerChange,
     missionId,
-    gradeGroup 
+    gradeGroup,
+    onC3GeneratePoster,
+    isGeneratingC3Image
 }) => {
     if (!stackedInputs || stackedInputs.length === 0) {
         return null;
@@ -60,23 +62,53 @@ const StackedInputs = ({
 
             case 'textarea':
                 return (
-                    <textarea
-                        rows={4}
-                        value={currentValue}
-                        onChange={(e) => onAnswerChange(inputId, e.target.value)}
-                        placeholder={inputDef.placeholder}
-                        style={{
-                            width: '100%',
-                            padding: '15px',
-                            borderRadius: '12px',
-                            border: '2px solid #dfe6e9',
-                            fontSize: '1.05rem',
-                            fontFamily: "'Nunito', sans-serif",
-                            resize: 'vertical',
-                            minHeight: '120px'
-                        }}
-                        required
-                    />
+                    <>
+                        <textarea
+                            rows={4}
+                            value={currentValue}
+                            onChange={(e) => onAnswerChange(inputId, e.target.value)}
+                            placeholder={inputDef.placeholder}
+                            style={{
+                                width: '100%',
+                                padding: '15px',
+                                borderRadius: '12px',
+                                border: '2px solid #dfe6e9',
+                                fontSize: '1.05rem',
+                                fontFamily: "'Nunito', sans-serif",
+                                resize: 'vertical',
+                                minHeight: '120px'
+                            }}
+                            required
+                        />
+                        {missionId === 'C-3' && gradeGroup !== 'lower' && inputDef.id === 'creative_edit' && onC3GeneratePoster && (
+                            <button
+                                type="button"
+                                onClick={onC3GeneratePoster}
+                                disabled={isGeneratingC3Image}
+                                style={{
+                                    marginTop: '15px',
+                                    width: '100%',
+                                    padding: '18px',
+                                    background: 'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%)',
+                                    color: 'white',
+                                    border: 'none',
+                                    borderRadius: '20px',
+                                    fontWeight: '900',
+                                    fontSize: '1.2rem',
+                                    cursor: isGeneratingC3Image ? 'wait' : 'pointer',
+                                    boxShadow: '0 8px 20px rgba(108, 92, 231, 0.25)',
+                                    transition: 'all 0.3s',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: '10px'
+                                }}
+                            >
+                                <span style={{ fontSize: '1.4rem' }}>✨</span>
+                                마법의 AI로 포스터 그리기
+                            </button>
+                        )}
+                    </>
                 );
 
             case 'checklist':
