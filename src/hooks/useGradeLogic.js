@@ -20,7 +20,9 @@ export const useGradeLogic = (mission, gradeGroup) => {
                 currentScenarioImage: null,
                 currentScenarioDescription: null,
                 currentWhy: null,
-                currentExample: null
+                currentExample: null,
+                currentReferenceImage: null,
+                currentReferenceImageCaption: null
             };
         }
 
@@ -76,6 +78,15 @@ export const useGradeLogic = (mission, gradeGroup) => {
             ? (typeof mission.example === 'object' ? mission.example[gradeGroup] : mission.example)
             : null;
 
+        // 참고 그림 (학년별 객체 또는 단일 문자열)
+        const currentReferenceImage = mission.referenceImages
+            ? mission.referenceImages[gradeGroup] ?? null
+            : mission.referenceImage ?? null;
+
+        const currentReferenceImageCaption = mission.referenceImageCaptions
+            ? mission.referenceImageCaptions[gradeGroup] ?? null
+            : mission.referenceImageCaption ?? null;
+
         return {
             currentType,
             currentPrompts,
@@ -87,7 +98,9 @@ export const useGradeLogic = (mission, gradeGroup) => {
             currentScenarioImage,
             currentScenarioDescription,
             currentWhy,
-            currentExample
+            currentExample,
+            currentReferenceImage,
+            currentReferenceImageCaption
         };
     }, [mission, gradeGroup]);
 };

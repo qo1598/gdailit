@@ -24,7 +24,9 @@ const DirectTextMode = ({
         currentStackedInputs,
         currentPrompts,
         currentScenarioImage,
-        currentScenarioDescription
+        currentScenarioDescription,
+        currentReferenceImage,
+        currentReferenceImageCaption
     } = useGradeLogic(mission, gradeGroup);
     const showPhotoUpload = currentType === 'upload-text';
 
@@ -146,7 +148,7 @@ const DirectTextMode = ({
                     WebkitTapHighlightColor: 'transparent'
                 }}
             >
-                {mission?.referenceImage && missionId !== 'C-3' && (
+                {currentReferenceImage && missionId !== 'C-3' && (
                     <div
                         style={{
                             width: '100%',
@@ -161,12 +163,12 @@ const DirectTextMode = ({
                     >
                         <div style={{ width: '100%', borderRadius: '12px', overflow: 'hidden', marginBottom: '8px' }}>
                             <img
-                                src={mission.referenceImage}
+                                src={currentReferenceImage}
                                 alt="미션 참고 그림"
                                 style={{ width: '100%', height: 'auto', display: 'block' }}
                             />
                         </div>
-                        {mission.referenceImageCaption && (
+                        {currentReferenceImageCaption && (
                             <div
                                 style={{
                                     color: '#2d3436',
@@ -178,7 +180,7 @@ const DirectTextMode = ({
                                     borderRadius: '8px'
                                 }}
                             >
-                                {mission.referenceImageCaption}
+                                {currentReferenceImageCaption}
                             </div>
                         )}
                     </div>
