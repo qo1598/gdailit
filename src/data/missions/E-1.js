@@ -1,5 +1,5 @@
 export const E1_MISSION = {
-    title: '우리 주변 숨은 AI 찾기 대작전!',
+    title: '숨은 AI를 찾아라!',
     competency: 'AI 인식 및 발견',
     why: {
         lower: '우리 주변에 보물찾기처럼 똑똑한 기계를 찾아봐요!',
@@ -13,26 +13,31 @@ export const E1_MISSION = {
     },
     storySteps: {
         lower: [
-            { text: '안녕! 나는 꼬마 AI 로봇 알리야. 만나서 정말 반가워!', image: '/robot_2d_base.png' },
-            { text: '우리 집이나 학교에는 똑똑한 AI 친구들이 몰래 숨어있대.', image: '/e1_mission_v3.png' },
-            { text: '로봇청소기처럼 스스로 움직이거나, 내 목소리를 알아듣는 친구들이 다 AI야!', image: '/robot_2d_base.png' },
-            { text: '우리 주변 어디에 숨어있는지 탐정처럼 눈을 크게 뜨고 찾아볼래?', image: '/e1_mission_v3.png' },
-            { text: '찾았으면 찰칵! 사진을 찍어서 나에게 보여줘. 어떤 도움을 주는지도 궁금해!', image: '/robot_2d_base.png' }
+            { text: '안녕하세요! 저는 AI 로봇 알리예요. 만나서 정말 반가워요!', image: '/robot_2d_base.png' },
+            { text: '우리 집이나 학교에는 똑똑한 AI 친구들이 몰래 숨어있대요.', image: '/e1_mission_v3.png' },
+            { text: '로봇청소기처럼 스스로 움직이거나, 내 목소리를 알아듣는 친구들이 모두 AI랍니다!', image: '/robot_2d_base.png' },
+            { text: '우리 주변 어디에 숨어있는지 탐정처럼 눈을 크게 뜨고 찾아볼까요?', image: '/e1_mission_v3.png' },
+            { text: '찾았으면 찰칵! 사진을 찍어서 제게 보여주세요. 어떤 도움을 주는지도 궁금해요!', image: '/robot_2d_base.png' }
         ],
         middle: [
-            { text: '안녕 친구! 나는 알리야. 우리 주변엔 몰래 숨어서 우리를 도와주는 AI 친구들이 아주 많아.', image: '/robot_2d_base.png' },
-            { text: '유튜브 추천 영상이나 날씨를 알려주는 스피커도 모두 AI 기술로 만들어졌어.', image: '/e1_mission_v3.png' },
-            { text: 'AI는 우리가 무엇을 좋아하는지, 무엇이 필요한지 스스로 학습하고 판단해.', image: '/robot_2d_base.png' },
-            { text: '이제 네가 탐정이 되어 우리 생활 곳곳에 숨어있는 AI를 조사해 줄래?', image: '/e1_mission_v3.png' },
-            { text: '어떤 AI를 발견했는지, 그 친구가 어떤 착한 일을 하고 있는지 나에게 상세히 알려줘!', image: '/robot_2d_base.png' }
+            { text: '안녕하세요! 저는 알리예요. 우리 주변엔 몰래 숨어서 우리를 도와주는 AI 친구들이 아주 많아요.', image: '/robot_2d_base.png' },
+            { text: '유튜브 추천 영상이나 날씨를 알려주는 스피커도 모두 AI 기술로 만들어졌답니다.', image: '/e1_mission_v3.png' },
+            { text: 'AI는 우리가 무엇을 좋아하는지, 무엇이 필요한지 스스로 학습하고 판단해요.', image: '/robot_2d_base.png' },
+            { text: '이제 여러분이 탐정이 되어 우리 생활 곳곳에 숨어있는 AI를 조사해 볼까요?', image: '/e1_mission_v3.png' },
+            { text: '어떤 AI를 발견했는지, 그 친구가 어떤 착한 일을 하고 있는지 제게 상세히 알려주세요!', image: '/robot_2d_base.png' }
         ],
         upper: [
-            { text: '반가워! 나는 알리야. 현대 사회의 일상 곳곳에는 수많은 AI 시스템이 이미 깊숙이 들어와 있어.', image: '/robot_2d_base.png' },
-            { text: '스마트홈, 자율주행, 정교한 알고리즘 서비스 등이 우리 삶을 더 편리하게 만들고 있지.', image: '/e1_mission_v3.png' },
-            { text: '하지만 익숙함 때문에 우리는 그 속에 숨겨진 AI의 정체를 놓치고 해.', image: '/robot_2d_base.png' },
-            { text: '이제 네 명의 AI 전문가로서 우리 일상 속 AI 기술을 찾아 사진을 찍고 분석해 봐!', image: '/e1_mission_v3.png' },
-            { text: '편리함뿐만 아니라 그 뒤에 숨겨진 작동 원리와 한계까지 찾아낸다면, 넌 정말 멋진 전문가야!', image: '/robot_2d_base.png' }
+            { text: '안녕하세요! 저는 알리예요. 현대 사회의 일상 곳곳에는 수많은 AI 시스템이 이미 깊숙이 들어와 있어요.', image: '/robot_2d_base.png' },
+            { text: '스마트홈, 자율주행, 정교한 알고리즘 서비스 등이 우리 삶을 더 편리하게 만들고 있답니다.', image: '/e1_mission_v3.png' },
+            { text: '하지만 너무 익숙해서 우리는 그 속에 숨겨진 AI의 정체를 종종 놓치곤 해요.', image: '/robot_2d_base.png' },
+            { text: '이제 여러분이 AI 전문가가 되어 우리 일상 속 AI 기술을 찾아 사진을 찍고 분석해 볼까요?', image: '/e1_mission_v3.png' },
+            { text: '편리함뿐만 아니라 그 뒤에 숨겨진 작동 원리와 한계까지 찾아낸다면, 정말 훌륭한 전문가가 될 거예요!', image: '/robot_2d_base.png' }
         ]
+    },
+    prompts: {
+        lower: ['AI 친구를 찾아 사진을 찍고, 어디에 있는지 알려주세요!'],
+        middle: ['사진을 올리고, AI가 우리를 어떻게 도와주는지 설명해 주세요!'],
+        upper: ['AI 기술의 사진을 올리고, 제공하는 편리함과 한계점을 분석해 보세요!']
     },
     type: 'upload-text',
     stackedInputs: {

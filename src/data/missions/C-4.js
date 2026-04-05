@@ -13,25 +13,25 @@ export const C4_MISSION = {
     },
     storySteps: {
         lower: [
-            { text: '안녕! 나는 정직 심사관 알리야. 오늘은 네 친구의 조그만 고민이 담긴 일기를 같이 보려고 해.', image: '/robot_2d_base.png' },
-            { text: '숙제를 AI에게 대신 시키고 나서 마음이 편하지 않은 친구의 가슴 아픈 이야기야.', image: '/c4_diary_scenario.png' },
-            { text: '우리는 AI라는 강력한 도구를 가졌지만, 가장 소중한 건 바로 나의 "정직"이야.', image: '/robot_2d_base.png' },
-            { text: '일기를 꼼꼼히 읽고 네 친구의 무거운 마음을 어떻게 덜어줄지 같이 고민해 줄래?', image: '/c4_diary_scenario.png' },
-            { text: '용기 있게 사실을 말하는 법을 배우러 떠나보자! 정직 미션 시작!', image: '/robot_2d_base.png' }
+            { text: '안녕하세요! 저는 정직 심사관 선생님, 알리예요. 오늘은 여러분 친구의 조그만 고민이 담긴 일기를 같이 보려고 해요.', image: '/robot_2d_base.png' },
+            { text: '숙제를 AI에게 대신 시키고 나서 마음이 편하지 않은 친구의 가슴 아픈 이야기랍니다.', image: '/c4_diary_scenario.png' },
+            { text: '우리는 AI라는 강력한 도구를 가졌지만, 가장 소중한 건 바로 나의 "정직"이에요.', image: '/robot_2d_base.png' },
+            { text: '일기를 꼼꼼히 읽고 친구의 무거운 마음을 어떻게 덜어줄지 같이 고민해 줄래요?', image: '/c4_diary_scenario.png' },
+            { text: '용기 있게 사실을 말하는 법을 배우러 떠나보아요! 정직 미션 시작!', image: '/robot_2d_base.png' }
         ],
         middle: [
-            { text: '반가워! 나는 양심 수호자 알리야. 오늘은 겉으론 완벽해 보이지만 속은 갈등 중인 어느 학생의 일기장을 가져왔어.', image: '/robot_2d_base.png' },
-            { text: 'AI 덕분에 30분 만에 끝낸 숙제로 큰 칭찬을 받았지만, 네 친구는 자기가 가짜가 된 것 같대.', image: '/c4_diary_scenario.png' },
-            { text: '모든 창작물에는 누가 만들었는지 밝히는 "출처 표기"라는 소중한 약속이 있거든.', image: '/robot_2d_base.png' },
-            { text: '당당하게 AI 사용 사실을 밝히고 진짜 내 실력을 키우는 법을 고민해 보자!', image: '/c4_diary_scenario.png' },
-            { text: '용기 있는 고백은 진짜 리더를 만든단다. 미션 출발!', image: '/robot_2d_base.png' }
+            { text: '반가워요! 저는 양심 수호자 선생님, 알리예요. 오늘은 겉으론 완벽해 보이지만 속은 갈등 중인 어느 학생의 일기장을 가져왔어요.', image: '/robot_2d_base.png' },
+            { text: 'AI 덕분에 30분 만에 끝낸 숙제로 큰 칭찬을 받았지만, 친구는 자기가 가짜가 된 것 같대요.', image: '/c4_diary_scenario.png' },
+            { text: '모든 창작물에는 누가 만들었는지 밝히는 "출처 표기"라는 소중한 약속이 있거든요.', image: '/robot_2d_base.png' },
+            { text: '당당하게 AI 사용 사실을 밝히고 진짜 내 실력을 키우는 법을 고민해 볼까요?', image: '/c4_diary_scenario.png' },
+            { text: '용기 있는 고백은 진짜 리더를 만든답니다. 미션 출발!', image: '/robot_2d_base.png' }
         ],
         upper: [
-            { text: '환영해! 나는 창작 멘토 알리야. 생성형 AI 시대에 가장 중요한 태도는 바로 "책임 있는 창작"이야.', image: '/robot_2d_base.png' },
-            { text: 'AI가 다듬어준 보고서로 좋은 점수를 받았지만, 내 것이 아닌 것 같아 괴로워하는 일기가 여기 있어.', image: '/c4_diary_scenario.png' },
-            { text: '나의 노력과 기계의 결과물 사이에서 우리는 어디에 선을 그어야 할까? "정직"은 어떻게 지킬까?', image: '/robot_2d_base.png' },
-            { text: '미래의 창의 인재로서 너만의 "정직 가이드라인"을 일기 내용을 바탕으로 세워보길 바라!', image: '/c4_diary_scenario.png' },
-            { text: '도구를 잘 쓰는 법보다 중요한 건 정직하게 마침표를 찍는 마음이란다. 시작!', image: '/robot_2d_base.png' }
+            { text: '환영합니다! 저는 창작 멘토 선생님, 알리예요. 생성형 AI 시대에 가장 중요한 태도는 바로 "책임 있는 창작"이랍니다.', image: '/robot_2d_base.png' },
+            { text: 'AI가 다듬어준 보고서로 좋은 점수를 받았지만, 내 것이 아닌 것 같아 괴로워하는 일기가 여기 있어요.', image: '/c4_diary_scenario.png' },
+            { text: '나의 노력과 기계의 결과물 사이에서 우리는 어디에 선을 그어야 할까요? "정직"은 어떻게 지킬까요?', image: '/robot_2d_base.png' },
+            { text: '미래의 창의 인재로서 여러분만의 "정직 가이드라인"을 일기 내용을 바탕으로 세워보길 바라요!', image: '/c4_diary_scenario.png' },
+            { text: '도구를 잘 쓰는 법보다 중요한 건 정직하게 마침표를 찍는 마음이랍니다. 시작!', image: '/robot_2d_base.png' }
         ]
     },
     scenarioImages: {
@@ -48,18 +48,18 @@ export const C4_MISSION = {
     stackedInputs: {
         lower: [
             { id: 'diary_feel', type: 'textarea', label: '1. 일기 속 친구의 마음은 지금 어떤가요?', placeholder: '칭찬을 받았는데도 마음이 무거운 이유를 일기에서 찾아 써 보세요.' },
-            { id: 'advice', type: 'text', label: '2. 사탕을 받은 친구에게 해주고 싶은 말은?', placeholder: '내 노력으로 얻지 않은 것에 "정직"하게 대처하는 법을 조언해 주세요.' }
+            { id: 'advice', type: 'text', label: '2. 사탕을 받은 친구에게 무슨 말을 해주고 싶나요?', placeholder: '내 노력으로 얻지 않은 것에 "정직"하게 대처하는 법을 조언해 주세요.' }
         ],
         middle: [
             { id: 'problem', type: 'textarea', label: '1. "꼬마 과학자"라는 칭찬이 왜 친구를 힘들게 했을까요?', placeholder: '자신의 노력과 AI의 노력을 구분하지 않고 "출처 표기"를 하지 않은 문제를 적어보세요.' },
-            { id: 'solution', type: 'textarea', label: '2. 선생님께 정직하게 고백할 때 사용할 "용기의 문장"을 생각하여 적어봅시다.', placeholder: '"선생님, 사실은 일부분 AI의 도움을 받았는데 다음부터는 제 힘으로 해보겠습니다"라고 말하는 것처럼 적어보세요.' }
+            { id: 'solution', type: 'textarea', label: '2. 선생님께 정직하게 고백할 때 사용할 "용기의 문장"을 생각하여 적어볼까요?', placeholder: '"선생님, 사실은 일부분 AI의 도움을 받았는데 다음부터는 제 힘으로 해보겠습니다"라고 말하는 것처럼 적어보세요.' }
         ],
         upper: [
             { id: 'attribution', type: 'textarea', label: '1. 보고서에 AI의 도움을 받았다고 정직하게 밝힌다면 어떻게 써야 할까요?', placeholder: '(예: "이 보고서의 목차와 문장 다듬기에서 AI의 도움을 30% 정도 받았습니다.") 처럼 구체적으로 적어보세요.' },
             {
                 id: 'creativity_ethic',
                 type: 'multi-text',
-                label: '2. 창작자의 양심을 지키기 위한 "정직 선언문"',
+                label: '2. 창작자의 양심을 지키기 위한 "정직 선언문"을 작성해 볼까요?',
                 fields: [
                     { id: 'promise_1', placeholder: '첫 번째: 내가 직접 하지 않은 일을 내 이름으로 속이지 않기' },
                     { id: 'promise_2', placeholder: '두 번째: AI의 도움을 받았다면 반드시 "출처 표기"를 하기' },

@@ -5,7 +5,7 @@
  */
 
 export const D4_MISSION = {
-    title: '학교 평화 수호의 심장, 천재 AI 설계 마스터 도면 짜기',
+    title: '천재 AI 설계 마스터 도면 짜기',
     competency: 'AI 원리 체험',
     why: {
         lower:
@@ -23,43 +23,43 @@ export const D4_MISSION = {
     storySteps: {
         lower: [
             {
-                text: '안녕! 나는 AI 설계 도우미 알리야. 우리 학교에 불편한 점이 있지?',
+                text: '안녕하세요! 저는 AI 설계 도우미 선생님, 알리예요. 우리 학교에 불편한 점이 있지요?',
                 image: '/robot_2d_base.png'
             },
             {
-                text: '오늘은 도와줄 AI에게 이름을 짓고, 어떤 불편을 어떻게 도울지 세 가지로 나누어 적어 보자.',
+                text: '오늘은 우리를 도와줄 AI에게 이름을 지어주고, 어떤 불편을 어떻게 도울지 세 가지로 나누어 적어 볼 거예요.',
                 image: '/robot_2d_base.png'
             },
             {
-                text: '아래 세 칸: ① 이름 ② 불편한 일 ③ 도와줄 수 있는 일. 차례로 채워 봐!',
+                text: '아래 세 칸에 ① 이름 ② 불편한 점 ③ 도와줄 수 있는 일을 차례로 채워 볼까요?',
                 image: '/robot_2d_base.png'
             }
         ],
         middle: [
             {
-                text: '안녕! 나는 AI 설계 도우미 알리야. 이름·불편·도움을 정했다면, 한 단계 더 나아가 보자.',
+                text: '안녕하세요! 저는 AI 설계 도우미 선생님, 알리예요. 이름, 불편, 그리고 도움을 정했다면 한 단계 더 나아가 볼까요?',
                 image: '/robot_2d_base.png'
             },
             {
-                text: 'AI가 진짜로 똑똑하게 행동하려면, 어떤 정보(데이터)를 모아서 배우게 할지 정해야 해.',
+                text: 'AI가 진짜로 똑똑하게 행동하려면, 어떤 정보(데이터)를 모아서 배우게 할지 정해야 한답니다.',
                 image: '/robot_2d_base.png'
             },
             {
-                text: '아래 네 칸: 앞의 세 가지에 이어 ④ 필요한 데이터까지 적어 봐!',
+                text: '아래 네 칸에 앞의 세 가지를 쓰고, 이어서 ④ 필요한 데이터까지 적어 보아요!',
                 image: '/robot_2d_base.png'
             }
         ],
         upper: [
             {
-                text: '안녕! 나는 AI 설계 도우미 알리야. 이름·불편·도움·데이터까지 생각했다면 마지막 단계야.',
+                text: '안녕하세요! 저는 AI 설계 도우미 선생님, 알리예요. 이름, 불편, 도움, 데이터까지 생각했다면 이제 생각의 마지막 단계랍니다.',
                 image: '/robot_2d_base.png'
             },
             {
-                text: 'AI는 가끔 예상과 다르게 행동하거나 잘못할 수 있어. 그럴 때 어떻게 하면 안전하게 쓸 수 있을지가 중요해.',
+                text: 'AI는 가끔 예상과 다르게 행동하거나 잘못할 수 있어요. 그럴 때 어떻게 하면 안전하게 쓸 수 있을지가 중요해요.',
                 image: '/robot_2d_base.png'
             },
             {
-                text: '아래 다섯 칸: 마지막에 ⑤ 안전하게 쓰는 방법(사람이 멈추거나 확인하는 것)을 적어 봐!',
+                text: '아래 다섯 칸에 마지막으로 ⑤ 안전하게 쓰는 방법(사람이 직점 멈추거나 확인하는 것)을 적어 볼까요?',
                 image: '/robot_2d_base.png'
             }
         ]
@@ -86,19 +86,19 @@ export const D4_MISSION = {
             {
                 id: 'ai_name',
                 type: 'text',
-                label: '1. AI(또는 로봇)의 이름',
+                label: '1. AI(또는 로봇)의 이름을 지어볼까요?',
                 placeholder: '예: 줄줄이, 도서관 요정 봇…'
             },
             {
                 id: 'inconvenience',
                 type: 'textarea',
-                label: '2. 학교에서 불편한 일',
+                label: '2. 학교에서 불편한 일은 무엇인가요?',
                 placeholder: '예: 급식 줄이 너무 길다, 분실물을 잘 못 찾겠다…'
             },
             {
                 id: 'ai_helps',
                 type: 'textarea',
-                label: '3. 그 AI가 도움을 줄 수 있는 일',
+                label: '3. 그 AI가 어떤 도움을 줄 수 있을까요?',
                 placeholder: '예: 몇 학년 몇 반이 먼저 가면 한산한지 알려 준다, 분실물 장소를 사진으로 찾아 준다…'
             }
         ],
@@ -106,25 +106,25 @@ export const D4_MISSION = {
             {
                 id: 'ai_name',
                 type: 'text',
-                label: '1. AI(또는 로봇)의 이름',
+                label: '1. AI(또는 로봇)의 이름을 지어볼까요?',
                 placeholder: '예: 줄줄이, 도서관 요정 봇…'
             },
             {
                 id: 'inconvenience',
                 type: 'textarea',
-                label: '2. 학교에서 불편한 일',
+                label: '2. 학교에서 불편한 일은 무엇인가요?',
                 placeholder: '예: 급식 줄이 너무 길다, 분실물을 잘 못 찾겠다…'
             },
             {
                 id: 'ai_helps',
                 type: 'textarea',
-                label: '3. 그 AI가 도움을 줄 수 있는 일',
+                label: '3. 그 AI가 어떤 도움을 줄 수 있을까요?',
                 placeholder: '예: 줄 안내, 분실물 검색 도움…'
             },
             {
                 id: 'data_collect',
                 type: 'textarea',
-                label: '4. 똑똑하게 행동하려면 필요한 데이터',
+                label: '4. 똑똑하게 행동하려면 어떤 데이터가 필요할까요?',
                 placeholder:
                     '예: 지난주 급식 줄 사진·시간 기록, 분실물 접수 장부, 설문 결과… 쉬운 말로 나열해 봐.'
             }
@@ -133,25 +133,25 @@ export const D4_MISSION = {
             {
                 id: 'ai_name',
                 type: 'text',
-                label: '1. AI(또는 로봇)의 이름',
+                label: '1. AI(또는 로봇)의 이름을 지어볼까요?',
                 placeholder: '예: 줄줄이, 도서관 요정 봇…'
             },
             {
                 id: 'inconvenience',
                 type: 'textarea',
-                label: '2. 학교에서 불편한 일',
+                label: '2. 학교에서 불편한 일은 무엇인가요?',
                 placeholder: '예: 급식 줄, 분실물, 시끄러운 복도…'
             },
             {
                 id: 'ai_helps',
                 type: 'textarea',
-                label: '3. 그 AI가 도움을 줄 수 있는 일',
+                label: '3. 그 AI가 어떤 도움을 줄 수 있을까요?',
                 placeholder: '예: 안내, 기록 정리, 알림…'
             },
             {
                 id: 'data_collect',
                 type: 'textarea',
-                label: '4. 똑똑하게 행동하려면 필요한 데이터',
+                label: '4. 똑똑하게 행동하려면 어떤 데이터가 필요할까요?',
                 placeholder:
                     '예: 도서 대출 기록, 급식 신청, 체육관 예약표… 어떤 문제를 풀 때 어떤 데이터가 필요한지 적어 봐.'
             },
@@ -159,7 +159,7 @@ export const D4_MISSION = {
                 id: 'hitl',
                 type: 'textarea',
                 label:
-                    '5. AI가 예상과 다르게 행동하거나 문제가 생겼을 때, 안전하게 쓰려면 어떻게 할까?',
+                    '5. AI가 예상과 다르게 행동할 때, 안전하게 쓰려면 어떻게 해야 할까요?',
                 placeholder:
                     '예: 이상하면 교사가 전원 끄기 / 영양사·담임이 최종 확인 후만 실행 / 학부모 신고 시 사용 중지…'
             }

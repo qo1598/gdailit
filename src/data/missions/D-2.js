@@ -31,7 +31,7 @@ const D2_APPLE_FIVE_FIELDS = [
 ];
 
 export const D2_MISSION = {
-    title: '쓰레기를 먹으면 배가 아파요! 깨끗한 데이터 밥 주기',
+    title: '깨끗한 데이터 밥 주기',
     competency: 'AI 원리 체험',
     why: {
         lower:
@@ -52,43 +52,43 @@ export const D2_MISSION = {
     storySteps: {
         lower: [
             {
-                text: '안녕! 나는 데이터 요리사 알리야. 아기 AI에게 사과를 가르칠 건데, 똑같은 사진만 주면 금방 싫증 난다구!',
+                text: '안녕하세요! 저는 데이터 요리사 선생님, 알리예요. 아기 AI에게 사과를 가르칠 건데, 똑같은 사진만 주면 금방 싫증 낸답니다!',
                 image: '/robot_2d_base.png'
             },
             {
-                text: '색·모양·어디에 있든 서로 다른 사과 모습을 다섯 가지 적어 넣어 보자. 그게 곧 AI의 “영양 만점 도시락”이야.',
+                text: '색, 모양, 어디에 있든 서로 다른 사과 모습을 다섯 가지 적어 넣어 볼까요? 그게 곧 AI의 "영양 만점 도시락"이에요.',
                 image: '/robot_2d_base.png'
             },
             {
-                text: '아래 다섯 칸에 하나씩만 적어도 돼. 상상력 쇼핑 시작!',
+                text: '아래 다섯 칸에 하나씩만 적어도 된답니다. 상상력 쇼핑 시작해 볼까요?',
                 image: '/robot_2d_base.png'
             }
         ],
         middle: [
             {
-                text: '반가워! 1·2학년 때 했던 것 기억나? 사과는 여러 모습으로 골고루 넣는 게 좋았지.',
+                text: '반가워요! 1·2학년 때 했던 것 기억나나요? 사과는 여러 모습으로 골고루 넣는 게 좋았죠.',
                 image: '/robot_2d_base.png'
             },
             {
-                text: '이번엔 나선형으로 한 단계 더! “사과” 연습인데 바나나·망고 사진이 이름표만 사과로 잘못 붙어 섞였다고 상상해 봐.',
+                text: '이번엔 나선형으로 한 단계 더! "사과" 연습인데 바나나·망고 사진이 이름표만 사과로 잘못 붙어 섞였다고 상상해 보아요.',
                 image: '/robot_2d_base.png'
             },
             {
-                text: '먼저 아래 다섯 칸에 또 다른 사과 아이디어를 적고, 그다음 칸에 섞였을 때 생길 문제를 적어!',
+                text: '먼저 아래 다섯 칸에 또 다른 사과 아이디어를 적고, 그다음 칸에 잘못 섞였을 때 생길 문제를 적어볼까요?',
                 image: '/robot_2d_base.png'
             }
         ],
         upper: [
             {
-                text: '안녕! 나는 데이터 요리사 알리야. 오늘은 “색이 속이는” 사과 이야기를 할 거야.',
+                text: '안녕하세요! 저는 데이터 요리사 선생님, 알리예요. 오늘은 "색이 속이는" 사과 이야기를 할 거예요.',
                 image: '/robot_2d_base.png'
             },
             {
-                text: '어떤 AI는 잘 익은 빨간 사과와 덜 익은 빨간 사과만 잔뜩 보고 배웠대. 그런데 세상엔 다 익어도 초록색인 아오리사과도 있지.',
+                text: '어떤 AI는 잘 익은 빨간 사과와 덜 익은 빨간 사과만 잔뜩 보고 배웠대요. 그런데 세상엔 다 익어도 초록색인 아오리사과도 있죠.',
                 image: '/robot_2d_base.png'
             },
             {
-                text: '이 AI가 아오리를 만나면 뭘 착각할까? 그리고 데이터와 설계를 어떻게 바꾸면 나아질까? 비판적으로 두 칸에 적어 보자!',
+                text: '이 AI가 아오리를 만나면 뭘 착각할까요? 그리고 데이터와 설계를 어떻게 바꾸면 나아질까요? 비판적으로 두 칸에 적어 보아요!',
                 image: '/robot_2d_base.png'
             }
         ]
@@ -117,7 +117,7 @@ export const D2_MISSION = {
             {
                 id: 'd2_apple_five',
                 type: 'multi-text',
-                label: '서로 다른 사과 모습 5가지',
+                label: '서로 다른 사과 모습 5가지를 적어볼까요?',
                 placeholder: '',
                 fields: D2_APPLE_FIVE_FIELDS
             }
@@ -126,14 +126,14 @@ export const D2_MISSION = {
             {
                 id: 'd2_apple_five',
                 type: 'multi-text',
-                label: '서로 다른 사과 모습 5가지',
+                label: '1. 서로 다른 사과 모습 5가지를 적어볼까요?',
                 placeholder: '',
                 fields: D2_APPLE_FIVE_FIELDS
             },
             {
                 id: 'd2_mixed_fruit_chaos',
                 type: 'textarea',
-                label: '다른 과일(바나나·망고 등)이 사과 데이터에 잘못 섞여 학습되면?',
+                label: '2. 다른 과일(바나나·망고 등)이 사과 데이터에 잘못 섞여 학습되면 어떻게 될까요?',
                 placeholder:
                     '예: 바나나를 사과로 착각해서 추천이 엉망 / 망고 사진만 보면 무조건 사과로 답함 / 진짜 사과와 다른 과일 경계가 무너짐… 네 생각을 적어 봐.'
             }
@@ -142,14 +142,14 @@ export const D2_MISSION = {
             {
                 id: 'd2_aomori_problem',
                 type: 'textarea',
-                label: '① AI가 {{AOMORI}}를 인식했을 때 생길 수 있는 문제를 생각해 봅시다.',
+                label: '① AI가 {{AOMORI}}를 인식했을 때 생길 수 있는 문제를 생각해 볼까요?',
                 placeholder:
                     '예: “아직 안 익었다”고만 판단해서 버림 / 초록=미숙 규칙에 갇혀 달콤한 아오리를 평가 절하…'
             },
             {
                 id: 'd2_aomori_solution',
                 type: 'textarea',
-                label: '② 위와 같은 해결을 위해 데이터·검증·설계에서 할 수 방법을 생각해 봅시다.',
+                label: '② 위와 같은 문제 해결을 위해 데이터 수집·검증에서 어떤 방법을 쓸 수 있을까요?',
                 placeholder:
                     '예: 초록 사과·아오리 사진을 충분히 넣기 / 익음은 색만이 아니라 질감·당도 정보 병행 / 사람이 의심 케이스만 검토…'
             }

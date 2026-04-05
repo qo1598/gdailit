@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { checkModeration } from '../utils/moderation';
-import VocabHighlighter from './VocabHighlighter';
+import DictionaryText from './DictionaryText';
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const MODEL_NAME = import.meta.env.VITE_GEMINI_MODEL || "gemini-2.0-flash-lite";
@@ -17,7 +17,7 @@ const ChatInterface = ({
     currentUserTurnLimit,
     currentChatInitiator,
     onChatComplete,
-    setVocabModal,
+    onWordClick,
     style = {}
 }) => {
     const [messages, setMessages] = useState([]);
@@ -150,9 +150,9 @@ const ChatInterface = ({
                                 lineHeight: '1.4'
                             }}>
                                 {message.role === 'ai' ? (
-                                    <VocabHighlighter
+                                    <DictionaryText
                                         text={message.content}
-                                        onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })}
+                                        onWordClick={onWordClick}
                                     />
                                 ) : (
                                     message.content

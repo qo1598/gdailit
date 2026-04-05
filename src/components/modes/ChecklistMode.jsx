@@ -1,13 +1,16 @@
 import React from 'react';
 import { useGradeLogic } from '../../hooks/useGradeLogic';
 import MissionScenarioPanel from '../mission/MissionScenarioPanel';
+import DictionaryText from '../DictionaryText';
 
 const ChecklistMode = ({ 
     mission, 
     missionId, 
     gradeGroup, 
-    stackedAnswers, 
+    stackedAnswers,
+    isEditing,
     onStackedChange, 
+    onWordClick,
     onSubmit 
 }) => {
     const {
@@ -62,7 +65,7 @@ const ChecklistMode = ({
                         }}>
                             알리(Alli)
                         </span>
-                        좋아! 이제 본격적으로 미션을 수행해 보자. 파이팅!
+                        <DictionaryText text="좋아! 이제 본격적으로 미션을 수행해 보자. 파이팅!" onWordClick={onWordClick} />
                     </div>
                 </div>
             </div>
@@ -91,6 +94,7 @@ const ChecklistMode = ({
                 <MissionScenarioPanel
                     imageUrl={currentScenarioImage}
                     description={currentScenarioDescription}
+                    onWordClick={onWordClick}
                 />
 
                 {currentPrompts && currentPrompts.length > 0 && (
@@ -117,7 +121,7 @@ const ChecklistMode = ({
                                     color: '#2d3436'
                                 }}
                             >
-                                {prompt}
+                                <DictionaryText text={prompt} onWordClick={onWordClick} />
                             </p>
                         ))}
                     </div>
@@ -132,7 +136,7 @@ const ChecklistMode = ({
                             marginBottom: '15px',
                             color: '#2d3436'
                         }}>
-                            {inputDef.label}
+                            <DictionaryText text={inputDef.label} onWordClick={onWordClick} />
                         </label>
                         
                         {inputDef.type === 'checklist' && (
@@ -160,7 +164,9 @@ const ChecklistMode = ({
                                             }}
                                             style={{ marginRight: '12px', width: '16px', height: '16px' }}
                                         />
-                                        <span style={{ color: '#2d3436' }}>{item}</span>
+                                        <span style={{ color: '#2d3436' }}>
+                                            <DictionaryText text={item} onWordClick={onWordClick} />
+                                        </span>
                                     </label>
                                 ))}
                             </div>
@@ -201,7 +207,7 @@ const ChecklistMode = ({
                             width: '100%'
                         }}
                     >
-                        미션 내용 수정하기!
+                        {isEditing ? '미션 내용 수정하기!' : '미션 제출하기!'}
                     </button>
                 </div>
             </div>

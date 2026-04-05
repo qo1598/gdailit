@@ -13,25 +13,25 @@ export const E3_MISSION = {
     },
     storySteps: {
         lower: [
-            { text: '안녕! 나는 탐험가 알리야. 오늘은 AI 친구가 어떻게 내 마음을 읽는지 알아볼 거야!', image: '/robot_2d_base.png' },
-            { text: '너 혹시 "앗! 내가 보고 싶던 영상이 또 나왔네?" 하고 놀란 적 있니?', image: '/robot_2d_base.png' },
-            { text: '유튜브나 게임 앱들에는 아주 똑똑한 "알고리즘" 친구가 숨어있거든.', image: '/robot_2d_base.png' },
-            { text: '우리가 이전에 봤던 영상이나 눌렀던 "좋아요"를 보고 우리 취향을 공부하는 거야.', image: '/robot_2d_base.png' },
-            { text: '최근에 네 취향에 딱 맞춰 추천해 신기했던 물건이나 영상이 있었는지 나에게 알려줘!', image: '/robot_2d_base.png' }
+            { text: '안녕하세요! 저는 탐험가 알리예요. 오늘은 AI 친구가 어떻게 내 마음을 읽는지 알아볼 거예요!', image: '/robot_2d_base.png' },
+            { text: '혹시 "앗! 내가 보고 싶던 영상이 또 나왔네?" 하고 놀란 적 있나요?', image: '/robot_2d_base.png' },
+            { text: '유튜브나 게임 앱들에는 아주 똑똑한 "알고리즘" 친구가 숨어있거든요.', image: '/robot_2d_base.png' },
+            { text: '우리가 이전에 봤던 영상이나 눌렀던 "좋아요"를 보고 우리 취향을 공부하는 거랍니다.', image: '/robot_2d_base.png' },
+            { text: '최근에 내 취향에 딱 맞춰 추천해 주어서 신기했던 물건이나 영상이 있었는지 제게 알려주세요!', image: '/robot_2d_base.png' }
         ],
         middle: [
-            { text: '반가워! 나는 알고리즘 추적기 알리야. 오늘은 AI 추천 시스템의 비밀을 파헤칠 거야.', image: '/robot_2d_base.png' },
-            { text: '우리가 인터넷에 남긴 모든 흔적은 AI가 학습하는 소중한 "데이터"가 돼.', image: '/robot_2d_base.png' },
-            { text: '검색어, 시청 시간, 좋아요, 클릭까지! AI는 이걸 분석해서 우리가 좋아할 만한 걸 계속 보여주지.', image: '/robot_2d_base.png' },
-            { text: '마치 우리 뒤를 몰래 따라다니며 취향을 메모하는 탐정 같은 녀석이야.', image: '/robot_2d_base.png' },
-            { text: '최근 너에게 추천된 콘텐츠를 찾고, AI가 어떤 흔적을 보고 그걸 추천했는지 추리해 볼래?', image: '/robot_2d_base.png' }
+            { text: '반가워요! 저는 알고리즘 추적기 알리예요. 오늘은 AI 추천 시스템의 비밀을 파헤쳐 볼게요.', image: '/robot_2d_base.png' },
+            { text: '우리가 인터넷에 남긴 모든 흔적은 AI가 학습하는 소중한 "데이터"가 된답니다.', image: '/robot_2d_base.png' },
+            { text: '검색어, 시청 시간, 좋아요, 클릭까지! AI는 이걸 분석해서 우리가 좋아할 만한 걸 계속 보여주지요.', image: '/robot_2d_base.png' },
+            { text: '마치 우리 뒤를 몰래 따라다니며 취향을 메모하는 탐정 같은 녀석이에요.', image: '/robot_2d_base.png' },
+            { text: '최근에 나에게 추천된 콘텐츠를 찾고, AI가 어떤 흔적을 보고 그걸 추천했는지 추리해 볼까요?', image: '/robot_2d_base.png' }
         ],
         upper: [
-            { text: '환영해! 나는 데이터 분석가 알리야. 오늘은 추천 알고리즘의 화려함 속에 숨겨진 그림자에 대해 이야기해 볼 거야.', image: '/robot_2d_base.png' },
-            { text: '알고리즘은 우리에게 편리함을 주지만, 동시에 우리가 보고 싶은 것만 보게 만드는 "필터 버블"을 만들지.', image: '/robot_2d_base.png' },
-            { text: '계속해서 비슷한 주장과 영상만 보다 보면 우리의 생각은 점점 좁아질 수밖에 없어.', image: '/robot_2d_base.png' },
-            { text: '이걸 "확증 편향"이라고 해. 다양한 의견을 들을 기회를 알고리즘이 빼앗아 가는 셈이지.', image: '/robot_2d_base.png' },
-            { text: '너에게 쏟아지는 알고리즘 추천을 분석하고, 이런 현상이 가져올 부작용에 대한 너의 의견을 들려줘.', image: '/robot_2d_base.png' }
+            { text: '환영해요! 저는 데이터 분석가 알리예요. 오늘은 추천 알고리즘의 화려함 속에 숨겨진 그림자에 대해 이야기해 볼게요.', image: '/robot_2d_base.png' },
+            { text: '알고리즘은 우리에게 편리함을 주지만, 동시에 우리가 보고 싶은 것만 보게 만드는 "필터 버블"을 만들기도 한답니다.', image: '/robot_2d_base.png' },
+            { text: '계속해서 비슷한 주장과 영상만 보다 보면 우리의 생각은 점점 좁아질 수밖에 없어요.', image: '/robot_2d_base.png' },
+            { text: '이걸 "확증 편향"이라고 해요. 다양한 의견을 들을 기회를 알고리즘이 빼앗아 가는 셈이지요.', image: '/robot_2d_base.png' },
+            { text: '여러분에게 쏟아지는 알고리즘 추천을 분석하고, 이런 현상이 가져올 부작용에 대한 여러분의 의견을 들려주세요.', image: '/robot_2d_base.png' }
         ]
     },
     prompts: {
@@ -51,15 +51,15 @@ export const E3_MISSION = {
     },
     type: 'direct-text',
     stackedInputs: {
-        lower: [{ id: 'item', type: 'text', label: "민수처럼 나에게 '딱' 마음에 들게 추천해준 것은?", placeholder: '최근에 본 영상이나 갖고 싶던 물건을 적어보아요.' }],
+        lower: [{ id: 'item', type: 'text', label: '1. 나에게 딱 맞게 추천해 주어서 깜짝 놀랐던 영상이나 물건은 무엇인가요?', placeholder: '최근에 본 영상이나 갖고 싶던 물건을 적어보아요.' }],
         middle: [
-            { id: 'item', type: 'text', label: "1. 나에게 '깜짝' 놀라게 추천 콘텐츠는?", placeholder: '유튜브나 쇼핑몰에서 신기하게 발견한 것을 적어보세요.' },
+            { id: 'item', type: 'text', label: '1. 나를 깜짝 놀라게 한 추천 콘텐츠는 무엇인가요?', placeholder: '유튜브나 쇼핑몰에서 신기하게 발견한 것을 적어보세요.' },
             { id: 'why_recommend', type: 'textarea', label: '2. AI 탐정의 추리: 나의 어떤 흔적(데이터)이 추천을 만들었을까요?', placeholder: '내가 검색했거나, 좋아요를 눌렀거나, 오래 시청했던 행동을 찾아보세요.' }
         ],
         upper: [
-            { id: 'item', type: 'text', label: '1. 나에게 자주 뜨는 알고리즘 추천 콘텐츠는?', placeholder: '나의 관심사가 그대로 반영된 영상 장르나 주제를 적어보세요.' },
+            { id: 'item', type: 'text', label: '1. 나에게 자주 화면에 뜨는 알고리즘 추천 콘텐츠는 무엇인가요?', placeholder: '나의 관심사가 그대로 반영된 영상 장르나 주제를 적어보세요.' },
             { id: 'why_recommend', type: 'textarea', label: '2. 데이터 추적: AI가 나를 분석하기 위해 어떤 정보를 수집했을까요?', placeholder: '조회수, 체류 시간, 좋아요 등 AI가 나를 분석하기 위해 사용했을 정보들을 추측해 보세요.' },
-            { id: 'side_effect', type: 'textarea', label: "3. 생각의 함정: '확증 편향'이 가져올 우리 사회의 위험은?", placeholder: '나와 다른 의견을 듣기 어려워지는 문제가 우리 사회의 소통에 어떤 영향을 줄지 서술해 보세요.' }
+            { id: 'side_effect', type: 'textarea', label: "3. 생각의 함정: '확증 편향'이 우리 사회의 소통에 어떤 위험을 초래할 수 있을까요?", placeholder: '나와 다른 의견을 듣기 어려워지는 문제가 우리 사회의 소통에 어떤 영향을 줄지 서술해 보세요.' }
         ]
     }
 };

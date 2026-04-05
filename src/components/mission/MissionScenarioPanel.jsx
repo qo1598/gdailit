@@ -1,10 +1,11 @@
 import React from 'react';
+import DictionaryText from '../DictionaryText';
 
 /**
  * mission.scenarioImages / scenarioDescriptions 를 탐구 과제 상단에 표시
  * @param {React.ReactNode} [descriptionNode] — 있으면 description 대신 렌더 (D-2 아오리 용어 링크 등)
  */
-const MissionScenarioPanel = ({ imageUrl, description, descriptionNode }) => {
+const MissionScenarioPanel = ({ imageUrl, description, descriptionNode, onWordClick }) => {
     const hasString = typeof description === 'string' ? description.trim().length > 0 : false;
     const hasNode = descriptionNode != null;
     const hasText = hasString || hasNode;
@@ -53,7 +54,9 @@ const MissionScenarioPanel = ({ imageUrl, description, descriptionNode }) => {
                         fontWeight: '600'
                     }}
                 >
-                    {hasNode ? descriptionNode : description}
+                    {hasNode ? descriptionNode : (
+                        <DictionaryText text={description} onWordClick={onWordClick} />
+                    )}
                 </div>
             )}
         </div>

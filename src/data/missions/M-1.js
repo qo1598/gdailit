@@ -1,5 +1,5 @@
 export const M1_MISSION = {
-    title: '생각 지휘본부, 나의 주도권을 지켜라!',
+    title: '나의 주도권을 지켜라!',
     competency: 'AI 사용 판단 및 관리',
     why: {
         lower: '로봇에게 맡길 일과 내가 직접 할 일을 똑똑하게 나눠봐요!',
@@ -13,25 +13,25 @@ export const M1_MISSION = {
     },
     storySteps: {
         lower: [
-            { text: '안녕! 나는 너의 생각 지휘본부 도우미 알리야. 우리에게 엄청난 초능력 로봇이 하나 생겼어!', image: '/robot_2d_base.png' },
-            { text: '이 로봇은 손가락 하나 까딱 안 해도 어질러진 방을 다 치워주겠다고 말해. 정말 편하겠지?', image: '/robot_2d_base.png' },
-            { text: '그런데 갑자기 로봇이 "내가 네 대신 재미있는 퍼즐도 다 맞춰줄게. 넌 그냥 쉬어!"라고 유혹하고 있어.', image: '/robot_2d_base.png' },
-            { text: '모든 일을 로봇에게 다 맡기면 우리 머리는 점점 말랑말랑해져서 생각하는 힘을 잃어버릴 수도 있어!', image: '/robot_2d_base.png' },
-            { text: '어떤 일은 로봇에게 맡기고 쉬고, 어떤 일은 내가 직접 주도권을 쥐어야 할지 똑똑하게 나눠보자!', image: '/robot_2d_base.png' }
+            { text: '안녕하세요! 저는 여러분의 생각 지휘본부 도우미 선생님, 알리예요. 우리에게 엄청난 초능력 로봇이 하나 생겼어요!', image: '/robot_2d_base.png' },
+            { text: '이 로봇은 손가락 하나 까딱 안 해도 어질러진 방을 다 치워주겠다고 말해요. 정말 편하겠죠?', image: '/robot_2d_base.png' },
+            { text: '그런데 갑자기 로봇이 "내가 네 대신 재미있는 퍼즐도 다 맞춰줄게. 넌 그냥 쉬어!"라고 유혹하고 있어요.', image: '/robot_2d_base.png' },
+            { text: '모든 일을 로봇에게 다 맡기면 우리 머리는 점점 말랑말랑해져서 생각하는 힘을 잃어버릴 수도 있답니다!', image: '/robot_2d_base.png' },
+            { text: '어떤 일은 로봇에게 맡기고 어떤 일은 내가 직접 주도권을 쥐어야 할지 똑똑하게 나눠보아요!', image: '/robot_2d_base.png' }
         ],
         middle: [
-            { text: '안녕! 나는 너의 최고 주도권 수호자 알리야. 요즘 AI가 우리 삶에 아주 깊숙이 들어와 있지.', image: '/robot_2d_base.png' },
-            { text: '그중에서 우리의 "생각 근육"을 빼앗는 무서운 유혹도 숨어 있어. 숙제 대신 로봇처럼 말이야.', image: '/robot_2d_base.png' },
-            { text: '로봇이 모든 정답을 대신 말해주면 당장은 편하겠지만, 우리의 비판적 사고력은 퇴화하고 말 거야.', image: '/robot_2d_base.png' },
-            { text: '우리는 기술의 주인이 되어야 해. 언제 AI를 쓰고, 언제 내 머리를 써야 할지 결정하는 능력이 필요해.', image: '/robot_2d_base.png' },
-            { text: '자, 생각 지휘관이 되어 AI의 교묘한 유혹을 이겨내고 너의 주도권을 증명해 봐!', image: '/robot_2d_base.png' }
+            { text: '안녕하세요! 저는 여러분의 주도권 수호자 선생님, 알리예요. 요즘 AI가 우리 삶에 아주 깊숙이 들어와 있죠.', image: '/robot_2d_base.png' },
+            { text: '그중에서 우리의 "생각 근육"을 빼앗는 무서운 유혹도 숨어 있어요. 숙제를 대신해 주겠다는 로봇처럼 말이에요.', image: '/robot_2d_base.png' },
+            { text: '로봇이 모든 정답을 대신 말해주면 당장은 편하겠지만, 우리의 비판적 사고력은 퇴화하고 말 거예요.', image: '/robot_2d_base.png' },
+            { text: '우리는 기술의 주인이 되어야 해요. 언제 AI를 쓰고, 언제 내 머리를 써야 할지 결정하는 능력이 필요하답니다.', image: '/robot_2d_base.png' },
+            { text: '자, 생각 지휘관이 되어 AI의 교묘한 유혹을 이겨내고 주도권을 증명해 보세요!', image: '/robot_2d_base.png' }
         ],
         upper: [
-            { text: '반갑습니다. 최고 관리 센터의 알리입니다. 현대 사회에서 AI는 거부할 수 없는 강력한 도구입니다.', image: '/robot_2d_base.png' },
-            { text: '하지만 인공지능이 "인지적 노력"까지 대행하게 되면, 인간은 주체성을 잃고 기술에 종속됩니다.', image: '/robot_2d_base.png' },
-            { text: '핵심적인 가치 판단과 복합적인 문제 해결 과정의 주도권은 반드시 인간에게 있어야 합니다.', image: '/robot_2d_base.png' },
+            { text: '환영합니다! 최고 관리 센터의 알리 선생님이에요. 현대 사회에서 AI는 거부할 수 없는 강력한 도구죠.', image: '/robot_2d_base.png' },
+            { text: '하지만 인공지능이 "인지적 노력"까지 대신하게 되면, 인간은 주체성을 잃고 기술에 종속된답니다.', image: '/robot_2d_base.png' },
+            { text: '핵심적인 가치 판단과 복잡한 문제 해결 과정의 주도권은 반드시 인간에게 있어야 해요.', image: '/robot_2d_base.png' },
             { text: '단순 반복 업무는 효율적으로 위임(Delegation)하되, 인간 중심의 가치 설정은 우리가 주도해야 하죠.', image: '/robot_2d_base.png' },
-            { text: '당신만의 AI 전략 지도를 설계해 보세요. 기술을 다루는 지휘관으로서의 책임과 주도권을 보여줄 때입니다.', image: '/robot_2d_base.png' }
+            { text: '여러분만의 AI 전략 지도를 설계해 보세요. 기술을 다루는 지휘관으로서의 책임과 주도권을 보여줄 때입니다.', image: '/robot_2d_base.png' }
         ]
     },
     scenarioImages: {
@@ -59,7 +59,7 @@ export const M1_MISSION = {
             {
                 id: 'choice_work',
                 type: 'checklist',
-                label: '로봇에게 "대신 다 맡겨도" 되는 단순한 일은 무엇일까?',
+                label: '1. 로봇에게 "대신 다 맡겨도" 되는 단순한 일은 무엇일까요?',
                 list: [
                     '어질러진 장난감 박스에 넣기',
                     '재미있는 수수께끼 정답 생각하기',
@@ -69,9 +69,9 @@ export const M1_MISSION = {
             }
         ],
         upper: [
-            { id: 'task_ai', type: 'textarea', label: '1. AI에게 효율적으로 위임(대신시킴)할 단순 반복 Task', placeholder: '단순한 자료 형식 변환, 오타 찾기, 일정 정리 등' },
-            { id: 'task_human', type: 'textarea', label: '2. 인간인 내가 반드시 주도권을 쥐고 직접 해결할 핵심 과업', placeholder: '최종 기획 의도 설정, 인터뷰 대상자 선정, 감정이 담긴 홍보 문구 최종 결정 등' },
-            { id: 'management_principle', type: 'text', label: '3. 나의 최고 주도권 수호 선언 (한 줄)', placeholder: '예: AI는 나의 비서일 뿐, 지휘관은 항상 나다!' }
+            { id: 'task_ai', type: 'textarea', label: '1. AI에게 효율적으로 위임(대신시킴)할 단순 반복 작업은 무엇인가요?', placeholder: '단순한 자료 형식 변환, 오타 찾기, 일정 정리 등' },
+            { id: 'task_human', type: 'textarea', label: '2. 인간인 내가 반드시 주도권을 쥐고 직접 해결해야 할 핵심 과업은 무엇인가요?', placeholder: '최종 기획 의도 설정, 인터뷰 대상자 선정, 감정이 담긴 홍보 문구 최종 결정 등' },
+            { id: 'management_principle', type: 'text', label: '3. 나의 최고 주도권 수호 선언문을 한 줄로 작성해 볼까요?', placeholder: '예: AI는 나의 비서일 뿐, 지휘관은 항상 나다!' }
         ]
     }
 };

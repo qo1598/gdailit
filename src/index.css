@@ -31,6 +31,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 #root {
@@ -300,8 +302,9 @@ body {
   word-break: keep-all;
   overflow-wrap: break-word;
   padding: 0 10px;
-  height: 2.8em;
-  /* Consistent 2-line height */
+  min-height: 2.8em;
+  height: auto;
+  /* Allows expanding for longer titles to prevent overlaps */
   display: flex !important;
   align-items: center;
   justify-content: center;

@@ -13,25 +13,25 @@ export const C1_MISSION = {
     },
     storySteps: {
         lower: [
-            { text: '안녕! 나는 꼬마 작가 로봇 알리야. 만나서 정말 반가워!', image: '/robot_2d_base.png' },
-            { text: '우리 머릿속에만 있던 마법 같은 이야기를 현실로 만들어볼까?', image: '/c1_story_v3.png' },
-            { text: '내가 이야기의 시작을 적어 주면, 네가 다음 이야기를 이어주는 거야.', image: '/robot_2d_base.png' },
-            { text: '우리가 힘을 합치면 세상에 하나뿐인 멋진 동화책이 탄생할 거야!', image: '/c1_story_v3.png' },
-            { text: '상상력 나래를 활짝 펴고, 우리만의 판타지 세계로 떠나보자! 출발!', image: '/robot_2d_base.png' }
+            { text: '안녕하세요! 저는 여러분의 친절한 창의력 선생님, 알리예요. 만나서 정말 반가워요!', image: '/robot_2d_base.png' },
+            { text: '우리 머릿속에만 있던 마법 같은 이야기를 현실로 만들어볼까요?', image: '/c1_story_v3.png' },
+            { text: '제가 이야기의 시작을 적어 주면, 다음 이야기를 이어주세요.', image: '/robot_2d_base.png' },
+            { text: '우리가 힘을 합치면 세상에 하나뿐인 멋진 동화책이 탄생할 거예요!', image: '/c1_story_v3.png' },
+            { text: '상상의 나래를 활짝 펴고, 우리만의 판타지 세계로 떠나보아요! 출발!', image: '/robot_2d_base.png' }
         ],
         middle: [
-            { text: '반가워! 나는 베스트셀러 작가 알리야. 오늘은 너와 함께 판타지 대작을 집필해볼 거야.', image: '/robot_2d_base.png' },
-            { text: 'AI와 사람이 힘을 합치면 그 어떤 기발한 이야기도 탄생할 수 있어.', image: '/c1_story_v3.png' },
-            { text: '내가 첫 문장을 던질 테니, 누구도 예상 못 한 기상천외한 반전을 네가 넣어줄래?', image: '/robot_2d_base.png' },
-            { text: '너의 창의성이 AI의 생성 능력과 만나면 어떤 일이 벌어질지 정말 기대돼!', image: '/c1_story_v3.png' },
-            { text: '준비됐지? 자 이제 우리만의 릴레이 동화 쓰기 대작전 시작!', image: '/robot_2d_base.png' }
+            { text: '안녕하세요! 저는 여러분의 문학 선생님, 알리예요. 오늘은 저와 함께 판타지 대작을 집필해 볼 거예요.', image: '/robot_2d_base.png' },
+            { text: 'AI와 사람이 힘을 합치면 그 어떤 기발한 이야기도 탄생할 수 있답니다.', image: '/c1_story_v3.png' },
+            { text: '제가 첫 문장을 던질 테니, 누구도 예상 못 한 기상천외한 반전을 넣어주실래요?', image: '/robot_2d_base.png' },
+            { text: '여러분의 창의성이 AI의 생성 능력과 만나면 어떤 일이 벌어질지 정말 기대돼요!', image: '/c1_story_v3.png' },
+            { text: '준비되셨나요? 자, 이제 우리만의 릴레이 동화 쓰기 대작전 시작!', image: '/robot_2d_base.png' }
         ],
         upper: [
-            { text: '환영해! 나는 전문 창작 파트너 알리야. 오늘은 인간의 독창성과 AI의 생성 능력이 만나는 창작의 세계를 경험해볼 거야.', image: '/robot_2d_base.png' },
-            { text: '서로 교대로 한 줄씩 이야기를 이어가며 깊이 있는 판타지 소설을 완성해보자.', image: '/c1_story_v3.png' },
-            { text: '문장을 완성한 다음에는 우리가 어떻게 협동했는지, 누구의 아이디어가 더 빛났는지 스스로 평가해보자!', image: '/robot_2d_base.png' },
-            { text: '단순한 보조 도구를 넘어서서 AI와의 창의적 협업, 너의 작가적 기량을 보여줘!', image: '/c1_story_v3.png' },
-            { text: '자 이제 타자기 키보드를 잡고 우리만의 걸작을 뽐내봐! 시작!', image: '/robot_2d_base.png' }
+            { text: '환영합니다! 저는 전문 창작 멘토 선생님, 알리예요. 오늘은 인간의 독창성과 AI의 생성 능력이 만나는 창작의 세계를 경험해 볼 거예요.', image: '/robot_2d_base.png' },
+            { text: '서로 교대로 한 줄씩 이야기를 이어가며 깊이 있는 판타지 소설을 완성해 보아요.', image: '/c1_story_v3.png' },
+            { text: '문장을 완성한 다음에는 우리가 어떻게 협동했는지, 누구의 아이디어가 더 빛났는지 스스로 평가해 볼까요?', image: '/robot_2d_base.png' },
+            { text: '단순한 보조 도구를 넘어서서 AI와의 창의적 협업, 여러분의 훌륭한 작가적 기량을 보여주세요!', image: '/c1_story_v3.png' },
+            { text: '자, 이제 키보드를 잡고 우리만의 걸작을 뽐내보세요! 시작!', image: '/robot_2d_base.png' }
         ]
     },
     userTurnLimit: { lower: 3, middle: 5, upper: 7 },

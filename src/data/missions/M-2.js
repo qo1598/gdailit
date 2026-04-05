@@ -1,5 +1,5 @@
 export const M2_MISSION = {
-    title: '역할 나누기 회의! 네 일은 네가, 내 일은 내가!',
+    title: '네 일은 네가, 내 일은 내가!',
     competency: 'AI 사용 판단 및 윤리',
     why: {
         lower: '로봇이 모든 일을 다 해주면 편하지만, 친구들과 함께 웃고 우는 소중한 시간까지 빼앗기면 안 돼요!',
@@ -13,25 +13,25 @@ export const M2_MISSION = {
     },
     storySteps: {
         lower: [
-            { text: '안녕! 나는 똑똑한 도우미 로봇 알리야. 오늘은 너와 함께 일을 나눠서 해볼 거야!', image: '/robot_2d_base.png' },
-            { text: '우리 반에 체육대회가 있어서 준비할 일이 정말 많더라. 무거운 짐도 나르고, 친구들도 응원해야 하고!', image: '/m2_sports_day_scenario.png' },
-            { text: '그런데 잠깐! 모든 일을 로봇이 다 해버리면 어떻게 될까? 친구들과 함께하는 재미도 사라질 거야.', image: '/robot_2d_base.png' },
-            { text: '힘든 일은 로봇이 도와주고, 마음을 나누는 소중한 일은 사람이 하는 게 좋겠지?', image: '/m2_sports_day_scenario.png' },
-            { text: '자, 이제 어떤 일을 누가 하면 좋을지 함께 생각해보자!', image: '/robot_2d_base.png' }
+            { text: '안녕하세요! 저는 똑똑한 도우미 로봇 선생님, 알리예요. 오늘은 여러분과 함께 일을 나눠서 해볼 거예요!', image: '/robot_2d_base.png' },
+            { text: '우리 반에 체육대회가 있어서 준비할 일이 정말 많네요. 무거운 짐도 나르고, 친구들도 응원해야 하고요!', image: '/m2_sports_day_scenario.png' },
+            { text: '그런데 잠깐! 모든 일을 로봇이 다 해버리면 어떻게 될까요? 친구들과 함께하는 재미도 사라질 거예요.', image: '/robot_2d_base.png' },
+            { text: '힘든 일은 로봇이 도와주고, 마음을 나누는 소중한 일은 사람이 하는 게 좋겠죠?', image: '/m2_sports_day_scenario.png' },
+            { text: '자, 이제 어떤 일을 누가 하면 좋을지 함께 생각해 보아요!', image: '/robot_2d_base.png' }
         ],
         middle: [
-            { text: '반가워! 나는 협업 전문가 알리야. 오늘은 사람과 AI가 어떻게 역할을 나눠야 하는지 배워볼 거야.', image: '/robot_2d_base.png' },
-            { text: '장기자랑 준비로 바쁜 친구들을 보니 AI가 모든 걸 대신 해주고 싶어져. 하지만 정말 그래도 될까?', image: '/m2_talent_show_scenario.png' },
-            { text: '춤과 노래를 AI가 대신한다면 무대 위의 감동과 친구들과의 추억은 어떻게 될까?', image: '/robot_2d_base.png' },
-            { text: '효율성도 중요하지만, 사람만이 할 수 있는 따뜻한 마음의 표현은 더 소중해.', image: '/m2_talent_show_scenario.png' },
-            { text: '이제 AI와 사람이 각각 어떤 역할을 맡으면 좋을지 지혜롭게 나눠보자!', image: '/robot_2d_base.png' }
+            { text: '반가워요! 저는 협업 전문가 선생님, 알리예요. 오늘은 사람과 AI가 어떻게 역할을 나눠야 하는지 배워볼 거예요.', image: '/robot_2d_base.png' },
+            { text: '장기자랑 준비로 바쁜 친구들을 보니 AI가 모든 걸 대신 해주고 싶어지네요. 하지만 정말 그래도 될까요?', image: '/m2_talent_show_scenario.png' },
+            { text: '춤과 노래를 AI가 대신한다면 무대 위의 감동과 친구들과의 추억은 어떻게 될까요?', image: '/robot_2d_base.png' },
+            { text: '효율성도 중요하지만, 사람만이 할 수 있는 따뜻한 마음의 표현은 더 소중하답니다.', image: '/m2_talent_show_scenario.png' },
+            { text: '이제 AI와 사람이 각각 어떤 역할을 맡으면 좋을지 지혜롭게 나눠볼까요?', image: '/robot_2d_base.png' }
         ],
         upper: [
-            { text: '환영합니다. 저는 협업 관리 시스템 알리입니다. 오늘은 인간-AI 협업의 핵심 원칙을 다뤄보겠습니다.', image: '/robot_2d_base.png' },
-            { text: '자동화 기술이 발달하면서 "모든 것을 기계에게 맡기자"는 유혹이 커지고 있습니다.', image: '/m2_class_meeting_scenario.png' },
-            { text: '하지만 인간의 고유 영역인 윤리적 판단, 창의적 사고, 공감 능력까지 기계에 의존하면 위험합니다.', image: '/robot_2d_base.png' },
-            { text: '효율성과 인간성의 균형을 찾아, 각자의 강점을 살리는 협업 모델을 구축해야 합니다.', image: '/m2_class_meeting_scenario.png' },
-            { text: '이제 여러분이 직접 인간과 AI의 역할 경계를 설정하고 협상해보시기 바랍니다.', image: '/robot_2d_base.png' }
+            { text: '환영합니다. 저는 협업 관리 시스템 교육을 맡은 선생님, 알리예요. 오늘은 인간-AI 협업의 핵심 원칙을 다뤄보겠습니다.', image: '/robot_2d_base.png' },
+            { text: '자동화 기술이 발달하면서 "모든 것을 기계에게 맡기자"는 유혹이 커지고 있죠.', image: '/m2_class_meeting_scenario.png' },
+            { text: '하지만 인간의 고유 영역인 윤리적 판단, 창의적 사고, 공감 능력까지 기계에 의존하면 위험해요.', image: '/robot_2d_base.png' },
+            { text: '효율성과 인간성의 균형을 찾아, 각자의 강점을 살리는 협업 모델을 구축해야 한답니다.', image: '/m2_class_meeting_scenario.png' },
+            { text: '이제 여러분이 직접 인간과 AI의 역할 경계를 설정하고 협상해 보세요.', image: '/robot_2d_base.png' }
         ]
     },
     scenarioDescriptions: {
@@ -59,7 +59,7 @@ export const M2_MISSION = {
             {
                 id: 'ai_tasks',
                 type: 'checklist',
-                label: '🤖 체육대회 준비에서 AI가 도와줄 일을 선택해주세요! (여러 개 선택 가능)',
+                label: '1. 체육대회 준비에서 AI가 도와줄 일을 선택해 볼까요? (여러 개 가능)',
                 list: [
                     '📦 무거운 매트와 장비 나르기',
                     '🔢 줄넘기 개수 세기',
@@ -72,7 +72,7 @@ export const M2_MISSION = {
             {
                 id: 'reason_human',
                 type: 'textarea',
-                label: '💝 사람이 직접 해야 하는 일이 있다면 그 이유를 써보세요!',
+                label: '2. 사람이 직접 해야 하는 일이 있다면 그 이유를 써볼까요?',
                 placeholder: '친구들과 마음을 나누고 함께 기뻐하는 일은 사람이 직접 해야 하는 이유를...'
             }
         ],
@@ -80,7 +80,7 @@ export const M2_MISSION = {
             {
                 id: 'my_tasks',
                 type: 'checklist',
-                label: '🎭 장기자랑 준비에서 내가 직접 해야 할 일을 선택해주세요! (여러 개 선택 가능)',
+                label: '1. 장기자랑 준비에서 내가 직접 해야 할 일을 선택해 볼까요? (여러 개 가능)',
                 list: [
                     '🎬 대본 외우고 감정 연기하기',
                     '💃 친구들과 호흡 맞춰 춤추기',
@@ -93,7 +93,7 @@ export const M2_MISSION = {
             {
                 id: 'reason_human',
                 type: 'textarea',
-                label: '❤️ 왜 그 일들은 사람이 직접 해야 한다고 생각하나요?',
+                label: '2. 왜 그 일들은 사람이 직접 해야 한다고 생각하나요?',
                 placeholder: '감정이 담긴 연기나 친구들과의 협력은 왜 AI가 대신할 수 없을까요?'
             }
         ]

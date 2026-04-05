@@ -1,4 +1,5 @@
 import React from 'react';
+import DictionaryText from '../DictionaryText';
 import ImageGenerator from './ImageGenerator';
 import D1LowerBasketDnD from './d1/D1LowerBasketDnD';
 import D1MiddleGroupsDnD from './d1/D1MiddleGroupsDnD';
@@ -15,7 +16,8 @@ const StackedInputs = ({
     gradeGroup,
     onC3GeneratePoster,
     isGeneratingC3Image,
-    onRequestAomoriHelp
+    onRequestAomoriHelp,
+    onWordClick
 }) => {
     if (!stackedInputs || stackedInputs.length === 0) {
         return null;
@@ -51,7 +53,6 @@ const StackedInputs = ({
                         type="text"
                         value={currentValue}
                         onChange={(e) => onAnswerChange(inputId, e.target.value)}
-                        placeholder={inputDef.placeholder}
                         style={{
                             width: '100%',
                             padding: 'clamp(14px, 3.5vw, 16px)',
@@ -75,7 +76,6 @@ const StackedInputs = ({
                             rows={4}
                             value={currentValue}
                             onChange={(e) => onAnswerChange(inputId, e.target.value)}
-                            placeholder={inputDef.placeholder}
                             style={{
                                 width: '100%',
                                 padding: 'clamp(14px, 3.5vw, 16px)',
@@ -219,7 +219,7 @@ const StackedInputs = ({
                                         lineHeight: '1.5',
                                         padding: '0 10px'
                                     }}>
-                                        {item}
+                                        <DictionaryText text={item} onWordClick={onWordClick} />
                                     </div>
                                 </div>
                             );
@@ -269,7 +269,7 @@ const StackedInputs = ({
                                             marginBottom: '8px'
                                         }}
                                     >
-                                        {field.label}
+                                        <DictionaryText text={field.label} onWordClick={onWordClick} />
                                     </div>
                                 )}
                                 <input
@@ -338,7 +338,7 @@ const StackedInputs = ({
                                 </div>
                             ) : (
                             <label style={labelStyle}>
-                                {inputDef.label}
+                                <DictionaryText text={inputDef.label} onWordClick={onWordClick} />
                             </label>
                             )}
                             {inputDef.placeholder && (

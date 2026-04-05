@@ -2,13 +2,16 @@ import React from 'react';
 import { useGradeLogic } from '../../hooks/useGradeLogic';
 import StackedInputs from '../mission/StackedInputs';
 import MissionScenarioPanel from '../mission/MissionScenarioPanel';
+import DictionaryText from '../DictionaryText';
 
 const StackedInputsMode = ({ 
     mission, 
     missionId, 
     gradeGroup, 
-    stackedAnswers, 
+    stackedAnswers,
+    isEditing,
     onStackedChange, 
+    onWordClick,
     onSubmit 
 }) => {
     const {
@@ -69,7 +72,7 @@ const StackedInputsMode = ({
                         }}>
                             알리(Alli)
                         </span>
-                        좋아! 이제 본격적으로 미션을 수행해 보자. 파이팅!
+                        <DictionaryText text="좋아! 이제 본격적으로 미션을 수행해 보자. 파이팅!" onWordClick={onWordClick} />
                     </div>
                 </div>
             </div>
@@ -99,6 +102,7 @@ const StackedInputsMode = ({
                 <MissionScenarioPanel
                     imageUrl={currentScenarioImage}
                     description={currentScenarioDescription}
+                    onWordClick={onWordClick}
                 />
 
                 {currentPrompts && currentPrompts.length > 0 && (
@@ -120,12 +124,12 @@ const StackedInputsMode = ({
                                 style={{
                                     marginBottom: idx === currentPrompts.length - 1 ? 0 : '12px',
                                     fontWeight: '900',
-                                    fontSize: 'clamp(1rem, 4vw, 1.2rem)',
+                                    fontSize: 'clamp(1rem, 4vw, 1.15rem)',
                                     lineHeight: 1.5,
                                     color: '#2d3436'
                                 }}
                             >
-                                {prompt}
+                                <DictionaryText text={prompt} onWordClick={onWordClick} />
                             </p>
                         ))}
                     </div>
@@ -137,6 +141,7 @@ const StackedInputsMode = ({
                     stackedInputs={currentStackedInputs}
                     stackedAnswers={stackedAnswers}
                     onAnswerChange={onStackedChange}
+                    onWordClick={onWordClick}
                 />
 
                 <div style={{ textAlign: 'center', marginTop: 'clamp(20px, 5vw, 30px)' }}>
@@ -158,7 +163,7 @@ const StackedInputsMode = ({
                             touchAction: 'manipulation'
                         }}
                     >
-                        미션 내용 수정하기!
+                        {isEditing ? '미션 내용 수정하기!' : '미션 제출하기!'}
                     </button>
                 </div>
             </div>

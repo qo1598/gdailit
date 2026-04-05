@@ -2,12 +2,14 @@ import React from 'react';
 import { useGradeLogic } from '../../hooks/useGradeLogic';
 import ChatInterface from '../ChatInterface';
 import MissionScenarioPanel from '../mission/MissionScenarioPanel';
+import DictionaryText from '../DictionaryText';
 
 const ChatMode = ({ 
     mission, 
     missionId, 
     gradeGroup, 
     userName,
+    onWordClick,
     onComplete 
 }) => {
     const {
@@ -60,7 +62,7 @@ const ChatMode = ({
                         }}>
                             알리
                         </span>
-                        좋아! 이제 본격적으로 미션을 수행해 보자. 파이팅!
+                        <DictionaryText text="좋아! 이제 본격적으로 미션을 수행해 보자. 파이팅!" onWordClick={onWordClick} />
                     </div>
                 </div>
             </div>
@@ -113,6 +115,7 @@ const ChatMode = ({
                     <MissionScenarioPanel
                         imageUrl={currentScenarioImage}
                         description={currentScenarioDescription}
+                        onWordClick={onWordClick}
                     />
                 )}
 
@@ -135,12 +138,12 @@ const ChatMode = ({
                                 style={{
                                     marginBottom: idx === currentPrompts.length - 1 ? 0 : '12px',
                                     fontWeight: '900',
-                                    fontSize: '1.2rem',
+                                    fontSize: '1.1rem',
                                     lineHeight: '1.5',
                                     color: '#2d3436'
                                 }}
                             >
-                                {prompt}
+                                <DictionaryText text={prompt} onWordClick={onWordClick} />
                             </p>
                         ))}
                     </div>
@@ -154,6 +157,7 @@ const ChatMode = ({
                     currentChatInitiator={currentChatInitiator}
                     onChatComplete={onComplete}
                     userName={userName}
+                    onWordClick={onWordClick}
                 />
             </div>
         </div>

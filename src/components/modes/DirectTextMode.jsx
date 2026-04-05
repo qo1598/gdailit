@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import DictionaryText from '../DictionaryText';
 import { GoogleGenAI } from '@google/genai';
 import { useGradeLogic } from '../../hooks/useGradeLogic';
 import StackedInputs from '../mission/StackedInputs';
@@ -16,7 +17,9 @@ const DirectTextMode = ({
     missionId,
     gradeGroup,
     stackedAnswers,
+    isEditing,
     onStackedChange,
+    onWordClick,
     onSubmit
 }) => {
     const {
@@ -133,7 +136,7 @@ const DirectTextMode = ({
                         >
                             알리(Alli)
                         </span>
-                        좋아! 이제 본격적으로 미션을 수행해 보자. 파이팅!
+                        <DictionaryText text="좋아! 이제 본격적으로 미션을 수행해 보자. 파이팅!" onWordClick={onWordClick} />
                     </div>
                 </div>
             </div>
@@ -216,6 +219,7 @@ const DirectTextMode = ({
                             ? renderAomoriFragments(currentScenarioDescription, openAomoriHelp)
                             : undefined
                     }
+                    onWordClick={onWordClick}
                 />
 
                 {missionId === 'D-2' && gradeGroup === 'upper' && (
@@ -246,7 +250,7 @@ const DirectTextMode = ({
                                     color: '#2d3436'
                                 }}
                             >
-                                {prompt}
+                                <DictionaryText text={prompt} onWordClick={onWordClick} />
                             </p>
                         ))}
                     </div>
@@ -313,6 +317,7 @@ const DirectTextMode = ({
                         onRequestAomoriHelp={
                             missionId === 'D-2' && gradeGroup === 'upper' ? openAomoriHelp : undefined
                         }
+                        onWordClick={onWordClick}
                     />
 
                     <div style={{ textAlign: 'center', marginTop: 'clamp(20px, 5vw, 30px)' }}>
@@ -333,7 +338,7 @@ const DirectTextMode = ({
                                 touchAction: 'manipulation'
                             }}
                         >
-                            미션 내용 수정하기!
+                            {isEditing ? '미션 내용 수정하기!' : '미션 제출하기!'}
                         </button>
                     </div>
                 </form>

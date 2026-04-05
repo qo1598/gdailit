@@ -1,5 +1,5 @@
 export const M3_MISSION = {
-    title: '마법 양탄자를 조종하는 슈퍼 프롬프트!',
+    title: '마법의 슈퍼 프롬프트!',
     competency: 'AI 사용 판단 및 윤리',
     why: {
         lower: 'AI는 마법 지니처럼 뭐든 들어주지만, 말하는 대로만 해요! "케이크 만들어줘"라고 하면 아무 케이크나 뚝딱 만들지만, "딸기 장식 3층 초콜릿 케이크"라고 하면 내가 원하는 걸 정확히 만들어요.',
@@ -13,25 +13,25 @@ export const M3_MISSION = {
     },
     storySteps: {
         lower: [
-            { text: '안녕! 나는 마법사 알리야. 오늘은 AI한테 마법 주문을 거는 방법을 배울 거야!', image: '/robot_2d_base.png' },
-            { text: 'AI는 우리가 말하는 대로만 해줘. "케이크!"라고 하면 아무 케이크나 뚝딱 만들어버려.', image: '/robot_2d_base.png' },
-            { text: '하지만 "딸기 장식, 3층, 초콜릿 맛 케이크!"라고 하면 내가 원하는 걸 정확히 만들 수 있어!', image: '/robot_2d_base.png' },
-            { text: '말이 자세할수록 AI가 더 잘 알아듣거든. 이게 바로 "마법 주문(프롬프트)"이야!', image: '/robot_2d_base.png' },
-            { text: '자, 이제 짧은 주문과 자세한 주문, 두 가지를 직접 만들어보자!', image: '/robot_2d_base.png' }
+            { text: '안녕하세요! 저는 마법사 선생님, 알리예요. 오늘은 AI에게 마법 주문을 거는 방법을 배울 거예요!', image: '/robot_2d_base.png' },
+            { text: 'AI는 우리가 말하는 대로만 해줘요. "케이크!"라고 하면 아무 케이크나 뚝딱 만들어버리죠.', image: '/robot_2d_base.png' },
+            { text: '하지만 "딸기 장식, 3층, 초콜릿 맛 케이크!"라고 하면 내가 원하는 걸 정확히 만들 수 있답니다!', image: '/robot_2d_base.png' },
+            { text: '말이 자세할수록 AI가 더 잘 알아듣거든요. 이게 바로 "마법 주문(프롬프트)"이에요!', image: '/robot_2d_base.png' },
+            { text: '자, 이제 짧은 주문과 자세한 주문, 두 가지를 직접 만들어볼까요?', image: '/robot_2d_base.png' }
         ],
         middle: [
-            { text: '안녕! 나는 AI 주문 가이드 알리야. 오늘은 AI 화가에게 그림을 주문해 볼 거야.', image: '/robot_2d_base.png' },
-            { text: '"그림 그려줘!"라고만 하면 AI 화가는… 잠깐, 어떤 그림? 뭘 그려야 해? 😰', image: '/robot_2d_base.png' },
-            { text: '색깔, 배경, 분위기, 캐릭터의 행동… 이런 조건들을 넣어줄수록 그림이 딱 원하는 대로 나와!', image: '/robot_2d_base.png' },
-            { text: '조건이 많을수록 AI가 내 상상 속 그림에 딱 맞는 결과를 만들어준답니다.', image: '/robot_2d_base.png' },
-            { text: '자, 이제 조건 카드를 골라서 나만의 완벽한 그림 주문서를 만들어보자!', image: '/robot_2d_base.png' }
+            { text: '안녕하세요! 저는 AI 주문 가이드 선생님, 알리예요. 오늘은 AI 화가에게 그림을 주문해 볼 거예요.', image: '/robot_2d_base.png' },
+            { text: '"그림 그려줘!"라고만 하면 AI 화가는… 잠깐, 어떤 그림? 뭘 그려야 할지 몰라요. 😰', image: '/robot_2d_base.png' },
+            { text: '색깔, 배경, 분위기, 캐릭터의 행동… 이런 조건들을 넣어줄수록 그림이 기가 막히게 나온답니다!', image: '/robot_2d_base.png' },
+            { text: '조건이 많을수록 AI가 내 상상 속 그림에 딱 맞는 결과를 만들어 줄 거예요.', image: '/robot_2d_base.png' },
+            { text: '자, 이제 조건 카드를 골라서 나만의 완벽한 그림 주문서를 만들어볼까요?', image: '/robot_2d_base.png' }
         ],
         upper: [
-            { text: '안녕! 나는 프롬프트 전략가 알리야. 오늘은 AI가 딱 원하는 답을 내놓게 만드는 비법을 알려줄게.', image: '/robot_2d_base.png' },
-            { text: '"기후변화 알려줘"라는 질문을 받으면 AI는 뭘 어디까지 말해야 할지 몰라서 헤맨단다.', image: '/robot_2d_base.png' },
-            { text: '그래서 필요한 게 바로 프롬프트 공식! 역할, 과제, 제약, 형식의 4가지를 넣는 거야.', image: '/robot_2d_base.png' },
-            { text: '"초등 선생님처럼, 기후변화를 10문장 이내, Q&A 형태로 설명해줘" — 이렇게!', image: '/robot_2d_base.png' },
-            { text: '자, 이제 AI가 제시한 나쁜 프롬프트를 이 공식으로 멋지게 고쳐주러 가보자!', image: '/robot_2d_base.png' }
+            { text: '환영합니다! 저는 프롬프트 전략가 선생님, 알리예요. 오늘은 AI가 딱 원하는 답을 내놓게 만드는 비법을 알려줄게요.', image: '/robot_2d_base.png' },
+            { text: '"기후변화 알려줘"라는 질문을 받으면 AI는 뭘 어디까지 말해야 할지 몰라서 헤매게 된답니다.', image: '/robot_2d_base.png' },
+            { text: '그래서 필요한 게 바로 프롬프트 공식! 역할, 과제, 제약, 형식의 4가지를 넣는 거예요.', image: '/robot_2d_base.png' },
+            { text: '"초등 선생님처럼, 기후변화를 10문장 이내, Q&A 형태로 설명해줘!" — 이렇게요!', image: '/robot_2d_base.png' },
+            { text: '자, 이제 AI가 제시한 나쁜 프롬프트를 이 공식으로 멋지게 고쳐주러 가볼까요?', image: '/robot_2d_base.png' }
         ]
     },
     prompts: {
@@ -48,13 +48,13 @@ export const M3_MISSION = {
             {
                 id: 'bad_prompt',
                 type: 'text',
-                label: '💤 짧은 주문 (어떤 게 나올지 모르는)',
+                label: '1. 아주 짧게 대충 말하는 주문(나쁜 주문)을 써볼까요?',
                 placeholder: '예: "케이크" 또는 "우주선" 같이 딱 한두 단어로!'
             },
             {
                 id: 'good_prompt',
                 type: 'textarea',
-                label: '🌟 마법 주문서 (조건을 팍팍 넣어서!)',
+                label: '2. 여러 가지 조건을 팍팍 넣은 마법 주문서(좋은 주문)를 써볼까요?',
                 placeholder: '예: "딸기 장식이 달린, 초콜릿 맛, 3층짜리 생일 케이크!" — 조건 3가지 이상 넣어봐요!'
             }
         ],
@@ -62,7 +62,7 @@ export const M3_MISSION = {
             {
                 id: 'prompt_conditions',
                 type: 'checklist',
-                label: '🎨 그림 주문서에 넣을 조건을 골라보세요! (여러 개 선택 가능)',
+                label: '1. 그림 주문서에 넣을 조건들을 골라볼까요? (여러 개 선택 가능)',
                 list: [
                     '🎨 색깔 (예: 보라색, 황금빛, 무지개)',
                     '🌅 배경/장소 (예: 우주, 바닷속, 동화 마을)',
@@ -75,7 +75,7 @@ export const M3_MISSION = {
             {
                 id: 'final_prompt',
                 type: 'textarea',
-                label: '✏️ 고른 조건들을 모아 완성된 그림 주문서를 한 문장으로 써보세요!',
+                label: '2. 고른 조건들을 모아 완성된 그림 주문서를 한 문장으로 써볼까요?',
                 placeholder: '예: "밤하늘 우주를 배경으로 황금빛 날개를 펼치고 춤추는 고양이를 수채화 스타일로 그려줘!"'
             }
         ]

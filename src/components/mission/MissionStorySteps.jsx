@@ -1,4 +1,5 @@
 import React from 'react';
+import DictionaryText from '../DictionaryText';
 
 /**
  * 미션 스토리 단계를 표시하는 컴포넌트
@@ -10,7 +11,7 @@ const MissionStorySteps = ({
     onNextStep,
     onPrevStep,
     onComplete,
-    setVocabModal,
+    onWordClick,
     missionId
 }) => {
     if (!steps || steps.length === 0) {
@@ -104,7 +105,7 @@ const MissionStorySteps = ({
                     boxSizing: 'border-box'
                 }}
             >
-                <p style={{ margin: 0, width: '100%' }}>{step.text}</p>
+                <DictionaryText text={step.text} onWordClick={onWordClick} />
             </div>
 
             <div
