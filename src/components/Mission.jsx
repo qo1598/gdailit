@@ -81,7 +81,7 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
     }
 
     const handleBack = () => {
-        navigate('/dashboard');
+        navigate('/');
     };
 
     const handleStoryComplete = () => {
@@ -283,30 +283,7 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
     };
 
     return (
-        <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 relative pt-[50px]">
-            {/* 글로벌 미션 종료 버튼 (도감 나가기) */}
-            <button 
-                onClick={handleBack}
-                style={{
-                    position: 'absolute',
-                    top: '15px',
-                    left: '15px',
-                    background: 'white',
-                    border: '2px solid #dfe6e9',
-                    borderRadius: '50%',
-                    width: '45px',
-                    height: '45px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    zIndex: 50,
-                    boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-                    cursor: 'pointer'
-                }}
-            >
-                <span style={{ fontSize: '24px', fontWeight: 'bold', color: '#2d3436' }}>&larr;</span>
-            </button>
-            
+        <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 relative">
             {renderMissionMode()}
 
             {/* 설문조사 모달 */}

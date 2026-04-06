@@ -624,8 +624,6 @@ function parseGradeGroup(studentId) {
 }
 
 function AppContent() {
-  const location = useLocation();
-  const isMissionPath = location.pathname.startsWith('/mission');
   const [missions, setMissions] = React.useState(INITIAL_MISSIONS);
   const [userId, setUserId] = React.useState(null);
   const [userName, setUserName] = React.useState('');
@@ -780,7 +778,7 @@ function AppContent() {
 
   return (
     <>
-      {userId && !isMissionPath && (
+      {userId && (
         <>
           {/* ===== PC/태블릿 헤더 (768px 이상) ===== */}
           <header className="app-header header-desktop">
@@ -820,7 +818,7 @@ function AppContent() {
         </>
       )}
 
-      <main className="main-content" style={{ padding: userId && !isMissionPath ? '20px' : '0' }}>
+      <main className="main-content" style={{ padding: userId ? '15px' : '0' }}>
         {isLoading ? (
           <div className="flex items-center justify-center min-h-screen">
             <div className="text-lg">로딩 중...</div>
@@ -839,7 +837,7 @@ function AppContent() {
 
       <RewardModal info={rewardInfo} onClose={() => setRewardInfo({ ...rewardInfo, show: false })} />
 
-      {userId && !isMissionPath && <Navigation />}
+      {userId && <Navigation />}
     </>
   );
 }
