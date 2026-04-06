@@ -27,7 +27,7 @@ export const E2_MISSION = {
             { text: '진짜 정답이 뭔지 확인하고, 왜 AI가 이런 실수를 했는지 탐정처럼 추리해 볼까요?', image: '/robot_2d_base.png' }
         ],
         upper: [
-            { text: '환영해요! 저는 데이터 전문가 알리예요. 오늘은 생성형 AI의 가장 큰 한계인 환각(Hallucination) 현상을 파헤쳐 볼까요?', image: '/robot_2d_base.png' },
+            { text: '환영해요! 저는 데이터 전문가 알리예요. 오늘은 생성형 AI의 가장 큰 한계인 환각 현상을 파헤쳐 볼까요?', image: '/robot_2d_base.png' },
             { text: 'AI는 확률적으로 가장 자연스러운 문장을 만들 뿐, 그 내용이 항상 사실인 것은 아니랍니다.', image: '/robot_2d_base.png' },
             { text: '이런 "환각" 현상은 정교한 문장 속에 숨어서 우리를 혼란스럽게 만들지요.', image: '/robot_2d_base.png' },
             { text: '이제 여러분이 직접 AI와 대화하며 논리적인 허점을 찾아내고, 실제 사실로 AI를 설득해 보세요!', image: '/robot_2d_base.png' },

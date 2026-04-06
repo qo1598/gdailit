@@ -604,7 +604,7 @@ function Profile({ userId, userName, fragments, setFragments, avatarConfig, setA
           width: '80%'
         }}
       >
-        저장하고 실험실 나가기
+        로그아웃
       </button>
     </div>
   );
@@ -645,20 +645,20 @@ function AppContent() {
     const avatarConfig = student.avatar_config || { body: "basic", color: "blue", accessory: "none" };
     const schoolId = student.schoolId || 'gyeongdong';
     const gradeGroup = parseGradeGroup(student.id);
-    
+
     setUserId(userId);
     setFragments(fragments);
     setAvatarConfig(avatarConfig);
     setSchoolId(schoolId);
     setGradeGroup(gradeGroup);
-    
+
     // 로컬 스토리지에 세션 저장
     localStorage.setItem('userId', userId);
     localStorage.setItem('fragments', fragments.toString());
     localStorage.setItem('avatarConfig', JSON.stringify(avatarConfig));
     localStorage.setItem('schoolId', schoolId);
     localStorage.setItem('gradeGroup', gradeGroup);
-    
+
     if (student.justAttended) {
       handleReward(3, "오늘의 첫 접속 보상입니다! 반가워요!");
     }
@@ -683,7 +683,7 @@ function AppContent() {
         userName = '학생';
       }
     }
-    
+
     setUserName(userName);
     localStorage.setItem('userName', userName);
   };
@@ -694,7 +694,7 @@ function AppContent() {
     setSchoolId('gyeongdong');
     setGradeGroup('lower');
     setMissions(INITIAL_MISSIONS);
-    
+
     // 로컬 스토리지 클리어
     localStorage.removeItem('userId');
     localStorage.removeItem('userName');

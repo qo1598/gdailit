@@ -64,7 +64,7 @@ const MISSIONS = {
             middle: [
                 { text: '반가워! 나는 탐정 알리야. 오늘은 겉으론 똑똑해 보이지만 속은 허당인 AI의 실수를 조사할 거야.', image: '/robot_2d_base.png' },
                 { text: 'AI는 방대한 데이터를 학습하지만, 가끔은 데이터가 섞여서 그럴듯한 거짓말을 만들어내.', image: '/robot_2d_base.png' },
-                { text: "사람들은 이걸 '환각(Hallucination)' 현상이라고 해. 확신에 차서 말하니까 속기 쉽지.", image: '/robot_2d_base.png' },
+                { text: "사람들은 이걸 '환각' 현상이라고 해. 확신에 차서 말하니까 속기 쉽지.", image: '/robot_2d_base.png' },
                 { text: '우리 AI 친구가 호랑이를 동물 나라의 왕이라고 생각해서 두 번째로 크다고 우격다짐하고 있어.', image: '/robot_2d_base.png' },
                 { text: '진짜 정답이 뭔지 확인하고, 왜 AI가 이런 실수를 했는지 탐정처럼 추리해 줄래?', image: '/robot_2d_base.png' }
             ],

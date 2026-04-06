@@ -94,7 +94,7 @@ const MISSIONS = {
                 { text: '진짜 정답이 뭔지 확인하고, 왜 AI가 이런 실수를 했는지 탐정처럼 추리해 줄래?', image: '/robot_2d_base.png' }
             ],
             upper: [
-                { text: '환영해! 나는 데이터 전문가 알리야. 오늘은 생성형 AI의 가장 큰 한계인 거짓 정보 생성, 즉 환각(Hallucination)을 파헤쳐 보자.', image: '/robot_2d_base.png' },
+                { text: '환영해! 나는 데이터 전문가 알리야. 오늘은 생성형 AI의 가장 큰 한계인 거짓 정보 생성, 즉 환각을 파헤쳐 보자.', image: '/robot_2d_base.png' },
                 { text: 'AI는 확률적으로 가장 자연스러운 문장을 만들 뿐, 그 내용이 항상 사실인 것은 아니야.', image: '/robot_2d_base.png' },
                 { text: '이런 "환각" 현상은 정교한 문장 속에 숨어서 우리를 혼란스럽게 만들지.', image: '/robot_2d_base.png' },
                 { text: '이제 네가 직접 AI와 대화하며 논리적인 허점을 찾아내고, 실제 사실로 AI를 설득해 봐!', image: '/robot_2d_base.png' },
@@ -597,7 +597,7 @@ const MISSIONS = {
         },
         scenarioImages: {
             lower: '/m2_sports_day_scenario.png',
-            middle: '/m2_talent_show_scenario.png', 
+            middle: '/m2_talent_show_scenario.png',
             upper: '/m2_class_meeting_scenario.png'
         },
         prompts: {
@@ -957,7 +957,7 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
 
     const generateM3Image = async () => {
         let prompt = '';
-        
+
         // M-3 저학년: good_prompt 사용
         if (gradeGroup === 'lower') {
             prompt = stackedAnswers.good_prompt;
@@ -1663,9 +1663,9 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                 <>
                                     {/* M-2 고학년 채팅 모드에서도 이미지 표시 */}
                                     {missionId === 'M-2' && gradeGroup === 'upper' && (
-                                        <div style={{ 
-                                            display: 'flex', 
-                                            justifyContent: 'center', 
+                                        <div style={{
+                                            display: 'flex',
+                                            justifyContent: 'center',
                                             marginBottom: '20px',
                                             background: '#f8f9fa',
                                             borderRadius: '15px',
@@ -1675,9 +1675,9 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                             <img
                                                 src={mission.scenarioImages?.[gradeGroup] || '/robot_2d_base.png'}
                                                 alt="상황 이미지"
-                                                style={{ 
-                                                    maxWidth: '70%', 
-                                                    height: 'auto', 
+                                                style={{
+                                                    maxWidth: '70%',
+                                                    height: 'auto',
                                                     borderRadius: '12px',
                                                     boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                                                 }}
@@ -1694,32 +1694,32 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                                         padding: '10px 15px',
                                                         borderRadius: m.role === 'ai' ? '5px 15px 15px 15px' : '15px 15px 5px 15px',
                                                         boxShadow: '0 2px 5px rgba(0,0,0,0.05)',
-                                                    fontWeight: 'bold',
-                                                    fontSize: '0.95rem'
-                                                }}>
-                                                    {m.role === 'ai' ? (
-                                                        <VocabHighlighter
-                                                            text={m.content}
-                                                            onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })}
-                                                        />
-                                                    ) : m.content}
+                                                        fontWeight: 'bold',
+                                                        fontSize: '0.95rem'
+                                                    }}>
+                                                        {m.role === 'ai' ? (
+                                                            <VocabHighlighter
+                                                                text={m.content}
+                                                                onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })}
+                                                            />
+                                                        ) : m.content}
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        ))}
-                                        {isAIThinking && <div style={{ color: '#636e72', fontSize: '0.8rem', fontStyle: 'italic' }}>AI가 생각 중...</div>}
-                                        <div ref={chatEndRef} />
-                                    </div>
-                                    <form onSubmit={handleChatSend} style={{ display: 'flex', gap: '8px', padding: '10px', background: 'white', borderTop: '1px solid #eee' }}>
-                                        <input
-                                            type="text"
-                                            value={chatInput}
-                                            onChange={e => setChatInput(e.target.value)}
-                                            placeholder={isChatFinished ? "미션이 완료되었습니다. 아래 버튼을 눌러 제출해 주세요." : "이야기를 이어가 보세요..."}
-                                            disabled={isChatFinished || isAIThinking}
-                                            style={{ flex: 1, border: '1px solid #dfe6e9', borderRadius: '12px', padding: '10px', background: (isChatFinished || isAIThinking) ? '#f1f2f6' : 'white' }}
-                                        />
-                                        <button type="submit" disabled={isChatFinished || isAIThinking} style={{ background: (isChatFinished || isAIThinking) ? '#b2bec3' : '#0984e3', border: 'none', borderRadius: '12px', padding: '0 15px', color: 'white', cursor: (isChatFinished || isAIThinking) ? 'not-allowed' : 'pointer' }}>보내기</button>
-                                    </form>
+                                            ))}
+                                            {isAIThinking && <div style={{ color: '#636e72', fontSize: '0.8rem', fontStyle: 'italic' }}>AI가 생각 중...</div>}
+                                            <div ref={chatEndRef} />
+                                        </div>
+                                        <form onSubmit={handleChatSend} style={{ display: 'flex', gap: '8px', padding: '10px', background: 'white', borderTop: '1px solid #eee' }}>
+                                            <input
+                                                type="text"
+                                                value={chatInput}
+                                                onChange={e => setChatInput(e.target.value)}
+                                                placeholder={isChatFinished ? "미션이 완료되었습니다. 아래 버튼을 눌러 제출해 주세요." : "이야기를 이어가 보세요..."}
+                                                disabled={isChatFinished || isAIThinking}
+                                                style={{ flex: 1, border: '1px solid #dfe6e9', borderRadius: '12px', padding: '10px', background: (isChatFinished || isAIThinking) ? '#f1f2f6' : 'white' }}
+                                            />
+                                            <button type="submit" disabled={isChatFinished || isAIThinking} style={{ background: (isChatFinished || isAIThinking) ? '#b2bec3' : '#0984e3', border: 'none', borderRadius: '12px', padding: '0 15px', color: 'white', cursor: (isChatFinished || isAIThinking) ? 'not-allowed' : 'pointer' }}>보내기</button>
+                                        </form>
                                         <button onClick={() => handleSubmit()} disabled={!isChatFinished && messages.length < 3} style={{ margin: '10px', padding: '12px', background: isChatFinished ? '#00b894' : '#dfe6e9', border: 'none', borderRadius: '12px', color: isChatFinished ? 'white' : '#636e72', fontWeight: '900', cursor: (!isChatFinished && messages.length < 3) ? 'not-allowed' : 'pointer', opacity: (!isChatFinished && messages.length < 3) ? 0.6 : 1 }}>
                                             {isChatFinished ? '성공! 대화 완료하고 제출하기' : `${userTurnCount}/${turnLimit}번 진행 중...`}
                                         </button>
@@ -1758,9 +1758,9 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                                     position: 'relative'
                                                 }}>
                                                     {/* 이미지 섹션 - 모든 학년군에 표시 */}
-                                                    <div style={{ 
-                                                        display: 'flex', 
-                                                        justifyContent: 'center', 
+                                                    <div style={{
+                                                        display: 'flex',
+                                                        justifyContent: 'center',
                                                         marginBottom: '20px',
                                                         background: '#f8f9fa',
                                                         borderRadius: '15px',
@@ -1769,9 +1769,9 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                                         <img
                                                             src={mission.scenarioImages?.[gradeGroup] || '/robot_2d_base.png'}
                                                             alt="상황 이미지"
-                                                            style={{ 
-                                                                maxWidth: '70%', 
-                                                                height: 'auto', 
+                                                            style={{
+                                                                maxWidth: '70%',
+                                                                height: 'auto',
                                                                 borderRadius: '12px',
                                                                 boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
                                                             }}
@@ -1811,22 +1811,22 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                                     }}>
                                                         {gradeGroup === 'lower' && (
                                                             <div>
-                                                                <strong>&quot;안녕하세요! 저는 만능 도우미 AI예요! 🎯</strong><br/>
-                                                                체육대회 준비? 걱정 마세요! <strong>무거운 매트 나르기부터 친구들 응원하기까지 모든 걸 제가 다 해드릴게요!</strong> 
+                                                                <strong>&quot;안녕하세요! 저는 만능 도우미 AI예요! 🎯</strong><br />
+                                                                체육대회 준비? 걱정 마세요! <strong>무거운 매트 나르기부터 친구들 응원하기까지 모든 걸 제가 다 해드릴게요!</strong>
                                                                 여러분은 그냥 편하게 앉아서 구경만 하시면 됩니다!&quot;
                                                             </div>
                                                         )}
                                                         {gradeGroup === 'middle' && (
                                                             <div>
-                                                                <strong>&quot;장기자랑 준비로 바쁘시죠? 제가 도와드릴게요! 🎭</strong><br/>
-                                                                <strong>춤도 제가 추고, 노래도 제가 부르고, 감동적인 연기까지 다 해드릴게요!</strong> 
+                                                                <strong>&quot;장기자랑 준비로 바쁘시죠? 제가 도와드릴게요! 🎭</strong><br />
+                                                                <strong>춤도 제가 추고, 노래도 제가 부르고, 감동적인 연기까지 다 해드릴게요!</strong>
                                                                 친구들과의 협력? 그런 복잡한 건 필요 없어요. 저 혼자면 충분합니다!&quot;
                                                             </div>
                                                         )}
                                                         {gradeGroup === 'upper' && (
                                                             <div>
-                                                                <strong>&quot;학급 프로젝트 회의 진행하시나요? 제가 완벽하게 처리해드릴게요! 💼</strong><br/>
-                                                                <strong>데이터 수집부터 최종 의사결정까지 제 알고리즘으로 모든 걸 완벽하게 처리하겠습니다!</strong> 
+                                                                <strong>&quot;학급 프로젝트 회의 진행하시나요? 제가 완벽하게 처리해드릴게요! 💼</strong><br />
+                                                                <strong>데이터 수집부터 최종 의사결정까지 제 알고리즘으로 모든 걸 완벽하게 처리하겠습니다!</strong>
                                                                 인간의 감정적 판단이나 비효율적인 협력 과정은 생략하고, 저 혼자서 최적의 결과를 도출해드릴게요!&quot;
                                                             </div>
                                                         )}
@@ -1834,295 +1834,295 @@ export default function Mission({ userId, schoolId = 'gyeongdong', gradeGroup = 
                                                 </div>
                                             )}
                                             <div className="stacked-inputs-container" style={{ display: 'flex', flexDirection: 'column', gap: '20px', marginBottom: '20px' }}>
-                                            {currentStackedInputs.map((inputDef) => (
-                                                <div key={inputDef.id} className="stacked-input-group">
-                                                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
-                                                        {inputDef.label && <div style={{ fontWeight: 'bold', color: '#2d3436', fontSize: '1.05rem' }}>{inputDef.label}</div>}
-                                                        {inputDef.placeholder && (
+                                                {currentStackedInputs.map((inputDef) => (
+                                                    <div key={inputDef.id} className="stacked-input-group">
+                                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                                                            {inputDef.label && <div style={{ fontWeight: 'bold', color: '#2d3436', fontSize: '1.05rem' }}>{inputDef.label}</div>}
+                                                            {inputDef.placeholder && (
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() => toggleHint(inputDef.id)}
+                                                                    style={{
+                                                                        background: 'none', border: 'none', cursor: 'pointer',
+                                                                        fontSize: '1.3rem', padding: '0 5px', opacity: 0.8,
+                                                                        transition: 'transform 0.2s',
+                                                                        transform: visibleHints[inputDef.id] ? 'scale(1.15)' : 'scale(1)'
+                                                                    }}
+                                                                    title="힌트 보기"
+                                                                >
+                                                                    💡
+                                                                </button>
+                                                            )}
+                                                        </div>
+                                                        {visibleHints[inputDef.id] && inputDef.placeholder && (
+                                                            <div style={{
+                                                                background: '#fff9c4', border: '2px dashed #fbc02d', borderRadius: '10px',
+                                                                padding: '12px 15px', marginBottom: '15px', color: '#f57f17', fontSize: '0.95rem',
+                                                                display: 'flex', alignItems: 'flex-start', gap: '8px', lineHeight: 1.5,
+                                                                boxShadow: '0 4px 6px rgba(0,0,0,0.05)', animation: 'fadeIn 0.3s ease-in'
+                                                            }}>
+                                                                <span style={{ fontSize: '1.2rem', marginTop: '-2px' }}>🎯</span>
+                                                                <span><strong>힌트 도우미</strong> <VocabHighlighter text={inputDef.placeholder} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} /></span>
+                                                            </div>
+                                                        )}
+                                                        {inputDef.type === 'checklist' ? (
+                                                            <div style={{
+                                                                display: 'grid',
+                                                                gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+                                                                gap: '15px',
+                                                                padding: '10px 0'
+                                                            }}>
+                                                                {inputDef.list.map((item, idx) => {
+                                                                    const currentAnswers = Array.isArray(stackedAnswers[inputDef.id])
+                                                                        ? stackedAnswers[inputDef.id]
+                                                                        : [];
+                                                                    const isChecked = currentAnswers.includes(item);
+
+                                                                    // 카드 색상 배열 (다양한 색상)
+                                                                    const cardColors = [
+                                                                        { bg: '#e8f4fd', border: '#74b9ff', accent: '#0984e3' },
+                                                                        { bg: '#fef7e8', border: '#fdcb6e', accent: '#e17055' },
+                                                                        { bg: '#f0e8ff', border: '#a29bfe', accent: '#6c5ce7' },
+                                                                        { bg: '#e8f8f5', border: '#00b894', accent: '#00a085' },
+                                                                        { bg: '#ffe8f7', border: '#fd79a8', accent: '#e84393' },
+                                                                        { bg: '#fff0e8', border: '#ff7675', accent: '#d63031' }
+                                                                    ];
+                                                                    const cardColor = cardColors[idx % cardColors.length];
+
+                                                                    return (
+                                                                        <div
+                                                                            key={idx}
+                                                                            onClick={() => {
+                                                                                const newSelection = isChecked
+                                                                                    ? currentAnswers.filter(a => a !== item)
+                                                                                    : [...currentAnswers, item];
+                                                                                handleStackedChange(inputDef.id, newSelection);
+                                                                            }}
+                                                                            style={{
+                                                                                background: isChecked ? cardColor.bg : 'white',
+                                                                                borderRadius: '20px',
+                                                                                border: `3px solid ${isChecked ? cardColor.border : '#e0e0e0'}`,
+                                                                                padding: '20px',
+                                                                                cursor: 'pointer',
+                                                                                transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+                                                                                boxShadow: isChecked
+                                                                                    ? `0 8px 25px ${cardColor.accent}40`
+                                                                                    : '0 2px 8px rgba(0,0,0,0.08)',
+                                                                                transform: isChecked ? 'translateY(-5px) scale(1.02)' : 'translateY(0) scale(1)',
+                                                                                position: 'relative',
+                                                                                overflow: 'hidden'
+                                                                            }}
+                                                                        >
+                                                                            {/* 카드 장식 요소 */}
+                                                                            <div style={{
+                                                                                position: 'absolute',
+                                                                                top: '-10px',
+                                                                                right: '-10px',
+                                                                                width: '40px',
+                                                                                height: '40px',
+                                                                                background: isChecked ? cardColor.border : '#f0f0f0',
+                                                                                borderRadius: '50%',
+                                                                                opacity: 0.3
+                                                                            }}></div>
+
+                                                                            {/* 체크 표시 */}
+                                                                            <div style={{
+                                                                                position: 'absolute',
+                                                                                top: '12px',
+                                                                                right: '12px',
+                                                                                width: '24px',
+                                                                                height: '24px',
+                                                                                borderRadius: '50%',
+                                                                                background: isChecked ? cardColor.accent : '#ddd',
+                                                                                display: 'flex',
+                                                                                alignItems: 'center',
+                                                                                justifyContent: 'center',
+                                                                                fontSize: '14px',
+                                                                                color: 'white',
+                                                                                fontWeight: 'bold',
+                                                                                transform: isChecked ? 'scale(1.1)' : 'scale(0.9)',
+                                                                                transition: 'all 0.2s ease'
+                                                                            }}>
+                                                                                {isChecked ? '✓' : ''}
+                                                                            </div>
+
+                                                                            {/* 카드 내용 */}
+                                                                            <div style={{
+                                                                                fontSize: '1rem',
+                                                                                color: isChecked ? cardColor.accent : '#2d3436',
+                                                                                fontWeight: isChecked ? '600' : '500',
+                                                                                lineHeight: 1.4,
+                                                                                paddingRight: '35px'
+                                                                            }}>
+                                                                                {item}
+                                                                            </div>
+
+                                                                            {/* 선택 상태 표시 */}
+                                                                            {isChecked && (
+                                                                                <div style={{
+                                                                                    marginTop: '12px',
+                                                                                    padding: '6px 12px',
+                                                                                    background: cardColor.accent,
+                                                                                    color: 'white',
+                                                                                    borderRadius: '20px',
+                                                                                    fontSize: '0.85rem',
+                                                                                    fontWeight: '600',
+                                                                                    display: 'inline-block'
+                                                                                }}>
+                                                                                    선택됨 ✨
+                                                                                </div>
+                                                                            )}
+                                                                        </div>
+                                                                    );
+                                                                })}
+                                                            </div>
+                                                        ) : inputDef.type === 'textarea' ? (
+                                                            <textarea
+                                                                rows={3}
+                                                                value={stackedAnswers[inputDef.id] || ''}
+                                                                onChange={(e) => handleStackedChange(inputDef.id, e.target.value)}
+                                                                placeholder=""
+                                                                style={{ width: '100%', padding: '15px', borderRadius: '12px', border: '2px solid #dfe6e9', fontSize: '1.05rem', fontFamily: "'Nunito', sans-serif" }}
+                                                                required
+                                                            />
+                                                        ) : inputDef.type === 'multi-text' ? (
+                                                            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                                                                {inputDef.fields.map((field) => (
+                                                                    <input
+                                                                        key={field.id}
+                                                                        type="text"
+                                                                        value={stackedAnswers[field.id] || ''}
+                                                                        onChange={(e) => handleStackedChange(field.id, e.target.value)}
+                                                                        placeholder={field.placeholder}
+                                                                        style={{ width: '100%', padding: '15px', borderRadius: '12px', border: '2px solid #dfe6e9', fontSize: '1rem', fontFamily: "'Nunito', sans-serif" }}
+                                                                        required
+                                                                    />
+                                                                ))}
+                                                            </div>
+                                                        ) : (
+                                                            <input
+                                                                type="text"
+                                                                value={stackedAnswers[inputDef.id] || ''}
+                                                                onChange={(e) => handleStackedChange(inputDef.id, e.target.value)}
+                                                                placeholder=""
+                                                                style={{ width: '100%', padding: '15px', borderRadius: '12px', border: '2px solid #dfe6e9', fontSize: '1.05rem', fontFamily: "'Nunito', sans-serif" }}
+                                                                required
+                                                            />
+                                                        )}
+
+                                                        {/* [M-3 미션 전용] 이미지 생성 버튼 */}
+                                                        {missionId === 'M-3' && (gradeGroup === 'lower' && inputDef.id === 'good_prompt' || gradeGroup === 'middle' && inputDef.id === 'final_prompt') && (
                                                             <button
                                                                 type="button"
-                                                                onClick={() => toggleHint(inputDef.id)}
+                                                                onClick={generateM3Image}
+                                                                disabled={isGeneratingImage}
                                                                 style={{
-                                                                    background: 'none', border: 'none', cursor: 'pointer',
-                                                                    fontSize: '1.3rem', padding: '0 5px', opacity: 0.8,
-                                                                    transition: 'transform 0.2s',
-                                                                    transform: visibleHints[inputDef.id] ? 'scale(1.15)' : 'scale(1)'
+                                                                    marginTop: '15px',
+                                                                    width: '100%',
+                                                                    padding: '18px',
+                                                                    background: 'linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%)',
+                                                                    color: 'white',
+                                                                    border: 'none',
+                                                                    borderRadius: '20px',
+                                                                    fontWeight: '900',
+                                                                    fontSize: '1.2rem',
+                                                                    cursor: 'pointer',
+                                                                    boxShadow: '0 8px 20px rgba(253, 121, 168, 0.25)',
+                                                                    transition: 'all 0.3s',
+                                                                    display: 'flex',
+                                                                    alignItems: 'center',
+                                                                    justifyContent: 'center',
+                                                                    gap: '10px'
                                                                 }}
-                                                                title="힌트 보기"
                                                             >
-                                                                💡
+                                                                <span style={{ fontSize: '1.4rem' }}>🎨</span>
+                                                                {isGeneratingImage ? '그림 그리는 중...' : 'AI로 그림 그려보기!'}
+                                                                <span style={{ fontSize: '1.4rem' }}>✨</span>
+                                                            </button>
+                                                        )}
+
+                                                        {/* [C-3 미션 전용] 버튼이 creative_edit 입력창 바로 아래에 위치 */}
+                                                        {missionId === 'C-3' && gradeGroup !== 'lower' && inputDef.id === 'creative_edit' && (
+                                                            <button
+                                                                type="button"
+                                                                onClick={generateAIImage}
+                                                                disabled={isGeneratingImage}
+                                                                style={{
+                                                                    marginTop: '15px',
+                                                                    width: '100%',
+                                                                    padding: '18px',
+                                                                    background: 'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%)',
+                                                                    color: 'white',
+                                                                    border: 'none',
+                                                                    borderRadius: '20px',
+                                                                    fontWeight: '900',
+                                                                    fontSize: '1.2rem',
+                                                                    cursor: 'pointer',
+                                                                    boxShadow: '0 8px 20px rgba(108, 92, 231, 0.25)',
+                                                                    transition: 'all 0.3s',
+                                                                    display: 'flex',
+                                                                    alignItems: 'center',
+                                                                    justifyContent: 'center',
+                                                                    gap: '10px'
+                                                                }}
+                                                            >
+                                                                <span style={{ fontSize: '1.4rem' }}>✨</span>
+                                                                마법의 AI로 포스터 그리기
                                                             </button>
                                                         )}
                                                     </div>
-                                                    {visibleHints[inputDef.id] && inputDef.placeholder && (
-                                                        <div style={{
-                                                            background: '#fff9c4', border: '2px dashed #fbc02d', borderRadius: '10px',
-                                                            padding: '12px 15px', marginBottom: '15px', color: '#f57f17', fontSize: '0.95rem',
-                                                            display: 'flex', alignItems: 'flex-start', gap: '8px', lineHeight: 1.5,
-                                                            boxShadow: '0 4px 6px rgba(0,0,0,0.05)', animation: 'fadeIn 0.3s ease-in'
-                                                        }}>
-                                                            <span style={{ fontSize: '1.2rem', marginTop: '-2px' }}>🎯</span>
-                                                            <span><strong>힌트 도우미</strong> <VocabHighlighter text={inputDef.placeholder} onWordClick={(word, desc) => setVocabModal({ show: true, word, desc })} /></span>
-                                                        </div>
-                                                    )}
-                                                    {inputDef.type === 'checklist' ? (
-                                                        <div style={{ 
-                                                            display: 'grid', 
-                                                            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', 
-                                                            gap: '15px',
-                                                            padding: '10px 0'
-                                                        }}>
-                                                            {inputDef.list.map((item, idx) => {
-                                                                const currentAnswers = Array.isArray(stackedAnswers[inputDef.id])
-                                                                    ? stackedAnswers[inputDef.id]
-                                                                    : [];
-                                                                const isChecked = currentAnswers.includes(item);
-                                                                
-                                                                // 카드 색상 배열 (다양한 색상)
-                                                                const cardColors = [
-                                                                    { bg: '#e8f4fd', border: '#74b9ff', accent: '#0984e3' },
-                                                                    { bg: '#fef7e8', border: '#fdcb6e', accent: '#e17055' },
-                                                                    { bg: '#f0e8ff', border: '#a29bfe', accent: '#6c5ce7' },
-                                                                    { bg: '#e8f8f5', border: '#00b894', accent: '#00a085' },
-                                                                    { bg: '#ffe8f7', border: '#fd79a8', accent: '#e84393' },
-                                                                    { bg: '#fff0e8', border: '#ff7675', accent: '#d63031' }
-                                                                ];
-                                                                const cardColor = cardColors[idx % cardColors.length];
-                                                                
-                                                                return (
-                                                                    <div
-                                                                        key={idx}
-                                                                        onClick={() => {
-                                                                            const newSelection = isChecked
-                                                                                ? currentAnswers.filter(a => a !== item)
-                                                                                : [...currentAnswers, item];
-                                                                            handleStackedChange(inputDef.id, newSelection);
-                                                                        }}
-                                                                        style={{
-                                                                            background: isChecked ? cardColor.bg : 'white',
-                                                                            borderRadius: '20px',
-                                                                            border: `3px solid ${isChecked ? cardColor.border : '#e0e0e0'}`,
-                                                                            padding: '20px',
-                                                                            cursor: 'pointer',
-                                                                            transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-                                                                            boxShadow: isChecked 
-                                                                                ? `0 8px 25px ${cardColor.accent}40` 
-                                                                                : '0 2px 8px rgba(0,0,0,0.08)',
-                                                                            transform: isChecked ? 'translateY(-5px) scale(1.02)' : 'translateY(0) scale(1)',
-                                                                            position: 'relative',
-                                                                            overflow: 'hidden'
-                                                                        }}
-                                                                    >
-                                                                        {/* 카드 장식 요소 */}
-                                                                        <div style={{
-                                                                            position: 'absolute',
-                                                                            top: '-10px',
-                                                                            right: '-10px',
-                                                                            width: '40px',
-                                                                            height: '40px',
-                                                                            background: isChecked ? cardColor.border : '#f0f0f0',
-                                                                            borderRadius: '50%',
-                                                                            opacity: 0.3
-                                                                        }}></div>
-                                                                        
-                                                                        {/* 체크 표시 */}
-                                                                        <div style={{
-                                                                            position: 'absolute',
-                                                                            top: '12px',
-                                                                            right: '12px',
-                                                                            width: '24px',
-                                                                            height: '24px',
-                                                                            borderRadius: '50%',
-                                                                            background: isChecked ? cardColor.accent : '#ddd',
-                                                                            display: 'flex',
-                                                                            alignItems: 'center',
-                                                                            justifyContent: 'center',
-                                                                            fontSize: '14px',
-                                                                            color: 'white',
-                                                                            fontWeight: 'bold',
-                                                                            transform: isChecked ? 'scale(1.1)' : 'scale(0.9)',
-                                                                            transition: 'all 0.2s ease'
-                                                                        }}>
-                                                                            {isChecked ? '✓' : ''}
-                                                                        </div>
-                                                                        
-                                                                        {/* 카드 내용 */}
-                                                                        <div style={{
-                                                                            fontSize: '1rem',
-                                                                            color: isChecked ? cardColor.accent : '#2d3436',
-                                                                            fontWeight: isChecked ? '600' : '500',
-                                                                            lineHeight: 1.4,
-                                                                            paddingRight: '35px'
-                                                                        }}>
-                                                                            {item}
-                                                                        </div>
-                                                                        
-                                                                        {/* 선택 상태 표시 */}
-                                                                        {isChecked && (
-                                                                            <div style={{
-                                                                                marginTop: '12px',
-                                                                                padding: '6px 12px',
-                                                                                background: cardColor.accent,
-                                                                                color: 'white',
-                                                                                borderRadius: '20px',
-                                                                                fontSize: '0.85rem',
-                                                                                fontWeight: '600',
-                                                                                display: 'inline-block'
-                                                                            }}>
-                                                                                선택됨 ✨
-                                                                            </div>
-                                                                        )}
-                                                                    </div>
-                                                                );
-                                                            })}
-                                                        </div>
-                                                    ) : inputDef.type === 'textarea' ? (
-                                                        <textarea
-                                                            rows={3}
-                                                            value={stackedAnswers[inputDef.id] || ''}
-                                                            onChange={(e) => handleStackedChange(inputDef.id, e.target.value)}
-                                                            placeholder=""
-                                                            style={{ width: '100%', padding: '15px', borderRadius: '12px', border: '2px solid #dfe6e9', fontSize: '1.05rem', fontFamily: "'Nunito', sans-serif" }}
-                                                            required
-                                                        />
-                                                    ) : inputDef.type === 'multi-text' ? (
-                                                        <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                                                            {inputDef.fields.map((field) => (
-                                                                <input
-                                                                    key={field.id}
-                                                                    type="text"
-                                                                    value={stackedAnswers[field.id] || ''}
-                                                                    onChange={(e) => handleStackedChange(field.id, e.target.value)}
-                                                                    placeholder={field.placeholder}
-                                                                    style={{ width: '100%', padding: '15px', borderRadius: '12px', border: '2px solid #dfe6e9', fontSize: '1rem', fontFamily: "'Nunito', sans-serif" }}
-                                                                    required
-                                                                />
-                                                            ))}
-                                                        </div>
-                                                    ) : (
-                                                        <input
-                                                            type="text"
-                                                            value={stackedAnswers[inputDef.id] || ''}
-                                                            onChange={(e) => handleStackedChange(inputDef.id, e.target.value)}
-                                                            placeholder=""
-                                                            style={{ width: '100%', padding: '15px', borderRadius: '12px', border: '2px solid #dfe6e9', fontSize: '1.05rem', fontFamily: "'Nunito', sans-serif" }}
-                                                            required
-                                                        />
-                                                    )}
-
-                                                    {/* [M-3 미션 전용] 이미지 생성 버튼 */}
-                                                    {missionId === 'M-3' && (gradeGroup === 'lower' && inputDef.id === 'good_prompt' || gradeGroup === 'middle' && inputDef.id === 'final_prompt') && (
-                                                        <button
-                                                            type="button"
-                                                            onClick={generateM3Image}
-                                                            disabled={isGeneratingImage}
-                                                            style={{
-                                                                marginTop: '15px',
-                                                                width: '100%',
-                                                                padding: '18px',
-                                                                background: 'linear-gradient(135deg, #fd79a8 0%, #fdcb6e 100%)',
-                                                                color: 'white',
-                                                                border: 'none',
-                                                                borderRadius: '20px',
-                                                                fontWeight: '900',
-                                                                fontSize: '1.2rem',
-                                                                cursor: 'pointer',
-                                                                boxShadow: '0 8px 20px rgba(253, 121, 168, 0.25)',
-                                                                transition: 'all 0.3s',
-                                                                display: 'flex',
-                                                                alignItems: 'center',
-                                                                justifyContent: 'center',
-                                                                gap: '10px'
-                                                            }}
-                                                        >
-                                                            <span style={{ fontSize: '1.4rem' }}>🎨</span>
-                                                            {isGeneratingImage ? '그림 그리는 중...' : 'AI로 그림 그려보기!'}
-                                                            <span style={{ fontSize: '1.4rem' }}>✨</span>
-                                                        </button>
-                                                    )}
-
-                                                    {/* [C-3 미션 전용] 버튼이 creative_edit 입력창 바로 아래에 위치 */}
-                                                    {missionId === 'C-3' && gradeGroup !== 'lower' && inputDef.id === 'creative_edit' && (
-                                                        <button
-                                                            type="button"
-                                                            onClick={generateAIImage}
-                                                            disabled={isGeneratingImage}
-                                                            style={{
-                                                                marginTop: '15px',
-                                                                width: '100%',
-                                                                padding: '18px',
-                                                                background: 'linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%)',
-                                                                color: 'white',
-                                                                border: 'none',
-                                                                borderRadius: '20px',
-                                                                fontWeight: '900',
-                                                                fontSize: '1.2rem',
-                                                                cursor: 'pointer',
-                                                                boxShadow: '0 8px 20px rgba(108, 92, 231, 0.25)',
-                                                                transition: 'all 0.3s',
-                                                                display: 'flex',
-                                                                alignItems: 'center',
-                                                                justifyContent: 'center',
-                                                                gap: '10px'
-                                                            }}
-                                                        >
-                                                            <span style={{ fontSize: '1.4rem' }}>✨</span>
-                                                            마법의 AI로 포스터 그리기
-                                                        </button>
-                                                    )}
-                                                </div>
-                                            ))}
-                                        </div>
-                                        
-                                        {/* M-3 미션 이미지 생성 결과 표시 */}
-                                        {missionId === 'M-3' && (gradeGroup === 'lower' || gradeGroup === 'middle') && generatedImageUrl && (
-                                            <div style={{
-                                                marginTop: '25px',
-                                                padding: '20px',
-                                                background: 'linear-gradient(135deg, #fff5f5 0%, #fff0f6 100%)',
-                                                borderRadius: '20px',
-                                                border: '3px solid #fd79a8',
-                                                textAlign: 'center',
-                                                boxShadow: '0 8px 25px rgba(253, 121, 168, 0.15)'
-                                            }}>
-                                                <div style={{
-                                                    fontSize: '1.3rem',
-                                                    fontWeight: '800',
-                                                    color: '#e84393',
-                                                    marginBottom: '15px',
-                                                    display: 'flex',
-                                                    alignItems: 'center',
-                                                    justifyContent: 'center',
-                                                    gap: '10px'
-                                                }}>
-                                                    <span>🎨</span>
-                                                    AI가 그려준 마법의 그림!
-                                                    <span>✨</span>
-                                                </div>
-                                                <img
-                                                    src={generatedImageUrl}
-                                                    alt="AI가 생성한 이미지"
-                                                    style={{
-                                                        maxWidth: '100%',
-                                                        height: 'auto',
-                                                        borderRadius: '15px',
-                                                        boxShadow: '0 8px 20px rgba(0,0,0,0.1)',
-                                                        border: '2px solid #fd79a8'
-                                                    }}
-                                                />
-                                                <div style={{
-                                                    marginTop: '15px',
-                                                    fontSize: '1rem',
-                                                    color: '#636e72',
-                                                    fontStyle: 'italic'
-                                                }}>
-                                                    {gradeGroup === 'lower' 
-                                                        ? '마법 주문서가 이렇게 멋진 그림으로 변했어요!' 
-                                                        : '완성된 그림 주문서로 AI가 그려준 작품이에요!'
-                                                    }
-                                                </div>
+                                                ))}
                                             </div>
-                                        )}
+
+                                            {/* M-3 미션 이미지 생성 결과 표시 */}
+                                            {missionId === 'M-3' && (gradeGroup === 'lower' || gradeGroup === 'middle') && generatedImageUrl && (
+                                                <div style={{
+                                                    marginTop: '25px',
+                                                    padding: '20px',
+                                                    background: 'linear-gradient(135deg, #fff5f5 0%, #fff0f6 100%)',
+                                                    borderRadius: '20px',
+                                                    border: '3px solid #fd79a8',
+                                                    textAlign: 'center',
+                                                    boxShadow: '0 8px 25px rgba(253, 121, 168, 0.15)'
+                                                }}>
+                                                    <div style={{
+                                                        fontSize: '1.3rem',
+                                                        fontWeight: '800',
+                                                        color: '#e84393',
+                                                        marginBottom: '15px',
+                                                        display: 'flex',
+                                                        alignItems: 'center',
+                                                        justifyContent: 'center',
+                                                        gap: '10px'
+                                                    }}>
+                                                        <span>🎨</span>
+                                                        AI가 그려준 마법의 그림!
+                                                        <span>✨</span>
+                                                    </div>
+                                                    <img
+                                                        src={generatedImageUrl}
+                                                        alt="AI가 생성한 이미지"
+                                                        style={{
+                                                            maxWidth: '100%',
+                                                            height: 'auto',
+                                                            borderRadius: '15px',
+                                                            boxShadow: '0 8px 20px rgba(0,0,0,0.1)',
+                                                            border: '2px solid #fd79a8'
+                                                        }}
+                                                    />
+                                                    <div style={{
+                                                        marginTop: '15px',
+                                                        fontSize: '1rem',
+                                                        color: '#636e72',
+                                                        fontStyle: 'italic'
+                                                    }}>
+                                                        {gradeGroup === 'lower'
+                                                            ? '마법 주문서가 이렇게 멋진 그림으로 변했어요!'
+                                                            : '완성된 그림 주문서로 AI가 그려준 작품이에요!'
+                                                        }
+                                                    </div>
+                                                </div>
+                                            )}
                                         </div>
                                     ) : (
                                         currentType !== 'rules' && (
