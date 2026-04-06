@@ -781,22 +781,43 @@ function AppContent() {
   return (
     <>
       {userId && !isMissionPath && (
-        <header className="app-header" style={{ padding: '8px 12px', borderBottomLeftRadius: '16px', borderBottomRightRadius: '16px' }}>
-          {/* 1줄: 제목 */}
-          <h1 className="app-title" style={{ fontSize: '1.1rem', textAlign: 'center', marginBottom: '6px' }}>나의 AI 리터러시 능력 도감</h1>
-          {/* 2줄: 닉네임 | 조각 | 뱃지 */}
-          <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-            <div style={{ background: 'rgba(255,255,255,0.25)', padding: '3px 10px', borderRadius: '15px', fontSize: '0.75rem', fontWeight: 'bold' }}>
-              {userName}
+        <>
+          {/* ===== PC/태블릿 헤더 (768px 이상) ===== */}
+          <header className="app-header header-desktop">
+            <div className="header-top">
+              <h1 className="app-title">나의 AI 리터러시 능력 도감</h1>
+              <div className="user-profile" style={{ flexDirection: 'column', alignItems: 'flex-end', background: 'transparent', padding: 0 }}>
+                <div style={{ display: 'flex', gap: '8px' }}>
+                  <div style={{ background: 'rgba(255, 255, 255, 0.25)', padding: '6px 14px', borderRadius: '20px', fontSize: '0.9rem' }}>
+                    {userName}
+                  </div>
+                  <div style={{ background: '#74b9ff', color: 'white', padding: '6px 14px', borderRadius: '20px', fontWeight: '900', boxShadow: '0 4px 6px rgba(116, 185, 255, 0.3)', fontSize: '0.9rem' }}>
+                    <ChipIcon size={18} color="white" style={{ marginRight: '6px' }} /> {fragments}
+                  </div>
+                </div>
+                <div style={{ background: '#ffa502', color: 'white', padding: '6px 14px', borderRadius: '20px', fontWeight: '900', boxShadow: '0 4px 6px rgba(255, 165, 2, 0.3)', fontSize: '0.9rem', marginTop: '8px' }}>
+                  {completedCount} / 16 뱃지
+                </div>
+              </div>
             </div>
-            <div style={{ background: '#74b9ff', color: 'white', padding: '3px 10px', borderRadius: '15px', fontWeight: '900', fontSize: '0.75rem' }}>
-              <ChipIcon size={14} color="white" style={{ marginRight: '4px' }} />{fragments}
+          </header>
+
+          {/* ===== 모바일 헤더 (767px 이하) ===== */}
+          <header className="app-header header-mobile" style={{ padding: '8px 12px', borderBottomLeftRadius: '16px', borderBottomRightRadius: '16px' }}>
+            <h1 className="app-title" style={{ fontSize: '1.1rem', textAlign: 'center', marginBottom: '6px' }}>나의 AI 리터러시 능력 도감</h1>
+            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
+              <div style={{ background: 'rgba(255,255,255,0.25)', padding: '3px 10px', borderRadius: '15px', fontSize: '0.75rem', fontWeight: 'bold' }}>
+                {userName}
+              </div>
+              <div style={{ background: '#74b9ff', color: 'white', padding: '3px 10px', borderRadius: '15px', fontWeight: '900', fontSize: '0.75rem' }}>
+                <ChipIcon size={14} color="white" style={{ marginRight: '4px' }} />{fragments}
+              </div>
+              <div style={{ background: '#ffa502', color: 'white', padding: '3px 10px', borderRadius: '15px', fontWeight: '900', fontSize: '0.75rem' }}>
+                {completedCount}/16 뱃지
+              </div>
             </div>
-            <div style={{ background: '#ffa502', color: 'white', padding: '3px 10px', borderRadius: '15px', fontWeight: '900', fontSize: '0.75rem' }}>
-              {completedCount}/16 뱃지
-            </div>
-          </div>
-        </header>
+          </header>
+        </>
       )}
 
       <main className="main-content" style={{ padding: userId && !isMissionPath ? '20px' : '0' }}>
