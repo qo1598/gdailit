@@ -61,9 +61,12 @@ const ChatInterface = ({
         };
 
         // 모더레이션 체크
-        const moderationResult = await checkModeration(userMessage.content);
-        if (!moderationResult.isAppropriate) {
-            alert(`부적절한 내용이 감지되었습니다: ${moderationResult.reason}`);
+        const lastUserMsg = messages.filter(m => m.role === 'user').slice(-1)[0];
+        const lastText = lastUserMsg?.content || '';
+        const lastTime = lastUserMsg ? new Date(lastUserMsg.timestamp).getTime() : null;
+        const moderationResult = checkModeration(userMessage.content, lastText, lastTime);
+        if (!moderationResult.isValid) {
+            alert(moderationResult.message || `부적절한 내용이 감지되었습니다.`);
             return;
         }
 
