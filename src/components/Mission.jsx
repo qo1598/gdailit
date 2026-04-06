@@ -172,28 +172,27 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
     if (missionPhase === 'story') {
         return (
             <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
-                <div className="max-w-4xl mx-auto p-6">
+                <div className="max-w-4xl mx-auto p-4">
                     {/* 미션 제목 헤더 */}
                     <div style={{
                         textAlign: 'center',
-                        marginBottom: '30px',
-                        padding: '20px',
+                        marginBottom: '12px',
+                        padding: '12px',
                         background: 'white',
                         borderRadius: '15px',
                         boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
                     }}>
                         <div style={{
-                            fontSize: '1.8rem',
+                            fontSize: '1.4rem',
                             fontWeight: 'bold',
                             color: '#2d3436',
-                            marginBottom: '8px'
+                            marginBottom: '4px'
                         }}>
                             {mission.title}
                         </div>
                         <div style={{
-                            fontSize: '1rem',
-                            color: '#636e72',
-                            marginBottom: '5px'
+                            fontSize: '0.85rem',
+                            color: '#636e72'
                         }}>
                             {missionId} | {mission.competency}
                         </div>
@@ -209,6 +208,12 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
                         missionId={missionId}
                     />
                 </div>
+                <DictionaryModal 
+                    isOpen={vocabModal.isOpen}
+                    word={vocabModal.word}
+                    definition={vocabModal.definition}
+                    onClose={closeVocabModal}
+                />
             </div>
         );
     }
@@ -217,7 +222,7 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
     if (missionPhase === 'education') {
         return (
             <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50">
-                <div className="max-w-4xl mx-auto p-6">
+                <div className="max-w-4xl mx-auto p-4">
                     <MissionHeader
                         mission={mission}
                         missionId={missionId}
@@ -228,6 +233,12 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
                         onComplete={handleEducationComplete}
                     />
                 </div>
+                <DictionaryModal 
+                    isOpen={vocabModal.isOpen}
+                    word={vocabModal.word}
+                    definition={vocabModal.definition}
+                    onClose={closeVocabModal}
+                />
             </div>
         );
     }

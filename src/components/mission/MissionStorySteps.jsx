@@ -30,12 +30,11 @@ const MissionStorySteps = ({
                 background: 'white',
                 border: '3px solid #74b9ff',
                 borderRadius: '20px',
-                padding: '25px',
+                padding: '15px',
                 boxShadow: '0 4px 12px rgba(116, 185, 255, 0.1)',
                 width: '100%',
                 maxWidth: '800px',
                 margin: '0 auto',
-                minHeight: '560px',
                 display: 'flex',
                 flexDirection: 'column',
                 boxSizing: 'border-box',
@@ -44,12 +43,12 @@ const MissionStorySteps = ({
         >
             <div
                 style={{
-                    height: '220px',
+                    maxHeight: '150px',
                     flexShrink: 0,
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    marginBottom: '12px'
+                    marginBottom: '8px'
                 }}
             >
                 {step.image ? (
@@ -58,7 +57,7 @@ const MissionStorySteps = ({
                         alt="스토리 이미지"
                         style={{
                             maxWidth: '100%',
-                            maxHeight: '200px',
+                            maxHeight: '140px',
                             width: 'auto',
                             height: 'auto',
                             objectFit: 'contain',
@@ -75,13 +74,13 @@ const MissionStorySteps = ({
                 style={{
                     background: '#74b9ff',
                     color: 'white',
-                    padding: '8px 16px',
+                    padding: '5px 14px',
                     borderRadius: '20px',
-                    fontSize: '16px',
+                    fontSize: '14px',
                     fontWeight: 'bold',
                     display: 'inline-block',
                     alignSelf: 'center',
-                    marginBottom: '16px',
+                    marginBottom: '8px',
                     flexShrink: 0
                 }}
             >
@@ -91,17 +90,17 @@ const MissionStorySteps = ({
             <div
                 style={{
                     flex: '1 1 auto',
-                    minHeight: '168px',
-                    maxHeight: '200px',
+                    minHeight: '80px',
+                    maxHeight: '160px',
                     overflowY: 'auto',
-                    fontSize: '1.3rem',
-                    lineHeight: '1.6',
+                    fontSize: '1.1rem',
+                    lineHeight: '1.5',
                     fontWeight: '500',
                     color: '#2d3436',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    padding: '8px 4px',
+                    padding: '4px',
                     boxSizing: 'border-box'
                 }}
             >
@@ -114,8 +113,8 @@ const MissionStorySteps = ({
                     gridTemplateColumns: `${BTN_W}px 1fr ${BTN_W}px`,
                     alignItems: 'center',
                     justifyItems: 'stretch',
-                    gap: '12px',
-                    marginTop: '20px',
+                    gap: '8px',
+                    marginTop: '10px',
                     flexShrink: 0,
                     minHeight: `${BTN_H}px`
                 }}
