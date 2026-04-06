@@ -623,6 +623,14 @@ body {
   .app-header {
     padding: 12px 15px;
   }
+  .header-top {
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+  }
+  .app-title {
+    text-align: center;
+  }
   .main-content {
     padding: 10px;
   }

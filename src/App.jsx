@@ -783,7 +783,7 @@ function AppContent() {
       {userId && !isMissionPath && (
         <header className="app-header">
           <div className="header-top">
-            <h1 className="app-title" style={{ fontSize: '1.6rem' }}>나의 AI 리터러시 능력 도감</h1>
+            <h1 className="app-title">나의 AI 리터러시 능력 도감</h1>
             <div className="user-profile" style={{ flexDirection: 'column', alignItems: 'flex-end', background: 'transparent', padding: 0 }}>
               <div style={{ display: 'flex', gap: '8px' }}>
                 <div style={{ background: 'rgba(255, 255, 255, 0.25)', padding: '6px 14px', borderRadius: '20px', fontSize: '0.9rem' }}>
