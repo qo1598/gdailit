@@ -70,7 +70,7 @@ const StackedInputsMode = ({
                             marginBottom: '6px',
                             verticalAlign: 'middle'
                         }}>
-                            알리(Alli)
+                            알리(AIli)
                         </span>
                         <DictionaryText text="좋아! 이제 본격적으로 미션을 수행해 보자. 파이팅!" onWordClick={onWordClick} />
                     </div>

@@ -30,81 +30,70 @@ const MissionStorySteps = ({
                 background: 'white',
                 border: '3px solid #74b9ff',
                 borderRadius: '20px',
-                padding: '15px',
+                padding: '12px',
                 boxShadow: '0 4px 12px rgba(116, 185, 255, 0.1)',
                 width: '100%',
                 maxWidth: '800px',
                 margin: '0 auto',
                 display: 'flex',
                 flexDirection: 'column',
-                boxSizing: 'border-box',
-                textAlign: 'center'
+                boxSizing: 'border-box'
             }}
         >
+            {/* 상단: 캐릭터 + 말풍선 (가로 배치) */}
             <div
                 style={{
-                    maxHeight: '150px',
-                    flexShrink: 0,
                     display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    marginBottom: '8px'
+                    alignItems: 'flex-start',
+                    gap: '12px',
+                    marginBottom: '10px'
                 }}
             >
-                {step.image ? (
-                    <img
-                        src={step.image}
-                        alt="스토리 이미지"
+                {/* 캐릭터 이미지 */}
+                <div style={{ flexShrink: 0, textAlign: 'center' }}>
+                    {step.image && (
+                        <img
+                            src={step.image}
+                            alt="알리 캐릭터"
+                            style={{
+                                width: '70px',
+                                height: '70px',
+                                objectFit: 'contain',
+                                background: 'transparent'
+                            }}
+                        />
+                    )}
+                    <div
                         style={{
-                            maxWidth: '100%',
-                            maxHeight: '140px',
-                            width: 'auto',
-                            height: 'auto',
-                            objectFit: 'contain',
+                            background: '#74b9ff',
+                            color: 'white',
+                            padding: '3px 10px',
                             borderRadius: '15px',
-                            boxShadow: '0 4px 12px rgba(0,0,0,0.1)'
+                            fontSize: '12px',
+                            fontWeight: 'bold',
+                            marginTop: '4px',
+                            display: 'inline-block'
                         }}
-                    />
-                ) : (
-                    <div style={{ width: 1, height: 1, opacity: 0 }} aria-hidden />
-                )}
-            </div>
+                    >
+                        알리(AIli)
+                    </div>
+                </div>
 
-            <div
-                style={{
-                    background: '#74b9ff',
-                    color: 'white',
-                    padding: '5px 14px',
-                    borderRadius: '20px',
-                    fontSize: '14px',
-                    fontWeight: 'bold',
-                    display: 'inline-block',
-                    alignSelf: 'center',
-                    marginBottom: '8px',
-                    flexShrink: 0
-                }}
-            >
-                알리
-            </div>
-
-            <div
-                style={{
-                    flex: '1 1 auto',
-                    minHeight: '80px',
-                    maxHeight: '160px',
-                    overflowY: 'auto',
-                    fontSize: '1.1rem',
-                    lineHeight: '1.5',
-                    fontWeight: '500',
-                    color: '#2d3436',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    padding: '4px',
-                    boxSizing: 'border-box'
-                }}
-            >
-                <DictionaryText text={step.text} onWordClick={onWordClick} />
+                {/* 말풍선 텍스트 */}
+                <div
+                    style={{
+                        flex: 1,
+                        fontSize: '1rem',
+                        lineHeight: '1.6',
+                        fontWeight: '500',
+                        color: '#2d3436',
+                        wordBreak: 'keep-all',
+                        overflowWrap: 'break-word',
+                        padding: '8px 0'
+                    }}
+                >
+                    <DictionaryText text={step.text} onWordClick={onWordClick} />
+                </div>
             </div>
 
             <div

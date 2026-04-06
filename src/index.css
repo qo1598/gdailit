@@ -321,7 +321,7 @@ body {
   background: white;
   display: flex;
   justify-content: space-around;
-  padding: 15px 10px 25px;
+  padding: 8px 10px 15px;
   box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.03);
   border-top-left-radius: var(--radius-lg);
   border-top-right-radius: var(--radius-lg);
@@ -335,25 +335,25 @@ body {
   color: #ced6e0;
   text-decoration: none;
   font-weight: 800;
-  font-size: 0.9rem;
-  gap: 8px;
+  font-size: 0.75rem;
+  gap: 4px;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .nav-item.active {
   color: var(--pokedex-red);
-  transform: translateY(-5px);
+  transform: translateY(-3px);
 }
 
 .nav-icon {
-  width: 45px;
-  height: 45px;
+  width: 36px;
+  height: 36px;
   background: #f1f2f6;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.2rem;
+  font-size: 1rem;
 }
 
 .nav-item.active .nav-icon {
