@@ -45,7 +45,8 @@ const ChecklistMode = ({
                         style={{ 
                             width: '60px', 
                             height: '60px',
-                            objectFit: 'contain'
+                            objectFit: 'contain',
+                            background: 'transparent'
                         }} 
                     />
                     <div style={{

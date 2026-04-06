@@ -321,7 +321,7 @@ body {
   background: white;
   display: flex;
   justify-content: space-around;
-  padding: 8px 10px 15px;
+  padding: 12px 10px 20px;
   box-shadow: 0 -10px 20px rgba(0, 0, 0, 0.03);
   border-top-left-radius: var(--radius-lg);
   border-top-right-radius: var(--radius-lg);
@@ -335,25 +335,25 @@ body {
   color: #ced6e0;
   text-decoration: none;
   font-weight: 800;
-  font-size: 0.75rem;
-  gap: 4px;
+  font-size: 0.85rem;
+  gap: 6px;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 .nav-item.active {
   color: var(--pokedex-red);
-  transform: translateY(-3px);
+  transform: translateY(-4px);
 }
 
 .nav-icon {
-  width: 36px;
-  height: 36px;
+  width: 42px;
+  height: 42px;
   background: #f1f2f6;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
 .nav-item.active .nav-icon {
@@ -623,8 +623,18 @@ body {
   display: none;
 }
 
+/* Story layout: PC = vertical, Mobile = horizontal */
+.story-layout-desktop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.story-layout-mobile {
+  display: none;
+}
+
 /* -------------------------------
-   Mobile Typography & UI Scaling
+   Mobile / Tablet Responsive
 --------------------------------*/
 @media (max-width: 767px) {
   .header-desktop {
@@ -632,6 +642,28 @@ body {
   }
   .header-mobile {
     display: block;
+  }
+  .story-layout-desktop {
+    display: none;
+  }
+  .story-layout-mobile {
+    display: block;
+  }
+  /* Compact nav only on mobile */
+  .bottom-nav {
+    padding: 6px 10px 12px;
+  }
+  .nav-item {
+    font-size: 0.7rem;
+    gap: 3px;
+  }
+  .nav-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 0.9rem;
+  }
+  .nav-item.active {
+    transform: translateY(-2px);
   }
 }
 
