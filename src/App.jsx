@@ -623,7 +623,9 @@ function parseGradeGroup(studentId) {
   return 'lower';
 }
 
-function App() {
+function AppContent() {
+  const location = useLocation();
+  const isMissionPath = location.pathname.startsWith('/mission');
   const [missions, setMissions] = React.useState(INITIAL_MISSIONS);
   const [userId, setUserId] = React.useState(null);
   const [userName, setUserName] = React.useState('');
@@ -777,8 +779,8 @@ function App() {
   const progressPercentage = Math.round((completedCount / 16) * 100);
 
   return (
-    <Router>
-      {userId && (
+    <>
+      {userId && !isMissionPath && (
         <header className="app-header">
           <div className="header-top">
             <h1 className="app-title" style={{ fontSize: '1.6rem' }}>나의 AI 리터러시 능력 도감</h1>
@@ -802,7 +804,7 @@ function App() {
         </header>
       )}
 
-      <main className="main-content" style={{ padding: userId ? '20px' : '0', paddingBottom: userId ? '150px' : '0' }}>
+      <main className="main-content" style={{ padding: userId && !isMissionPath ? '20px' : '0' }}>
         {isLoading ? (
           <div className="flex items-center justify-center min-h-screen">
             <div className="text-lg">로딩 중...</div>
@@ -821,10 +823,15 @@ function App() {
 
       <RewardModal info={rewardInfo} onClose={() => setRewardInfo({ ...rewardInfo, show: false })} />
 
-
-      {userId && <Navigation />}
-    </Router>
+      {userId && !isMissionPath && <Navigation />}
+    </>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <Router>
+      <AppContent />
+    </Router>
+  );
+}

@@ -22,6 +22,10 @@
   -webkit-tap-highlight-color: transparent;
 }
 
+html {
+  font-size: 16px;
+}
+
 body {
   font-family: 'Nunito', 'Malgun Gothic', sans-serif;
   background-color: #eccc68;
@@ -313,10 +317,7 @@ body {
 
 /* Bottom Navigation */
 .bottom-nav {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
+  position: relative;
   background: white;
   display: flex;
   justify-content: space-around;
@@ -476,7 +477,7 @@ body {
   background: linear-gradient(to right, #ff9f43, #ff7f50);
   color: white;
   border: none;
-  padding: 18px;
+  padding: 1.15rem;
   border-radius: 30px;
   font-size: 1.4rem;
   font-weight: 900;
@@ -609,5 +610,32 @@ body {
   to {
     opacity: 1;
     transform: translateX(0);
+  }
+}
+
+/* -------------------------------
+   Mobile Typography & UI Scaling
+--------------------------------*/
+@media (max-width: 480px) {
+  html {
+    font-size: 14px;
+  }
+  .app-header {
+    padding: 12px 15px;
+  }
+  .main-content {
+    padding: 10px;
+  }
+}
+
+@media (max-width: 380px) {
+  html {
+    font-size: 13px;
+  }
+  .badge-card {
+    padding: 15px 5px 15px;
+  }
+  .btn-primary {
+    font-size: 1.25rem;
   }
 }

@@ -115,7 +115,8 @@ const ChatInterface = ({
             <div style={{
                 display: 'flex',
                 flexDirection: 'column',
-                height: '400px',
+                height: 'max(45vh, 300px)',
+                flex: 1,
                 border: '2px solid #dfe6e9',
                 borderRadius: '20px',
                 overflow: 'hidden',

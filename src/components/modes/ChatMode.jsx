@@ -27,8 +27,8 @@ const ChatMode = ({
                 background: '#fff9e6',
                 border: '3px solid #fdcb6e',
                 borderRadius: '20px',
-                padding: '20px',
-                marginBottom: '20px'
+                padding: '12px',
+                marginBottom: '15px'
             }}>
                 <div style={{
                     display: 'flex',
@@ -72,8 +72,8 @@ const ChatMode = ({
                 background: '#fff9e6',
                 border: '3px solid #fdcb6e',
                 borderRadius: '20px',
-                padding: '25px',
-                marginBottom: '20px'
+                padding: '15px',
+                marginBottom: '15px'
             }}>
                 <h3
                     className="mission-task-header"
@@ -126,7 +126,7 @@ const ChatMode = ({
                             textAlign: 'left',
                             color: '#2d3436',
                             background: 'white',
-                            padding: '18px',
+                            padding: '12px',
                             borderRadius: '15px',
                             border: '3px solid #dfe6e9',
                             boxShadow: '0 4px 6px rgba(0,0,0,0.02)'
