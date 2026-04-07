@@ -94,13 +94,22 @@ const ChatInterface = ({
                 systemInstruction: contextInstruction
             });
 
-            // 3. 채팅 히스토리 구성 (첫 AI 메시지 제외하여 user-first 규칙 준수)
-            const chatHistory = newMessages.slice(0, -1)
-                .filter((msg, idx) => !(idx === 0 && msg.role === 'ai')) // 첫 AI 메시지 제외
-                .map(msg => ({
-                    role: msg.role === 'ai' ? 'model' : 'user',
-                    parts: [{ text: msg.content }]
-                }));
+            // 3. 채팅 히스토리 구성 (user-first 규칙 준수)
+            let chatHistory = [];
+            const historyToMap = newMessages.slice(0, -1);
+
+            if (historyToMap.length > 0 && historyToMap[0].role === 'ai') {
+                // AI가 대화를 시작한 경우: [User(필러)] -> [Model(도입문)] -> [User] 순으로 구성
+                chatHistory.push({
+                    role: 'user',
+                    parts: [{ text: "미션을 시작합니다. 인사를 부탁해요." }]
+                });
+            }
+
+            chatHistory.push(...historyToMap.map(msg => ({
+                role: msg.role === 'ai' ? 'model' : 'user',
+                parts: [{ text: msg.content }]
+            })));
 
             const chat = model.startChat({
                 history: chatHistory,
