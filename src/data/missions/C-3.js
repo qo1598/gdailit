@@ -1,6 +1,7 @@
 export const C3_MISSION = {
     title: '마법 단어로 포스터 만들기',
     competency: 'AI와 창의적 협업',
+    introModalImage: '/c3_diverse_poster_2026.png',
     why: {
         lower: 'AI가 만든 멋진 그림에 사람의 따뜻한 마음을 얹어볼까요?',
         middle: 'AI의 결과물을 그대로 쓰지 않고, 나만의 개성을 더해 창작물을 발전시켜요.',

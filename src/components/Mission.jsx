@@ -76,6 +76,7 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
     const [currentStep, setCurrentStep] = useState(0);
     const [chatMessages, setChatMessages] = useState([]); // 채팅 대화 내역 저장용
     const [generatedImageUrl, setGeneratedImageUrl] = useState(null); // 생성된 이미지 URL 저장용
+    const [showIntroModal, setShowIntroModal] = useState(!!mission?.introModalImage);
 
     if (!mission) {
         return (
@@ -251,6 +252,85 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
                         onWordClick={openVocabModal}
                         missionId={missionId}
                     />
+
+                    {/* 도입부 이미지 모달 (C-3 용 등) */}
+                    {showIntroModal && mission.introModalImage && (
+                        <div style={{
+                            position: 'fixed',
+                            top: 0,
+                            left: 0,
+                            right: 0,
+                            bottom: 0,
+                            background: 'rgba(0,0,0,0.85)',
+                            zIndex: 10000,
+                            display: 'flex',
+                            flexDirection: 'column',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            padding: '20px',
+                            backdropFilter: 'blur(10px)',
+                            WebkitBackdropFilter: 'blur(10px)'
+                        }}>
+                            <div className="page-enter" style={{
+                                width: '100%',
+                                maxWidth: '600px',
+                                background: 'white',
+                                borderRadius: '30px',
+                                overflow: 'hidden',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                boxShadow: '0 25px 60px rgba(0,0,0,0.5)'
+                            }}>
+                                <div style={{
+                                    padding: '20px',
+                                    textAlign: 'center',
+                                    background: '#f8f9fa',
+                                    borderBottom: '1px solid #eee'
+                                }}>
+                                    <h3 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 'bold', color: '#2d3436' }}>
+                                        🎨 이번 미션의 핵심 참고 자료예요!
+                                    </h3>
+                                </div>
+                                <div style={{ 
+                                    padding: '25px', 
+                                    display: 'flex', 
+                                    justifyContent: 'center',
+                                    maxHeight: '70vh',
+                                    overflowY: 'auto'
+                                }}>
+                                    <img 
+                                        src={mission.introModalImage} 
+                                        alt="도입부 이미지" 
+                                        style={{ 
+                                            width: '100%', 
+                                            height: 'auto', 
+                                            borderRadius: '15px',
+                                            boxShadow: '0 5px 15px rgba(0,0,0,0.1)'
+                                        }} 
+                                    />
+                                </div>
+                                <div style={{ padding: '20px' }}>
+                                    <button 
+                                        onClick={() => setShowIntroModal(false)}
+                                        style={{
+                                            width: '100%',
+                                            padding: '18px',
+                                            background: 'linear-gradient(135deg, #74b9ff, #0984e3)',
+                                            color: 'white',
+                                            border: 'none',
+                                            borderRadius: '20px',
+                                            fontSize: '1.2rem',
+                                            fontWeight: 'bold',
+                                            cursor: 'pointer',
+                                            boxShadow: '0 8px 0 #0763ab'
+                                        }}
+                                    >
+                                        닫고 스토리 시작하기
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
                 <DictionaryModal 
                     isOpen={vocabModal.isOpen}
