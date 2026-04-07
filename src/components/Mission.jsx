@@ -76,7 +76,8 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
     const [currentStep, setCurrentStep] = useState(0);
     const [chatMessages, setChatMessages] = useState([]); // 채팅 대화 내역 저장용
     const [generatedImageUrl, setGeneratedImageUrl] = useState(null); // 생성된 이미지 URL 저장용
-    const [showIntroModal, setShowIntroModal] = useState(!!mission?.introModalImage);
+    const [showIntroModal, setShowIntroModal] = useState(false);
+    const hasShownIntroModalRef = React.useRef(false);
 
     if (!mission) {
         return (
@@ -246,7 +247,14 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
                     <MissionStorySteps
                         steps={mission.storySteps?.[gradeGroup] || []}
                         currentStep={currentStep}
-                        onNextStep={() => setCurrentStep(prev => prev + 1)}
+                        onNextStep={() => {
+                            const nextStep = currentStep + 1;
+                            if (nextStep === 1 && mission.introModalImage && !hasShownIntroModalRef.current) {
+                                setShowIntroModal(true);
+                                hasShownIntroModalRef.current = true;
+                            }
+                            setCurrentStep(nextStep);
+                        }}
                         onPrevStep={() => setCurrentStep(prev => prev - 1)}
                         onComplete={handleStoryComplete}
                         onWordClick={openVocabModal}
