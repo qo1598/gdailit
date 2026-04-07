@@ -826,7 +826,7 @@ function AppContent() {
         ) : (
           <Routes>
             <Route path="/" element={userId ? <Dashboard missions={missions} refresh={fetchProgress} justAttended={false} setJustAttended={() => { }} gradeGroup={gradeGroup} /> : <Login onLogin={handleLogin} />} />
-            <Route path="/mission/:missionId/:gradeGroup" element={userId ? <Mission userName={userName} /> : <Login onLogin={handleLogin} />} />
+            <Route path="/mission/:missionId/:gradeGroup" element={userId ? <Mission userId={userId} schoolId={schoolId} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
             <Route path="/minigame" element={userId ? <MiniGame userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
             <Route path="/discussion" element={userId ? <Discussion userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
             <Route path="/profile" element={userId ? <Profile userId={userId} userName={userName} fragments={fragments} setFragments={setFragments} avatarConfig={avatarConfig} setAvatarConfig={setAvatarConfig} onLogout={handleLogout} /> : <Login onLogin={handleLogin} />} />
