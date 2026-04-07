@@ -131,7 +131,7 @@ export default function Login({ onLogin }) {
                 })
                 .eq('id', student.id)
                 .select()
-                .single();
+                .maybeSingle();
 
             if (error) {
                 console.error('Attendance update error:', error);

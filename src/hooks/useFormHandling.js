@@ -80,7 +80,7 @@ export const useFormHandling = (initialValues = {}) => {
                 .select('data')
                 .eq('user_id', userId)
                 .eq('mission_id', missionId)
-                .single();
+                .maybeSingle();
 
             if (error) {
                 if (error.code !== 'PGRST116') {

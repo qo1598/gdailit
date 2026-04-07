@@ -209,7 +209,7 @@ export default function MiniGame({ userId, schoolId = 'gyeongdong', gradeGroup =
                 .from('students')
                 .select('fragments')
                 .eq('id', userId)
-                .single();
+                .maybeSingle();
 
             const newTotal = (student?.fragments || 0) + amount;
 
