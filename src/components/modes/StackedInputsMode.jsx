@@ -11,6 +11,7 @@ const StackedInputsMode = ({
     stackedAnswers,
     isEditing,
     onStackedChange, 
+    onImageGenerated,
     onWordClick,
     onSubmit 
 }) => {
@@ -141,6 +142,7 @@ const StackedInputsMode = ({
                     stackedInputs={currentStackedInputs}
                     stackedAnswers={stackedAnswers}
                     onAnswerChange={onStackedChange}
+                    onImageGenerated={onImageGenerated}
                     onWordClick={onWordClick}
                 />
 

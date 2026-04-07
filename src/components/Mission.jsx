@@ -47,14 +47,22 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
         validateForm,
         fetchExistingSubmission,
         isEditing,
-        teacherFeedback
+        teacherFeedback,
+        handleFileChange,
+        handleTextChange
     } = useFormHandling();
 
     // 초기 데이터 로드 (수정 모드 감지)
     React.useEffect(() => {
-        if (userId && missionId) {
-            fetchExistingSubmission(userId, missionId, currentType, currentStackedInputs);
-        }
+        const loadData = async () => {
+            if (userId && missionId) {
+                const subData = await fetchExistingSubmission(userId, missionId, currentType, currentStackedInputs);
+                if (subData && subData.chat_history) {
+                    setChatMessages(subData.chat_history);
+                }
+            }
+        };
+        loadData();
     }, [userId, missionId, currentType, currentStackedInputs, fetchExistingSubmission]);
     
     // URL 파라미터에서 phase 확인
@@ -63,6 +71,8 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
     
     const [missionPhase, setMissionPhase] = useState(initialPhase);
     const [currentStep, setCurrentStep] = useState(0);
+    const [chatMessages, setChatMessages] = useState([]); // 채팅 대화 내역 저장용
+    const [generatedImageUrl, setGeneratedImageUrl] = useState(null); // 생성된 이미지 URL 저장용
 
     if (!mission) {
         return (
@@ -115,6 +125,8 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
                 currentType, currentStackedInputs,
                 startTime: startTimeRef.current,
                 editCountRef,
+                messages: chatMessages, // 채팅 내역 전달
+                generatedImageUrl: generatedImageUrl, // 생성된 이미지 전달
                 surveyData: isEditing ? null : surveyData,
                 onSuccess: () => {
                     setShowSurvey(false);
@@ -136,8 +148,15 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
         }
     };
 
-    const handleChatComplete = () => {
-        setMissionPhase('complete');
+    const handleChatComplete = (messages) => {
+        setChatMessages(messages);
+        // 채팅은 turnLimit이 차야 버튼이 활성화되므로 바로 제출 단계(설문)로 진입
+        if (isEditing) {
+            // 수정 모드면 설문 없이 즉시 제출
+            handleFinalSubmit(); 
+        } else {
+            setShowSurvey(true);
+        }
     };
 
     // 미션 완료 화면
@@ -252,6 +271,9 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
             stackedAnswers,
             isEditing,
             onStackedChange: handleStackedChange,
+            onFileChange: handleFileChange,
+            onTextChange: handleTextChange,
+            onImageGenerated: setGeneratedImageUrl,
             onWordClick: openVocabModal,
             onSubmit: handlePreSubmit
         };
@@ -262,6 +284,7 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
                     {...modeProps}
                     userName={userName}
                     onComplete={handleChatComplete}
+                    chatMessages={chatMessages}
                 />
             );
         }
@@ -276,6 +299,7 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
                         {...modeProps}
                         userName={userName}
                         onComplete={handleChatComplete}
+                        chatMessages={chatMessages}
                     />
                 );
 

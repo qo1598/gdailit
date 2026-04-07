@@ -10,7 +10,8 @@ const ChatMode = ({
     gradeGroup, 
     userName,
     onWordClick,
-    onComplete 
+    onComplete,
+    chatMessages = []
 }) => {
     const {
         currentUserTurnLimit,
@@ -158,6 +159,7 @@ const ChatMode = ({
                     onChatComplete={onComplete}
                     userName={userName}
                     onWordClick={onWordClick}
+                    initialMessages={chatMessages}
                 />
             </div>
         </div>

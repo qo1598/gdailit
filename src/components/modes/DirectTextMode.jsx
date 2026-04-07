@@ -19,6 +19,9 @@ const DirectTextMode = ({
     stackedAnswers,
     isEditing,
     onStackedChange,
+    onFileChange,
+    onTextChange,
+    onImageGenerated,
     onWordClick,
     onSubmit
 }) => {
@@ -286,6 +289,7 @@ const DirectTextMode = ({
                                 <input
                                     type="file"
                                     accept="image/*"
+                                    onChange={(e) => onFileChange(e.target.files[0])}
                                     style={{
                                         width: '100%',
                                         padding: '10px',
@@ -318,7 +322,28 @@ const DirectTextMode = ({
                             missionId === 'D-2' && gradeGroup === 'upper' ? openAomoriHelp : undefined
                         }
                         onWordClick={onWordClick}
+                        onImageGenerated={onImageGenerated}
                     />
+
+                    {(!currentStackedInputs || currentStackedInputs.length === 0) && (
+                        <div style={{ marginTop: '20px' }}>
+                            <textarea
+                                rows={6}
+                                value={mission.formData || ''}
+                                onChange={(e) => onTextChange?.(e.target.value)}
+                                placeholder="여기에 여러분의 생각을 자유롭게 적어보세요."
+                                style={{
+                                    width: '100%',
+                                    padding: '15px',
+                                    borderRadius: '15px',
+                                    border: '2px solid #dfe6e9',
+                                    fontSize: '1rem',
+                                    resize: 'vertical'
+                                }}
+                                required
+                            />
+                        </div>
+                    )}
 
                     <div style={{ textAlign: 'center', marginTop: 'clamp(20px, 5vw, 30px)' }}>
                         <button

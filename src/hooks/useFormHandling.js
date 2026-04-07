@@ -93,14 +93,19 @@ export const useFormHandling = (initialValues = {}) => {
                 const subData = data.data;
                 const newValues = { isEditing: true, teacherFeedback: subData.teacher_feedback || null };
 
-                if (currentType === 'rules') {
-                    newValues.rule1 = subData.rule1 || '';
-                    newValues.rule2 = subData.rule2 || '';
-                    newValues.rule3 = subData.rule3 || '';
-                } else if (currentStackedInputs?.length > 0) {
-                    newValues.stackedAnswers = subData.stackedAnswers || {};
-                } else {
-                    newValues.formData = subData.text || '';
+                // 데이터 복구 (Additive approach)
+                if (subData.rule1 !== undefined) {
+                    newValues.rule1 = subData.rule1;
+                    newValues.rule2 = subData.rule2;
+                    newValues.rule3 = subData.rule3;
+                }
+                
+                if (subData.stackedAnswers) {
+                    newValues.stackedAnswers = subData.stackedAnswers;
+                }
+                
+                if (subData.text) {
+                    newValues.formData = subData.text;
                 }
 
                 // 채팅일 경우 ChatMode에서 내부 상태를 복구하므로 formData에만 넣어줍니다.
@@ -114,7 +119,8 @@ export const useFormHandling = (initialValues = {}) => {
     }, [setFormValues]);
 
     // 폼 형식이 올바른지 검증
-    const validateForm = useCallback((currentType, currentStackedInputs) => {
+    const validateForm = useCallback((currentType, currentStackedInputs, isChatMode = false) => {
+        if (isChatMode || currentType === 'chat') return true;
         if (currentType === 'rules') {
             return rule1.trim() && rule2.trim() && rule3.trim();
         } else if (currentStackedInputs?.length > 0) {
@@ -178,23 +184,40 @@ export const useFormHandling = (initialValues = {}) => {
             const fileUrl = await uploadFileIfGiven(userId, missionId);
 
             // 2. SubmissionData 페이로드 생성
-            const finalContent = mission.isChatMode 
+            const finalContent = (mission.isChatMode || currentType === 'chat')
                 ? messages.map(m => `[${m.role}] ${m.content}`).join('\n') 
                 : formData;
 
-            // 기본 페이로드
+            // 기본 페이로드 (모든 데이터를 누적하여 저장)
             let submissionData = { 
                 file_url: fileUrl, 
-                generatedImageUrl: missionId === 'C-3' ? generatedImageUrl : null,
-                teacher_feedback: teacherFeedback // 기존 코멘트 유지
+                generatedImageUrl: generatedImageUrl || null,
+                teacher_feedback: teacherFeedback
             };
+            
+            // 1. 채팅 데이터 추가
+            if (mission.isChatMode || currentType === 'chat') {
+                submissionData.text = finalContent;
+                submissionData.chat_history = messages;
+            }
+            
+            // 2. 스택/입력 데이터 추가
+            if (currentStackedInputs?.length > 0) {
+                submissionData.stackedAnswers = stackedAnswers;
+                // 스택 미션이면서 텍스트 데이터가 있으면 함께 저장
+                if (formData && formData.trim()) {
+                    submissionData.text = formData;
+                }
+            } else if (!submissionData.text) {
+                // 일반 텍스트 미션인 경우
+                submissionData.text = formData;
+            }
 
+            // 3. 규칙 데이터 (레거시 지원)
             if (currentType === 'rules') {
-                submissionData = { ...submissionData, rule1, rule2, rule3 };
-            } else if (currentStackedInputs?.length > 0) {
-                submissionData = { ...submissionData, stackedAnswers };
-            } else {
-                submissionData = { ...submissionData, text: finalContent };
+                submissionData.rule1 = rule1;
+                submissionData.rule2 = rule2;
+                submissionData.rule3 = rule3;
             }
 
             // 3. Database 연동

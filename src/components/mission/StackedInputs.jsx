@@ -17,7 +17,8 @@ const StackedInputs = ({
     onC3GeneratePoster,
     isGeneratingC3Image,
     onRequestAomoriHelp,
-    onWordClick
+    onWordClick,
+    onImageGenerated
 }) => {
     if (!stackedInputs || stackedInputs.length === 0) {
         return null;
@@ -391,6 +392,7 @@ const StackedInputs = ({
                 missionId={missionId}
                 gradeGroup={gradeGroup}
                 stackedAnswers={stackedAnswers}
+                onImageGenerated={onImageGenerated}
             />
         </div>
     );

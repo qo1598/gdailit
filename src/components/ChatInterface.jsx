@@ -18,9 +18,10 @@ const ChatInterface = ({
     currentChatInitiator,
     onChatComplete,
     onWordClick,
+    initialMessages = [],
     style = {}
 }) => {
-    const [messages, setMessages] = useState([]);
+    const [messages, setMessages] = useState(initialMessages);
     const [chatInput, setChatInput] = useState('');
     const [isAIThinking, setIsAIThinking] = useState(false);
     const chatEndRef = useRef(null);
@@ -40,7 +41,7 @@ const ChatInterface = ({
             };
             setMessages([initialMessage]);
         }
-    }, [mission, currentChatInitiator, messages.length]);
+    }, [mission, currentChatInitiator, messages.length, initialMessages]);
 
     // 자동 스크롤
     useEffect(() => {
@@ -76,20 +77,39 @@ const ChatInterface = ({
         setIsAIThinking(true);
 
         try {
-            // AI 페르소나 생성
+            // 1. AI 페르소나 및 시스템 지침 생성
             const persona = mission.persona ? mission.persona() : 
                 "당신은 친근하고 도움이 되는 AI 선생님입니다. 학생들이 AI 리터러시를 배울 수 있도록 도와주세요.";
+            
+            // AI가 먼저 말을 시작한 경우, 그 내용은 시스템 지침에 포함시켜 컨텍스트를 유지하고
+            // API에 보내는 history에서는 제외하여 첫 메시지가 'user'가 되도록 합니다.
+            let contextInstruction = persona;
+            if (messages.length > 0 && messages[0].role === 'ai') {
+                contextInstruction += `\n\n현재 미션의 도입 문구: "${messages[0].content}"`;
+            }
 
-            // Gemini API 호출
-            const model = genAI.getGenerativeModel({ model: MODEL_NAME });
-            const chat = model.startChat({
-                history: newMessages.slice(0, -1).map(msg => ({
-                    role: msg.role === 'ai' ? 'model' : 'user',
-                    parts: [{ text: msg.content }]
-                }))
+            // 2. Gemini API 모델 설정 (systemInstruction 활용)
+            const model = genAI.getGenerativeModel({ 
+                model: MODEL_NAME,
+                systemInstruction: contextInstruction
             });
 
-            const result = await chat.sendMessage(`${persona}\n\n사용자 메시지: ${userMessage.content}`);
+            // 3. 채팅 히스토리 구성 (첫 AI 메시지 제외하여 user-first 규칙 준수)
+            const chatHistory = newMessages.slice(0, -1)
+                .filter((msg, idx) => !(idx === 0 && msg.role === 'ai')) // 첫 AI 메시지 제외
+                .map(msg => ({
+                    role: msg.role === 'ai' ? 'model' : 'user',
+                    parts: [{ text: msg.content }]
+                }));
+
+            const chat = model.startChat({
+                history: chatHistory,
+                generationConfig: {
+                    maxOutputTokens: 1000,
+                }
+            });
+
+            const result = await chat.sendMessage(userMessage.content);
             const aiResponse = result.response.text();
 
             const aiMessage = {
