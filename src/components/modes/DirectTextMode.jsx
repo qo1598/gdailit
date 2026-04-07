@@ -4,6 +4,8 @@ import { GoogleGenAI } from '@google/genai';
 import { useGradeLogic } from '../../hooks/useGradeLogic';
 import StackedInputs from '../mission/StackedInputs';
 import MissionScenarioPanel from '../mission/MissionScenarioPanel';
+import { useModeration } from '../../hooks/useModeration';
+import ModerationModal from '../common/ModerationModal';
 import {
     AomoriAppleHelpModal,
     renderAomoriFragments
@@ -39,6 +41,7 @@ const DirectTextMode = ({
     const [isGeneratingC3Image, setIsGeneratingC3Image] = useState(false);
     const [generatedC3ImageUrl, setGeneratedC3ImageUrl] = useState('');
     const [aomoriHelpOpen, setAomoriHelpOpen] = useState(false);
+    const { modWarning, validateContent, closeWarning } = useModeration();
 
     const openAomoriHelp = useCallback(() => setAomoriHelpOpen(true), []);
     const closeAomoriHelp = useCallback(() => setAomoriHelpOpen(false), []);
@@ -50,6 +53,11 @@ const DirectTextMode = ({
         const prompt = stackedAnswers.creative_edit;
         if (!prompt || prompt.trim() === '') {
             alert('먼저 수정하고 싶은 포스터의 내용을 적어주세요.');
+            return;
+        }
+
+        // 비속어 필터링 체크 (프롬프트 생성 전)
+        if (!validateContent(prompt)) {
             return;
         }
 
@@ -368,6 +376,12 @@ const DirectTextMode = ({
                     </div>
                 </form>
             </div>
+            
+            <ModerationModal 
+                show={modWarning.show} 
+                message={modWarning.message} 
+                onClose={closeWarning} 
+            />
         </div>
     );
 };

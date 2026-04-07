@@ -15,6 +15,8 @@ import DirectTextMode from './modes/DirectTextMode';
 import ChatMode from './modes/ChatMode';
 import StackedInputsMode from './modes/StackedInputsMode';
 import ChecklistMode from './modes/ChecklistMode';
+import { useModeration } from '../hooks/useModeration';
+import ModerationModal from './common/ModerationModal';
 
 const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
     const { missionId, gradeGroup } = useParams();
@@ -23,6 +25,7 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
     
     // 사전 모달 상태
     const [vocabModal, setVocabModal] = useState({ isOpen: false, word: '', definition: '' });
+    const { modWarning, validateContent, closeWarning } = useModeration();
     
     const openVocabModal = React.useCallback((word, definition) => {
         setVocabModal({ isOpen: true, word, definition });
@@ -110,6 +113,28 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
     // 내부 제출 버튼 클릭 시 트리거 (수정이면 즉시 제출, 처음이면 설문 모달 띄우기)
     const handlePreSubmit = () => {
         if (!validateForm(currentType, currentStackedInputs)) return;
+
+        // 비속어/도배 필터링 전수 검사
+        // 1. 단순 텍스트 검사 (formData)
+        if (formData && !validateContent(formData)) return;
+
+        // 2. 스택 입력 데이터 검사 (stackedAnswers)
+        if (stackedAnswers) {
+            const hasProfanity = Object.values(stackedAnswers).some(val => {
+                if (typeof val === 'string' && val.trim()) {
+                    return !validateContent(val, { skipSpam: true, skipRepetition: true });
+                }
+                if (typeof val === 'object' && val !== null) {
+                    // multi-text 필드 등 검사
+                    return Object.values(val).some(innerVal => 
+                        typeof innerVal === 'string' && innerVal.trim() && !validateContent(innerVal, { skipSpam: true, skipRepetition: true })
+                    );
+                }
+                return false;
+            });
+            if (hasProfanity) return;
+        }
+
         if (isEditing) {
             handleFinalSubmit();
         } else {
@@ -320,6 +345,12 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
     return (
         <div className="min-h-screen bg-gradient-to-br from-purple-50 to-blue-50 relative">
             {renderMissionMode()}
+            
+            <ModerationModal 
+                show={modWarning.show} 
+                message={modWarning.message} 
+                onClose={closeWarning} 
+            />
 
             {/* 설문조사 모달 */}
             {showSurvey && (

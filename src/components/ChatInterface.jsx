@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { checkModeration } from '../utils/moderation';
+import { useModeration } from '../hooks/useModeration';
+import ModerationModal from './common/ModerationModal';
 import DictionaryText from './DictionaryText';
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
@@ -24,6 +25,7 @@ const ChatInterface = ({
     const [messages, setMessages] = useState(initialMessages);
     const [chatInput, setChatInput] = useState('');
     const [isAIThinking, setIsAIThinking] = useState(false);
+    const { modWarning, validateContent, closeWarning } = useModeration();
     const chatEndRef = useRef(null);
 
     // 채팅 상태 계산
@@ -62,12 +64,7 @@ const ChatInterface = ({
         };
 
         // 모더레이션 체크
-        const lastUserMsg = messages.filter(m => m.role === 'user').slice(-1)[0];
-        const lastText = lastUserMsg?.content || '';
-        const lastTime = lastUserMsg ? new Date(lastUserMsg.timestamp).getTime() : null;
-        const moderationResult = checkModeration(userMessage.content, lastText, lastTime);
-        if (!moderationResult.isValid) {
-            alert(moderationResult.message || `부적절한 내용이 감지되었습니다.`);
+        if (!validateContent(userMessage.content)) {
             return;
         }
 
@@ -279,6 +276,12 @@ const ChatInterface = ({
                     {isChatFinished ? '🎉 대화 완료! 미션 제출하기' : `💬 ${userTurnCount}/${turnLimit}번 대화 진행 중...`}
                 </button>
             </div>
+
+            <ModerationModal 
+                show={modWarning.show} 
+                message={modWarning.message} 
+                onClose={closeWarning} 
+            />
         </div>
     );
 };
