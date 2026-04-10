@@ -7,6 +7,7 @@ import MiniGame from './components/MiniGame';
 import Login from './components/Login';
 import Discussion from './components/Discussion';
 import Admin from './components/Admin';
+import MissionRunner from './components/mission/v3/MissionRunner';
 import { supabase } from './supabaseClient';
 import './index.css';
 
@@ -776,9 +777,12 @@ function AppContent() {
   // Based on 16 total missions
   const progressPercentage = Math.round((completedCount / 16) * 100);
 
+  const location = useLocation();
+  const isV3Mission = location.pathname.startsWith('/v3/mission');
+
   return (
     <>
-      {userId && (
+      {userId && !isV3Mission && (
         <>
           {/* ===== PC/태블릿 헤더 (768px 이상) ===== */}
           <header className="app-header header-desktop">
@@ -818,7 +822,7 @@ function AppContent() {
         </>
       )}
 
-      <main className="main-content" style={{ padding: userId ? '15px' : '0' }}>
+      <main className="main-content" style={{ padding: (userId && !isV3Mission) ? '15px' : '0' }}>
         {isLoading ? (
           <div className="flex items-center justify-center min-h-screen">
             <div className="text-lg">로딩 중...</div>
@@ -827,6 +831,7 @@ function AppContent() {
           <Routes>
             <Route path="/" element={userId ? <Dashboard missions={missions} refresh={fetchProgress} justAttended={false} setJustAttended={() => { }} gradeGroup={gradeGroup} /> : <Login onLogin={handleLogin} />} />
             <Route path="/mission/:missionId/:gradeGroup" element={userId ? <Mission userId={userId} schoolId={schoolId} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
+            <Route path="/v3/mission/:missionId/:gradeBand" element={userId ? <MissionRunner /> : <Login onLogin={handleLogin} />} />
             <Route path="/minigame" element={userId ? <MiniGame userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
             <Route path="/discussion" element={userId ? <Discussion userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
             <Route path="/profile" element={userId ? <Profile userId={userId} userName={userName} fragments={fragments} setFragments={setFragments} avatarConfig={avatarConfig} setAvatarConfig={setAvatarConfig} onLogout={handleLogout} /> : <Login onLogin={handleLogin} />} />
@@ -837,7 +842,7 @@ function AppContent() {
 
       <RewardModal info={rewardInfo} onClose={() => setRewardInfo({ ...rewardInfo, show: false })} />
 
-      {userId && <Navigation />}
+      {userId && !isV3Mission && <Navigation />}
     </>
   );
 }
