@@ -1,12 +1,12 @@
 import React, { useRef } from 'react';
-import { Check, Camera } from 'lucide-react';
+import { Check, Camera, Lightbulb } from 'lucide-react';
 import { getIcon } from './MissionIcons';
 
 /**
  * TDRenderer - Exploration & Identification type UI.
  * Handles uiModes: choice_cards | single_select_buttons | photo_or_card_select
  */
-const TDRenderer = ({ step, answers, setAnswers, domainColor }) => {
+const TDRenderer = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
 
   // ─── choice_cards (multi-select) ─────────────────────────────
   if (step.uiMode === 'choice_cards') {
@@ -22,7 +22,7 @@ const TDRenderer = ({ step, answers, setAnswers, domainColor }) => {
 
     return (
       <div className="animate-slide-up" style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(12px, 3vw, 18px)' }}>
-        <StepHeader step={step} domainColor={domainColor} />
+        <StepHeader step={step} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />
 
         <div className="v3-choice-grid">
           {step.options.map((option, idx) => {
@@ -105,7 +105,7 @@ const TDRenderer = ({ step, answers, setAnswers, domainColor }) => {
 
     return (
       <div className="animate-slide-up" style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(12px, 3vw, 18px)' }}>
-        <StepHeader step={step} domainColor={domainColor} />
+        <StepHeader step={step} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />
 
         <div style={{
           display: 'grid',
@@ -217,7 +217,7 @@ const TDRenderer = ({ step, answers, setAnswers, domainColor }) => {
 
 // ─── Sub-components ──────────────────────────────────────────────
 
-const StepHeader = ({ step, domainColor }) => (
+const StepHeader = ({ step, domainColor, hint, onHintClick }) => (
   <div className="v3-card" style={{ marginBottom: 0 }}>
     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
       <span style={{ width: 'clamp(12px, 3vw, 16px)', height: '4px', borderRadius: '999px', backgroundColor: domainColor, flexShrink: 0 }} />
@@ -225,9 +225,34 @@ const StepHeader = ({ step, domainColor }) => (
         {step.title}
       </span>
     </div>
-    <h3 style={{ fontSize: 'clamp(1.1rem, 4vw, 1.4rem)', fontWeight: 900, color: '#1e293b', lineHeight: 1.3, margin: 0, wordBreak: 'keep-all' }}>
-      {step.question}
-    </h3>
+    <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+      <h3 style={{ fontSize: 'clamp(1.1rem, 4vw, 1.4rem)', fontWeight: 900, color: '#1e293b', lineHeight: 1.3, margin: 0, wordBreak: 'keep-all', flex: 1 }}>
+        {step.question}
+      </h3>
+      {hint && (
+        <button
+          onClick={onHintClick}
+          title="힌트 보기"
+          style={{
+            flexShrink: 0,
+            width: '36px', height: '36px',
+            borderRadius: '50%',
+            backgroundColor: '#fef9c3',
+            border: '2px solid #fde047',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer',
+            transition: 'transform 0.15s, background-color 0.15s',
+            marginTop: '2px'
+          }}
+          onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#fef08a'; e.currentTarget.style.transform = 'scale(1.12)'; }}
+          onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#fef9c3'; e.currentTarget.style.transform = 'scale(1)'; }}
+          onTouchStart={e => e.currentTarget.style.transform = 'scale(1.12)'}
+          onTouchEnd={e => e.currentTarget.style.transform = 'scale(1)'}
+        >
+          <Lightbulb size={18} color="#ca8a04" strokeWidth={2.2} />
+        </button>
+      )}
+    </div>
   </div>
 );
 
@@ -288,7 +313,7 @@ const PhotoUpload = ({ step, answers, setAnswers, domainColor }) => {
 
   return (
     <div className="animate-slide-up" style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(12px, 3vw, 16px)' }}>
-      <StepHeader step={step} domainColor={domainColor} />
+      <StepHeader step={step} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />
 
       {/* Hidden file input - camera on mobile */}
       <input

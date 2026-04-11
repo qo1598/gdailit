@@ -176,12 +176,19 @@ export const useFormHandling = (initialValues = {}) => {
         currentType, currentStackedInputs, 
         startTime, editCountRef, messages = [], 
         generatedImageUrl = null, surveyData = null, 
-        onSuccess, onReward 
+        telemetry = null, // 추가
+        onSuccess, onReward,
+        isMockMode = true // 기본값을 true로 설정하여 로컬 검증 모드 우선
     }) => {
         setIsSubmitting(true);
         try {
             // 1. Storage 업로드 
-            const fileUrl = await uploadFileIfGiven(userId, missionId);
+            let fileUrl = null;
+            if (!isMockMode) {
+                fileUrl = await uploadFileIfGiven(userId, missionId);
+            } else {
+                console.log('🧪 [MockMode] File upload skipped.');
+            }
 
             // 2. SubmissionData 페이로드 생성
             const finalContent = (mission.isChatMode || currentType === 'chat')
@@ -204,23 +211,38 @@ export const useFormHandling = (initialValues = {}) => {
             // 2. 스택/입력 데이터 추가
             if (currentStackedInputs?.length > 0) {
                 submissionData.stackedAnswers = stackedAnswers;
-                // 스택 미션이면서 텍스트 데이터가 있으면 함께 저장
                 if (formData && formData.trim()) {
                     submissionData.text = formData;
                 }
             } else if (!submissionData.text) {
-                // 일반 텍스트 미션인 경우
                 submissionData.text = formData;
             }
 
-            // 3. 규칙 데이터 (레거시 지원)
             if (currentType === 'rules') {
                 submissionData.rule1 = rule1;
                 submissionData.rule2 = rule2;
                 submissionData.rule3 = rule3;
             }
 
-            // 3. Database 연동
+            // [추가] MockMode인 경우 콘솔에 출력하고 종료
+            if (isMockMode) {
+                console.group('🚀 [MockMode] Mission Submission Data Preview');
+                console.log('Mission ID:', missionId);
+                console.log('Grade Group:', gradeGroup);
+                console.log('Submission Content:', submissionData);
+                console.log('Survey Data:', surveyData);
+                console.groupEnd();
+                
+                // 시뮬레이션 성공 처리
+                setTimeout(() => {
+                    setShowSuccess(true);
+                    if (onSuccess) onSuccess();
+                    setIsSubmitting(false);
+                }, 800);
+                return;
+            }
+
+            // 3. Database 연동 (MockMode가 아닐 때만 실행)
             if (isEditing) {
                 const { error: err1 } = await supabase
                     .from('mission_submissions')
@@ -257,7 +279,7 @@ export const useFormHandling = (initialValues = {}) => {
             // 4. Activity Logs (Research Telemetry)
             try {
                 const endTime = Date.now();
-                await supabase.from('activity_logs').insert([{
+                const logData = {
                     user_id: userId,
                     school_id: schoolId,
                     activity_type: 'mission_enhanced',
@@ -275,12 +297,20 @@ export const useFormHandling = (initialValues = {}) => {
                             edit_count: editCountRef ? editCountRef.current : 0,
                             has_file: !!file,
                             is_chat_mode: !!mission.isChatMode,
-                            chat_history: mission.isChatMode ? messages : null
+                            chat_history: mission.isChatMode ? messages : null,
+                            ...telemetry // 외부 텔레메트리 데이터 병합
                         },
                         survey: isEditing ? null : surveyData,
+                        ksa_tags: mission.ksa_tags, // KSA 태그 포함
                         submitted_at: new Date().toISOString()
                     }
-                }]);
+                };
+
+                if (isMockMode) {
+                    console.log('📊 [MockMode] Activity Log Preview:', logData);
+                } else {
+                    await supabase.from('activity_logs').insert([logData]);
+                }
             } catch (logErr) {
                 console.warn('activity_logs 로깅 실패:', logErr);
             }

@@ -11,7 +11,9 @@ const ChecklistMode = ({
     isEditing,
     onStackedChange, 
     onWordClick,
-    onSubmit 
+    onSubmit,
+    onFocus, // 추가
+    onChange  // 추가
 }) => {
     const {
         currentStackedInputs,
@@ -21,7 +23,8 @@ const ChecklistMode = ({
     } = useGradeLogic(mission, gradeGroup);
     
     const handleChecklistChange = (inputId, selectedItems) => {
-        onStackedChange(inputId, selectedItems);
+        onFocus?.(inputId);
+        onChange?.(inputId, selectedItems);
     };
 
     return (
@@ -176,7 +179,8 @@ const ChecklistMode = ({
                         {inputDef.type === 'textarea' && (
                             <textarea
                                 value={stackedAnswers[inputDef.id] || ''}
-                                onChange={(e) => onStackedChange(inputDef.id, e.target.value)}
+                                onFocus={() => onFocus?.(inputDef.id)}
+                                onChange={(e) => onChange?.(inputDef.id, e.target.value)}
                                 placeholder={inputDef.placeholder}
                                 style={{
                                     width: '100%',

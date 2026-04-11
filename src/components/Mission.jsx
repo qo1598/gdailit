@@ -15,6 +15,7 @@ import DirectTextMode from './modes/DirectTextMode';
 import ChatMode from './modes/ChatMode';
 import StackedInputsMode from './modes/StackedInputsMode';
 import ChecklistMode from './modes/ChecklistMode';
+import PerformanceModes from './modes/PerformanceModes'; // 추가
 import { useModeration } from '../hooks/useModeration';
 import ModerationModal from './common/ModerationModal';
 
@@ -108,6 +109,35 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
     };
 
     const startTimeRef = React.useRef(Date.now());
+    const telemetryRef = React.useRef({
+        dwellTimePerField: {}, // { fieldId: totalMs }
+        interactionCount: 0,
+        choiceHistory: [], // { timestamp, fieldId, value }
+        lastFieldFocus: null,
+        lastFocusTime: Date.now()
+    });
+
+    const trackFieldFocus = (fieldId) => {
+        const now = Date.now();
+        if (telemetryRef.current.lastFieldFocus) {
+            const duration = now - telemetryRef.current.lastFocusTime;
+            const prevField = telemetryRef.current.lastFieldFocus;
+            telemetryRef.current.dwellTimePerField[prevField] = (telemetryRef.current.dwellTimePerField[prevField] || 0) + duration;
+        }
+        telemetryRef.current.lastFieldFocus = fieldId;
+        telemetryRef.current.lastFocusTime = now;
+        telemetryRef.current.interactionCount += 1;
+    };
+
+    const trackFieldChange = (fieldId, value) => {
+        telemetryRef.current.choiceHistory.push({
+            timestamp: Date.now(),
+            fieldId,
+            value: typeof value === 'object' ? 'complex_object' : value
+        });
+        telemetryRef.current.interactionCount += 1;
+    };
+
     const editCountRef = React.useRef(0);
     const [showSurvey, setShowSurvey] = useState(false);
     const [surveyData, setSurveyData] = useState({ effort: 3, confidence: 3, trust: 3 });
@@ -152,8 +182,13 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
                 currentType, currentStackedInputs,
                 startTime: startTimeRef.current,
                 editCountRef,
-                messages: chatMessages, // 채팅 내역 전달
-                generatedImageUrl: generatedImageUrl, // 생성된 이미지 전달
+                telemetry: {
+                    ...telemetryRef.current,
+                    totalTime: Date.now() - startTimeRef.current
+                },
+                isMockMode: true, // 로컬 검증을 위해 기본 활성화
+                messages: chatMessages, 
+                generatedImageUrl: generatedImageUrl, 
                 surveyData: isEditing ? null : surveyData,
                 onSuccess: () => {
                     setShowSurvey(false);
@@ -388,7 +423,12 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
             onTextChange: handleTextChange,
             onImageGenerated: setGeneratedImageUrl,
             onWordClick: openVocabModal,
-            onSubmit: handlePreSubmit
+            onSubmit: handlePreSubmit,
+            onFocus: trackFieldFocus, // 추가
+            onChange: (id, val) => {   // 추가
+                handleStackedChange(id, val);
+                trackFieldChange(id, val);
+            }
         };
 
         if (isCurrentChatMode) {
@@ -422,6 +462,11 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
             case 'checklist':
                 return <ChecklistMode {...modeProps} />;
 
+            case 'performance-sorting': 
+            case 'performance-matching': 
+            case 'performance-highlight': 
+                return <PerformanceModes {...modeProps} />;
+
             case 'upload-text':
                 return <DirectTextMode {...modeProps} />;
 
@@ -451,47 +496,54 @@ const Mission = ({ userId, userName, schoolId, setFragments, onReward }) => {
                         <p className="text-center text-blue-600 font-bold mb-8 italic">마지막 질문에 답하고 미션을 완료해볼까요?</p>
 
                         <div className="space-y-8">
-                            <div className="bg-blue-50/50 p-4 rounded-2xl border border-blue-100">
-                                <p className="font-bold text-gray-800 mb-4 flex items-center gap-2">
-                                    <span style={{ fontSize: '1.2rem' }}>🔥</span> 이 미션을 위해 얼마나 노력했나요?
-                                </p>
-                                <div className="flex justify-between px-2">
-                                    {[1, 2, 3, 4, 5].map(v => (
-                                        <button key={v} onClick={() => setSurveyData({ ...surveyData, effort: v })} 
-                                            className={`w-12 h-12 rounded-full font-black text-lg transition-all transform hover:scale-110 active:scale-95 ${surveyData.effort === v ? 'bg-blue-500 text-white shadow-[0_4px_15px_rgba(59,130,246,0.5)] scale-110 border-2 border-white' : 'bg-white text-gray-400 border-2 border-gray-100 hover:border-blue-200 hover:text-blue-400'}`}>
-                                            {v}
-                                        </button>
-                                    ))}
+                            {/* KSA 동적 질문 매핑 */}
+                            {mission.ksa_tags?.K && (
+                                <div className="bg-blue-50/50 p-4 rounded-2xl border border-blue-100">
+                                    <p className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                                        <span style={{ fontSize: '1.2rem' }}>📚</span> {mission.ksa_tags.K}: AI 지식을 더 잘 알게 되었나요?
+                                    </p>
+                                    <div className="flex justify-between px-2">
+                                        {[1, 2, 3, 4, 5].map(v => (
+                                            <button key={v} onClick={() => setSurveyData({ ...surveyData, effort: v })} 
+                                                className={`w-12 h-12 rounded-full font-black text-lg transition-all transform hover:scale-110 active:scale-95 ${surveyData.effort === v ? 'bg-blue-500 text-white shadow-[0_4px_15px_rgba(59,130,246,0.5)] scale-110 border-2 border-white' : 'bg-white text-gray-400 border-2 border-gray-100'}`}>
+                                                {v}
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
 
-                            <div className="bg-green-50/50 p-4 rounded-2xl border border-green-100">
-                                <p className="font-bold text-gray-800 mb-4 flex items-center gap-2">
-                                    <span style={{ fontSize: '1.2rem' }}>💡</span> 내용을 스스로 잘 이해했나요?
-                                </p>
-                                <div className="flex justify-between px-2">
-                                    {[1, 2, 3, 4, 5].map(v => (
-                                        <button key={v} onClick={() => setSurveyData({ ...surveyData, confidence: v })} 
-                                            className={`w-12 h-12 rounded-full font-black text-lg transition-all transform hover:scale-110 active:scale-95 ${surveyData.confidence === v ? 'bg-green-500 text-white shadow-[0_4px_15px_rgba(34,197,94,0.5)] scale-110 border-2 border-white' : 'bg-white text-gray-400 border-2 border-gray-100 hover:border-green-200 hover:text-green-400'}`}>
-                                            {v}
-                                        </button>
-                                    ))}
+                            {mission.ksa_tags?.S && (
+                                <div className="bg-green-50/50 p-4 rounded-2xl border border-green-100">
+                                    <p className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                                        <span style={{ fontSize: '1.2rem' }}>🛠️</span> {mission.ksa_tags.S}: AI 기능을 잘 활용했나요?
+                                    </p>
+                                    <div className="flex justify-between px-2">
+                                        {[1, 2, 3, 4, 5].map(v => (
+                                            <button key={v} onClick={() => setSurveyData({ ...surveyData, confidence: v })} 
+                                                className={`w-12 h-12 rounded-full font-black text-lg transition-all transform hover:scale-110 active:scale-95 ${surveyData.confidence === v ? 'bg-green-500 text-white shadow-[0_4px_15px_rgba(34,197,94,0.5)] scale-110 border-2 border-white' : 'bg-white text-gray-400 border-2 border-gray-100'}`}>
+                                                {v}
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
 
-                            <div className="bg-orange-50/50 p-4 rounded-2xl border border-orange-100">
-                                <p className="font-bold text-gray-800 mb-4 flex items-center gap-2">
-                                    <span style={{ fontSize: '1.2rem' }}>🚀</span> 실생활에 도움이 될 것 같나요?
-                                </p>
-                                <div className="flex justify-between px-2">
-                                    {[1, 2, 3, 4, 5].map(v => (
-                                        <button key={v} onClick={() => setSurveyData({ ...surveyData, trust: v })} 
-                                            className={`w-12 h-12 rounded-full font-black text-lg transition-all transform hover:scale-110 active:scale-95 ${surveyData.trust === v ? 'bg-orange-500 text-white shadow-[0_4px_15px_rgba(249,115,22,0.5)] scale-110 border-2 border-white' : 'bg-white text-gray-400 border-2 border-gray-100 hover:border-orange-200 hover:text-orange-400'}`}>
-                                            {v}
-                                        </button>
-                                    ))}
+                            {mission.ksa_tags?.A && (
+                                <div className="bg-orange-50/50 p-4 rounded-2xl border border-orange-100">
+                                    <p className="font-bold text-gray-800 mb-4 flex items-center gap-2">
+                                        <span style={{ fontSize: '1.2rem' }}>🌱</span> {mission.ksa_tags.A}: AI를 책임감 있게 사용했나요?
+                                    </p>
+                                    <div className="flex justify-between px-2">
+                                        {[1, 2, 3, 4, 5].map(v => (
+                                            <button key={v} onClick={() => setSurveyData({ ...surveyData, trust: v })} 
+                                                className={`w-12 h-12 rounded-full font-black text-lg transition-all transform hover:scale-110 active:scale-95 ${surveyData.trust === v ? 'bg-orange-500 text-white shadow-[0_4px_15px_rgba(249,115,22,0.5)] scale-110 border-2 border-white' : 'bg-white text-gray-400 border-2 border-gray-100'}`}>
+                                                {v}
+                                            </button>
+                                        ))}
+                                    </div>
                                 </div>
-                            </div>
+                            )}
                         </div>
 
                         <button onClick={handleFinalSubmit} 

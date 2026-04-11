@@ -787,35 +787,35 @@ function AppContent() {
           {/* ===== PC/태블릿 헤더 (768px 이상) ===== */}
           <header className="app-header header-desktop">
             <div className="header-top">
-              <h1 className="app-title">나의 AI 리터러시 능력 도감</h1>
-              <div className="user-profile" style={{ flexDirection: 'column', alignItems: 'flex-end', background: 'transparent', padding: 0 }}>
-                <div style={{ display: 'flex', gap: '8px' }}>
-                  <div style={{ background: 'rgba(255, 255, 255, 0.25)', padding: '6px 14px', borderRadius: '20px', fontSize: '0.9rem' }}>
-                    {userName}
-                  </div>
-                  <div style={{ background: '#74b9ff', color: 'white', padding: '6px 14px', borderRadius: '20px', fontWeight: '900', boxShadow: '0 4px 6px rgba(116, 185, 255, 0.3)', fontSize: '0.9rem' }}>
-                    <ChipIcon size={18} color="white" style={{ marginRight: '6px' }} /> {fragments}
-                  </div>
+              <h1 className="app-title">나의 AI 리터러시 도감</h1>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <div style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.15)', color: 'white', padding: '5px 12px', borderRadius: '12px', fontSize: '0.85rem', fontWeight: 700 }}>
+                  {userName}
                 </div>
-                <div style={{ background: '#ffa502', color: 'white', padding: '6px 14px', borderRadius: '20px', fontWeight: '900', boxShadow: '0 4px 6px rgba(255, 165, 2, 0.3)', fontSize: '0.9rem', marginTop: '8px' }}>
-                  {completedCount} / 16 뱃지
+                <div style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.15)', color: 'white', padding: '5px 12px', borderRadius: '12px', fontWeight: 900, fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <ChipIcon size={15} color="#93c5fd" /> {fragments}
+                </div>
+                <div style={{ background: '#22c55e', color: 'white', padding: '5px 12px', borderRadius: '12px', fontWeight: 900, fontSize: '0.85rem', boxShadow: '0 2px 8px rgba(34,197,94,0.3)' }}>
+                  {completedCount}/16
                 </div>
               </div>
             </div>
           </header>
 
           {/* ===== 모바일 헤더 (767px 이하) ===== */}
-          <header className="app-header header-mobile" style={{ padding: '8px 12px', borderBottomLeftRadius: '16px', borderBottomRightRadius: '16px' }}>
-            <h1 className="app-title" style={{ fontSize: '1.1rem', textAlign: 'center', marginBottom: '6px' }}>나의 AI 리터러시 능력 도감</h1>
-            <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
-              <div style={{ background: 'rgba(255,255,255,0.25)', padding: '3px 10px', borderRadius: '15px', fontSize: '0.75rem', fontWeight: 'bold' }}>
-                {userName}
-              </div>
-              <div style={{ background: '#74b9ff', color: 'white', padding: '3px 10px', borderRadius: '15px', fontWeight: '900', fontSize: '0.75rem' }}>
-                <ChipIcon size={14} color="white" style={{ marginRight: '4px' }} />{fragments}
-              </div>
-              <div style={{ background: '#ffa502', color: 'white', padding: '3px 10px', borderRadius: '15px', fontWeight: '900', fontSize: '0.75rem' }}>
-                {completedCount}/16 뱃지
+          <header className="app-header header-mobile" style={{ padding: '10px 16px' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h1 className="app-title" style={{ fontSize: '1rem' }}>AI 리터러시 도감</h1>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                <div style={{ background: 'rgba(255,255,255,0.12)', color: 'white', padding: '3px 10px', borderRadius: '10px', fontSize: '0.78rem', fontWeight: 700 }}>
+                  {userName}
+                </div>
+                <div style={{ background: 'rgba(255,255,255,0.12)', color: 'white', padding: '3px 10px', borderRadius: '10px', fontWeight: 900, fontSize: '0.78rem', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                  <ChipIcon size={12} color="#93c5fd" />{fragments}
+                </div>
+                <div style={{ background: '#22c55e', color: 'white', padding: '3px 10px', borderRadius: '10px', fontWeight: 900, fontSize: '0.78rem' }}>
+                  {completedCount}/16
+                </div>
               </div>
             </div>
           </header>

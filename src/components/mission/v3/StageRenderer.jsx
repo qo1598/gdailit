@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CheckCircle2, ClipboardList } from 'lucide-react';
+import { CheckCircle2, ClipboardList, Lightbulb, X } from 'lucide-react';
 import TaskStepRenderer from './TaskStepRenderer';
+import DictionaryText from '../../DictionaryText';
+import DictionaryModal from '../../DictionaryModal';
 import {
   StartDetectiveIcon,
   IntroThinkingIcon,
@@ -29,6 +31,14 @@ const StageRenderer = ({
   const navigate = useNavigate();
   const currentStep = gradeSpec.steps?.[stepIndex];
   const domainColor = `var(--v3-color-${mission.meta.domain.toLowerCase()})`;
+
+  const [vocabModal, setVocabModal] = useState({ open: false, word: '', definition: '' });
+  const [hintOpen, setHintOpen] = useState(false);
+
+  useEffect(() => { setHintOpen(false); }, [stepIndex]);
+
+  const openVocab = (word, definition) => setVocabModal({ open: true, word, definition });
+  const closeVocab = () => setVocabModal({ open: false, word: '', definition: '' });
 
   // ─── START ────────────────────────────────────────────────────
   if (stage === 'start') {
@@ -130,7 +140,7 @@ const StageRenderer = ({
                 wordBreak: 'keep-all'
               }}
             >
-              {line}
+              <DictionaryText text={line} onWordClick={openVocab} />
             </p>
           ))}
         </div>
@@ -150,6 +160,12 @@ const StageRenderer = ({
             />
           ))}
         </div>
+        <DictionaryModal
+          isOpen={vocabModal.open}
+          word={vocabModal.word}
+          definition={vocabModal.definition}
+          onClose={closeVocab}
+        />
       </div>
     );
   }
@@ -165,15 +181,7 @@ const StageRenderer = ({
           </h2>
         </div>
         {gradeSpec.coreUnderstanding.map((item, idx) => (
-          <div
-            key={item.id}
-            className="v3-card animate-slide-up"
-            style={{
-              animationDelay: `${idx * 120}ms`,
-              padding: `clamp(16px, 4vw, 20px)`,
-              marginBottom: 0
-            }}
-          >
+          <div key={item.id} className="v3-card animate-slide-up" style={{ animationDelay: `${idx * 120}ms`, padding: 'clamp(16px, 4vw, 20px)', marginBottom: 0 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
               <div style={{
                 width: 'clamp(22px, 5vw, 26px)',
@@ -208,7 +216,7 @@ const StageRenderer = ({
               lineHeight: 1.45,
               wordBreak: 'keep-all'
             }}>
-              {item.question}
+              <DictionaryText text={item.question} onWordClick={openVocab} />
             </div>
             <div style={{
               padding: 'clamp(8px, 2vw, 10px) clamp(10px, 3vw, 14px)',
@@ -219,24 +227,114 @@ const StageRenderer = ({
               lineHeight: 1.55,
               wordBreak: 'keep-all'
             }}>
-              {item.answer}
+              <DictionaryText text={item.answer} onWordClick={openVocab} />
             </div>
           </div>
         ))}
+        <DictionaryModal
+          isOpen={vocabModal.open}
+          word={vocabModal.word}
+          definition={vocabModal.definition}
+          onClose={closeVocab}
+        />
       </div>
     );
   }
 
   // ─── TASK ──────────────────────────────────────────────────────
   if (stage === 'task') {
+    const hint = currentStep?.hint;
     return (
-      <TaskStepRenderer
-        step={currentStep}
-        gradeSpec={gradeSpec}
-        answers={answers}
-        setAnswers={setAnswers}
-        domainColor={domainColor}
-      />
+      <>
+        <TaskStepRenderer
+          step={currentStep}
+          gradeSpec={gradeSpec}
+          answers={answers}
+          setAnswers={setAnswers}
+          domainColor={domainColor}
+          hint={hint}
+          onHintClick={() => setHintOpen(true)}
+        />
+
+        {/* Hint Modal */}
+        {hint && hintOpen && (
+          <div
+            onClick={() => setHintOpen(false)}
+            style={{
+              position: 'fixed', inset: 0,
+              backgroundColor: 'rgba(0,0,0,0.5)',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              zIndex: 1100, padding: '20px',
+              backdropFilter: 'blur(4px)',
+              animation: 'fadeIn 0.2s ease-out'
+            }}
+          >
+            <div
+              onClick={e => e.stopPropagation()}
+              style={{
+                background: 'white',
+                width: '100%', maxWidth: '360px',
+                borderRadius: '28px',
+                padding: '28px 24px',
+                boxShadow: '0 20px 40px rgba(0,0,0,0.2)',
+                border: '3px solid #fde047',
+                textAlign: 'center',
+                animation: 'popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275)'
+              }}
+            >
+              <div style={{
+                width: '56px', height: '56px', borderRadius: '50%',
+                backgroundColor: '#fef9c3',
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                margin: '0 auto 14px'
+              }}>
+                <Lightbulb size={28} color="#ca8a04" strokeWidth={2} />
+              </div>
+              <h3 style={{ fontSize: '1.1rem', fontWeight: 900, color: '#1e293b', margin: '0 0 14px' }}>
+                힌트
+              </h3>
+              <div style={{
+                background: '#fefce8',
+                padding: '16px',
+                borderRadius: '16px',
+                fontSize: 'clamp(0.9rem, 2.5vw, 1rem)',
+                color: '#713f12',
+                lineHeight: 1.65,
+                textAlign: 'left',
+                wordBreak: 'keep-all',
+                marginBottom: '18px'
+              }}>
+                <DictionaryText text={hint} onWordClick={(w, d) => { setHintOpen(false); openVocab(w, d); }} />
+              </div>
+              <button
+                onClick={() => setHintOpen(false)}
+                style={{
+                  background: '#fde047',
+                  color: '#713f12',
+                  border: 'none',
+                  padding: '12px 28px',
+                  borderRadius: '16px',
+                  fontSize: '1rem',
+                  fontWeight: 900,
+                  cursor: 'pointer',
+                  fontFamily: 'inherit',
+                  boxShadow: '0 4px 0 #ca8a04'
+                }}
+              >
+                확인했어요!
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Vocab Modal */}
+        <DictionaryModal
+          isOpen={vocabModal.open}
+          word={vocabModal.word}
+          definition={vocabModal.definition}
+          onClose={closeVocab}
+        />
+      </>
     );
   }
 
@@ -261,7 +359,68 @@ const StageRenderer = ({
         return found ? found.label : '—';
       }
       if (step.uiMode === 'photo_or_card_select') {
-        return ans.type === 'photo' ? '📷 사진으로 찾음' : '—';
+        return ans.type === 'photo' ? '사진으로 찾음' : '—';
+      }
+      if (step.uiMode === 'image_view') {
+        return '그림 관찰 완료';
+      }
+      if (step.uiMode === 'defect_select') {
+        if (!ans || ans.length === 0) return '—';
+        const types = (step.defectTypes || []).filter(d => ans.includes(d.id));
+        return types.map(d => d.label).join(', ') || `${ans.length}개 선택`;
+      }
+      if (step.uiMode === 'image_compare_ab') {
+        if (!ans?.image) return '—';
+        const imgLabel = ans.image === 'A' ? step.imageA?.label : step.imageB?.label;
+        const reasons = (step.reasonOptions || []).filter(r => (ans.reasons || []).includes(r.id));
+        const reasonText = reasons.map(r => r.label).join(', ');
+        return reasonText ? `${imgLabel} · ${reasonText}` : imgLabel || '—';
+      }
+      if (step.uiMode === 'task_and_prompt') {
+        if (!ans?.task_type) return '—';
+        const taskMap = { poster: '환경 보호 포스터', event_notice: '학교 행사 안내문', book_intro: '책 소개 글' };
+        return `${taskMap[ans.task_type] || ans.task_type} · "${ans.prompt_initial || ''}"`;
+      }
+      if (step.uiMode === 'prompt_with_conditions') {
+        if (!ans?.prompt_detailed) return '—';
+        const preview = ans.prompt_detailed.length > 30 ? ans.prompt_detailed.slice(0, 30) + '…' : ans.prompt_detailed;
+        return `"${preview}"`;
+      }
+      if (step.uiMode === 'text_compare_ab') {
+        if (!ans?.choice) return '—';
+        const choiceLabel = ans.choice === 'A' ? step.labelA : step.labelB;
+        const reasons = (step.reasonOptions || []).filter(r => (ans.reasons || []).includes(r.id));
+        return reasons.length > 0 ? `${choiceLabel} · ${reasons.map(r => r.label).join(', ')}` : choiceLabel;
+      }
+      if (step.uiMode === 'prompt_builder') {
+        if (!ans?.full_text) return '—';
+        const preview = ans.full_text.length > 35 ? ans.full_text.slice(0, 35) + '…' : ans.full_text;
+        return `"${preview}"`;
+      }
+      if (step.uiMode === 'result_compare_final') {
+        if (!ans?.best) return '—';
+        const bestMap = { initial: '처음 결과', detailed: '두 번째 결과', revised: '내가 고친 결과' };
+        return bestMap[ans.best] || ans.best;
+      }
+      if (step.uiMode === 'ds_training_cards') {
+        return ans?.highlighted?.length ? ans.highlighted.join(', ') : '—';
+      }
+      if (step.uiMode === 'ds_rule_builder' || step.uiMode === 'ds_rule_revise') {
+        if (!ans?.conditions?.length) return '—';
+        return `${ans.conditions.join(' OR ')} → ${step.labelNames?.[ans.target_label] || ans.target_label}`;
+      }
+      if (step.uiMode === 'ds_classify') {
+        const total = (step.newCards || []).length;
+        const done = (step.newCards || []).filter(c => ans?.[c.id]).length;
+        return `${done}/${total}개 분류`;
+      }
+      if (step.uiMode === 'ds_result_check') {
+        if (ans?.correct_count === undefined) return '—';
+        return `${ans.correct_count}/${(step.newCards || []).length}개 정답`;
+      }
+      if (step.uiMode === 'ds_rule_save') {
+        if (!ans?.best_rule) return '—';
+        return `규칙 ${ans.best_rule.toUpperCase()} 저장`;
       }
       return '—';
     };

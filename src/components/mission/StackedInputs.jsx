@@ -18,13 +18,16 @@ const StackedInputs = ({
     isGeneratingC3Image,
     onRequestAomoriHelp,
     onWordClick,
-    onImageGenerated
+    onImageGenerated,
+    onFocus, // 추가
+    onChange // 추가 (onAnswerChange 대신 사용 권장)
 }) => {
     if (!stackedInputs || stackedInputs.length === 0) {
         return null;
     }
 
     const handleChecklistChange = (inputId, item, isChecked) => {
+        onFocus(inputId); // 텔레메트리: 포커스 감지
         const currentAnswers = stackedAnswers[inputId] || [];
         let newAnswers;
         
@@ -34,13 +37,13 @@ const StackedInputs = ({
             newAnswers = currentAnswers.filter(answer => answer !== item);
         }
         
-        onAnswerChange(inputId, newAnswers);
+        onChange(inputId, newAnswers);
     };
 
     const handleMultiTextChange = (inputId, fieldId, value) => {
         const currentAnswers = stackedAnswers[inputId] || {};
         const newAnswers = { ...currentAnswers, [fieldId]: value };
-        onAnswerChange(inputId, newAnswers);
+        onChange(inputId, newAnswers);
     };
 
     const renderInput = (inputDef) => {
@@ -53,7 +56,8 @@ const StackedInputs = ({
                     <input
                         type="text"
                         value={currentValue}
-                        onChange={(e) => onAnswerChange(inputId, e.target.value)}
+                        onFocus={() => onFocus(inputId)}
+                        onChange={(e) => onChange(inputId, e.target.value)}
                         style={{
                             width: '100%',
                             padding: 'clamp(14px, 3.5vw, 16px)',
@@ -76,7 +80,8 @@ const StackedInputs = ({
                         <textarea
                             rows={4}
                             value={currentValue}
-                            onChange={(e) => onAnswerChange(inputId, e.target.value)}
+                            onFocus={() => onFocus(inputId)}
+                            onChange={(e) => onChange(inputId, e.target.value)}
                             style={{
                                 width: '100%',
                                 padding: 'clamp(14px, 3.5vw, 16px)',
@@ -232,7 +237,10 @@ const StackedInputs = ({
                 return (
                     <D1LowerBasketDnD
                         value={currentValue}
-                        onAnswerChange={(v) => onAnswerChange(inputId, v)}
+                        onAnswerChange={(v) => {
+                            onFocus(inputId);
+                            onChange(inputId, v);
+                        }}
                     />
                 );
 
@@ -240,7 +248,10 @@ const StackedInputs = ({
                 return (
                     <D1MiddleGroupsDnD
                         value={currentValue}
-                        onAnswerChange={(v) => onAnswerChange(inputId, v)}
+                        onAnswerChange={(v) => {
+                            onFocus(inputId);
+                            onChange(inputId, v);
+                        }}
                         dndVariant={inputDef.dndVariant}
                         dndLabels={inputDef.dndLabels}
                     />
@@ -250,7 +261,10 @@ const StackedInputs = ({
                 return (
                     <D1MiddleGroupsDnD
                         value={currentValue}
-                        onAnswerChange={(v) => onAnswerChange(inputId, v)}
+                        onAnswerChange={(v) => {
+                            onFocus(inputId);
+                            onChange(inputId, v);
+                        }}
                         dndVariant="upper"
                         dndLabels={inputDef.dndLabels}
                     />
@@ -276,6 +290,7 @@ const StackedInputs = ({
                                 <input
                                     type="text"
                                     value={(stackedAnswers[inputId] || {})[field.id] || ''}
+                                    onFocus={() => onFocus(inputId)}
                                     onChange={(e) => handleMultiTextChange(inputId, field.id, e.target.value)}
                                     placeholder={field.placeholder}
                                     style={{

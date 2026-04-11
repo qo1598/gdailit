@@ -1,65 +1,64 @@
-export const E3_MISSION = {
+﻿export const E3_MISSION = {
     title: '알고리즘의 꼬리 잡기',
-    competency: 'AI 인식 및 발견',
-    why: {
-        lower: 'AI가 내 마음을 어떻게 알까?',
-        middle: '데이터가 알고리즘을 통해 추천으로 이어지는 원리를 배워요.',
-        upper: '확증 편향(필터 버블)이 우리에게 미치는 영향을 고민합니다.'
-    },
-    example: {
-        lower: '내가 어제 본 공룡 영상이 또 나오는 이유',
-        middle: '쇼핑몰의 "당신을 위한 추천 상품" 목록',
-        upper: '확증 편향을 유도하는 뉴스 알고리즘의 사례'
+    competency: '알고리즘 편식 및 편향 성찰',
+    ksa_tags: { K: "K1.1", S: "Self and Social Awareness", A: "Curious" },
+    type: {
+        lower: 'stacked-inputs',
+        middle: 'performance-matching',
+        upper: 'stacked-inputs'
     },
     storySteps: {
         lower: [
-            { text: '안녕하세요! 저는 탐험가 알리예요. 오늘은 AI 친구가 어떻게 내 마음을 읽는지 알아볼 거예요!', image: '/robot_2d_base.png' },
-            { text: '혹시 "앗! 내가 보고 싶던 영상이 또 나왔네?" 하고 놀란 적 있나요?', image: '/robot_2d_base.png' },
-            { text: '유튜브나 게임 앱들에는 아주 똑똑한 "알고리즘" 친구가 숨어있거든요.', image: '/robot_2d_base.png' },
-            { text: '우리가 이전에 봤던 영상이나 눌렀던 "좋아요"를 보고 우리 취향을 공부하는 거랍니다.', image: '/robot_2d_base.png' },
-            { text: '최근에 내 취향에 딱 맞춰 추천해 주어서 신기했던 물건이나 영상이 있었는지 제게 알려주세요!', image: '/robot_2d_base.png' }
+            { text: '유튜브나 게임을 할 때, 내가 좋아할 만한 걸 AI가 쏙쏙 골라준 적이 있나요?' },
+            { text: '내가 본 것을 기억하고 추천해 주는 것을 "알고리즘"이라고 불러요.' },
+            { text: '나에게 추천된 것들 중 가장 신기했던 경험을 기록해 봅시다!' }
         ],
         middle: [
-            { text: '반가워요! 저는 알고리즘 추적기 알리예요. 오늘은 AI 추천 시스템의 비밀을 파헤쳐 볼게요.', image: '/robot_2d_base.png' },
-            { text: '우리가 인터넷에 남긴 모든 흔적은 AI가 학습하는 소중한 "데이터"가 된답니다.', image: '/robot_2d_base.png' },
-            { text: '검색어, 시청 시간, 좋아요, 클릭까지! AI는 이걸 분석해서 우리가 좋아할 만한 걸 계속 보여주지요.', image: '/robot_2d_base.png' },
-            { text: '마치 우리 뒤를 몰래 따라다니며 취향을 메모하는 탐정 같은 녀석이에요.', image: '/robot_2d_base.png' },
-            { text: '최근에 나에게 추천된 콘텐츠를 찾고, AI가 어떤 흔적을 보고 그걸 추천했는지 추리해 볼까요?', image: '/robot_2d_base.png' }
+            { text: '알고리즘은 우리가 클릭한 "데이터"의 꼬리를 잡고 따라다녀요.' },
+            { text: '어떤 과거의 기록 때문에 지금 이 콘텐츠가 추천되었는지 연결해 볼까요?' },
+            { text: '추천의 원리를 알면 알고리즘에 휘둘리지 않는 똑똑한 사용자가 될 수 있어요.' }
         ],
         upper: [
-            { text: '환영해요! 저는 데이터 분석가 알리예요. 오늘은 추천 알고리즘의 화려함 속에 숨겨진 그림자에 대해 이야기해 볼게요.', image: '/robot_2d_base.png' },
-            { text: '알고리즘은 우리에게 편리함을 주지만, 동시에 우리가 보고 싶은 것만 보게 만드는 "필터 버블"을 만들기도 한답니다.', image: '/robot_2d_base.png' },
-            { text: '계속해서 비슷한 주장과 영상만 보다 보면 우리의 생각은 점점 좁아질 수밖에 없어요.', image: '/robot_2d_base.png' },
-            { text: '이걸 "확증 편향"이라고 해요. 다양한 의견을 들을 기회를 알고리즘이 빼앗아 가는 셈이지요.', image: '/robot_2d_base.png' },
-            { text: '여러분에게 쏟아지는 알고리즘 추천을 분석하고, 이런 현상이 가져올 부작용에 대한 여러분의 의견을 들려주세요.', image: '/robot_2d_base.png' }
+            { text: '알고리즘 추천은 편리하지만 "필터 버블"이라는 위험한 우리에 갇히게 할 수도 있습니다.' },
+            { text: '나와 비슷한 의견만 듣게 되면 사회의 다양한 목소리를 듣지 못하게 될 수 있어요.' },
+            { text: '이런 현상이 우리 공동체에 어떤 영향을 줄지 비판적으로 분석해 봅시다.' }
         ]
     },
-    prompts: {
-        lower: ["시윤이는 인형을 한 번 검색했을 뿐인데 알고리즘이 그 흔적을 보고 인형 영상을 잔뜩 추천해 줬대. 여러분도 시윤이처럼 나에게 딱 맞춰 추천해 신기했던 영상이나 장난감이 있었나요? 어떤 것이었는지 알리에게 알려주세요."],
-        middle: ["지우는 케이크 영상을 딱 한 번 봤을 뿐인데 AI는 지우가 요리를 좋아한다고 생각하게 되었어요! 여러분도 AI가 내 마음을 읽은 것처럼 신기하게 추천해 준 콘텐츠가 있었나요? AI가 여러분의 어떤 흔적을 보고 그 콘텐츠를 골랐을지 추리해 보세요."],
-        upper: ["내가 좋아하는 영상만 보다 보면, 나도 모르게 내가 보고 싶은 정보 속에만 갇혀버리는 '확증 편향'에 빠질 수 있어요. 여러분의 알고리즘 추천 경험을 분석해 보고, 이런 현상이 우리 사회의 소통에 어떤 위험을 줄 수 있을지 비판적으로 서술해 보세요."]
+    education: {
+        lower: {
+            why: '나에게 추천되는 정보들이 어떻게 나타나는지 관심을 가지기 위해서예요.',
+            example: '고양이 영상을 많이 보면, AI는 나를 "고양이 매니아"로 기억해요.'
+        },
+        middle: {
+            why: '추천 알고리즘의 통계적 추론 과정을 이해하고 데이터의 흐름을 파악합니다.',
+            example: '축구화 검색 기록(데이터) -> 축구 경기 영상 추천(알고리즘)'
+        },
+        upper: {
+            why: '알고리즘이 개인의 가치관 형성과 사회적 소통에 미치는 영향을 성찰합니다.',
+            example: '편향된 뉴스만 추천받으면 다른 사람의 생각을 이해하기 어려워져요.'
+        }
     },
-    scenarioDescriptions: {
-        lower: '시윤이는 어제 인형을 한 번 검색했을 뿐인데 오늘 유튜브를 보니 온통 인형 이야기뿐이에요. 알고리즘이 시윤이의 마음을 벌써 읽은 걸까요?',
-        middle: '평소 요리에 전혀 관심 없던 지우가 케이크 만드는 영상을 딱 한 번 끝까지 봤더니 다음 날 추천 목록이 온통 요리로 바뀌었어요!',
-        upper: "민지가 특정 주제에 대해 비판적인 영상만 몇 번 시청했더니, 이제는 다양한 관점의 영상은 사라지고 오직 비판적인 내용만 추천하는 '확증 편향'에 갇히게 되었어요."
-    },
-    scenarioImages: {
-        lower: '/missions/e3/lower.png',
-        middle: '/missions/e3/middle.png',
-        upper: '/missions/e3/upper.png'
-    },
-    type: 'direct-text',
     stackedInputs: {
-        lower: [{ id: 'item', type: 'text', label: '1. 나에게 딱 맞게 추천해 주어서 깜짝 놀랐던 영상이나 물건은 무엇인가요?', placeholder: '최근에 본 영상이나 갖고 싶던 물건을 적어보아요.' }],
+        lower: [
+            { id: 'item', type: 'text', label: '나에게 추천된 콘텐츠', placeholder: '무엇을 추천받았나요?' }
+        ],
         middle: [
-            { id: 'item', type: 'text', label: '1. 나를 깜짝 놀라게 한 추천 콘텐츠는 무엇인가요?', placeholder: '유튜브나 쇼핑몰에서 신기하게 발견한 것을 적어보세요.' },
-            { id: 'why_recommend', type: 'textarea', label: '2. AI 탐정의 추리: 나의 어떤 흔적(데이터)이 추천을 만들었을까요?', placeholder: '내가 검색했거나, 좋아요를 눌렀거나, 오래 시청했던 행동을 찾아보세요.' }
+            { 
+                id: 'matching_algo', 
+                type: 'performance-matching', 
+                label: '데이터와 추천 연결하기',
+                pairs: [
+                    { id: 'p1', question: '강아지 간식 검색', answer: '애완동물 용품 광고' },
+                    { id: 'p2', question: '신나는 댄스 노래 청취', artist: '비슷한 분위기의 가수 추천' },
+                    { id: 'p3', question: '종이접기 방법 시청', answer: '미술 도구 만들기 영상' }
+                ],
+                sources: ['애완동물 용품 광고', '비슷한 분위기의 가수 추천', '미술 도구 만들기 영상']
+            }
         ],
         upper: [
-            { id: 'item', type: 'text', label: '1. 나에게 자주 화면에 뜨는 알고리즘 추천 콘텐츠는 무엇인가요?', placeholder: '나의 관심사가 그대로 반영된 영상 장르나 주제를 적어보세요.' },
-            { id: 'why_recommend', type: 'textarea', label: '2. 데이터 추적: AI가 나를 분석하기 위해 어떤 정보를 수집했을까요?', placeholder: '조회수, 체류 시간, 좋아요 등 AI가 나를 분석하기 위해 사용했을 정보들을 추측해 보세요.' },
-            { id: 'side_effect', type: 'textarea', label: "3. 생각의 함정: '확증 편향'이 우리 사회의 소통에 어떤 위험을 초래할 수 있을까요?", placeholder: '나와 다른 의견을 듣기 어려워지는 문제가 우리 사회의 소통에 어떤 영향을 줄지 서술해 보세요.' }
+            { id: 'item', type: 'text', label: '분석할 추천 콘텐츠', placeholder: '최근 자주 뜨는 영상이나 광고' },
+            { id: 'why_recommend', type: 'text', label: '추천된 원인 추적', placeholder: '나의 어떤 활동 때문일까요?' },
+            { id: 'side_effect', type: 'textarea', label: '필터 버블의 위험성', placeholder: '이 콘텐츠만 계속 보게 된다면 무엇을 놓치게 될까요?' }
         ]
     }
 };

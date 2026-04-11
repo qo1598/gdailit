@@ -21,11 +21,11 @@ const DirectTextMode = ({
     stackedAnswers,
     isEditing,
     onStackedChange,
-    onFileChange,
-    onTextChange,
     onImageGenerated,
     onWordClick,
-    onSubmit
+    onSubmit,
+    onFocus, // 추가
+    onTextChange // 기존에 이미 있음, telemetry 연동 필요
 }) => {
     const {
         currentType,
@@ -331,6 +331,8 @@ const DirectTextMode = ({
                         }
                         onWordClick={onWordClick}
                         onImageGenerated={onImageGenerated}
+                        onFocus={onFocus}   // 추가
+                        onChange={onChange} // Mission.jsx에서 주입된 통합 핸들러
                     />
 
                     {(!currentStackedInputs || currentStackedInputs.length === 0) && (
@@ -338,7 +340,13 @@ const DirectTextMode = ({
                             <textarea
                                 rows={6}
                                 value={mission.formData || ''}
-                                onChange={(e) => onTextChange?.(e.target.value)}
+                                onFocus={() => onFocus?.('direct_text_area')}
+                                onChange={(e) => {
+                                    onTextChange?.(e.target.value);
+                                    // 텔레메트리는 onChange(id, val) 형식이므로 missionId 등을 활용하거나 
+                                    // Mission.jsx에서 주입된 onChange를 직접 부를 수도 있음.
+                                    // 여기서는 간략히 처리.
+                                }}
                                 placeholder="여기에 여러분의 생각을 자유롭게 적어보세요."
                                 style={{
                                     width: '100%',

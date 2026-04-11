@@ -1,5 +1,5 @@
 import React from 'react';
-import { ArrowLeft, ChevronLeft, ChevronRight, Check } from 'lucide-react';
+import { Home, ChevronLeft, ChevronRight, Check, Loader2 } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 
 const DOMAIN_COLORS = {
@@ -9,52 +9,71 @@ const DOMAIN_COLORS = {
   Designing: 'var(--v3-color-designing)'
 };
 
-const MissionShell = ({ 
-  meta, 
-  gradeSpec, 
-  stage, 
-  stepIndex, 
-  totalSteps, 
-  onPrev, 
-  onNext, 
-  onStart, 
-  children 
+const GRADE_LABELS = { L: '1-2학년', M: '3-4학년', H: '5-6학년' };
+
+const MissionShell = ({
+  meta,
+  gradeSpec,
+  stage,
+  stepIndex,
+  totalSteps,
+  slideIndex,
+  totalSlides,
+  onPrev,
+  onNext,
+  onStart,
+  uiState,
+  children
 }) => {
   const navigate = useNavigate();
-  const domainColor = DOMAIN_COLORS[meta.domain] || 'var(--pokedex-red)';
-  
+  const domainColor = DOMAIN_COLORS[meta.domain] || '#3498db';
+  const gradeSuffix = gradeSpec.cardCode.split('-').pop();
+  const gradeLabel = GRADE_LABELS[gradeSuffix] || '';
+
   const isStart = stage === 'start';
   const isComplete = stage === 'complete';
-  const isLastStep = stage === 'submit';
+  const isSubmit = stage === 'submit';
 
-  const gradeLabel = gradeSpec.cardCode.split('-').pop() === 'L' ? '1-2학년' : 
-                     gradeSpec.cardCode.split('-').pop() === 'M' ? '3-4학년' : '5-6학년';
+  // Progress label and percentage
+  const getProgress = () => {
+    if (stage === 'intro') {
+      return {
+        label: `미션 도입 ${slideIndex + 1}/${totalSlides}`,
+        pct: Math.round(((slideIndex + 1) / totalSlides) * 20)
+      };
+    }
+    if (stage === 'core') return { label: '핵심 이해', pct: 30 };
+    if (stage === 'task') {
+      return {
+        label: `수행 과제 ${stepIndex + 1}/${totalSteps}`,
+        pct: Math.round(30 + ((stepIndex + 1) / totalSteps) * 60)
+      };
+    }
+    if (stage === 'submit') return { label: '최종 제출', pct: 95 };
+    return { label: '', pct: 0 };
+  };
+
+  const { label: progressLabel, pct: progressPct } = getProgress();
+
+  const handleHomeClick = () => navigate('/');
 
   return (
     <div className="v3-mission-layout">
       {/* TopBar */}
       {!isComplete && (
-        <div 
-          className="v3-top-bar"
-          style={{ backgroundColor: domainColor }}
-        >
-          <button 
-            onClick={() => stage === 'start' ? navigate('/') : onPrev()}
-            className="v3-back-btn"
-          >
-            <ArrowLeft size={20} />
+        <div className="v3-top-bar" style={{ backgroundColor: domainColor }}>
+          <button onClick={handleHomeClick} className="v3-back-btn">
+            <Home size={20} />
           </button>
-          <div style={{ flex: 1 }}>
-            <div style={{ fontSize: '10px', opacity: 0.8, fontWeight: 'bold', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
+            <div style={{ fontSize: '10px', opacity: 0.85, fontWeight: 800, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
               {meta.domain} | {gradeSpec.cardCode}
             </div>
-            <div style={{ fontWeight: 'bold', fontSize: '1.125rem', lineHeight: 1.2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+            <div style={{ fontWeight: 800, fontSize: '1rem', lineHeight: 1.2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
               {meta.title}
             </div>
           </div>
-          <div className="v3-grade-badge">
-            {gradeLabel}
-          </div>
+          <div className="v3-grade-badge">{gradeLabel}</div>
         </div>
       )}
 
@@ -62,27 +81,13 @@ const MissionShell = ({
       {!isStart && !isComplete && (
         <div className="v3-progress-container">
           <div className="v3-progress-info">
-            <span className="v3-progress-label">
-              {stage === 'intro' ? '미션 도입' : 
-               stage === 'core' ? '핵심 이해' : 
-               stage === 'task' ? `수행 과제 (${stepIndex + 1}/${totalSteps})` : 
-               stage === 'submit' ? '최종 제출' : ''}
-            </span>
-            <span className="v3-progress-percent">
-               {stage === 'task' ? Math.round(((stepIndex + 1) / totalSteps) * 100) : 
-                stage === 'intro' ? 20 : stage === 'core' ? 40 : 90}%
-            </span>
+            <span className="v3-progress-label">{progressLabel}</span>
+            <span className="v3-progress-percent">{progressPct}%</span>
           </div>
           <div className="v3-progress-track">
-            <div 
+            <div
               className="v3-progress-bar"
-              style={{ 
-                backgroundColor: domainColor,
-                width: stage === 'intro' ? '20%' : 
-                       stage === 'core' ? '40%' : 
-                       stage === 'task' ? `${40 + ((stepIndex + 1) / totalSteps) * 50}%` : 
-                       stage === 'submit' ? '95%' : '0%'
-              }}
+              style={{ backgroundColor: domainColor, width: `${progressPct}%` }}
             />
           </div>
         </div>
@@ -93,23 +98,33 @@ const MissionShell = ({
         {children}
       </div>
 
+      {/* Validation Error */}
+      {uiState?.validationError && (
+        <div style={{ margin: '0 16px 8px', padding: '10px 16px', backgroundColor: '#fef2f2', border: '1px solid #fca5a5', borderRadius: '12px', color: '#dc2626', fontSize: '0.875rem', fontWeight: 700, textAlign: 'center' }}>
+          {uiState.validationError}
+        </div>
+      )}
+
       {/* BottomNav */}
       {!isStart && !isComplete && (
         <div className="v3-bottom-nav">
-          <button 
-            onClick={onPrev}
-            className="v3-btn-prev"
-          >
+          <button onClick={onPrev} className="v3-btn-prev">
             <ChevronLeft size={20} />
             이전
           </button>
-          <button 
+          <button
             onClick={onNext}
             className="v3-btn-next"
-            style={{ backgroundColor: domainColor }}
+            style={{ backgroundColor: domainColor, opacity: uiState?.loading ? 0.7 : 1 }}
+            disabled={uiState?.loading}
           >
-            {isLastStep ? '제출하기' : '다음'}
-            {isLastStep ? <Check size={20} /> : <ChevronRight size={20} />}
+            {uiState?.loading ? (
+              <Loader2 size={20} style={{ animation: 'spin 1s linear infinite' }} />
+            ) : isSubmit ? (
+              <>제출하기 <Check size={18} /></>
+            ) : (
+              <>다음 <ChevronRight size={20} /></>
+            )}
           </button>
         </div>
       )}

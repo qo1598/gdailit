@@ -13,7 +13,9 @@ const StackedInputsMode = ({
     onStackedChange, 
     onImageGenerated,
     onWordClick,
-    onSubmit 
+    onSubmit,
+    onFocus, // 추가
+    onChange  // 추가
 }) => {
     const {
         currentStackedInputs,
@@ -144,6 +146,8 @@ const StackedInputsMode = ({
                     onAnswerChange={onStackedChange}
                     onImageGenerated={onImageGenerated}
                     onWordClick={onWordClick}
+                    onFocus={onFocus}   // 추가
+                    onChange={onChange} // 추가
                 />
 
                 <div style={{ textAlign: 'center', marginTop: 'clamp(20px, 5vw, 30px)' }}>

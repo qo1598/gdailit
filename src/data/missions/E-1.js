@@ -1,55 +1,61 @@
-export const E1_MISSION = {
-    title: '숨은 AI를 찾아라!',
-    competency: 'AI 인식 및 발견',
-    why: {
-        lower: '우리 주변에 보물찾기처럼 똑똑한 기계를 찾아봐요!',
-        middle: '우리 생활을 편리하게 해주는 AI 기술의 원리를 이해해요.',
-        upper: '현대 사회의 핵심 기술인 AI의 사회적 역할을 탐구합니다.'
-    },
-    example: {
-        lower: '집 안의 로봇청소기, 엄마 폰의 똑똑한 비서',
-        middle: '유튜브의 영상 추천, 내가 좋아하는 것 같은 광고',
-        upper: '도심의 자율주행 버스, 공장의 스마트 제조 로봇'
+﻿export const E1_MISSION = {
+    title: '내 주변 숨은 AI 찾기 대작전!',
+    competency: 'AI 인식 및 한계점 파악',
+    ksa_tags: { K: "K1.4", S: "Self and Social Awareness", A: "Curious" },
+    type: {
+        lower: 'performance-sorting',
+        middle: 'stacked-inputs',
+        upper: 'stacked-inputs'
     },
     storySteps: {
         lower: [
-            { text: '안녕하세요! 저는 AI 로봇 알리예요. 만나서 정말 반가워요!', image: '/robot_2d_base.png' },
-            { text: '우리 집이나 학교에는 똑똑한 AI 친구들이 몰래 숨어있대요.', image: '/e1_mission_v3.png' },
-            { text: '로봇청소기처럼 스스로 움직이거나, 내 목소리를 알아듣는 친구들이 모두 AI랍니다!', image: '/robot_2d_base.png' },
-            { text: '우리 주변 어디에 숨어있는지 탐정처럼 눈을 크게 뜨고 찾아볼까요?', image: '/e1_mission_v3.png' },
-            { text: '찾았으면 찰칵! 사진을 찍어서 제게 보여주세요. 어떤 도움을 주는지도 궁금해요!', image: '/robot_2d_base.png' }
+            { text: '안녕! 우리 주변에는 우리를 도와주는 똑똑한 AI 친구들이 아주 많이 숨어 있어.' },
+            { text: '에어컨, 로봇 청소기, 그리고 엄마 핸드폰 속에도 AI가 살고 있을지 몰라!' },
+            { text: '오늘은 우리 주변에서 AI가 들어있는 물건과 아닌 물건을 직접 나누어 볼 거야. 준비됐니?' }
         ],
         middle: [
-            { text: '안녕하세요! 저는 알리예요. 우리 주변엔 몰래 숨어서 우리를 도와주는 AI 친구들이 아주 많아요.', image: '/robot_2d_base.png' },
-            { text: '유튜브 추천 영상이나 날씨를 알려주는 스피커도 모두 AI 기술로 만들어졌답니다.', image: '/e1_mission_v3.png' },
-            { text: 'AI는 우리가 무엇을 좋아하는지, 무엇이 필요한지 스스로 학습하고 판단해요.', image: '/robot_2d_base.png' },
-            { text: '이제 여러분이 탐정이 되어 우리 생활 곳곳에 숨어있는 AI를 조사해 볼까요?', image: '/e1_mission_v3.png' },
-            { text: '어떤 AI를 발견했는지, 그 친구가 어떤 착한 일을 하고 있는지 제게 상세히 알려주세요!', image: '/robot_2d_base.png' }
+            { text: '여러분, AI는 단순히 전기로 움직이는 기계와는 조금 달라요.' },
+            { text: '스스로 생각하고 결정하는 AI 시스템이 우리 일상 어디에 숨어 있는지 찾아볼 시간입니다.' },
+            { text: '주변에서 발견한 AI 기기의 이름과 그 친구가 어떤 일을 하는지 자세히 기록해 보세요.' }
         ],
         upper: [
-            { text: '안녕하세요! 저는 알리예요. 현대 사회의 일상 곳곳에는 수많은 AI 시스템이 이미 깊숙이 들어와 있어요.', image: '/robot_2d_base.png' },
-            { text: '스마트홈, 자율주행, 정교한 알고리즘 서비스 등이 우리 삶을 더 편리하게 만들고 있답니다.', image: '/e1_mission_v3.png' },
-            { text: '하지만 너무 익숙해서 우리는 그 속에 숨겨진 AI의 정체를 종종 놓치곤 해요.', image: '/robot_2d_base.png' },
-            { text: '이제 여러분이 AI 전문가가 되어 우리 일상 속 AI 기술을 찾아 사진을 찍고 분석해 볼까요?', image: '/e1_mission_v3.png' },
-            { text: '편리함뿐만 아니라 그 뒤에 숨겨진 작동 원리와 한계까지 찾아낸다면, 정말 훌륭한 전문가가 될 거예요!', image: '/robot_2d_base.png' }
+            { text: '프레임워크 p.27에 따르면, AI는 목적에 따라 생성, 예측, 추천 등 다양한 방식으로 작동합니다.' },
+            { text: '하지만 모든 AI가 완벽한 건 아니에요. 편리함 뒤에 숨겨진 한계점이나 위험한 점은 없을까요?' },
+            { text: '발견한 AI 시스템을 분석하고, 그 기기가 가진 명확한 한계점까지 함께 도출해 봅시다.' }
         ]
     },
-    prompts: {
-        lower: ['AI 친구를 찾아 사진을 찍고, 어디에 있는지 알려주세요!'],
-        middle: ['사진을 올리고, AI가 우리를 어떻게 도와주는지 설명해 주세요!'],
-        upper: ['AI 기술의 사진을 올리고, 제공하는 편리함과 한계점을 분석해 보세요!']
+    education: {
+        lower: {
+            why: '어떤 물건이 AI인지 알면 기술을 더 잘 이해할 수 있어요.',
+            example: '로봇 청소기는 스스로 길을 찾지만, 일반 빗자루는 사람이 움직여야 해요.'
+        },
+        middle: {
+            why: 'AI의 기능을 이해하면 디지털 세상에서 주도적으로 행동할 수 있습니다.',
+            example: '스마트 스피커는 음성 인식 알고리즘을 사용하여 우리의 명령을 수행해요.'
+        },
+        upper: {
+            why: 'AI 시스템의 작동 원리와 한계를 알면 비판적으로 기술을 활용할 수 있습니다.',
+            example: '자율주행 자동차는 편리하지만, 예기치 못한 날씨 상황에서는 판단 오류가 생길 수 있습니다.'
+        }
     },
-    type: 'upload-text',
     stackedInputs: {
-        lower: [{ id: 'location', type: 'text', label: '1. 어디서 발견했나요?', placeholder: '방금 내가 주변에서 발견한 위치나 기계의 특징을 적어보세요.' }],
+        lower: [
+            { 
+                id: 'performance_sort', 
+                type: 'performance-sorting', 
+                label: 'AI 바구니 분류하기',
+                list: ['로봇 청소기', '일반 빗자루', '스마트 스피커', '나무 의자', '자율주행 차', '종이 비행기'],
+                categories: ['AI예요!', 'AI가 아니에요!']
+            }
+        ],
         middle: [
-            { id: 'location', type: 'text', label: '1. 어디서 발견했나요?', placeholder: '집이나 학교 등 AI 친구를 만난 정확한 장소를 알려주세요.' },
-            { id: 'function', type: 'textarea', label: '2. 여러분이 찾은 AI는 우리에게 어떤 편리함을 제공하나요?', placeholder: '이 AI가 특별히 어떤 귀찮은 일을 알아서 해주는지 생각해 보세요.' }
+            { id: 'location', type: 'text', label: '발견한 장소', placeholder: '어디에서 찾았나요? (예: 거실, 편의점)' },
+            { id: 'function', type: 'text', label: 'AI가 하는 일', placeholder: '이 AI는 어떤 도움을 주나요?' }
         ],
         upper: [
-            { id: 'location', type: 'text', label: '1. 어디서 발견했나요?', placeholder: '집이나 학교 등 AI 친구를 만난 정확한 장소를 알려주세요.' },
-            { id: 'function', type: 'textarea', label: '2. 여러분이 찾은 AI는 우리에게 어떤 편리함을 제공하나요?', placeholder: '이 AI가 특별히 어떤 귀찮은 일을 알아서 해주는지 생각해 보세요.' },
-            { id: 'pros_cons', type: 'textarea', label: '3. 편리함 뒤에 숨겨진 아쉬운 점(한계)을 적어보세요.', placeholder: '이 기계가 모든 상황에서 완벽할까? 사람이 직접 해야만 하는 일이나 위험한 점은 없는지 분석해 보세요.' }
+            { id: 'location', type: 'text', label: '발견한 장소/시스템', placeholder: '예: 자율주행 버스, 유튜브 추천' },
+            { id: 'function', type: 'text', label: '작동 원리 및 기능', placeholder: '이 시스템은 어떤 데이터를 기반으로 작동하나요?' },
+            { id: 'pros_cons', type: 'textarea', label: '편리함 뒤의 한계점', placeholder: '이 AI가 실수하거나 위험할 수 있는 상황은 언제일까요?' }
         ]
     }
 };

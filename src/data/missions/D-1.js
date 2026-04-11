@@ -1,144 +1,69 @@
-export const D1_MISSION = {
+﻿export const D1_MISSION = {
     title: '끼리끼리 분류 놀이!',
-    competency: 'AI 원리 체험',
-    why: {
-        lower:
-            'AI는 물건을 "특징"을 보고 나누는 걸 잘해요. 우리도 눈으로 특징을 골라 보면 분류가 어떻게 돌아가는지 감이 와요!',
-        middle:
-            '같은 과일도 기준을 바꾸면 완전히 다른 모둠이 돼요. 내가 정한 기준은 AI가 데이터를 나눌 때와 똑같이 중요해요.',
-        upper:
-            '축제나 학교 행사를 기획할 때는 어떤 프로그램을 살릴지(통과), 잠시 미룰지(보류) 정해야 해요. 이때 쓰는 기준이 한 번 정해지면 그대로 반복되기 쉬운데, 그러면 어떤 활동이나 친구들의 취향은 계속 뒤로 밀릴 수 있어요. 그래서 “왜 이렇게 나눴는지”를 생각해 보는 일이 중요해요.'
-    },
-    example: {
-        lower: '빨간색만 모으기, 동그란 것만 모으기처럼 한 가지 특징에 집중해 볼까요?',
-        middle: '씨가 있는지, 부드러운지, 향이 강한지… 겉모습 말고 다른 감각으로 나눠 보기!',
-        upper:
-            '예를 들어 행사 담당자가 활동 10가지를 나눌 때 “움직이는 체험만 통과”, “조용한 부스는 전부 보류”처럼 아주 단순한 기준만 쓴다고 해 봐요. 그 기준이 매번 그대로면 축제 안내에는 어떤 친구나 활동이 계속 빠질 수 있을까요? 편견이나 불공평은 없을까요?'
+    competency: '머신러닝 분류 원리 및 데이터 특징 추출',
+    ksa_tags: { K: "K1.2", S: "Computational Thinking", A: "Curious" },
+    type: {
+        lower: 'performance-sorting',
+        middle: 'performance-matching',
+        upper: 'stacked-inputs'
     },
     storySteps: {
         lower: [
-            {
-                text: '안녕하세요! 저는 분류 도우미 선생님, 알리예요. 오늘은 과일을 색깔 바구니에 나눠 볼 거예요!',
-                image: '/robot_2d_base.png'
-            },
-            {
-                text: '책상 위에 과일이 잔뜩 섞여 있어요. "빨간색"만 골라 보면 어떤 친구들이 모일까요?',
-                image: '/robot_2d_base.png'
-            },
-            {
-                text: 'AI도 이렇게 "어떤 특징을 볼지" 정한 다음에 데이터를 나눈답니다.',
-                image: '/robot_2d_base.png'
-            },
-            {
-                text: '자, 과일을 끌어서 빨간 바구니에 담아 보아요. 바구니가 곧 여러분의 답이에요!',
-                image: '/robot_2d_base.png'
-            }
+            { text: '알록달록 과일들이 시장에 나왔어요! AI가 과일을 정리할 수 있게 도와주세요.' },
+            { text: '빨간 사과와 노란 바나나를 색깔별로 분류 바구니에 담아볼까요?' },
+            { text: '색깔은 컴퓨터가 사물을 알아보는 아주 중요한 첫 번째 힌트랍니다.' }
         ],
         middle: [
-            {
-                text: '반가워요! 저는 패턴 탐정 선생님, 알리예요. 평소에 과일 먹는 걸 좋아하나요? 세상에는 정말 다양한 과일이 있답니다.',
-                image: '/robot_2d_base.png'
-            },
-            {
-                text: '촉감, 냄새, 씨 유무… 아무도 안 쓰는 기준으로 나누면 과일들이 신기하게 뒤섞여요!',
-                image: '/robot_2d_base.png'
-            },
-            {
-                text: '과일을 A 그룹, B 그룹으로 나누고, 여러분만의 기준을 만들어 보세요.',
-                image: '/robot_2d_base.png'
-            },
-            {
-                text: '여러분만의 기준을 만들어 과일을 분류하는 것처럼, AI도 이렇게 학습 데이터에 라벨을 붙인답니다.',
-                image: '/robot_2d_base.png'
-            }
+            { text: '기계는 우리가 가르쳐준 "기준(Feature)"에 따라 데이터를 분류합니다.' },
+            { text: '만약 색깔이 아니라 "맛"이나 "껍질의 두께"로 나누면 결과가 어떻게 달라질까요?' },
+            { text: '나만의 독특한 분류 기준을 세우고, 관련 있는 데이터끼리 짝을 지어 정렬해 보세요.' }
         ],
         upper: [
-            {
-                text: '안녕하세요! 저는 규칙 디자이너 선생님, 알리예요. 우리 주변에는 다양한 축제와 행사가 있는 거 아시나요?',
-                image: '/robot_2d_base.png'
-            },
-            {
-                text: '축제나 행사를 기획할 때는 어떤 프로그램을 운영할지 설계하는 게 중요해요.',
-                image: '/robot_2d_base.png'
-            },
-            {
-                text: '오늘은 여러분이 행사 담당자가 되어, 10가지의 활동을 보고 통과시킬지 보류시킬지 나눠 보고, 그다음 어떤 기준으로 나누었는지 적어볼까요?',
-                image: '/robot_2d_base.png'
-            },
-            {
-                text: '그리고 만약 이 기준으로 행사를 운영하면 어떤 문제가 생길 수 있을지 한번 고민해서 적어보아요.',
-                image: '/robot_2d_base.png'
-            }
+            { text: '프레임워크 K1.2에 따르면, AI는 패턴을 감지하고 예측 결과를 도출합니다.' },
+            { text: '하지만 분류 기준이 공정하지 않다면 누군가는 소외되거나 상처받을 수 있습니다.' },
+            { text: '축제 입장객을 분류하는 시스템의 문제점과 이를 해결할 혁신적인 제안을 담아 인사이트를 기록하세요.' }
         ]
     },
-    scenarioDescriptions: {
-        lower: '',
-        middle: '',
-        upper: ''
-    },
-    scenarioImages: {
-        lower: null,
-        middle: null,
-        upper: null
-    },
-    type: 'direct-text',
-    prompts: {
-        lower: [
-            '빨간색 계열 과일만 빨간 바구니에 담아 봅시다. 손가락으로 과일을 길게 눌러, 빨간 바구니로 끌어다 놓아 보세요.'
-        ],
-        middle: [
-            '과일 데이터를 나만의 기준으로 A 그룹과, B그룹에 나눠 보세요. 손가락으로 과일을 길게 눌러 끌어다 놓으면 돼요. 10개 모두 A 또는 B에 넣은 뒤, 아래에 어떤 기준으로 나누었는지 적어 주세요.'
-        ],
-        upper: []
+    education: {
+        lower: {
+            why: '컴퓨터가 사물의 특징을보고 분류하는 기초 원리를 알기 위해서예요.',
+            example: '빨간색 바구니에는 사과와 딸기를, 노란색 바구니에는 바나나와 참외를 넣어요.'
+        },
+        middle: {
+            why: '머신러닝의 "특징 추출" 과정을 경험하고 데이터 정렬의 논리적 사고를 기릅니다.',
+            example: '"먹을 수 있는 껍질" 기준: 사과, 포도 vs "버리는 껍질" 기준: 바나나, 귤'
+        },
+        upper: {
+            why: '데이터 분류가 사회적 의사결정에 미치는 영향과 편향성 문제를 비판적으로 성찰합니다.',
+            example: '안경 쓴 사람만 할인해 주는 AI는 그렇지 않은 사람에게 불평등을 줄 수 있어요.'
+        }
     },
     stackedInputs: {
         lower: [
-            {
-                id: 'color_sort',
-                type: 'd1-lower-basket-dnd',
-                omitLabel: true,
-                label: '',
-                placeholder: ''
+            { 
+                id: 'fruit_basket', 
+                type: 'performance-sorting', 
+                label: '과일 색깔 분류하기',
+                list: ['빨간 사과', '노란 바나나', '빨간 딸기', '노란 참외', '빨간 앵두', '노란 레몬'],
+                categories: ['빨강 바구니', '노랑 바구니']
             }
         ],
         middle: [
-            {
-                id: 'd1_group_assignments',
-                type: 'd1-middle-drag',
-                omitLabel: true,
-                label: '',
-                placeholder: ''
-            },
-            {
-                id: 'classification_rule',
-                type: 'textarea',
-                label: '과일을 나눈 나만의 기준을 적어볼까요?',
-                placeholder:
-                    '예: 씨가 있는 과일만 A로 모았어요. / 향이 강한 과일은 B로 모았어요. / 둥근 모양과 긴 모양으로 나눴어요.'
+            { 
+                id: 'custom_classification', 
+                type: 'performance-matching', 
+                label: '데이터와 기준 연결하기',
+                pairs: [
+                    { id: 'p1', question: '동그랗고 달콤한 맛', answer: '사과' },
+                    { id: 'p2', question: '길쭉하고 부드러운 속살', answer: '바나나' },
+                    { id: 'p3', question: '작고 신 맛이 강함', answer: '레몬' }
+                ],
+                sources: ['사과', '바나나', '레몬']
             }
         ],
         upper: [
-            {
-                id: 'd1_upper_assignments',
-                type: 'd1-upper-drag',
-                omitLabel: false,
-                label: '① 활동 10가지를 통과 ✅ 또는 보류 ⚠️ 로 나눠볼까요?',
-                placeholder: ''
-            },
-            {
-                id: 'unique_sort',
-                type: 'textarea',
-                label: '② 통과·보류 기준을 한 문장으로 적어볼까요?',
-                placeholder:
-                    '위에서 나눈 것과 맞게 적어 봐. 예: "움직이는 활동만 통과" / "조용한 모임은 전부 보류" / "만들기·그림만 통과"'
-            },
-            {
-                id: 'insight',
-                type: 'textarea',
-                label: '③ 이 기준으로 행사를 운영하면 어떤 상황이 발생할까요?',
-                placeholder:
-                    '예: 체육만 통과면 독서·그림 좋아하는 친구는 소외될 수 있어 / 조용한 활동만 보류면 내향적인 친구만 손해… 구체적으로 적어 봐.'
-            }
+            { id: 'unique_sort', type: 'text', label: '나만의 공정한 분류 기준', placeholder: '어떤 기준으로 나누면 모두가 행복할까요?' },
+            { id: 'insight', type: 'textarea', label: '분류 알고리즘 분석', placeholder: '기준 하나가 세상을 어떻게 바꿀 수 있을지 적어보세요' }
         ]
     }
 };

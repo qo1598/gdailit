@@ -1,27 +1,53 @@
 import React from 'react';
 import TDRenderer from './TDRenderer';
+import GCRenderer from './GCRenderer';
+import DSRenderer from './DSRenderer';
 
 /**
  * TaskStepRenderer - Dispatches the task to the appropriate performance type renderer.
- * Types: TD (Exploration), SJ (Judgement), GC (Generation), DS (Data/Design)
+ * Types: TD (Exploration), SJ (Judgement), GC (Generation/Critical), DS (Data/Design)
  */
-const TaskStepRenderer = ({ step, gradeSpec, answers, setAnswers, domainColor }) => {
+const TaskStepRenderer = ({ step, gradeSpec, answers, setAnswers, domainColor, hint, onHintClick }) => {
   const { performanceType } = gradeSpec;
 
   switch (performanceType) {
     case 'TD':
       return (
-        <TDRenderer 
-          step={step} 
-          answers={answers} 
-          setAnswers={setAnswers} 
-          domainColor={domainColor} 
+        <TDRenderer
+          step={step}
+          answers={answers}
+          setAnswers={setAnswers}
+          domainColor={domainColor}
+          hint={hint}
+          onHintClick={onHintClick}
         />
       );
-    // SJ, GC, DS will be added here
+    case 'GC':
+      return (
+        <GCRenderer
+          step={step}
+          answers={answers}
+          setAnswers={setAnswers}
+          domainColor={domainColor}
+          hint={hint}
+          onHintClick={onHintClick}
+        />
+      );
+    case 'DS':
+      return (
+        <DSRenderer
+          step={step}
+          answers={answers}
+          setAnswers={setAnswers}
+          domainColor={domainColor}
+          hint={hint}
+          onHintClick={onHintClick}
+        />
+      );
+    // SJ will be added here
     default:
       return (
-        <div className="p-8 text-center text-slate-400">
+        <div style={{ padding: '32px', textAlign: 'center', color: '#94a3b8' }}>
           준비 중인 수행 유형입니다: {performanceType}
         </div>
       );

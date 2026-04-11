@@ -56,16 +56,16 @@ export default function Dashboard({ missions, refresh, justAttended, setJustAtte
 
                             <div style={{
                                 marginTop: 'auto',
-                                fontSize: '0.85rem',
+                                fontSize: '0.8rem',
                                 fontWeight: '900',
-                                padding: '6px 12px',
-                                borderRadius: '15px',
-                                background: isCompleted ? '#ffeaa7' : isSupplement ? '#ff7675' : isPending ? '#ffeaa7' : '#f1f2f6',
-                                color: isCompleted ? '#d35400' : isSupplement ? '#fff' : isPending ? '#e67e22' : '#a4b0be',
+                                padding: '6px 10px',
+                                borderRadius: '12px',
+                                background: isCompleted ? '#fef3c7' : isSupplement ? '#fee2e2' : isPending ? '#fef9c3' : '#f1f5f9',
+                                color: isCompleted ? '#92400e' : isSupplement ? '#991b1b' : isPending ? '#854d0e' : '#94a3b8',
                                 width: '100%',
                                 textAlign: 'center'
                             }}>
-                                {isCompleted ? '뱃지 획득' : isSupplement ? '보충 필요' : isPending ? '검토 대기 중' : '도전하기'}
+                                {isCompleted ? '뱃지 획득' : isSupplement ? '보충 필요' : isPending ? '검토 대기' : '도전하기'}
                             </div>
                         </div>
                     );

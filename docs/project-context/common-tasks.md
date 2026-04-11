@@ -58,3 +58,12 @@ stage 흐름, 상태 관리, validation 수정 시:
 2. 학년군 UI 규칙 준수 여부 (L=선택 중심, H=AI 생성 가능)
 3. cardCode·gradeBand 변경 여부 확인 (DB 연동 위험)
 4. 레거시 파일 수정 여부 확인
+
+## 10. 이미지 사용 정책 (AI 이미지 자동 생성)
+미션 콘텐츠를 구현할 때 맥락에 맞는 이미지가 프로젝트에 없으면,
+**생성형 AI(Imagen 등)를 통해 이미지를 직접 생성하여 삽입한다.**
+
+- 실제 서비스용 정적 이미지 → `/public/` 에 저장 후 경로 참조
+- 런타임 생성 이미지 → `src/services/imagenService.js` 활용
+- 생성 프롬프트는 초등학생 교육용 스타일(밝고 평평한 일러스트)로 작성
+- 이미지 생성 전 `docs/claude-rules/image-api-template.md` 절차 참고
