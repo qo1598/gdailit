@@ -6,20 +6,20 @@ import { Check, X, Lightbulb, Plus } from 'lucide-react';
  * uiModes: ds_training_cards | ds_rule_builder | ds_classify |
  *          ds_result_check | ds_rule_revise | ds_rule_save
  */
-const DSRenderer = ({ step, answers, setAnswers, domainColor }) => {
+const DSRenderer = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
   switch (step.uiMode) {
     case 'ds_training_cards':
-      return <TrainingCardsStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} />;
+      return <TrainingCardsStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
     case 'ds_rule_builder':
-      return <RuleBuilderStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} />;
+      return <RuleBuilderStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
     case 'ds_rule_revise':
-      return <RuleBuilderStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} isRevise />;
+      return <RuleBuilderStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} isRevise />;
     case 'ds_classify':
-      return <ClassifyStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} />;
+      return <ClassifyStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
     case 'ds_result_check':
-      return <ResultCheckStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} />;
+      return <ResultCheckStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
     case 'ds_rule_save':
-      return <RuleSaveStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} />;
+      return <RuleSaveStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
     default:
       return <div style={{ padding: 32, textAlign: 'center', color: '#94a3b8' }}>알 수 없는 UI: {step.uiMode}</div>;
   }
@@ -27,7 +27,7 @@ const DSRenderer = ({ step, answers, setAnswers, domainColor }) => {
 
 // ─── Shared ───────────────────────────────────────────────────────
 
-const StepHeader = ({ step, domainColor }) => (
+const StepHeader = ({ step, domainColor, hint, onHintClick }) => (
   <div style={{ marginBottom: '4px' }}>
     <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px' }}>
       <div style={{ width: '4px', height: '18px', borderRadius: '2px', backgroundColor: domainColor, flexShrink: 0 }} />
@@ -35,9 +35,34 @@ const StepHeader = ({ step, domainColor }) => (
         {step.title}
       </span>
     </div>
-    <p style={{ fontSize: 'clamp(1rem, 3.2vw, 1.1rem)', fontWeight: 800, color: '#1e293b', margin: 0, lineHeight: 1.45, wordBreak: 'keep-all' }}>
-      {step.question}
-    </p>
+    <div style={{ display: 'flex', alignItems: 'flex-start', gap: '10px' }}>
+      <p style={{ fontSize: 'clamp(1rem, 3.2vw, 1.1rem)', fontWeight: 800, color: '#1e293b', margin: 0, lineHeight: 1.45, wordBreak: 'keep-all', flex: 1 }}>
+        {step.question}
+      </p>
+      {hint && (
+        <button
+          onClick={onHintClick}
+          title="힌트 보기"
+          style={{
+            flexShrink: 0,
+            width: '36px', height: '36px',
+            borderRadius: '50%',
+            backgroundColor: '#fef9c3',
+            border: '2px solid #fde047',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            cursor: 'pointer',
+            transition: 'transform 0.15s, background-color 0.15s',
+            marginTop: '2px'
+          }}
+          onMouseEnter={e => { e.currentTarget.style.backgroundColor = '#fef08a'; e.currentTarget.style.transform = 'scale(1.12)'; }}
+          onMouseLeave={e => { e.currentTarget.style.backgroundColor = '#fef9c3'; e.currentTarget.style.transform = 'scale(1)'; }}
+          onTouchStart={e => e.currentTarget.style.transform = 'scale(1.12)'}
+          onTouchEnd={e => e.currentTarget.style.transform = 'scale(1)'}
+        >
+          <Lightbulb size={18} color="#ca8a04" strokeWidth={2.2} />
+        </button>
+      )}
+    </div>
   </div>
 );
 
@@ -48,7 +73,7 @@ const GROUP_COLORS = {
 
 // ─── ds_training_cards ────────────────────────────────────────────
 
-const TrainingCardsStep = ({ step, answers, setAnswers, domainColor }) => {
+const TrainingCardsStep = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
   const highlighted = answers[step.id]?.highlighted || [];
   const { labelNames, cards, featureChips } = step;
 
@@ -64,7 +89,7 @@ const TrainingCardsStep = ({ step, answers, setAnswers, domainColor }) => {
 
   return (
     <div className="animate-slide-up" style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px, 4vw, 20px)' }}>
-      <StepHeader step={step} domainColor={domainColor} />
+      <StepHeader step={step} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />
 
       {/* Cards side by side */}
       <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '10px' }}>
@@ -148,7 +173,7 @@ const TrainingCardsStep = ({ step, answers, setAnswers, domainColor }) => {
 
 // ─── ds_rule_builder / ds_rule_revise ─────────────────────────────
 
-const RuleBuilderStep = ({ step, answers, setAnswers, domainColor, isRevise }) => {
+const RuleBuilderStep = ({ step, answers, setAnswers, domainColor, hint, onHintClick, isRevise }) => {
   const stepId = step.id;
   const { labelNames, availableFeatures, targetLabel } = step;
 
@@ -182,7 +207,7 @@ const RuleBuilderStep = ({ step, answers, setAnswers, domainColor, isRevise }) =
 
   return (
     <div className="animate-slide-up" style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px, 4vw, 20px)' }}>
-      <StepHeader step={step} domainColor={domainColor} />
+      <StepHeader step={step} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />
 
       {isRevise && answers.step2?.conditions?.length > 0 && (
         <div style={{
@@ -284,7 +309,7 @@ const RuleBuilderStep = ({ step, answers, setAnswers, domainColor, isRevise }) =
 
 // ─── ds_classify ─────────────────────────────────────────────────
 
-const ClassifyStep = ({ step, answers, setAnswers, domainColor }) => {
+const ClassifyStep = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
   const { newCards, labelNames } = step;
   const selections = answers[step.id] || {};
 
@@ -294,7 +319,7 @@ const ClassifyStep = ({ step, answers, setAnswers, domainColor }) => {
 
   return (
     <div className="animate-slide-up" style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px, 4vw, 20px)' }}>
-      <StepHeader step={step} domainColor={domainColor} />
+      <StepHeader step={step} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         {newCards.map((card, idx) => {
@@ -362,7 +387,7 @@ const ClassifyStep = ({ step, answers, setAnswers, domainColor }) => {
 
 // ─── ds_result_check ─────────────────────────────────────────────
 
-const ResultCheckStep = ({ step, answers, setAnswers, domainColor }) => {
+const ResultCheckStep = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
   const { newCards, labelNames } = step;
   const userPredictions = answers.step3 || {};
 
@@ -382,7 +407,7 @@ const ResultCheckStep = ({ step, answers, setAnswers, domainColor }) => {
 
   return (
     <div className="animate-slide-up" style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px, 4vw, 20px)' }}>
-      <StepHeader step={step} domainColor={domainColor} />
+      <StepHeader step={step} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />
 
       {/* Score */}
       <div style={{
@@ -458,7 +483,7 @@ const ResultCheckStep = ({ step, answers, setAnswers, domainColor }) => {
 
 // ─── ds_rule_save ─────────────────────────────────────────────────
 
-const RuleSaveStep = ({ step, answers, setAnswers, domainColor }) => {
+const RuleSaveStep = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
   const { refStepIds, labelNames } = step;
   const v1 = answers[refStepIds.v1] || {};
   const v2 = answers[refStepIds.v2] || {};
@@ -530,7 +555,7 @@ const RuleSaveStep = ({ step, answers, setAnswers, domainColor }) => {
 
   return (
     <div className="animate-slide-up" style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px, 4vw, 20px)' }}>
-      <StepHeader step={step} domainColor={domainColor} />
+      <StepHeader step={step} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />
 
       <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
         {renderRule(v1, 'v1')}

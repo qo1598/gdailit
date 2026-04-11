@@ -21,23 +21,23 @@ const buildFullPrompt = (fields, taskLabel) => {
 const GCRenderer = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
   switch (step.uiMode) {
     case 'image_view':
-      return <ImageViewStep step={step} domainColor={domainColor} />;
+      return <ImageViewStep step={step} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
     case 'defect_select':
-      return <DefectSelectStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} />;
+      return <DefectSelectStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
     case 'single_select_buttons':
-      return <SingleSelectStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} />;
+      return <SingleSelectStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
     case 'image_compare_ab':
-      return <ImageCompareStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} />;
+      return <ImageCompareStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
     case 'task_and_prompt':
-      return <TaskAndPromptStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} />;
+      return <TaskAndPromptStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
     case 'prompt_with_conditions':
-      return <PromptWithConditionsStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} />;
+      return <PromptWithConditionsStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
     case 'text_compare_ab':
-      return <TextCompareABStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} />;
+      return <TextCompareABStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
     case 'prompt_builder':
-      return <PromptBuilderStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} />;
+      return <PromptBuilderStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
     case 'result_compare_final':
-      return <ResultCompareFinalStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} />;
+      return <ResultCompareFinalStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
     default:
       return (
         <div style={{ padding: '32px', textAlign: 'center', color: '#94a3b8' }}>
@@ -48,7 +48,7 @@ const GCRenderer = ({ step, answers, setAnswers, domainColor, hint, onHintClick 
 };
 
 // ─── image_view ────────────────────────────────────────────────────
-const ImageViewStep = ({ step, domainColor }) => {
+const ImageViewStep = ({ step, domainColor, hint, onHintClick }) => {
   const [modalOpen, setModalOpen] = useState(false);
 
   return (
@@ -105,7 +105,7 @@ const ImageViewStep = ({ step, domainColor }) => {
 };
 
 // ─── defect_select ─────────────────────────────────────────────────
-const DefectSelectStep = ({ step, answers, setAnswers, domainColor }) => {
+const DefectSelectStep = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const selected = answers[step.id] || [];
   const otherText = answers[`${step.id}_other_text`] || '';
@@ -249,7 +249,7 @@ const DefectSelectStep = ({ step, answers, setAnswers, domainColor }) => {
 };
 
 // ─── single_select_buttons ─────────────────────────────────────────
-const SingleSelectStep = ({ step, answers, setAnswers, domainColor }) => {
+const SingleSelectStep = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
   const selected = answers[step.id] || null;
 
   const selectOption = (id) => {
@@ -308,7 +308,7 @@ const SingleSelectStep = ({ step, answers, setAnswers, domainColor }) => {
 };
 
 // ─── image_compare_ab ──────────────────────────────────────────────
-const ImageCompareStep = ({ step, answers, setAnswers, domainColor }) => {
+const ImageCompareStep = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
   const chosenImage = answers[step.id]?.image || null;
   const chosenReasons = answers[step.id]?.reasons || [];
 
@@ -540,7 +540,7 @@ const SelectionHint = ({ count, mode, chosenImage, chosenReason }) => {
 };
 
 // ─── task_and_prompt ──────────────────────────────────────────────
-const TaskAndPromptStep = ({ step, answers, setAnswers, domainColor }) => {
+const TaskAndPromptStep = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
   const data = answers[step.id] || {};
   const [isGenerating, setIsGenerating] = useState(false);
   const [genError, setGenError] = useState(null);
@@ -673,7 +673,7 @@ const TaskAndPromptStep = ({ step, answers, setAnswers, domainColor }) => {
 };
 
 // ─── prompt_with_conditions ───────────────────────────────────────
-const PromptWithConditionsStep = ({ step, answers, setAnswers, domainColor }) => {
+const PromptWithConditionsStep = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
   const data = answers[step.id] || {};
   const taskType = answers['step1']?.task_type;
   const taskLabel = { poster: '환경 보호 포스터 문구', event_notice: '학교 행사 안내문', book_intro: '책 소개 글' }[taskType] || '선택한 주제';
@@ -794,7 +794,7 @@ const PromptWithConditionsStep = ({ step, answers, setAnswers, domainColor }) =>
 };
 
 // ─── text_compare_ab ──────────────────────────────────────────────
-const TextCompareABStep = ({ step, answers, setAnswers, domainColor }) => {
+const TextCompareABStep = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
   const data = answers[step.id] || {};
   const outputA = answers['step1']?.output_initial;
   const outputB = answers['step2']?.output_detailed;
@@ -894,7 +894,7 @@ const TextCompareABStep = ({ step, answers, setAnswers, domainColor }) => {
 };
 
 // ─── prompt_builder ───────────────────────────────────────────────
-const PromptBuilderStep = ({ step, answers, setAnswers, domainColor }) => {
+const PromptBuilderStep = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
   const data = answers[step.id] || {};
   const taskType = answers['step1']?.task_type;
   const taskLabel = { poster: '환경 보호 포스터 문구', event_notice: '학교 행사 안내문', book_intro: '책 소개 글' }[taskType] || '선택한 주제';
@@ -1021,7 +1021,7 @@ const PromptBuilderStep = ({ step, answers, setAnswers, domainColor }) => {
 };
 
 // ─── result_compare_final ─────────────────────────────────────────
-const ResultCompareFinalStep = ({ step, answers, setAnswers, domainColor }) => {
+const ResultCompareFinalStep = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
   const data = answers[step.id] || {};
   const [modalImage, setModalImage] = useState(null); // { url, label }
 

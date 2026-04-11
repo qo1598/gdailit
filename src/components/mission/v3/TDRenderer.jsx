@@ -205,7 +205,7 @@ const TDRenderer = ({ step, answers, setAnswers, domainColor, hint, onHintClick 
 
   // ─── photo_or_card_select → 사진 업로드 only ──────────────────
   if (step.uiMode === 'photo_or_card_select') {
-    return <PhotoUpload step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} />;
+    return <PhotoUpload step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
   }
 
   return (
@@ -297,7 +297,7 @@ const compressImage = (file) =>
     reader.readAsDataURL(file);
   });
 
-const PhotoUpload = ({ step, answers, setAnswers, domainColor }) => {
+const PhotoUpload = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
   const fileInputRef = useRef(null);
   const current = answers[step.id] || {};
   const hasPhoto = current.type === 'photo' && current.value;
