@@ -1,5 +1,5 @@
 ﻿export const E4_MISSION = {
-    title: 'AI는 모든 친구에게 친절할까?',
+    title: '모두에게 똑같이 잘할까?',
     competency: '데이터 편향성 인지 및 윤리',
     ksa_tags: { K: "K2.5", S: "Critical Thinking", A: "Empathetic" },
     type: {

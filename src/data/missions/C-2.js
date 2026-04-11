@@ -1,5 +1,5 @@
 ﻿export const C2_MISSION = {
-    title: '인공지능의 팩토리 피크닉',
+    title: 'AI 그림, 어디가 이상할까?',
     competency: 'AI 출력물 비판적 평가 및 교정',
     ksa_tags: { K: "K4.1", S: "Creativity", A: "Adaptable" },
     type: {

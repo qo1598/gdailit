@@ -1,5 +1,5 @@
 export const M2_MISSION = {
-    title: '네 일은 네가, 내 일은 내가!',
+    title: '내 정보는 어디까지 줄까?',
     competency: 'AI 사용 판단 및 윤리',
     why: {
         lower: '로봇이 모든 일을 다 해주면 편하지만, 친구들과 함께 웃고 우는 소중한 시간까지 빼앗기면 안 돼요!',

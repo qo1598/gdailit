@@ -1,5 +1,5 @@
 export const M1_MISSION = {
-    title: '나의 주도권을 지켜라!',
+    title: 'AI를 언제 쓰면 좋을까?',
     competency: 'AI 사용 판단 및 관리',
     why: {
         lower: '로봇에게 맡길 일과 내가 직접 할 일을 똑똑하게 나눠봐요!',

@@ -1,5 +1,5 @@
 ﻿export const D2_MISSION = {
-    title: '깨끗한 데이터 밥 주기',
+    title: 'AI에게 어떤 예시를 줄까?',
     competency: '데이터 질과 GIGO 원칙',
     ksa_tags: { K: "K2.2", S: "Problem Solving", A: "Responsible" },
     type: {

@@ -1,5 +1,5 @@
 ﻿export const C4_MISSION = {
-    title: '나의 노력, 정직한 마침표',
+    title: '내 작품, AI와 어떻게 나눌까?',
     competency: '창작물 출처 표기 및 정직성',
     ksa_tags: { K: "K5.3", S: "Communication", A: "Responsible" },
     type: {

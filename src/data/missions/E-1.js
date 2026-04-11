@@ -1,5 +1,5 @@
 ﻿export const E1_MISSION = {
-    title: '내 주변 숨은 AI 찾기 대작전!',
+    title: '생활 속 AI 찾기',
     competency: 'AI 인식 및 한계점 파악',
     ksa_tags: { K: "K1.4", S: "Self and Social Awareness", A: "Curious" },
     type: {

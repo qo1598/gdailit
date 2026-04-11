@@ -1,5 +1,5 @@
 ﻿export const D4_MISSION = {
-    title: '천재 AI 설계 마스터 도면 짜기',
+    title: '사람을 돕는 AI 설계하기',
     competency: 'AI 수명 주기 기획 및 HITL 설계',
     ksa_tags: { K: "K3.2", S: "Problem Solving", A: "Innovative" },
     type: {

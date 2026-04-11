@@ -1,5 +1,5 @@
 ﻿export const C3_MISSION = {
-    title: '마법 단어로 포스터 만들기',
+    title: '목적에 맞게 다시 만들기',
     competency: 'AI 산출물 정제 및 창작 윤리',
     ksa_tags: { K: "K5.3", S: "Creativity", A: "Responsible" },
     type: {

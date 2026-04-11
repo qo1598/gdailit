@@ -1,5 +1,5 @@
 ﻿export const C1_MISSION = {
-    title: '판타지 릴레이 동화 쓰기!',
+    title: 'AI와 이어 쓰는 이야기',
     competency: 'AI 협업 창작 및 주도권 유지',
     ksa_tags: { K: "K1.3", S: "Creativity", A: "Innovative" },
     type: {

@@ -1,5 +1,5 @@
 ﻿export const D3_MISSION = {
-    title: '로봇 시력 검사용 함정 테스트!',
+    title: '시험해 보고 고쳐 보는 AI',
     competency: '시각 인식 한계 및 모델 카드 분석',
     ksa_tags: { K: "K4.1", S: "Critical Thinking", A: "Responsible" },
     type: {

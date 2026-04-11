@@ -1,5 +1,5 @@
 ﻿export const D1_MISSION = {
-    title: '끼리끼리 분류 놀이!',
+    title: '끼리끼리 분류 놀이',
     competency: '머신러닝 분류 원리 및 데이터 특징 추출',
     ksa_tags: { K: "K1.2", S: "Computational Thinking", A: "Curious" },
     type: {

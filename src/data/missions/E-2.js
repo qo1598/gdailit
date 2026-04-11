@@ -1,5 +1,5 @@
 ﻿export const E2_MISSION = {
-    title: 'AI의 거짓말을 잡아라!',
+    title: 'AI 답, 믿어도 될까?',
     competency: '환각 인지 및 사실 확인',
     ksa_tags: { K: "K4.3", S: "Critical Thinking", A: "Responsible" },
     type: {

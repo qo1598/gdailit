@@ -1,5 +1,5 @@
 export const M4_MISSION = {
-    title: 'AI 매너 현장',
+    title: 'AI와 함께 쓰는 약속',
     competency: 'AI 사용 판단 및 윤리',
     why: {
         lower:

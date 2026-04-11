@@ -1,5 +1,5 @@
 ﻿export const E3_MISSION = {
-    title: '알고리즘의 꼬리 잡기',
+    title: '왜 나한테 이걸 보여줄까?',
     competency: '알고리즘 편식 및 편향 성찰',
     ksa_tags: { K: "K1.1", S: "Self and Social Awareness", A: "Curious" },
     type: {
