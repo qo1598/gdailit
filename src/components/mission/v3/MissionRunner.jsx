@@ -9,7 +9,7 @@ import StageRenderer from './StageRenderer';
  * stage flow: start → intro → core → task(step1..n) → submit → complete
  */
 const MissionRunner = () => {
-  const { missionId, gradeBand } = useParams();
+  const { missionId, gradeGroup: gradeBand } = useParams();
   const navigate = useNavigate();
 
   const mission = MISSIONS_V3[missionId];

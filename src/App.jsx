@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, useLocation, useParams } from 'react-router-dom';
 import { Home, Gamepad2, UserCircle, MessageCircle, ClipboardList, Cpu } from 'lucide-react';
 import Dashboard from './components/Dashboard';
 import Mission from './components/Mission';
@@ -611,6 +611,15 @@ function Profile({ userId, userName, fragments, setFragments, avatarConfig, setA
   );
 }
 
+// V3로 구현된 미션 코드 — 같은 라우트에서 MissionRunner로 분기
+const V3_MISSIONS = new Set(['M-3', 'C-2', 'D-1', 'E-1']);
+
+function MissionOrV3(props) {
+  const params = useParams();
+  if (V3_MISSIONS.has(params.missionId)) return <MissionRunner />;
+  return <Mission {...props} />;
+}
+
 // 학년 → 학년군 파싱 (1-2학년: 'lower' / 3-4학년: 'middle' / 5-6학년: 'upper')
 function parseGradeGroup(studentId) {
   try {
@@ -829,9 +838,8 @@ function AppContent() {
           </div>
         ) : (
           <Routes>
-            <Route path="/" element={userId ? <Dashboard missions={missions} refresh={fetchProgress} justAttended={false} setJustAttended={() => { }} gradeGroup={gradeGroup} /> : <Login onLogin={handleLogin} />} />
-            <Route path="/mission/:missionId/:gradeGroup" element={userId ? <Mission userId={userId} schoolId={schoolId} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
-            <Route path="/v3/mission/:missionId/:gradeBand" element={userId ? <MissionRunner /> : <Login onLogin={handleLogin} />} />
+            <Route path="/" element={userId ? <Dashboard missions={missions} refresh={fetchProgress} justAttended={false} setJustAttended={() => { }} gradeGroup={gradeGroup} isTestAccount={userId.startsWith('test')} /> : <Login onLogin={handleLogin} />} />
+            <Route path="/mission/:missionId/:gradeGroup" element={userId ? <MissionOrV3 userId={userId} schoolId={schoolId} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
             <Route path="/minigame" element={userId ? <MiniGame userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
             <Route path="/discussion" element={userId ? <Discussion userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
             <Route path="/profile" element={userId ? <Profile userId={userId} userName={userName} fragments={fragments} setFragments={setFragments} avatarConfig={avatarConfig} setAvatarConfig={setAvatarConfig} onLogout={handleLogout} /> : <Login onLogin={handleLogin} />} />

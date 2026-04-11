@@ -1,25 +1,45 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function Dashboard({ missions, refresh, justAttended, setJustAttended, gradeGroup }) {
+
+const GRADE_OPTIONS = [
+    { label: '1·2학년군', band: 'lower' },
+    { label: '3·4학년군', band: 'middle' },
+    { label: '5·6학년군', band: 'upper' },
+];
+
+export default function Dashboard({ missions, refresh, justAttended, setJustAttended, gradeGroup, isTestAccount }) {
     const navigate = useNavigate();
-    const [showRewardModal, setShowRewardModal] = React.useState(false);
+    const [, setShowRewardModal] = React.useState(false);
+    const [gradeModal, setGradeModal] = React.useState(null); // missionId when open
 
     React.useEffect(() => {
         if (justAttended) {
             setShowRewardModal(true);
-            setJustAttended(false); // Clear the flag in parent
+            setJustAttended(false);
         }
         if (refresh) {
             refresh();
         }
     }, [justAttended, setJustAttended, refresh]);
 
-    const handleMissionClick = (id) => {
-        navigate(`/mission/${id}/${gradeGroup}`);
+    const navigateToMission = (id, band) => {
+        navigate(`/mission/${id}/${band}`);
     };
 
-    const completedCount = missions.filter(m => m.completed).length;
+    const handleMissionClick = (id) => {
+        if (isTestAccount) {
+            setGradeModal(id);
+        } else {
+            navigateToMission(id, gradeGroup);
+        }
+    };
+
+    const handleGradeSelect = (band) => {
+        const id = gradeModal;
+        setGradeModal(null);
+        navigateToMission(id, band);
+    };
 
     return (
         <div className="page-enter">
@@ -79,10 +99,66 @@ export default function Dashboard({ missions, refresh, justAttended, setJustAtte
                             <div style={{ width: '60px', height: '60px', background: '#dfe6e9', borderRadius: '50%' }}></div>
                         </div>
                         <div className="badge-title" style={{ color: '#b2bec3' }}>비밀 미션</div>
-                        <div style={{ marginTop: '15px', fontSize: '0.85rem', fontWeight: 'bold', padding: '6px', borderRadius: '15px', background: '#f1f2f6', color: '#b2bec3', width: '100%', textAlign: 'center' }}>🔒 잠김</div>
+                        <div style={{ marginTop: '15px', fontSize: '0.85rem', fontWeight: 'bold', padding: '6px', borderRadius: '15px', background: '#f1f2f6', color: '#b2bec3', width: '100%', textAlign: 'center' }}>잠김</div>
                     </div>
                 ))}
             </div>
+
+            {/* 학년군 선택 모달 (검증 계정 전용) */}
+            {gradeModal && (
+                <div
+                    style={{
+                        position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.55)',
+                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                        zIndex: 1000
+                    }}
+                    onClick={() => setGradeModal(null)}
+                >
+                    <div
+                        style={{
+                            background: '#fff', borderRadius: '20px', padding: '32px 28px',
+                            minWidth: '300px', textAlign: 'center',
+                            boxShadow: '0 8px 40px rgba(0,0,0,0.18)'
+                        }}
+                        onClick={e => e.stopPropagation()}
+                    >
+                        <div style={{ fontSize: '0.8rem', fontWeight: 700, color: '#94a3b8', marginBottom: '6px', letterSpacing: '0.05em' }}>
+                            검증 계정 · {gradeModal}
+                        </div>
+                        <div style={{ fontSize: '1.1rem', fontWeight: 900, color: '#1e293b', marginBottom: '24px' }}>
+                            학년군을 선택하세요
+                        </div>
+                        <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                            {GRADE_OPTIONS.map(opt => (
+                                <button
+                                    key={opt.band}
+                                    onClick={() => handleGradeSelect(opt.band)}
+                                    style={{
+                                        padding: '14px 20px', borderRadius: '12px',
+                                        border: '2px solid #e2e8f0', background: '#f8fafc',
+                                        cursor: 'pointer', fontWeight: 800, fontSize: '1rem',
+                                        color: '#334155', textAlign: 'center', width: '100%',
+                                        transition: 'all 0.15s'
+                                    }}
+                                    onMouseEnter={e => { e.currentTarget.style.background = '#eff6ff'; e.currentTarget.style.borderColor = '#93c5fd'; }}
+                                    onMouseLeave={e => { e.currentTarget.style.background = '#f8fafc'; e.currentTarget.style.borderColor = '#e2e8f0'; }}
+                                >
+                                    {opt.label}
+                                </button>
+                            ))}
+                        </div>
+                        <button
+                            onClick={() => setGradeModal(null)}
+                            style={{
+                                marginTop: '20px', background: 'none', border: 'none',
+                                color: '#94a3b8', cursor: 'pointer', fontSize: '0.85rem'
+                            }}
+                        >
+                            취소
+                        </button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }
