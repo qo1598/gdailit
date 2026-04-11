@@ -117,7 +117,7 @@ export default function Login({ onLogin }) {
     const checkAttendance = async (student) => {
         const today = getKstDate();
 
-        if (student.last_attended_at === today) {
+        if (student.last_attendance === today) {
             return student;
         }
 
@@ -126,7 +126,7 @@ export default function Login({ onLogin }) {
             const { data, error } = await supabase
                 .from('students')
                 .update({
-                    last_attended_at: today,
+                    last_attendance: today,
                     fragments: newFragments
                 })
                 .eq('id', student.id)
