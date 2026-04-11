@@ -1,0 +1,17 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc:*)",
+      "Bash(npm run:*)",
+      "Bash(grep -n \"performanceType\\\\|uiMode\\\\|coreUnderstanding\\\\|intro\" /c/Cursor/allit/gdailit/src/components/mission/v3/*.jsx)",
+      "Bash(xargs grep:*)",
+      "Bash(cat)",
+      "Bash(bash /tmp/compare_sizes.sh)",
+      "Bash(cmd.exe /c \"mkdir c:\\\\Cursor\\\\allit\\\\_backup && robocopy c:\\\\Cursor\\\\allit\\\\gdailit c:\\\\Cursor\\\\allit\\\\_backup\\\\gdailit /E /MOVE /NFL /NDL /NJH /NJS 2>&1\")",
+      "Bash(cmd.exe /c \"robocopy c:\\\\Cursor\\\\allit\\\\gdailit c:\\\\Cursor\\\\allit\\\\_backup\\\\gdailit /E /NFL /NDL 2>&1\")",
+      "Bash(powershell -Command \"Copy-Item -Path 'C:\\\\Cursor\\\\allit\\\\gdailit' -Destination 'C:\\\\Cursor\\\\allit\\\\_backup\\\\gdailit' -Recurse -Force 2>&1\")",
+      "Bash(powershell -Command \"Remove-Item -Path 'C:\\\\Cursor\\\\allit\\\\gdailit' -Recurse -Force 2>&1\")",
+      "Bash(git add:*)"
+    ]
+  }
+}

@@ -1,0 +1,50 @@
+node_modules/
+.next/
+dist/
+build/
+coverage/
+*.log
+*.lock
+__pycache__/
+.pytest_cache/
+.cache/
+.env
+.env.*
+out/
+tmp/
+.temp/
+_backup/
+
+# 레거시/백업 컴포넌트 (수정 대상 아님)
+src/components/Mission_backup.jsx
+src/components/Mission_orig.txt
+src/components/Mission_pre_recovery.jsx
+src/components/Mission_recovered.jsx
+src/components/Mission_recovered_final.jsx
+src/components/Mission_temp.txt
+src/components/Mission_view.txt
+
+# 임시 스크립트 (일회성)
+Mission_hint_fix.cjs
+apply_vocab.cjs
+inject_hint_ui.cjs
+move_modals.cjs
+recover_text.cjs
+rewrite.cjs
+rewrite2.cjs
+rewrite3.cjs
+restore_missions.cjs
+
+# 연구/기획 문서 (코드 작업과 무관)
+*.pdf
+*.xlsx
+*.txt
+*.zip
+설계도*
+연구계획서*
+implementation_plan*
+
+# 빌드 산출물
+build_error.txt
+git_status.txt
+.tmp.driveupload/
