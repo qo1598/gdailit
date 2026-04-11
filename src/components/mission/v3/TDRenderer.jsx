@@ -4,7 +4,7 @@ import { getIcon } from './MissionIcons';
 
 /**
  * TDRenderer - Exploration & Identification type UI.
- * Handles uiModes: choice_cards | single_select_buttons | photo_or_card_select
+ * Handles uiModes: choice_cards | single_select_buttons | photo_or_card_select | judge_qa_cards | tag_select
  */
 const TDRenderer = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
 
@@ -206,6 +206,125 @@ const TDRenderer = ({ step, answers, setAnswers, domainColor, hint, onHintClick 
   // ─── photo_or_card_select → 사진 업로드 only ──────────────────
   if (step.uiMode === 'photo_or_card_select') {
     return <PhotoUpload step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
+  }
+
+  // ─── judge_qa_cards ─────────────────────────────────────────────
+  // E-2-L: show QA pairs, student marks each as correct/strange
+  // step.qaCards: [{ id, question, answer, correctJudgment }]
+  // step.judgeOptions: [{ id, label }]
+  if (step.uiMode === 'judge_qa_cards') {
+    const ans = answers[step.id] || {};
+    const setJudge = (cardId, judgeId) => {
+      setAnswers(prev => ({ ...prev, [step.id]: { ...ans, [cardId]: judgeId } }));
+    };
+    const judged = Object.keys(ans).length;
+    const total = step.qaCards.length;
+
+    return (
+      <div className="animate-slide-up" style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(10px, 2.5vw, 14px)' }}>
+        <StepHeader step={step} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />
+
+        {step.qaCards.map(card => {
+          const selected = ans[card.id];
+          return (
+            <div key={card.id} className="v3-card" style={{ padding: 'clamp(12px, 3vw, 16px)', marginBottom: 0 }}>
+              <div style={{ fontSize: 'clamp(0.72rem, 2vw, 0.78rem)', fontWeight: 700, color: '#94a3b8', marginBottom: '3px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>질문</div>
+              <div style={{ fontWeight: 800, fontSize: 'clamp(0.92rem, 2.8vw, 1rem)', color: '#1e293b', marginBottom: '8px', wordBreak: 'keep-all' }}>{card.question}</div>
+              <div style={{ padding: '9px 13px', backgroundColor: '#f1f5f9', borderRadius: '10px', fontSize: 'clamp(0.83rem, 2.4vw, 0.9rem)', color: '#334155', marginBottom: '12px', lineHeight: 1.5, wordBreak: 'keep-all' }}>
+                <span style={{ fontWeight: 700, color: '#94a3b8' }}>AI: </span>{card.answer}
+              </div>
+              <div style={{ display: 'flex', gap: '8px' }}>
+                {(step.judgeOptions || [
+                  { id: 'correct', label: '맞는 답' },
+                  { id: 'strange', label: '이상한 답' }
+                ]).map(opt => {
+                  const isSelected = selected === opt.id;
+                  const accent = opt.id === 'strange' ? '#ef4444' : '#22c55e';
+                  return (
+                    <button
+                      key={opt.id}
+                      onClick={() => setJudge(card.id, opt.id)}
+                      style={{
+                        flex: 1, padding: 'clamp(8px, 2vw, 11px)', borderRadius: '12px',
+                        border: `2px solid ${isSelected ? accent : '#e2e8f0'}`,
+                        backgroundColor: isSelected ? accent + '18' : '#f8fafc',
+                        color: isSelected ? accent : '#64748b',
+                        fontWeight: isSelected ? 800 : 600,
+                        fontSize: 'clamp(0.85rem, 2.5vw, 0.95rem)',
+                        cursor: 'pointer', transition: 'all 0.15s', wordBreak: 'keep-all'
+                      }}
+                    >
+                      {isSelected && '✓ '}{opt.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          );
+        })}
+
+        <div style={{ padding: 'clamp(10px, 3vw, 14px) 16px', backgroundColor: '#f8fafc', borderRadius: '12px', border: '2px dashed #e2e8f0', textAlign: 'center' }}>
+          <p style={{ fontSize: 'clamp(0.8rem, 2.5vw, 0.9rem)', fontWeight: 700, color: judged === total ? '#22c55e' : '#94a3b8', margin: 0 }}>
+            {judged === total ? `${total}개 모두 확인했어요!` : `${judged} / ${total}개 확인함`}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // ─── tag_select ──────────────────────────────────────────────────
+  // E-1-M step4: tag chips (single select) + optional short text
+  // step.tags: [{ id, label }]
+  // step.allowText?: boolean
+  if (step.uiMode === 'tag_select') {
+    const ans = answers[step.id] || {};
+    const setTag = (tagId) => setAnswers(prev => ({ ...prev, [step.id]: { ...ans, tag: tagId } }));
+    const setText = (text) => setAnswers(prev => ({ ...prev, [step.id]: { ...ans, text } }));
+
+    return (
+      <div className="animate-slide-up" style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(12px, 3vw, 18px)' }}>
+        <StepHeader step={step} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />
+        <div className="v3-card" style={{ marginBottom: 0 }}>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '10px', marginBottom: step.allowText ? '14px' : '0' }}>
+            {step.tags.map(tag => {
+              const isSelected = ans.tag === tag.id;
+              return (
+                <button
+                  key={tag.id}
+                  onClick={() => setTag(tag.id)}
+                  style={{
+                    padding: 'clamp(8px, 2.5vw, 10px) clamp(12px, 3.5vw, 18px)',
+                    borderRadius: '999px',
+                    border: `2px solid ${isSelected ? domainColor : '#e2e8f0'}`,
+                    backgroundColor: isSelected ? domainColor : '#f8fafc',
+                    color: isSelected ? '#fff' : '#475569',
+                    fontWeight: isSelected ? 800 : 600,
+                    fontSize: 'clamp(0.85rem, 2.5vw, 0.95rem)',
+                    cursor: 'pointer', transition: 'all 0.15s', wordBreak: 'keep-all'
+                  }}
+                >
+                  {tag.label}
+                </button>
+              );
+            })}
+          </div>
+          {step.allowText && (
+            <textarea
+              placeholder="직접 써도 좋아요. (선택)"
+              value={ans.text || ''}
+              onChange={e => setText(e.target.value)}
+              style={{
+                width: '100%', padding: '10px 14px', borderRadius: '10px',
+                border: '2px solid #e2e8f0', fontSize: 'clamp(0.85rem, 2.5vw, 0.9rem)',
+                resize: 'none', outline: 'none', fontFamily: 'inherit',
+                color: '#1e293b', boxSizing: 'border-box', lineHeight: 1.5
+              }}
+              rows={2}
+            />
+          )}
+        </div>
+      </div>
+    );
   }
 
   return (

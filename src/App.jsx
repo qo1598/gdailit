@@ -612,7 +612,7 @@ function Profile({ userId, userName, fragments, setFragments, avatarConfig, setA
 }
 
 // V3로 구현된 미션 코드 — 같은 라우트에서 MissionRunner로 분기
-const V3_MISSIONS = new Set(['M-3', 'C-2', 'D-1', 'E-1']);
+const V3_MISSIONS = new Set(['M-3', 'C-2', 'D-1', 'E-1', 'E-2', 'E-3', 'E-4']);
 
 function MissionOrV3(props) {
   const params = useParams();

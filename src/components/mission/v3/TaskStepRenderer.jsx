@@ -2,6 +2,7 @@ import React from 'react';
 import TDRenderer from './TDRenderer';
 import GCRenderer from './GCRenderer';
 import DSRenderer from './DSRenderer';
+import SJRenderer from './SJRenderer';
 
 /**
  * TaskStepRenderer - Dispatches the task to the appropriate performance type renderer.
@@ -44,7 +45,17 @@ const TaskStepRenderer = ({ step, gradeSpec, answers, setAnswers, domainColor, h
           onHintClick={onHintClick}
         />
       );
-    // SJ will be added here
+    case 'SJ':
+      return (
+        <SJRenderer
+          step={step}
+          answers={answers}
+          setAnswers={setAnswers}
+          domainColor={domainColor}
+          hint={hint}
+          onHintClick={onHintClick}
+        />
+      );
     default:
       return (
         <div style={{ padding: '32px', textAlign: 'center', color: '#94a3b8' }}>
