@@ -123,22 +123,20 @@ export default function Login({ onLogin }) {
 
         try {
             const newFragments = (student.fragments || 0) + 3;
-            const { data, error } = await supabase
+            const { error } = await supabase
                 .from('students')
                 .update({
                     last_attendance: today,
                     fragments: newFragments
                 })
-                .eq('id', student.id)
-                .select()
-                .maybeSingle();
+                .eq('id', student.id);
 
             if (error) {
                 console.error('Attendance update error:', error);
                 return student;
             }
 
-            return { ...data, justAttended: true };
+            return { ...student, last_attendance: today, fragments: newFragments, justAttended: true };
         } catch (err) {
             console.error('Unexpected checkAttendance error:', err);
             return student;
