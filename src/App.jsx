@@ -616,7 +616,7 @@ const V3_MISSIONS = new Set(['M-3', 'C-2', 'D-1', 'E-1', 'E-2', 'E-3', 'E-4']);
 
 function MissionOrV3(props) {
   const params = useParams();
-  if (V3_MISSIONS.has(params.missionId)) return <MissionRunner />;
+  if (V3_MISSIONS.has(params.missionId)) return <MissionRunner userId={props.userId} />;
   return <Mission {...props} />;
 }
 

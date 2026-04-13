@@ -414,6 +414,26 @@ const StageRenderer = ({
         const done = (step.newCards || []).filter(c => ans?.[c.id]).length;
         return `${done}/${total}개 분류`;
       }
+      if (step.uiMode === 'judge_qa_carousel') {
+        const cards = step.qaCards || [];
+        const strangeCards = cards.filter(c => ans[c.id]?.judge === 'strange');
+        if (strangeCards.length === 0) return `이상한 답 없음 (${cards.length}개 확인)`;
+        const reasons = strangeCards.map(c => {
+          const r = (step.reasonOptions || []).find(o => o.id === ans[c.id]?.reason);
+          return r ? r.label : null;
+        }).filter(Boolean);
+        const uniqueReasons = [...new Set(reasons)];
+        return `이상한 답 ${strangeCards.length}개 · ${uniqueReasons.join(', ') || '이유 선택'}`;
+      }
+      if (step.uiMode === 'tag_select') {
+        const tag = (step.tags || []).find(t => t.id === ans.tag);
+        const parts = [tag?.label, ans.text].filter(Boolean);
+        return parts.join(' · ') || '—';
+      }
+      if (step.uiMode === 'free_text') {
+        if (!ans || !ans.trim()) return '—';
+        return ans.length > 40 ? ans.slice(0, 40) + '…' : ans;
+      }
       if (step.uiMode === 'ds_result_check') {
         if (ans?.correct_count === undefined) return '—';
         return `${ans.correct_count}/${(step.newCards || []).length}개 정답`;
@@ -421,6 +441,40 @@ const StageRenderer = ({
       if (step.uiMode === 'ds_rule_save') {
         if (!ans?.best_rule) return '—';
         return `규칙 ${ans.best_rule.toUpperCase()} 저장`;
+      }
+      // ─── SJ uiModes ───
+      if (step.uiMode === 'classify_cards' || step.uiMode === 'classify_cards_carousel') {
+        if (!ans || Object.keys(ans).length === 0) return '—';
+        const groups = step.groups || [];
+        const parts = groups.map(g => {
+          const count = Object.values(ans).filter(v => v === g.id).length;
+          return count > 0 ? `${g.label} ${count}개` : null;
+        }).filter(Boolean);
+        return parts.join(', ') || '—';
+      }
+      if (step.uiMode === 'multi_select_chips') {
+        if (!ans || ans.length === 0) return '—';
+        const chips = (step.chips || []).filter(c => ans.includes(c.id));
+        return chips.map(c => c.label).join(', ') || '—';
+      }
+      if (step.uiMode === 'chat_display') {
+        return ans?.confirmed ? '대화 내용 확인 완료' : '—';
+      }
+      if (step.uiMode === 'bubble_select_correct') {
+        if (!ans) return '—';
+        const selectedCount = Object.values(ans).filter(v => v.selected).length;
+        return selectedCount > 0 ? `틀린 말풍선 ${selectedCount}개 찾음` : '이상한 답 없음';
+      }
+      if (step.uiMode === 'per_case_judge') {
+        if (!ans || Object.keys(ans).length === 0) return '—';
+        const groups = step.judgmentOptions || [];
+        const parts = (step.cases || []).map(c => {
+          const ca = ans[c.id] || {};
+          if (!ca.judgment) return null;
+          const label = groups.find(g => g.id === ca.judgment)?.label || ca.judgment;
+          return `${c.title}: ${label}`;
+        }).filter(Boolean);
+        return parts.join(' · ') || '—';
       }
       return '—';
     };

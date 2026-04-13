@@ -368,6 +368,100 @@ export const StartDetectiveIcon = ({ size = 100 }) => (
   </svg>
 );
 
+export const ListenIcon = ({ size = 64 }) => (
+  <Svg bg="#E8F5E9" size={size}>
+    <rect x="22" y="14" width="20" height="28" rx="10" fill="#4CAF50" />
+    <rect x="24" y="14" width="8" height="28" rx="8" fill="#A5D6A7" opacity="0.4" />
+    <path d="M14 32 Q14 46 32 46 Q50 46 50 32" stroke="#4CAF50" strokeWidth="3" strokeLinecap="round" fill="none" />
+    <line x1="32" y1="46" x2="32" y2="54" stroke="#4CAF50" strokeWidth="3" strokeLinecap="round" />
+    <line x1="24" y1="54" x2="40" y2="54" stroke="#4CAF50" strokeWidth="3" strokeLinecap="round" />
+    <path d="M42 22 Q48 28 42 34" stroke="#81C784" strokeWidth="2.5" strokeLinecap="round" fill="none" />
+    <path d="M46 18 Q55 28 46 38" stroke="#81C784" strokeWidth="2" strokeLinecap="round" fill="none" opacity="0.4" />
+  </Svg>
+);
+
+export const TranslateIcon = ({ size = 64 }) => (
+  <Svg bg="#E3F2FD" size={size}>
+    <circle cx="32" cy="32" r="20" stroke="#1E88E5" strokeWidth="2.5" fill="white" />
+    <ellipse cx="32" cy="32" rx="9" ry="20" stroke="#1E88E5" strokeWidth="2" fill="none" />
+    <line x1="12" y1="32" x2="52" y2="32" stroke="#1E88E5" strokeWidth="2" />
+    <line x1="14" y1="22" x2="50" y2="22" stroke="#BBDEFB" strokeWidth="1.5" />
+    <line x1="14" y1="42" x2="50" y2="42" stroke="#BBDEFB" strokeWidth="1.5" />
+    <rect x="26" y="26" width="12" height="12" rx="3" fill="#1E88E5" opacity="0.85" />
+    <text x="32" y="35" textAnchor="middle" fontSize="7" fontWeight="bold" fill="white">번</text>
+  </Svg>
+);
+
+export const AutoActIcon = ({ size = 64 }) => (
+  <Svg bg="#FFF3E0" size={size}>
+    <ellipse cx="32" cy="46" rx="21" ry="10" fill="#94A3B8" />
+    <ellipse cx="32" cy="36" rx="21" ry="14" fill="#E2E8F0" />
+    <ellipse cx="32" cy="35" rx="17" ry="11" fill="#F1F5F9" />
+    <circle cx="25" cy="32" r="5" fill="#FF7043" />
+    <circle cx="25" cy="32" r="2.5" fill="white" />
+    <circle cx="39" cy="32" r="5" fill="#FF7043" />
+    <circle cx="39" cy="32" r="2.5" fill="white" />
+    <rect x="27" y="40" width="10" height="3" rx="1.5" fill="#FFA726" />
+    <rect x="9" y="43" width="7" height="12" rx="3.5" fill="#64748B" />
+    <rect x="48" y="43" width="7" height="12" rx="3.5" fill="#64748B" />
+    <path d="M44 12 L48 8 M48 8 L52 12 M48 8 L48 18" stroke="#FF7043" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+  </Svg>
+);
+
+// ─── E-2-L Step 2 Icons ──────────────────────────────────────────────────────
+export const CheckBookIcon = ({ size = 64 }) => (
+  <Svg bg="#EFF6FF" size={size}>
+    <rect x="16" y="10" width="28" height="38" rx="4" fill="#3B82F6" />
+    <rect x="18" y="12" width="24" height="34" rx="3" fill="#EFF6FF" />
+    <rect x="21" y="17" width="18" height="2.5" rx="1.2" fill="#93C5FD" />
+    <rect x="21" y="22" width="14" height="2.5" rx="1.2" fill="#93C5FD" />
+    <rect x="21" y="27" width="16" height="2.5" rx="1.2" fill="#93C5FD" />
+    <rect x="21" y="32" width="11" height="2.5" rx="1.2" fill="#93C5FD" />
+    <circle cx="42" cy="44" r="10" fill="#22C55E" />
+    <path d="M36.5 44 L40.5 48 L47.5 40" stroke="white" strokeWidth="2.8" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+  </Svg>
+);
+
+export const AskAdultIcon = ({ size = 64 }) => (
+  <Svg bg="#FFF7ED" size={size}>
+    <circle cx="32" cy="22" r="9" fill="#FB923C" />
+    <ellipse cx="32" cy="43" rx="13" ry="9" fill="#FB923C" />
+    <circle cx="29" cy="21" r="1.5" fill="white" />
+    <circle cx="35" cy="21" r="1.5" fill="white" />
+    <path d="M29 26 Q32 29 35 26" stroke="white" strokeWidth="2" strokeLinecap="round" fill="none" />
+    <circle cx="49" cy="20" r="7" fill="#FED7AA" />
+    <path d="M44 17 Q47 13 52 16" stroke="#FB923C" strokeWidth="1.8" strokeLinecap="round" fill="none" />
+    <path d="M46 23 Q49 26 52 23" stroke="#FB923C" strokeWidth="1.5" strokeLinecap="round" fill="none" />
+    <path d="M43 20 L42 20" stroke="#FB923C" strokeWidth="1.5" strokeLinecap="round" />
+    <path d="M55 20 L56 20" stroke="#FB923C" strokeWidth="1.5" strokeLinecap="round" />
+  </Svg>
+);
+
+export const SearchInternetIcon = ({ size = 64 }) => (
+  <Svg bg="#F0FDF4" size={size}>
+    <circle cx="29" cy="28" r="14" stroke="#16A34A" strokeWidth="3" fill="#DCFCE7" />
+    <ellipse cx="29" cy="28" rx="6" ry="14" stroke="#16A34A" strokeWidth="1.8" fill="none" />
+    <line x1="15" y1="28" x2="43" y2="28" stroke="#16A34A" strokeWidth="1.8" />
+    <line x1="17" y1="21" x2="41" y2="21" stroke="#16A34A" strokeWidth="1.5" />
+    <line x1="17" y1="35" x2="41" y2="35" stroke="#16A34A" strokeWidth="1.5" />
+    <line x1="40" y1="40" x2="52" y2="52" stroke="#16A34A" strokeWidth="3.5" strokeLinecap="round" />
+    <circle cx="40" cy="40" r="1.5" fill="#16A34A" />
+  </Svg>
+);
+
+export const AskAgainAiIcon = ({ size = 64 }) => (
+  <Svg bg="#F5F3FF" size={size}>
+    <rect x="12" y="14" width="32" height="24" rx="7" fill="#7C3AED" />
+    <circle cx="22" cy="26" r="3" fill="white" opacity="0.9" />
+    <circle cx="32" cy="26" r="3" fill="white" opacity="0.9" />
+    <circle cx="42" cy="26" r="3" fill="white" opacity="0.5" />
+    <path d="M20 38 L16 46 L28 40" fill="#7C3AED" />
+    <circle cx="44" cy="42" r="10" fill="#A78BFA" />
+    <path d="M40 42 L44 38 L48 42" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" fill="none" />
+    <path d="M44 38 L44 47" stroke="white" strokeWidth="2.2" strokeLinecap="round" />
+  </Svg>
+);
+
 // ─── Icon lookup map ─────────────────────────────────────────────────────────
 const ICON_MAP = {
   // Step 1
@@ -397,6 +491,15 @@ const ICON_MAP = {
   speak: SpeakIcon,
   clean: CleanIcon,
   navigate: NavigateIcon,
+  // E-1-M step3
+  listen: ListenIcon,
+  translate: TranslateIcon,
+  auto_act: AutoActIcon,
+  // E-2-L step2
+  check_book: CheckBookIcon,
+  ask_adult: AskAdultIcon,
+  search_internet: SearchInternetIcon,
+  ask_again: AskAgainAiIcon,
 };
 
 export const getIcon = (id, size = 56) => {
