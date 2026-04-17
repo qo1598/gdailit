@@ -277,76 +277,135 @@ export const E3_V3 = {
     upper: {
       cardCode: "E-3-H",
       performanceType: "SJ",
-      description: "추천 기능의 장점과 한계를 비교하여 판단하는 미션이에요.",
+      description: "추천 사례를 분석하고, 추천의 장점과 한계를 판단하며, 더 주도적으로 활용하는 방법을 생각해보는 미션이에요.",
       intro: [
-        { text: "추천 기능은 내가 좋아할 만한 것을 빠르게 찾게 도와줘요.\n그래서 편리하지만, 비슷한 것만 계속 보여 줄 수도 있어요." },
-        { text: "어떤 추천은 시간을 아껴 주지만, 어떤 추천은 새로운 것을 볼 기회를 줄일 수도 있어요.\n추천은 내 선택을 도와주기도 하고, 내 선택을 좁히기도 할 수 있어요." },
-        { text: "오늘은 추천의 좋은 점과 아쉬운 점을 함께 살펴볼 거예요.\n추천을 받을 때 무엇을 조심해야 하는지 생각해 봅시다." }
+        { text: "영상 앱, 쇼핑 앱, 뉴스 앱에서는 내가 좋아할 만한 것을 추천해 줄 때가 많아요.\n이런 추천은 내가 전에 본 것, 자주 고른 것, 오래 본 것과 비슷한 것을 바탕으로 이어질 수 있어요." },
+        { text: "추천은 필요한 것을 빨리 찾게 도와줘서 편리할 수 있어요.\n하지만 비슷한 것만 계속 보여 주면 새로운 정보를 놓치거나 생각이 한쪽으로 기울 수도 있어요." },
+        { text: "오늘은 추천이 왜 이어졌는지 살펴보고,\n그 추천이 언제 도움이 되고 언제 조심해야 하는지,\n어떻게 하면 더 주도적으로 활용할 수 있는지 생각해 볼 거예요." }
       ],
       coreUnderstanding: [
-        { id: 1, question: "왜 이런 활동을 해보는 것이 중요할까요?", answer: "추천은 편리하지만, 내가 보는 정보와 관심을 바꿀 수도 있어요. 추천의 좋은 점과 한계를 함께 생각할 수 있어야 더 주도적으로 AI를 사용할 수 있어요." },
-        { id: 2, question: "이 활동에서는 어떤 점을 잘 살펴보아야 할까요?", answer: "추천이 얼마나 편리한지뿐 아니라, 비슷한 것만 계속 보여 주는지, 새로운 선택을 막지는 않는지를 잘 살펴보아야 해요." },
-        { id: 3, question: "이 점을 생각하지 않으면 어떤 문제가 생길 수 있을까요?", answer: "추천을 무조건 좋은 것으로만 생각하고, 다양한 정보나 새로운 선택을 놓칠 수 있어요." }
+        { id: 1, question: "왜 이런 활동을 해보는 것이 중요할까요?", answer: "추천은 시간을 아껴 주고 관심 있는 것을 빨리 찾게 도와줄 수 있어요. 하지만 추천은 내가 보는 정보와 고르는 것을 바꾸기도 해요. 그래서 추천의 편리함만 보는 것이 아니라, 추천이 내 선택에 어떤 영향을 주는지도 함께 생각할 수 있어야 해요." },
+        { id: 2, question: "이 활동에서는 어떤 점을 잘 살펴보아야 할까요?", answer: "추천이 왜 이어졌는지, 내가 전에 본 것과 어떤 점이 비슷한지, 그리고 그 추천이 새로운 선택을 넓혀 주는지 아니면 좁히는지를 함께 살펴보아야 해요." },
+        { id: 3, question: "이 점을 생각하지 않으면 어떤 문제가 생길 수 있을까요?", answer: "추천을 무조건 편리한 기능으로만 생각해서, 비슷한 정보만 계속 보게 되거나 새로운 선택을 놓칠 수 있어요. 또 추천이 내 생각과 선택에 영향을 주고 있다는 점을 알아차리지 못할 수 있어요." }
       ],
       steps: [
         {
           id: "step1",
-          title: "STEP 1 · 좋은 점 고르기",
-          question: "추천 기능의 좋은 점은 무엇인가요?",
-          hint: "추천이 내 생활에서 어떤 도움을 주는지 생각해 보세요. 시간이 절약되거나, 관심 있는 것을 더 쉽게 찾을 수 있는 경험이 있었나요?",
-          uiMode: "multi_select_chips",
-          chips: [
-            { id: "time_saving", label: "시간을 아껴줘요" },
-            { id: "easy_to_find", label: "좋아하는 것 찾기 쉬워요" },
-            { id: "continue_interest", label: "관심 있는 것을 계속 볼 수 있어요" },
-            { id: "personalized", label: "나에게 맞춰줘요" },
+          title: "STEP 1 · 추천 사례 살펴보기",
+          question: "각 사례를 읽고, 왜 이런 추천이 이어졌는지 이유를 골라보세요.",
+          hint: "내가 전에 본 것과 추천된 것 사이의 공통점을 찾아보세요. 추천은 내가 어떻게 앱을 사용했는지를 바탕으로 이어져요.",
+          uiMode: "case_carousel_reason",
+          reasonOptions: [
+            { id: "similar_topic", label: "이전에 본 것과 주제가 비슷해서" },
+            { id: "frequency_time", label: "자주·오래 봐서" },
+            { id: "selection_pattern", label: "비슷한 것을 반복해서 골라서" },
             { id: "other", label: "기타" }
           ],
-          validation: { minSelections: 1 }
+          cases: [
+            {
+              id: "case_1",
+              title: "민서의 과학 발표 준비",
+              visual: "🔬🌋",
+              visualBg: "#fef3c7",
+              situation: "민서는 과학 발표를 위해 '화산', '지진', '지구 내부' 영상을 찾아봤어요. 그러자 앱이 '판 구조론', '화산 폭발 실험', '지진 대비법' 영상을 추천했어요.",
+              change: "민서는 관련 자료를 빠르게 모아 발표 준비를 쉽게 마쳤어요."
+            },
+            {
+              id: "case_2",
+              title: "지호의 게임 영상 루프",
+              visual: "🎮📺",
+              visualBg: "#ffe4e6",
+              situation: "지호는 게임 공략 영상을 매일 오래 봤어요. 앱은 비슷한 게임 영상과 실시간 방송만 계속 추천했어요.",
+              change: "지호는 다른 취미나 학습 영상을 거의 보지 않게 됐어요."
+            },
+            {
+              id: "case_3",
+              title: "서연의 운동화 쇼핑",
+              visual: "👟🛍️",
+              visualBg: "#e0f2fe",
+              situation: "서연이는 쇼핑몰에서 흰색·가벼운 운동화를 자주 살펴봤어요. 쇼핑몰이 비슷한 색과 모양의 운동화를 계속 추천했어요.",
+              change: "원하는 운동화는 빨리 찾았지만, 다른 색이나 다른 종류 신발은 거의 보지 않게 됐어요."
+            }
+          ],
+          validation: { required: true }
         },
         {
           id: "step2",
-          title: "STEP 2 · 아쉬운 점 고르기",
-          question: "추천 기능의 아쉬운 점은 무엇인가요?",
-          hint: "추천이 항상 좋은 것만은 아니에요. 비슷한 것만 계속 보게 되면 어떤 문제가 생길 수 있을까요?",
-          uiMode: "multi_select_chips",
-          chips: [
-            { id: "similar_only", label: "비슷한 것만 보게 돼요" },
-            { id: "miss_new", label: "새로운 것을 놓쳐요" },
-            { id: "narrow_view", label: "생각이 좁아질 수 있어요" },
-            { id: "too_much", label: "너무 많이 보게 돼요" },
-            { id: "other", label: "기타" }
+          title: "STEP 2 · 판단하기 + 장단점 비교",
+          question: "각 사례에서 추천이 도움이 되는지 판단하고, 그에 맞는 좋은 점이나 아쉬운 점을 골라보세요.",
+          hint: "판단에 따라 좋은 점 또는 아쉬운 점 중 하나가 나타나요. '둘 다'를 선택하면 두 가지 모두 나와요.",
+          uiMode: "per_case_judge",
+          judgmentOptions: [
+            { id: "helpful", label: "도움이 된다" },
+            { id: "careful", label: "조심해야 한다" },
+            { id: "both", label: "둘 다 해당" }
           ],
-          validation: { minSelections: 1 }
+          planOptions: [
+            { id: "find_fast", label: "필요한 것을 빠르게 찾을 수 있었어요" },
+            { id: "collect_easy", label: "관련 자료를 효율적으로 모을 수 있었어요" },
+            { id: "convenient", label: "원하는 것을 편하게 찾을 수 있었어요" }
+          ],
+          planShowForJudgments: ["helpful", "both"],
+          planLabel: "좋은 점은?",
+          limitationOptions: [
+            { id: "similar_only", label: "비슷한 것만 계속 보게 됐어요" },
+            { id: "miss_new", label: "새로운 정보나 선택지를 놓쳤어요" },
+            { id: "narrow_view", label: "생각이나 관심이 한쪽으로 쏠렸어요" }
+          ],
+          limitationShowForJudgments: ["careful", "both"],
+          limitationLabel: "아쉬운 점은?",
+          cases: [
+            {
+              id: "case_1",
+              title: "민서 — 과학 발표 추천",
+              description: "발표 준비 중 관련 영상이 계속 추천되어 자료 수집이 빨라졌어요."
+            },
+            {
+              id: "case_2",
+              title: "지호 — 게임 영상 루프",
+              description: "게임 영상을 자주·오래 보자 같은 종류만 계속 추천되어 다른 콘텐츠를 보기 어려워졌어요."
+            },
+            {
+              id: "case_3",
+              title: "서연 — 운동화 쇼핑",
+              description: "비슷한 운동화가 계속 추천되어 빨리 찾았지만, 다양한 스타일을 볼 기회를 놓쳤어요."
+            },
+            {
+              id: "case_4",
+              title: "준호 — 뉴스 에코챔버",
+              description: "준호는 특정 주제의 뉴스를 즐겨 읽었어요. 앱이 비슷한 관점의 기사만 추천해서 다양한 시각을 접하기 어려웠어요."
+            }
+          ],
+          validation: { required: true }
         },
         {
           id: "step3",
-          title: "STEP 3 · 상황별 판단하기",
-          question: "추천은 언제 도움이 되고, 언제 조심해야 할까요?",
-          hint: "상황마다 추천이 도움이 될 수도, 오히려 방해가 될 수도 있어요. 각 상황을 보고 판단해 보세요.",
-          uiMode: "per_case_judge",
-          judgmentOptions: [
-            { id: "helpful", label: "도움이 돼요" },
-            { id: "careful", label: "조심해야 해요" }
-          ],
-          reasonOptions: [
-            { id: "saves_time", label: "시간을 아껴줘요" },
-            { id: "narrows_choices", label: "선택을 좁혀요" },
-            { id: "increases_variety", label: "다양성을 높여요" },
-            { id: "creates_habit", label: "습관이 생겨요" }
-          ],
-          cases: [
-            { id: "s1", title: "좋아하는 가수 음악을 계속 찾을 때", description: "음악 앱이 같은 가수의 다른 음악을 추천해 줘요." },
-            { id: "s2", title: "숙제 주제를 조사할 때", description: "검색하면 항상 내가 좋아하는 내용만 나와서 다른 시각은 보기 어려워요." },
-            { id: "s3", title: "새로운 취미를 찾고 싶을 때", description: "늘 보던 것만 추천되어서 새로운 것을 발견하기 어려워요." }
-          ],
+          title: "STEP 3 · 더 주도적으로 사용하려면?",
+          question: "추천을 더 잘 활용하기 위해 나는 어떻게 할 수 있을까요?",
+          hint: "추천이 편리하더라도 내가 능동적으로 선택하는 방법을 생각해 보세요.",
+          uiMode: "free_text",
+          placeholder: "예: 추천을 참고하되, 다른 것도 직접 찾아보고 비교해서 결정하겠어요.",
+          validation: { required: true }
+        },
+        {
+          id: "step4",
+          title: "STEP 4 · 나의 추천 사용 원칙",
+          question: "추천을 더 주도적으로 활용하기 위한 나만의 원칙을 한 줄로 써보세요.",
+          hint: "예: 추천은 편리하지만 비슷한 것만 보여 줄 수 있으니, 다른 선택도 함께 살펴봐야 한다.",
+          uiMode: "free_text",
+          placeholder: "예: 추천은 참고하되, 새로운 것도 스스로 찾아보는 습관을 갖겠다.",
           validation: { required: true }
         }
       ],
       submit: {
         title: "추천 판단 능력 완성!",
-        message: "추천의 장점과 한계를 함께 생각하는 힘이 생겼어요.",
-        summaryLabels: { step1: "추천의 좋은 점", step2: "추천의 아쉬운 점", step3: "상황별 판단" }
+        message: "추천이 왜 이어지는지 이해하고, 장점과 한계를 판단하며, 더 주도적으로 활용하는 힘이 생겼어요.",
+        summaryLabels: {
+          step1: "추천 이유 분석",
+          step2: "사례별 판단 + 장단점",
+          step3: "주도적 활용 방법",
+          step4: "나의 사용 원칙"
+        }
       }
     }
   }
