@@ -49,6 +49,7 @@ const TaskStepRenderer = ({ step, gradeSpec, answers, setAnswers, domainColor, h
       return (
         <SJRenderer
           step={step}
+          gradeSpec={gradeSpec}
           answers={answers}
           setAnswers={setAnswers}
           domainColor={domainColor}

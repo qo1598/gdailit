@@ -151,7 +151,8 @@ export const E1_V3 = {
             { id: "listen", label: "말 알아듣기", emoji: "🎙️" },
             { id: "navigate", label: "길 알려주기", emoji: "🗺️" },
             { id: "translate", label: "번역하기", emoji: "🌐" },
-            { id: "auto_act", label: "자동으로 움직이기", emoji: "⚙️" }
+            { id: "auto_act", label: "자동으로 움직이기", emoji: "⚙️" },
+            { id: "other", label: "기타", emoji: "📌" }
           ],
           validation: { required: true }
         },
@@ -220,7 +221,8 @@ export const E1_V3 = {
             { id: "learns", label: "스스로 학습한다" },
             { id: "no_learning", label: "학습하지 않는다" },
             { id: "sensor_only", label: "센서로만 반응한다" },
-            { id: "context_aware", label: "내 상황을 파악한다" }
+            { id: "context_aware", label: "내 상황을 파악한다" },
+            { id: "other", label: "기타" }
           ],
           validation: { minSelections: 2 }
         },

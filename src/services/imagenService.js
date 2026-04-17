@@ -23,29 +23,54 @@ const TASK_IMAGE_CONTEXTS = {
 };
 
 /**
+ * 프롬프트 단계별 품질 프리셋.
+ * - simple  : 학생이 짧고 모호하게 부탁한 1단계. 최소 보정만 적용해 결과가 단순/평범하게 나오도록 유도.
+ * - detailed: 학생이 조건을 추가한 2단계. 조건을 충실히 반영하는 중간 품질.
+ * - expert  : 학생이 직접 설계한 3단계. 최고 품질 연출로 프롬프트 정성이 결과에 드러나도록 유도.
+ */
+const PROMPT_MODE_CONFIG = {
+  simple: {
+    prefix: "Basic simple 2D cartoon illustration, flat colors, minimal detail,",
+    suffix: ""
+  },
+  detailed: {
+    prefix: "2D illustration, cute cartoon style, colorful and vibrant, child-friendly art style, clear composition, carefully following the specified conditions,",
+    suffix: "Make the illustration organized and visually clear."
+  },
+  expert: {
+    prefix: "High quality 2D illustration, professional cartoon art style, vibrant detailed colors, perfect composition, child-friendly premium art,",
+    suffix: "Create a visually impressive and polished illustration that captures every detail of the prompt."
+  }
+};
+
+/**
  * 학생이 입력한 프롬프트와 선택한 주제를 결합해 Imagen 프롬프트를 구성한다.
  * @param {string} studentPrompt - 학생이 직접 입력한 프롬프트
  * @param {string} taskType - 'poster' | 'event_notice' | 'book_intro'
+ * @param {'simple'|'detailed'|'expert'} mode - 품질 프리셋
  */
-function buildImagenPrompt(studentPrompt, taskType) {
+function buildImagenPrompt(studentPrompt, taskType, mode = 'detailed') {
   const ctx = TASK_IMAGE_CONTEXTS[taskType] || TASK_IMAGE_CONTEXTS.poster;
+  const modeConf = PROMPT_MODE_CONFIG[mode] || PROMPT_MODE_CONFIG.detailed;
   return [
-    "2D illustration, cute cartoon style, colorful and vibrant, child-friendly art style,",
-    "simple and clear composition, no text overlay,",
+    modeConf.prefix,
+    "no text overlay,",
     ctx.en + ".",
     "Korean student's creative direction:",
-    studentPrompt
-  ].join(" ");
+    studentPrompt,
+    modeConf.suffix
+  ].filter(Boolean).join(" ");
 }
 
 /**
  * Imagen으로 이미지를 생성하고 base64 data URL을 반환한다.
  * @param {string} studentPrompt
  * @param {string} taskType
+ * @param {'simple'|'detailed'|'expert'} [mode='detailed']
  * @returns {Promise<string>} data:image/png;base64,...
  */
-export async function generateImage(studentPrompt, taskType) {
-  const fullPrompt = buildImagenPrompt(studentPrompt, taskType);
+export async function generateImage(studentPrompt, taskType, mode = 'detailed') {
+  const fullPrompt = buildImagenPrompt(studentPrompt, taskType, mode);
 
   const response = await ai.models.generateImages({
     model: "imagen-4.0-fast-generate-001",

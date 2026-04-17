@@ -53,7 +53,8 @@ export const E2_V3 = {
             { id: "check_book", label: "책에서 찾아봐요" },
             { id: "ask_adult", label: "선생님이나 어른에게 물어봐요" },
             { id: "search_internet", label: "인터넷에서 다시 검색해요" },
-            { id: "ask_again", label: "AI의 말을 그대로 사용해요" }
+            { id: "ask_again", label: "AI의 말을 그대로 사용해요" },
+            { id: "other", label: "기타" }
           ],
           validation: { required: true, minSelections: 1 }
         }
@@ -163,7 +164,8 @@ export const E2_V3 = {
             { id: "ask_many", label: "AI가 지칠때까지 질문을 해서 정확한 답을 이끌어낸다" },
             { id: "ask_source", label: "정보의 출처나 근거를 직접 확인한다" },
             { id: "do_copy", label: "AI 답을 그대로 써서 내가 이해한 내용을 정리한다" },
-            { id: "cross_check", label: "여러 자료를 비교해서 공통된 내용을 신뢰한다" }
+            { id: "cross_check", label: "여러 자료를 비교해서 공통된 내용을 신뢰한다" },
+            { id: "other", label: "기타" }
           ],
           validation: { required: true, minSelections: 1 }
         }
@@ -191,42 +193,78 @@ export const E2_V3 = {
       steps: [
         {
           id: "step1",
-          title: "STEP 1 · AI 답 처리 방식 판단하기",
-          question: "이 답은 그대로 써도 될까요, 고쳐야 할까요, 다시 확인해야 할까요?",
-          hint: "각 AI 응답을 읽고 '수용 / 수정 / 재검증' 중 하나를 고르세요. 그 다음 왜 그렇게 판단했는지 이유와 계획을 함께 골라보세요.",
-          uiMode: "per_case_judge",
+          title: "STEP 1 · AI 응답 살펴보기",
+          question: "다음 AI 응답들을 하나씩 읽어보세요.",
+          hint: "각 질문에 대한 AI의 답변을 잘 읽어보세요. 맞는 내용인지, 의심스러운 내용은 없는지 주의 깊게 살펴보세요.",
+          uiMode: "monitor_display",
+          samples: [
+            { id: "s1", prompt: "광합성이 뭐야?", response: "광합성은 식물이 햇빛을 이용해 이산화탄소와 물로 산소와 포도당을 만드는 과정이에요. 모든 식물은 광합성을 하며, 이 과정 없이는 살 수 없어요." },
+            { id: "s2", prompt: "세종대왕이 만든 발명품은?", response: "세종대왕은 수많은 기계를 발명했어요. 특히 그가 만든 컴퓨터는 당시 세계 최초였어요. 이 컴퓨터가 현대 기술의 기반이 되었죠." },
+            { id: "s3", prompt: "독도는 어디에 있어?", response: "독도는 대한민국 경상북도 울릉군에 속한 섬으로, 동해에 위치해 있어요. 행정구역상 울릉읍 독도리입니다." },
+            { id: "s4", prompt: "달은 얼마나 자주 지구를 돌아?", response: "달은 약 24시간마다 지구를 한 바퀴 돌아요. 그래서 우리는 항상 달의 같은 면만 볼 수 있는 거예요." },
+            { id: "s5", prompt: "블랙홀 안에는 뭐가 있어?", response: "블랙홀 안에 들어가면 즉시 시간이 멈추고, 그 안에는 또 다른 우주가 존재한다는 것이 과학적으로 증명됐어요. 인류가 곧 블랙홀 내부를 직접 탐험할 계획도 있어요." }
+          ],
+          validation: { required: false }
+        },
+        {
+          id: "step2",
+          title: "STEP 2 · 수용·수정·재검증 판단하기",
+          question: "각 AI 응답을 어떻게 처리할까요?",
+          hint: "각 AI 응답을 읽고 '수용 / 수정 / 재검증' 중 하나를 선택하세요. '수용'은 그대로 써도 되는 경우, '수정'은 일부를 고쳐야 하는 경우, '재검증'은 다시 확인해야 하는 경우예요.",
+          uiMode: "per_response_judge",
+          samples: [
+            { id: "s1", prompt: "광합성이 뭐야?", response: "광합성은 식물이 햇빛을 이용해 이산화탄소와 물로 산소와 포도당을 만드는 과정이에요. 모든 식물은 광합성을 하며, 이 과정 없이는 살 수 없어요." },
+            { id: "s2", prompt: "세종대왕이 만든 발명품은?", response: "세종대왕은 수많은 기계를 발명했어요. 특히 그가 만든 컴퓨터는 당시 세계 최초였어요. 이 컴퓨터가 현대 기술의 기반이 되었죠." },
+            { id: "s3", prompt: "독도는 어디에 있어?", response: "독도는 대한민국 경상북도 울릉군에 속한 섬으로, 동해에 위치해 있어요. 행정구역상 울릉읍 독도리입니다." },
+            { id: "s4", prompt: "달은 얼마나 자주 지구를 돌아?", response: "달은 약 24시간마다 지구를 한 바퀴 돌아요. 그래서 우리는 항상 달의 같은 면만 볼 수 있는 거예요." },
+            { id: "s5", prompt: "블랙홀 안에는 뭐가 있어?", response: "블랙홀 안에 들어가면 즉시 시간이 멈추고, 그 안에는 또 다른 우주가 존재한다는 것이 과학적으로 증명됐어요. 인류가 곧 블랙홀 내부를 직접 탐험할 계획도 있어요." }
+          ],
           judgmentOptions: [
-            { id: "use", label: "수용 (그대로 사용)" },
-            { id: "revise", label: "수정 (고쳐서 사용)" },
-            { id: "verify", label: "재검증 (다시 확인 필요)" }
+            { id: "use", label: "수용", desc: "그대로 사용" },
+            { id: "revise", label: "수정", desc: "고쳐서 사용" },
+            { id: "verify", label: "재검증", desc: "다시 확인" }
           ],
+          validation: { required: true }
+        },
+        {
+          id: "step3",
+          title: "STEP 3 · 이유 고르기",
+          question: "수정 또는 재검증이 필요한 이유를 골라보세요.",
+          hint: "각 응답에서 왜 수정이나 재검증이 필요한지 가장 잘 맞는 이유를 선택하세요. 해당되는 것이 없다면 '기타'를 눌러 직접 써보세요.",
+          uiMode: "filtered_reason_select",
+          sourceStepId: "step2",
+          filterJudgments: ["revise", "verify"],
           reasonOptions: [
-            { id: "uncertain_fact", label: "사실이 불확실해요" },
-            { id: "partly_correct", label: "일부만 맞아요" },
-            { id: "no_evidence", label: "근거가 없어요" },
-            { id: "unclear_expression", label: "표현이 애매해요" },
-            { id: "mostly_correct", label: "거의 맞아요" }
+            { id: "wrong_fact", label: "사실이 틀렸어요" },
+            { id: "not_proven", label: "증명되지 않은 것을 사실처럼 말했어요" },
+            { id: "partly_wrong", label: "맞는 부분도 있지만 틀린 부분도 있어요" },
+            { id: "no_source", label: "출처나 근거가 없어요" },
+            { id: "misleading", label: "사실처럼 들리지만 확인이 필요해요" },
+            { id: "other", label: "기타" }
           ],
-          reasonMulti: true,
-          planOptions: [
-            { id: "search_more", label: "더 찾아보기" },
-            { id: "compare_sources", label: "다른 자료 비교" },
-            { id: "rewrite", label: "내 말로 다시 쓰기" },
-            { id: "ask_human", label: "전문가·어른에게 확인" },
-            { id: "remove_uncertain_part", label: "불확실한 부분 빼기" }
-          ],
-          cases: [
-            { id: "r1", title: "AI 응답 1", description: "광합성은 식물이 햇빛을 이용해 이산화탄소와 물로 산소와 포도당을 만드는 과정이에요. 모든 식물은 광합성을 하며, 이 과정 없이는 살 수 없어요." },
-            { id: "r2", title: "AI 응답 2", description: "조선시대의 과학기술은 매우 발달했으며, 세종대왕이 발명한 수많은 기계들이 현대 기술의 기반이 되었어요. 특히 그가 만든 컴퓨터는 당시 세계 최초였어요." },
-            { id: "r3", title: "AI 응답 3", description: "독도는 대한민국 경상북도 울릉군에 속한 섬으로, 동해에 위치해 있어요. 행정구역상 울릉읍 독도리입니다." }
-          ],
+          validation: { required: true }
+        },
+        {
+          id: "step4",
+          title: "STEP 4 · 수정·재검증 계획 세우기",
+          question: "각 응답을 어떻게 처리할지 계획을 직접 써보세요.",
+          hint: "각 응답을 어떻게 고치거나 다시 확인할지 직접 써보세요. 예: 과학 교과서를 찾아보겠어요, 선생님께 여쭤볼게요 등.",
+          uiMode: "filtered_plan_text",
+          sourceStepId: "step2",
+          filterJudgments: ["revise", "verify"],
+          placeholder: "어떻게 수정하거나 다시 확인할지 계획을 써보세요.",
           validation: { required: true }
         }
       ],
       submit: {
         title: "AI 답 처리 능력 완성!",
         message: "AI 답을 수용·수정·재검증으로 나누는 판단력이 생겼어요.",
-        summaryLabels: { step1: "응답별 판단 결과" }
+        summaryLabels: {
+          step1: "AI 응답 확인",
+          step2: "수용·수정·재검증 판단",
+          step3: "수정·재검증 이유",
+          step4: "처리 계획"
+        }
       }
     }
   }

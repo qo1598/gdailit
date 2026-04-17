@@ -23,6 +23,7 @@ const MissionShell = ({
   onNext,
   onStart,
   uiState,
+  dwellRemaining,
   children
 }) => {
   const navigate = useNavigate();
@@ -112,20 +113,33 @@ const MissionShell = ({
             <ChevronLeft size={20} />
             이전
           </button>
-          <button
-            onClick={onNext}
-            className="v3-btn-next"
-            style={{ backgroundColor: domainColor, opacity: uiState?.loading ? 0.7 : 1 }}
-            disabled={uiState?.loading}
-          >
-            {uiState?.loading ? (
-              <Loader2 size={20} style={{ animation: 'spin 1s linear infinite' }} />
-            ) : isSubmit ? (
-              <>제출하기 <Check size={18} /></>
-            ) : (
-              <>다음 <ChevronRight size={20} /></>
-            )}
-          </button>
+          {(() => {
+            const isBlocked = uiState?.loading || dwellRemaining > 0;
+            const dwellSec = dwellRemaining > 0 ? Math.ceil(dwellRemaining / 1000) : 0;
+            return (
+              <button
+                onClick={onNext}
+                className="v3-btn-next"
+                style={{
+                  backgroundColor: isBlocked ? '#94a3b8' : domainColor,
+                  opacity: 1,
+                  cursor: isBlocked ? 'not-allowed' : 'pointer',
+                  transition: 'background-color 0.3s ease'
+                }}
+                disabled={isBlocked}
+              >
+                {uiState?.loading ? (
+                  <Loader2 size={20} style={{ animation: 'spin 1s linear infinite' }} />
+                ) : dwellSec > 0 ? (
+                  <>{dwellSec}초 후 가능</>
+                ) : isSubmit ? (
+                  <>제출하기 <Check size={18} /></>
+                ) : (
+                  <>다음 <ChevronRight size={20} /></>
+                )}
+              </button>
+            );
+          })()}
         </div>
       )}
     </div>

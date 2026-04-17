@@ -67,24 +67,20 @@ export const M3_V3 = {
             { id: "better_fit", label: "목적에 더 맞아요" },
             { id: "better_format", label: "형식이 더 좋아요" },
             { id: "better_tone", label: "분위기가 더 적절해요" },
-            { id: "easier_to_use", label: "바로 쓸 수 있어요" }
+            { id: "easier_to_use", label: "바로 쓸 수 있어요" },
+            { id: "other", label: "기타 (직접 쓰기)" }
           ],
           validation: { requiredFields: ["choice", "reasons"] }
         },
         {
           id: "step4",
-          title: "STEP 4 · 프롬프트 고치기",
-          question: "요소를 직접 조합해서 더 좋은 프롬프트를 직접 설계해보세요.",
-          uiMode: "prompt_builder",
-          fields: [
-            { id: "audience", label: "대상", placeholder: "예: 초등학생, 선생님, 친구들" },
-            { id: "goal", label: "목적", placeholder: "예: 환경 보호를 알리려고" },
-            { id: "format", label: "형식", placeholder: "예: 3줄 시, 슬로건 3개" },
-            { id: "tone", label: "분위기", placeholder: "예: 밝고 희망차게, 진지하게" },
-            { id: "must_include", label: "꼭 넣을 내용", placeholder: "예: 재활용, 탄소 중립" },
-            { id: "length", label: "길이", placeholder: "예: 50자 이내, 3문장" }
-          ],
-          validation: { minFields: 3, requiredFields: ["full_text", "output_revised"] }
+          title: "STEP 4 · 나만의 프롬프트 설계",
+          question: "앞에서 배운 요소들을 직접 활용해서 나만의 프롬프트 문장을 완성해보세요.",
+          hint: "프롬프트에 넣으면 좋은 요소예요: 대상(누구에게?), 목적(왜 만드나요?), 형식(어떤 모습?), 분위기(밝게? 진지하게?), 꼭 넣을 내용, 길이. 이 요소들을 하나의 문장으로 자연스럽게 연결해보세요!",
+          uiMode: "prompt_single_input",
+          promptPlaceholder: "예: 초등학생이 이해하기 쉽게, 밝고 희망찬 분위기로, \"함께\"라는 단어를 꼭 넣어서, 3줄짜리 환경 보호 포스터 문구 만들어줘",
+          reminderElements: ["대상", "목적", "형식", "분위기", "꼭 넣을 내용", "길이"],
+          validation: { minLength: 20, requiredFields: ["prompt_revised", "output_revised"] }
         },
         {
           id: "step5",

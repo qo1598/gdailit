@@ -26,7 +26,7 @@ import { supabase } from '../supabaseClient';
  * 미션 step 구조가 바뀌어도 answers JSONB 필드만 수정하면 되므로
  * 테이블 스키마 변경 없이 유지 가능합니다.
  */
-export async function submitMissionV3({ userId, gradeSpec, mission, answers, startedAt }) {
+export async function submitMissionV3({ userId, gradeSpec, mission, answers, startedAt, hintUsed = {}, timeSpent = {} }) {
   const stepAnswers = {};
   gradeSpec.steps.forEach(step => {
     const ans = answers[step.id];
@@ -46,7 +46,11 @@ export async function submitMissionV3({ userId, gradeSpec, mission, answers, sta
       step_trace: gradeSpec.steps.map(s => ({
         step: s.id,
         completed: answers[s.id] !== undefined && answers[s.id] !== null,
+        hint_used: hintUsed[s.id] || false,
+        time_spent_sec: timeSpent[s.id] || null,
       })),
+      hint_used: hintUsed,
+      time_spent_sec: timeSpent,
     },
     started_at: startedAt,
     submitted_at: new Date().toISOString(),

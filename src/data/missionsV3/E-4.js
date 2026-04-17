@@ -33,7 +33,8 @@ export const E4_V3 = {
             { id: "usage_freq", label: "사용 경험이 달라요", emoji: "📱", isAI: true },
             { id: "wearing_glasses", label: "안경을 쓰거나 안 써요", emoji: "👓", isAI: true },
             { id: "same_age", label: "나이가 같아요", emoji: "🎂", isAI: false },
-            { id: "same_device", label: "같은 기기를 써요", emoji: "📱", isAI: false }
+            { id: "same_device", label: "같은 기기를 써요", emoji: "📱", isAI: false },
+            { id: "other", label: "기타", emoji: "📌" }
           ],
           validation: { minSelections: 1 }
         },

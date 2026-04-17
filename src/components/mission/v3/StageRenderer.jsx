@@ -26,7 +26,8 @@ const StageRenderer = ({
   answers,
   setAnswers,
   uiState,
-  onStart
+  onStart,
+  onHintUsed
 }) => {
   const navigate = useNavigate();
   const currentStep = gradeSpec.steps?.[stepIndex];
@@ -244,6 +245,10 @@ const StageRenderer = ({
   // ─── TASK ──────────────────────────────────────────────────────
   if (stage === 'task') {
     const hint = currentStep?.hint;
+    const handleHintClick = () => {
+      setHintOpen(true);
+      if (onHintUsed && currentStep?.id) onHintUsed(currentStep.id);
+    };
     return (
       <>
         <TaskStepRenderer
@@ -253,7 +258,7 @@ const StageRenderer = ({
           setAnswers={setAnswers}
           domainColor={domainColor}
           hint={hint}
-          onHintClick={() => setHintOpen(true)}
+          onHintClick={handleHintClick}
         />
 
         {/* Hint Modal */}
@@ -397,6 +402,11 @@ const StageRenderer = ({
         const preview = ans.full_text.length > 35 ? ans.full_text.slice(0, 35) + '…' : ans.full_text;
         return `"${preview}"`;
       }
+      if (step.uiMode === 'prompt_single_input') {
+        if (!ans?.prompt_revised) return '—';
+        const preview = ans.prompt_revised.length > 35 ? ans.prompt_revised.slice(0, 35) + '…' : ans.prompt_revised;
+        return `"${preview}"`;
+      }
       if (step.uiMode === 'result_compare_final') {
         if (!ans?.best) return '—';
         const bestMap = { initial: '처음 결과', detailed: '두 번째 결과', revised: '내가 고친 결과' };
@@ -433,6 +443,36 @@ const StageRenderer = ({
       if (step.uiMode === 'free_text') {
         if (!ans || !ans.trim()) return '—';
         return ans.length > 40 ? ans.slice(0, 40) + '…' : ans;
+      }
+      if (step.uiMode === 'single_select_cards') {
+        const TOPIC_LABEL = { animal: '동물', cooking: '요리', vehicle: '탈것' };
+        return TOPIC_LABEL[ans] || ans || '—';
+      }
+      if (step.uiMode === 'yesno_quiz') {
+        if (!ans || !ans.length) return '—';
+        const yesCount = ans.filter(r => r.answer === true).length;
+        return `예 ${yesCount}개 / 아니오 ${ans.length - yesCount}개`;
+      }
+      if (step.uiMode === 'recommendation_reveal') {
+        if (!ans) return '—';
+        const ITEM_LABEL = {
+          rabbit: '토끼', dog: '강아지', cat: '고양이', dolphin: '돌고래', eagle: '독수리',
+          penguin: '펭귄', tiger: '호랑이', giraffe: '기린',
+          cookie: '쿠키', pizza: '피자', fruit_skewer: '과일꼬치', gimbap: '김밥',
+          icecream: '아이스크림', sandwich: '샌드위치', pancake: '팬케이크', riceball: '주먹밥',
+          sports_car: '스포츠카', train: '기차', airplane: '비행기', ship: '배',
+          fire_truck: '소방차', police_car: '경찰차', excavator: '굴착기', bus: '버스'
+        };
+        return ITEM_LABEL[ans] || ans;
+      }
+      if (step.uiMode === 'reason_reflect') {
+        if (!ans) return '—';
+        const tags = step.reasonTagsByTopic ? Object.values(step.reasonTagsByTopic).flat() : [];
+        const selected = (ans.reason_selected || []).map(id => tags.find(t => t.id === id)?.label || id);
+        const expr = ans.reason_expression?.trim();
+        const parts = selected.length > 0 ? [selected.join(', ')] : [];
+        if (expr) parts.push(`"${expr.length > 20 ? expr.slice(0, 20) + '…' : expr}"`);
+        return parts.join(' · ') || '—';
       }
       if (step.uiMode === 'ds_result_check') {
         if (ans?.correct_count === undefined) return '—';
@@ -475,6 +515,71 @@ const StageRenderer = ({
           return `${c.title}: ${label}`;
         }).filter(Boolean);
         return parts.join(' · ') || '—';
+      }
+      if (step.uiMode === 'sample_full_carousel') {
+        if (!ans || Object.keys(ans).length === 0) return '—';
+        const counts = { use: 0, revise: 0, verify: 0 };
+        (step.samples || []).forEach(s => {
+          const j = ans[s.id]?.judgment;
+          if (j && counts[j] !== undefined) counts[j]++;
+        });
+        const parts = [];
+        if (counts.use) parts.push(`수용 ${counts.use}개`);
+        if (counts.revise) parts.push(`수정 ${counts.revise}개`);
+        if (counts.verify) parts.push(`재검증 ${counts.verify}개`);
+        return parts.join(' · ') || '—';
+      }
+      if (step.uiMode === 'monitor_display') {
+        return ans?.confirmed ? 'AI 응답 확인 완료' : '—';
+      }
+      if (step.uiMode === 'per_response_judge') {
+        if (!ans || Object.keys(ans).length === 0) return '—';
+        const opts = step.judgmentOptions || [];
+        const counts = { use: 0, revise: 0, verify: 0 };
+        Object.values(ans).forEach(v => { if (counts[v] !== undefined) counts[v]++; });
+        const parts = [];
+        if (counts.use) parts.push(`수용 ${counts.use}개`);
+        if (counts.revise) parts.push(`수정 ${counts.revise}개`);
+        if (counts.verify) parts.push(`재검증 ${counts.verify}개`);
+        return parts.join(' · ') || '—';
+      }
+      if (step.uiMode === 'filtered_reason_select') {
+        if (!ans || Object.keys(ans).length === 0) return '—';
+        const reasonOpts = step.reasonOptions || [];
+        const parts = Object.entries(ans).map(([id, reasonId]) => {
+          const sample = (step.reasonOptions ? [] : []).find(s => s.id === id);
+          const label = reasonOpts.find(r => r.id === reasonId)?.label || reasonId;
+          return label;
+        });
+        return [...new Set(parts)].join(', ') || '—';
+      }
+      if (step.uiMode === 'filtered_plan_text') {
+        if (!ans || Object.keys(ans).length === 0) return '—';
+        const count = Object.values(ans).filter(v => v?.trim()).length;
+        return `${count}개 계획 작성 완료`;
+      }
+      // ─── E-3-M uiModes ───
+      if (step.uiMode === 'clothing_grid_with_rec') {
+        return ans?.confirmed ? '옷 20개 확인 완료' : '—';
+      }
+      if (step.uiMode === 'star_rating_carousel') {
+        const ratedCount = Object.keys(ans || {}).length;
+        if (ratedCount === 0) return '—';
+        const avg = (Object.values(ans).reduce((a, b) => a + b, 0) / ratedCount).toFixed(1);
+        return `${ratedCount}개 평가 · 평균 ${avg}점`;
+      }
+      if (step.uiMode === 'recommendation_grid') {
+        if (!ans?.confirmed) return '—';
+        const clothingItems = gradeSpec?.clothingItems || [];
+        const recNames = (ans.recommendedIds || []).map(id => clothingItems.find(i => i.id === id)?.name).filter(Boolean);
+        return recNames.length > 0 ? recNames.join(', ') : '추천 확인 완료';
+      }
+      if (step.uiMode === 'multi_free_text') {
+        const qs = step.questions || [];
+        const answered = qs.filter(q => ans?.[q.id]?.trim());
+        if (answered.length === 0) return '—';
+        const firstText = ans[answered[0].id];
+        return firstText.length > 35 ? firstText.slice(0, 35) + '…' : firstText;
       }
       return '—';
     };

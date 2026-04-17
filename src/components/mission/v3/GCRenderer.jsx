@@ -36,6 +36,8 @@ const GCRenderer = ({ step, answers, setAnswers, domainColor, hint, onHintClick 
       return <TextCompareABStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
     case 'prompt_builder':
       return <PromptBuilderStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
+    case 'prompt_single_input':
+      return <PromptSingleInputStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
     case 'result_compare_final':
       return <ResultCompareFinalStep step={step} answers={answers} setAnswers={setAnswers} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />;
     default:
@@ -251,6 +253,7 @@ const DefectSelectStep = ({ step, answers, setAnswers, domainColor, hint, onHint
 // ─── single_select_buttons ─────────────────────────────────────────
 const SingleSelectStep = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
   const selected = answers[step.id] || null;
+  const otherText = answers[`${step.id}_other_text`] || '';
 
   const selectOption = (id) => {
     setAnswers(prev => ({ ...prev, [step.id]: id }));
@@ -302,6 +305,29 @@ const SingleSelectStep = ({ step, answers, setAnswers, domainColor, hint, onHint
         })}
       </div>
 
+      {selected === 'other' && (
+        <div className="animate-slide-up" style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+          <label style={{ fontSize: 'clamp(0.85rem, 2.5vw, 0.95rem)', fontWeight: 700, color: '#64748b' }}>
+            어떤 내용인지 써보세요!
+          </label>
+          <input
+            type="text"
+            placeholder="직접 써보세요..."
+            value={otherText}
+            onChange={(e) => setAnswers(prev => ({ ...prev, [`${step.id}_other_text`]: e.target.value }))}
+            autoFocus
+            maxLength={40}
+            style={{
+              width: '100%', padding: 'clamp(12px, 3vw, 16px) clamp(14px, 4vw, 18px)',
+              border: `2.5px solid ${domainColor}`, borderRadius: '14px',
+              fontSize: 'clamp(1rem, 3vw, 1.125rem)', fontWeight: 700,
+              outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit',
+              color: '#1e293b', backgroundColor: 'white'
+            }}
+          />
+        </div>
+      )}
+
       <SelectionHint count={selected ? 1 : 0} mode="single" />
     </div>
   );
@@ -311,6 +337,7 @@ const SingleSelectStep = ({ step, answers, setAnswers, domainColor, hint, onHint
 const ImageCompareStep = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
   const chosenImage = answers[step.id]?.image || null;
   const chosenReasons = answers[step.id]?.reasons || [];
+  const otherText = answers[step.id]?.other_text || '';
 
   const selectImage = (img) => {
     setAnswers(prev => ({ ...prev, [step.id]: { ...prev[step.id], image: img } }));
@@ -320,7 +347,9 @@ const ImageCompareStep = ({ step, answers, setAnswers, domainColor, hint, onHint
     const next = chosenReasons.includes(reasonId)
       ? chosenReasons.filter(r => r !== reasonId)
       : [...chosenReasons, reasonId];
-    setAnswers(prev => ({ ...prev, [step.id]: { ...prev[step.id], reasons: next } }));
+    const updates = { reasons: next };
+    if (!next.includes('other')) updates.other_text = '';
+    setAnswers(prev => ({ ...prev, [step.id]: { ...prev[step.id], ...updates } }));
   };
 
   return (
@@ -420,6 +449,25 @@ const ImageCompareStep = ({ step, answers, setAnswers, domainColor, hint, onHint
               );
             })}
           </div>
+          {chosenReasons.includes('other') && (
+            <div className="animate-slide-up" style={{ marginTop: '10px' }}>
+              <input
+                type="text"
+                placeholder="직접 써보세요..."
+                value={otherText}
+                onChange={(e) => setAnswers(prev => ({ ...prev, [step.id]: { ...prev[step.id], other_text: e.target.value } }))}
+                autoFocus
+                maxLength={40}
+                style={{
+                  width: '100%', padding: 'clamp(10px, 2.5vw, 13px) clamp(12px, 3vw, 16px)',
+                  border: `2.5px solid ${domainColor}`, borderRadius: '12px',
+                  fontSize: 'clamp(0.9rem, 2.8vw, 1rem)', fontWeight: 700,
+                  outline: 'none', boxSizing: 'border-box', fontFamily: 'inherit',
+                  color: '#1e293b', backgroundColor: 'white'
+                }}
+              />
+            </div>
+          )}
         </div>
       )}
 
@@ -558,7 +606,7 @@ const TaskAndPromptStep = ({ step, answers, setAnswers, domainColor, hint, onHin
     setIsGenerating(true);
     setGenError(null);
     try {
-      const imageUrl = await generateImage(data.prompt_initial, data.task_type);
+      const imageUrl = await generateImage(data.prompt_initial, data.task_type, 'simple');
       patch({ output_initial: imageUrl });
     } catch (err) {
       setGenError(err.message || '이미지 생성에 실패했어요. 다시 시도해주세요.');
@@ -694,7 +742,7 @@ const PromptWithConditionsStep = ({ step, answers, setAnswers, domainColor, hint
     setIsGenerating(true);
     setGenError(null);
     try {
-      const imageUrl = await generateImage(data.prompt_detailed, taskType);
+      const imageUrl = await generateImage(data.prompt_detailed, taskType, 'detailed');
       patch({ output_detailed: imageUrl });
     } catch (err) {
       setGenError(err.message || '이미지 생성에 실패했어요. 다시 시도해주세요.');
@@ -805,7 +853,9 @@ const TextCompareABStep = ({ step, answers, setAnswers, domainColor, hint, onHin
   const toggleReason = (id) => {
     const cur = data.reasons || [];
     const next = cur.includes(id) ? cur.filter(r => r !== id) : [...cur, id];
-    patch({ reasons: next });
+    const updates = { reasons: next };
+    if (id === 'other' && !next.includes('other')) updates.other_text = '';
+    patch(updates);
   };
 
   return (
@@ -880,6 +930,41 @@ const TextCompareABStep = ({ step, answers, setAnswers, domainColor, hint, onHin
               );
             })}
           </div>
+          {/* 기타 선택 시 주관식 입력 */}
+          {(data.reasons || []).includes('other') && (
+            <div className="animate-slide-up" style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <label style={{ fontSize: 'clamp(0.82rem, 2.5vw, 0.9rem)', fontWeight: 700, color: '#475569' }}>
+                어떤 점이 좋았나요? <span style={{ color: domainColor }}>*</span>
+              </label>
+              <input
+                type="text"
+                placeholder="직접 이유를 써보세요..."
+                value={data.other_text || ''}
+                onChange={e => patch({ other_text: e.target.value })}
+                autoFocus
+                maxLength={80}
+                style={{
+                  width: '100%',
+                  padding: 'clamp(10px, 3vw, 12px) clamp(12px, 3.5vw, 14px)',
+                  border: `2px solid ${data.other_text?.trim() ? domainColor : '#fbbf24'}`,
+                  borderRadius: '12px',
+                  fontSize: 'clamp(0.875rem, 2.8vw, 1rem)',
+                  fontWeight: 600,
+                  outline: 'none',
+                  boxSizing: 'border-box',
+                  fontFamily: 'inherit',
+                  color: '#1e293b',
+                  backgroundColor: 'white',
+                  transition: 'border-color 0.2s'
+                }}
+              />
+              {!data.other_text?.trim() && (
+                <p style={{ fontSize: 'clamp(0.75rem, 2.2vw, 0.82rem)', color: '#f59e0b', fontWeight: 700, margin: 0 }}>
+                  기타를 선택했다면 내용을 꼭 적어주세요!
+                </p>
+              )}
+            </div>
+          )}
         </div>
       )}
 
@@ -1013,6 +1098,128 @@ const PromptBuilderStep = ({ step, answers, setAnswers, domainColor, hint, onHin
         <GeneratedImageResult
           imageUrl={data.output_revised}
           label="내가 고친 결과"
+          domainColor={domainColor}
+        />
+      )}
+    </div>
+  );
+};
+
+// ─── prompt_single_input ──────────────────────────────────────────
+const PromptSingleInputStep = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
+  const data = answers[step.id] || {};
+  const taskType = answers['step1']?.task_type;
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [genError, setGenError] = useState(null);
+
+  const patch = (updates) =>
+    setAnswers(prev => ({ ...prev, [step.id]: { ...(prev[step.id] || {}), ...updates } }));
+
+  const handleGenerate = async () => {
+    if (!data.prompt_revised?.trim()) return;
+    setIsGenerating(true);
+    setGenError(null);
+    try {
+      const imageUrl = await generateImage(data.prompt_revised, taskType, 'expert');
+      patch({ output_revised: imageUrl });
+    } catch (err) {
+      setGenError(err.message || '이미지 생성에 실패했어요. 다시 시도해주세요.');
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  const charCount = (data.prompt_revised || '').length;
+  const minLength = step.validation?.minLength || 20;
+  const isLongEnough = charCount >= minLength;
+
+  return (
+    <div className="animate-slide-up" style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px, 4vw, 20px)' }}>
+      <StepHeader step={step} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />
+
+      {/* 요소 참고 배지 */}
+      {step.reminderElements && (
+        <div style={{
+          padding: 'clamp(10px, 3vw, 12px) 14px',
+          backgroundColor: `${domainColor}0D`, borderRadius: '12px',
+          border: `1.5px solid ${domainColor}30`
+        }}>
+          <p style={{ fontSize: 'clamp(0.72rem, 2.2vw, 0.8rem)', fontWeight: 800, color: '#64748b', margin: '0 0 8px' }}>
+            포함하면 좋은 요소들 (참고만 해요)
+          </p>
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px' }}>
+            {step.reminderElements.map(el => (
+              <span key={el} style={{
+                padding: '3px 10px', borderRadius: '999px',
+                backgroundColor: `${domainColor}18`,
+                border: `1px solid ${domainColor}40`,
+                fontSize: 'clamp(0.72rem, 2.2vw, 0.78rem)', fontWeight: 700,
+                color: '#475569'
+              }}>
+                {el}
+              </span>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* 프롬프트 입력 */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <p style={{ fontSize: 'clamp(0.8rem, 2.5vw, 0.88rem)', fontWeight: 800, color: '#64748b', margin: 0 }}>
+            나만의 프롬프트 작성
+          </p>
+          <span style={{
+            fontSize: 'clamp(0.72rem, 2.2vw, 0.78rem)', fontWeight: 900,
+            color: isLongEnough ? domainColor : '#94a3b8',
+            padding: '3px 8px', borderRadius: '999px',
+            backgroundColor: isLongEnough ? `${domainColor}15` : '#f1f5f9'
+          }}>
+            {charCount}자{!isLongEnough && ` (최소 ${minLength}자)`}
+          </span>
+        </div>
+        <textarea
+          value={data.prompt_revised || ''}
+          onChange={e => patch({ prompt_revised: e.target.value, output_revised: '' })}
+          placeholder={step.promptPlaceholder || '앞에서 배운 요소들을 활용해 나만의 프롬프트를 직접 써보세요.'}
+          rows={5}
+          style={{
+            width: '100%', padding: 'clamp(12px, 3vw, 14px)',
+            border: `2px solid ${isLongEnough ? domainColor + '80' : '#e2e8f0'}`,
+            borderRadius: '14px', fontSize: 'clamp(0.9rem, 2.8vw, 1rem)',
+            fontWeight: 600, outline: 'none', resize: 'vertical',
+            fontFamily: 'inherit', color: '#1e293b', backgroundColor: 'white',
+            transition: 'border-color 0.2s', boxSizing: 'border-box',
+            lineHeight: 1.6
+          }}
+        />
+        <button
+          onClick={handleGenerate}
+          disabled={!isLongEnough || isGenerating}
+          style={{
+            display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px',
+            padding: 'clamp(12px, 3.5vw, 14px)', borderRadius: '14px',
+            backgroundColor: isLongEnough && !isGenerating ? domainColor : '#e2e8f0',
+            color: isLongEnough && !isGenerating ? 'white' : '#94a3b8',
+            border: 'none', cursor: isLongEnough && !isGenerating ? 'pointer' : 'default',
+            fontWeight: 900, fontSize: 'clamp(0.9rem, 2.8vw, 1rem)',
+            fontFamily: 'inherit', transition: 'all 0.15s ease'
+          }}
+        >
+          {isGenerating
+            ? <><Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} /> AI 이미지 생성 중...</>
+            : !isLongEnough
+              ? `${minLength - charCount}자 더 입력해주세요`
+              : <><Sparkles size={16} /> AI 이미지 만들기</>
+          }
+        </button>
+        <GenerateError error={genError} onRetry={handleGenerate} />
+      </div>
+
+      {data.output_revised && (
+        <GeneratedImageResult
+          imageUrl={data.output_revised}
+          label="내가 설계한 프롬프트 결과"
           domainColor={domainColor}
         />
       )}

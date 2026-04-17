@@ -55,7 +55,8 @@ export const C2_V3 = {
             { id: "shape_confusion", label: "비슷한 모양을 헷갈렸어요" },
             { id: "position_error", label: "물체 위치를 잘못 계산했어요" },
             { id: "scene_mix", label: "여러 장면을 섞어버렸어요" },
-            { id: "no_physics", label: "물리 법칙을 이해 못했어요" }
+            { id: "no_physics", label: "물리 법칙을 이해 못했어요" },
+            { id: "other", label: "기타" }
           ],
           validation: { required: true }
         },
@@ -71,7 +72,8 @@ export const C2_V3 = {
             { id: "correct_shadow", label: "그림자가 올바른 방향이에요" },
             { id: "right_position", label: "물건 위치가 맞아요" },
             { id: "no_weird_shape", label: "이상한 모양이 없어요" },
-            { id: "overall_better", label: "전체적으로 더 자연스러워요" }
+            { id: "overall_better", label: "전체적으로 더 자연스러워요" },
+            { id: "other", label: "기타 (직접 쓰기)" }
           ],
           validation: { required: true }
         }
