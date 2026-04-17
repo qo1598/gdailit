@@ -390,6 +390,20 @@ const MissionRunner = ({ userId }) => {
         return false;
       }
     }
+    // ─── E-4-L uiModes ───
+    if (step.uiMode === 'case_view_carousel') {
+      return true;
+    }
+    if (step.uiMode === 'person_reason_select') {
+      if (!answer?.person) {
+        setUiState(prev => ({ ...prev, validationError: '더 어려울 것 같은 사람을 선택해주세요.' }));
+        return false;
+      }
+      if (!answer?.reasons || answer.reasons.length === 0) {
+        setUiState(prev => ({ ...prev, validationError: '이유를 1개 이상 선택해주세요.' }));
+        return false;
+      }
+    }
     // ─── DS uiModes ───
     if (step.uiMode === 'ds_training_cards') {
       const min = step.validation?.minHighlights || 2;

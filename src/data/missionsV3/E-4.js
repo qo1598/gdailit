@@ -11,50 +11,116 @@ export const E4_V3 = {
       performanceType: "TD",
       description: "같은 AI 기술도 사람에 따라 다르게 느껴질 수 있음을 알아보는 미션이에요.",
       intro: [
-        { text: "어떤 AI는 사람의 얼굴이나 목소리를 알아보기도 해요.\n그런데 어떤 사람은 잘 되고, 어떤 사람은 잘 안 될 때도 있어요." },
-        { text: "그래서 같은 기술이라도 모두에게 똑같이 편한 것은 아닐 수 있어요.\n누군가에게는 쉬운 것이 다른 사람에게는 어려울 수도 있어요." },
-        { text: "오늘은 같은 기술을 서로 다른 사람이 사용할 때 어떤 점이 다를지 살펴볼 거예요.\n누가 더 불편할 수 있을지 생각해 봅시다." }
+        { text: "어떤 AI는 사람의 얼굴이나 목소리, 말하기 방법을 알아보고 반응해요.\n그런데 같은 기술을 써도 어떤 사람에게는 잘 되고, 어떤 사람에게는 잘 안 될 때가 있어요." },
+        { text: "그래서 같은 AI 기술이라도 모두에게 똑같이 편하거나 똑같이 잘 맞는 것은 아닐 수 있어요.\n누군가에게는 쉬운 기술이 다른 사람에게는 어렵게 느껴질 수도 있어요." },
+        { text: "오늘은 같은 기술을 서로 다른 사람이 사용할 때 어떤 점이 다를지 살펴볼 거예요.\n그리고 누가 더 어려울 수 있는지, 왜 그렇게 생각하는지, 어떻게 하면 둘 다 더 잘 쓸 수 있을지 생각해 볼 거예요." }
       ],
       coreUnderstanding: [
-        { id: 1, question: "왜 이런 활동을 해보는 것이 중요할까요?", answer: "AI가 모두에게 똑같이 잘 맞는다고 생각하면 안 돼요. 사람마다 느끼는 편리함과 불편함이 다를 수 있어요." },
-        { id: 2, question: "이 활동에서는 어떤 점을 잘 살펴보아야 할까요?", answer: "같은 기술을 써도 누군가는 편하고 누군가는 불편할 수 있다는 점을 잘 살펴보아야 해요." },
-        { id: 3, question: "이 점을 생각하지 않으면 어떤 문제가 생길 수 있을까요?", answer: "어떤 사람은 사용하기 어려운 기술인데도 모두에게 괜찮다고 생각할 수 있어요." }
+        { id: 1, question: "왜 이런 활동을 해보는 것이 중요할까요?", answer: "AI는 모두에게 똑같이 잘 맞는다고 생각하면 안 돼요. 같은 기술도 사람마다 다르게 느껴질 수 있고, 어떤 사람에게는 더 어렵게 작동할 수 있어요." },
+        { id: 2, question: "이 활동에서는 어떤 점을 잘 살펴보아야 할까요?", answer: "같은 기술을 써도 누가 더 쉽게 쓰는지, 누가 더 어렵게 느끼는지, 그리고 그 차이가 어디에서 오는지 잘 살펴보아야 해요." },
+        { id: 3, question: "이 점을 생각하지 않으면 어떤 문제가 생길 수 있을까요?", answer: "어떤 사람에게는 사용하기 어려운 기술인데도 '모두에게 괜찮다'고 생각할 수 있어요. 그러면 누군가는 계속 불편하거나 어려움을 겪는데도 그 문제가 잘 보이지 않을 수 있어요." }
       ],
       steps: [
         {
           id: "step1",
-          title: "STEP 1 · 다른 점 찾기",
-          question: "두 사람 사이에서 어떤 점이 다를까요?",
-          hint: "AI 얼굴 인식 기술을 두 사람이 사용하고 있어요. 어떤 차이가 있을 때 한 사람은 잘 인식되고 다른 사람은 잘 안 될 수 있을까요?",
+          title: "STEP 1 · 같은 기술을 쓰는 두 사람 보기",
+          question: "두 사람이 같은 AI 기술을 쓰고 있어요. 어떤 점이 눈에 띄나요?",
+          hint: "한 사람은 잘 되고, 다른 사람은 잘 안 되는 것 같기도 해요. 천천히 살펴보세요.",
+          uiMode: "case_view_carousel",
+          cases: [
+            {
+              id: "case_a",
+              title: "사례 A — 말하면 반응하는 AI 장난감",
+              image: "/e4l_case_a.png",
+              description: "두 아이가 같은 AI 장난감에 말을 걸고 있어요.",
+              personA: { label: "어린이 A", status: "✅ 바로 반응해요!" },
+              personB: { label: "어린이 B", status: "❓ 여러 번 말해야 해요." }
+            },
+            {
+              id: "case_b",
+              title: "사례 B — 얼굴을 보고 문이 열리는 장치",
+              image: "/e4l_case_b.png",
+              description: "두 사람이 얼굴 인식으로 문을 열려고 해요.",
+              personA: { label: "사람 A", status: "✅ 문이 열려요!" },
+              personB: { label: "사람 B", status: "❓ 잘 인식이 안 돼요." }
+            },
+            {
+              id: "case_c",
+              title: "사례 C — 목소리를 듣고 노래를 틀어 주는 AI 스피커",
+              image: "/e4l_case_c.png",
+              description: "두 사람이 AI 스피커에 노래를 틀어 달라고 해요.",
+              personA: { label: "사람 A", status: "✅ 바로 노래가 나와요!" },
+              personB: { label: "사람 B", status: "❓ 잘 알아듣지 못해요." }
+            }
+          ],
+          validation: { required: false }
+        },
+        {
+          id: "step2",
+          title: "STEP 2 · 다른 점 찾기",
+          question: "두 사람의 기술 사용 경험에서 어떤 점이 다를까요?",
+          hint: "그림에서 한 사람은 쉽게 되고, 다른 사람은 어렵게 느끼는 부분을 찾아보세요.",
           uiMode: "choice_cards",
           options: [
-            { id: "voice_lang", label: "말하는 언어가 달라요", emoji: "🗣️", isAI: true },
-            { id: "face_differ", label: "얼굴 모습이 달라요", emoji: "👤", isAI: true },
-            { id: "usage_freq", label: "사용 경험이 달라요", emoji: "📱", isAI: true },
-            { id: "wearing_glasses", label: "안경을 쓰거나 안 써요", emoji: "👓", isAI: true },
-            { id: "same_age", label: "나이가 같아요", emoji: "🎂", isAI: false },
-            { id: "same_device", label: "같은 기기를 써요", emoji: "📱", isAI: false },
-            { id: "other", label: "기타", emoji: "📌" }
+            { id: "recognized_right_away", label: "한 사람은 바로 반응이 됐어요", emoji: "⚡" },
+            { id: "needs_retry", label: "한 사람은 여러 번 해야 했어요", emoji: "🔁" },
+            { id: "same_device", label: "두 사람이 서로 다른 기계를 사용했어요", emoji: "📱" },
+            { id: "easy_use", label: "한 사람은 쉽게 사용했어요", emoji: "😊" },
+            { id: "hard_use", label: "한 사람은 다시 시도하고 있었어요", emoji: "😟" },
+            { id: "same_place", label: "두 사람이 서로 다른 장소에 있었어요", emoji: "📍" },
+            { id: "no_response", label: "기계가 한 사람에게는 반응하지 않았어요", emoji: "❌" },
+            { id: "clothes_differ", label: "두 사람의 옷 색깔이 달랐어요", emoji: "👕" }
           ],
           validation: { minSelections: 1 }
         },
         {
-          id: "step2",
-          title: "STEP 2 · 불편한 사람 고르기",
-          question: "더 불편할 것 같은 사람은 어느 쪽인가요?",
-          hint: "AI가 더 많은 데이터를 학습한 유형의 사람은 잘 인식되는 경우가 많아요. 반면 데이터가 적은 유형의 사람은 잘 인식되지 않을 수 있어요.",
-          uiMode: "single_select_buttons",
-          options: [
-            { id: "person_a", label: "많이 학습된 사람과 비슷한 사람", emoji: "😊" },
-            { id: "person_b", label: "학습 데이터가 적은 유형의 사람", emoji: "😟" }
+          id: "step3",
+          title: "STEP 3 · 누가 더 어려울지 고르기",
+          question: "두 사람 중 누가 이 기술을 쓰기 더 어려울까요?",
+          hint: "어떤 이유로 그 사람이 더 어렵다고 생각했나요?",
+          uiMode: "person_reason_select",
+          personOptions: [
+            { id: "person_a", label: "A", description: "바로 반응이 된 사람" },
+            { id: "person_b", label: "B", description: "여러 번 시도한 사람" }
+          ],
+          randomizeReasons: true,
+          reasonOptions: [
+            { id: "not_recognized", label: "기계가 잘 알아듣지 못해서" },
+            { id: "needs_retry", label: "여러 번 해도 잘 안 돼서" },
+            { id: "hard_to_use", label: "사용하는 방법이 더 불편해 보여서" },
+            { id: "system_not_fit", label: "한 사람에게는 더 잘 맞지 않는 것 같아서" },
+            { id: "different_place", label: "두 사람이 다른 장소에 있어서" },
+            { id: "clothes_different", label: "두 사람의 옷이 달라서" }
           ],
           validation: { required: true }
+        },
+        {
+          id: "step4",
+          title: "STEP 4 · 모두가 더 잘 쓰려면?",
+          question: "어떻게 하면 두 사람 모두 더 잘 쓸 수 있을까요?",
+          hint: "한 가지 방법만 말고 다른 방법도 있으면 좋을까요?",
+          uiMode: "choice_cards",
+          randomize: true,
+          options: [
+            { id: "button_option", label: "버튼도 같이 있으면 좋겠어요", emoji: "🔘" },
+            { id: "different_way_to_use", label: "말하기 말고 다른 방법도 있으면 좋겠어요", emoji: "✋" },
+            { id: "fit_everyone", label: "여러 사람에게 잘 맞게 만들면 좋겠어요", emoji: "👥" },
+            { id: "easy_retry", label: "잘 안 되는 사람도 쉽게 다시 해 볼 수 있으면 좋겠어요", emoji: "🔄" },
+            { id: "change_color", label: "기계 색깔을 바꾸면 좋겠어요", emoji: "🎨" },
+            { id: "make_bigger", label: "기계를 더 크게 만들면 좋겠어요", emoji: "📦" }
+          ],
+          validation: { minSelections: 1 }
         }
       ],
       submit: {
-        title: "차이를 잘 찾았어요!",
-        message: "AI가 모두에게 똑같지 않을 수 있다는 걸 알았어요.",
-        summaryLabels: { step1: "찾은 차이점", step2: "더 불편한 사람" }
+        title: "잘 살펴봤어요!",
+        message: "AI가 모두에게 똑같이 잘 맞지 않을 수 있다는 걸 알았어요.",
+        summaryLabels: {
+          step1: "살펴본 사례",
+          step2: "찾은 다른 점",
+          step3: "더 어려운 사람과 이유",
+          step4: "모두를 위한 방법"
+        }
       }
     },
     middle: {

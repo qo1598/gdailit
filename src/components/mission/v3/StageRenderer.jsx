@@ -482,6 +482,18 @@ const StageRenderer = ({
         if (!ans?.best_rule) return '—';
         return `규칙 ${ans.best_rule.toUpperCase()} 저장`;
       }
+      // ─── E-4-L uiModes ───
+      if (step.uiMode === 'case_view_carousel') {
+        const count = (step.cases || []).length;
+        return `${count}개 사례 살펴봄`;
+      }
+      if (step.uiMode === 'person_reason_select') {
+        if (!ans?.person) return '—';
+        const personOpt = (step.personOptions || []).find(p => p.id === ans.person);
+        const reasons = (step.reasonOptions || []).filter(r => (ans.reasons || []).includes(r.id));
+        const reasonText = reasons.map(r => r.label).join(', ');
+        return reasonText ? `${personOpt?.label || ans.person} · ${reasonText}` : personOpt?.label || ans.person;
+      }
       // ─── SJ uiModes ───
       if (step.uiMode === 'classify_cards' || step.uiMode === 'classify_cards_carousel') {
         if (!ans || Object.keys(ans).length === 0) return '—';

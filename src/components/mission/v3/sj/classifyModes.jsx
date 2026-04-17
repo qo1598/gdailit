@@ -212,23 +212,30 @@ export const CaseCarouselReason = ({ step, answers, setAnswers, domainColor, hin
       </div>
 
       <div className="v3-card" style={{ marginBottom: 0, padding: 0, overflow: 'hidden' }}>
-        <div style={{
-          background: c.visualBg || domainColor + '22',
-          padding: 'clamp(20px, 5vw, 30px)',
-          textAlign: 'center',
-          borderBottom: '1px solid #f1f5f9'
-        }}>
-          <div style={{ fontSize: 'clamp(2.8rem, 11vw, 4.5rem)', lineHeight: 1, marginBottom: '10px' }}>
-            {c.visual}
-          </div>
-          <span style={{
-            display: 'inline-flex', alignItems: 'center', gap: '4px',
-            background: domainColor, color: '#fff', borderRadius: '20px',
-            padding: '4px 12px', fontSize: '0.75rem', fontWeight: 800
+        {c.image ? (
+          <img
+            src={c.image}
+            alt={c.title}
+            style={{
+              width: '100%',
+              aspectRatio: '16/9',
+              objectFit: 'cover',
+              display: 'block',
+              borderRadius: '16px 16px 0 0'
+            }}
+          />
+        ) : (
+          <div style={{
+            background: c.visualBg || domainColor + '22',
+            padding: 'clamp(16px, 4vw, 24px)',
+            textAlign: 'center',
+            borderBottom: '1px solid #f1f5f9'
           }}>
-            사례 {index + 1} / {cases.length}
-          </span>
-        </div>
+            <div style={{ fontSize: 'clamp(2.8rem, 11vw, 4.5rem)', lineHeight: 1 }}>
+              {c.visual}
+            </div>
+          </div>
+        )}
 
         <div style={{ padding: 'clamp(14px, 4vw, 20px)' }}>
           <div style={{
@@ -240,20 +247,10 @@ export const CaseCarouselReason = ({ step, answers, setAnswers, domainColor, hin
 
           <div style={{
             background: '#f8fafc', borderRadius: '10px', padding: '10px 14px',
-            marginBottom: '8px', fontSize: 'clamp(0.82rem, 2.4vw, 0.88rem)',
+            marginBottom: '18px', fontSize: 'clamp(0.82rem, 2.4vw, 0.88rem)',
             color: '#334155', lineHeight: 1.65, wordBreak: 'keep-all'
           }}>
-            <span style={{ fontWeight: 800, color: '#64748b', fontSize: '0.72rem', display: 'block', marginBottom: '4px' }}>📍 상황</span>
             {c.situation}
-          </div>
-
-          <div style={{
-            background: '#f0fdf4', borderRadius: '10px', padding: '10px 14px',
-            marginBottom: '18px', fontSize: 'clamp(0.82rem, 2.4vw, 0.88rem)',
-            color: '#166534', lineHeight: 1.65, wordBreak: 'keep-all'
-          }}>
-            <span style={{ fontWeight: 800, fontSize: '0.72rem', display: 'block', marginBottom: '4px' }}>🔄 결과</span>
-            {c.change}
           </div>
 
           <div style={{

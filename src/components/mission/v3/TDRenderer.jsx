@@ -1,5 +1,5 @@
 import React from 'react';
-import { ChoiceCards, SingleSelectButtons, TagSelect, SingleSelectCards, FreeText } from './td/selectModes';
+import { ChoiceCards, SingleSelectButtons, TagSelect, SingleSelectCards, FreeText, CaseViewCarousel, PersonReasonSelect } from './td/selectModes';
 import { JudgeQaCards, JudgeQaCarousel } from './td/judgeModes';
 import { PhotoUpload } from './td/photoMode';
 import { YesNoQuiz, RecommendationReveal, ReasonReflect } from './td/recommendationModes';
@@ -22,6 +22,8 @@ const MODE_MAP = {
   recommendation_reveal: RecommendationReveal,
   reason_reflect: ReasonReflect,
   free_text: FreeText,
+  case_view_carousel: CaseViewCarousel,
+  person_reason_select: PersonReasonSelect,
 };
 
 const TDRenderer = (props) => {
