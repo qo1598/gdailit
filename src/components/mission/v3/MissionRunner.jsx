@@ -329,17 +329,23 @@ const MissionRunner = ({ userId }) => {
     if (step.uiMode === 'per_case_judge') {
       const allDone = (step.cases || []).every(c => {
         const ca = answer?.[c.id] || {};
-        if (!ca.judgment) return false;
+        if (step.judgmentOptions && !ca.judgment) return false;
+        if (!step.judgmentOptions && step.reasonOptions && !(ca.reasons?.length > 0)) return false;
+        if (!step.judgmentOptions && step.planOptions && !(ca.plans?.length > 0)) return false;
         if (step.validation?.textRequired && !ca.text?.trim()) return false;
         return true;
       });
       if (!allDone) {
-        const msg = step.validation?.textRequired
-          ? '모든 사례에 판단을 선택하고 이유를 작성해주세요.'
-          : '모든 사례에 판단을 선택해주세요.';
+        let msg = '모든 사례에 판단을 선택해주세요.';
+        if (!step.judgmentOptions && step.reasonOptions) msg = '모든 사례에 원인을 하나 이상 선택해주세요.';
+        if (!step.judgmentOptions && step.planOptions) msg = '모든 사례에 개선 방향을 하나 이상 선택해주세요.';
+        if (step.validation?.textRequired) msg = '모든 사례에 판단을 선택하고 이유를 작성해주세요.';
         setUiState(prev => ({ ...prev, validationError: msg }));
         return false;
       }
+    }
+    if (step.uiMode === 'case_info_cards') {
+      return true;
     }
     if (step.uiMode === 'judge_qa_carousel') {
       const cards = step.qaCards || [];
@@ -387,6 +393,44 @@ const MissionRunner = ({ userId }) => {
       const answeredCount = (step.questions || []).filter(q => answer?.[q.id]?.trim()).length;
       if (answeredCount < minAnswered) {
         setUiState(prev => ({ ...prev, validationError: `질문 ${minAnswered}개 모두 답해주세요. (현재 ${answeredCount}개)` }));
+        return false;
+      }
+    }
+    // ─── E-4-M uiModes ───
+    if (step.uiMode === 'case_judge_carousel') {
+      const cases = step.cases || [];
+      if (step.judgmentOptions) {
+        const allDone = cases.every(c => !!(answer?.[c.id]?.judgment));
+        if (!allDone) {
+          setUiState(prev => ({ ...prev, validationError: '모든 사례에서 누가 더 불편한지 선택해주세요.' }));
+          return false;
+        }
+      }
+      if (step.reasonOptions) {
+        const allDone = cases.every(c => (answer?.[c.id]?.reasons || []).length > 0);
+        if (!allDone) {
+          setUiState(prev => ({ ...prev, validationError: '모든 사례에서 이유를 1개 이상 선택해주세요.' }));
+          return false;
+        }
+      }
+      if (step.fairnessOptions) {
+        const allDone = cases.every(c => !!(answer?.[c.id]?.fairness));
+        if (!allDone) {
+          setUiState(prev => ({ ...prev, validationError: '모든 사례의 공정성을 판단해주세요.' }));
+          return false;
+        }
+      }
+      if (step.allowText && step.validation?.textRequired) {
+        const allDone = cases.every(c => !!(answer?.[c.id]?.text?.trim()));
+        if (!allDone) {
+          setUiState(prev => ({ ...prev, validationError: '모든 장면에 생각을 적어주세요.' }));
+          return false;
+        }
+      }
+    }
+    if (step.uiMode === 'free_text') {
+      if (step.validation?.required && !answer?.trim()) {
+        setUiState(prev => ({ ...prev, validationError: '내 생각을 작성해주세요.' }));
         return false;
       }
     }

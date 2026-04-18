@@ -25,3 +25,12 @@ dist-ssr
 
 .vercel
 .env
+
+# Temp / local junk
+.tmp.driveupload/
+.Rhistory
+.vs/
+un/
+_backup/
+build_error.txt
+git_status.txt

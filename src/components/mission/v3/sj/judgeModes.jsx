@@ -24,7 +24,15 @@ export const PerCaseJudge = ({ step, answers, setAnswers, domainColor, hint, onH
         const ca = answer[c.id] || {};
         const hasJudgment = !!ca.judgment;
         return (
-          <div key={c.id} className="v3-card" style={{ marginBottom: 0 }}>
+          <div key={c.id} className="v3-card" style={{ marginBottom: 0, padding: 0, overflow: 'hidden' }}>
+            {c.image && (
+              <img
+                src={c.image}
+                alt={c.title}
+                style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover', display: 'block' }}
+              />
+            )}
+            <div style={{ padding: 'clamp(12px, 3vw, 16px)' }}>
             <div style={{ fontWeight: 800, fontSize: 'clamp(0.9rem, 2.8vw, 1rem)', color: '#1e293b', marginBottom: c.description ? '6px' : '10px', wordBreak: 'keep-all' }}>
               {c.title}
             </div>
@@ -33,7 +41,32 @@ export const PerCaseJudge = ({ step, answers, setAnswers, domainColor, hint, onH
                 {c.description}
               </div>
             )}
-            <div style={{ display: 'flex', gap: '8px', marginBottom: hasJudgment && (step.reasonOptions || step.planOptions || step.allowText) ? '12px' : '0' }}>
+            {(c.userA || c.userB) && (
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '8px', marginBottom: '12px' }}>
+                {[c.userA, c.userB].filter(Boolean).map((user) => (
+                  <div key={user.id} style={{
+                    padding: 'clamp(8px, 2vw, 11px)',
+                    borderRadius: '10px',
+                    backgroundColor: '#f8fafc',
+                    border: '1.5px solid #e2e8f0'
+                  }}>
+                    <div style={{ fontWeight: 800, fontSize: 'clamp(0.78rem, 2.2vw, 0.86rem)', color: '#1e293b', marginBottom: '4px' }}>
+                      {user.label}
+                    </div>
+                    <div style={{ fontSize: 'clamp(0.75rem, 2.1vw, 0.82rem)', color: '#64748b', lineHeight: 1.45, wordBreak: 'keep-all' }}>
+                      {user.status}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {step.judgmentOptions && step.judgmentLabel && (
+              <div style={{ fontSize: 'clamp(0.72rem, 2vw, 0.78rem)', fontWeight: 700, color: '#94a3b8', marginBottom: '7px', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                {step.judgmentLabel}
+              </div>
+            )}
+            {step.judgmentOptions && (
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '8px', marginBottom: hasJudgment && (step.reasonOptions || step.planOptions || step.allowText) ? '12px' : '0' }}>
               {step.judgmentOptions.map(opt => {
                 const isSelected = ca.judgment === opt.id;
                 return (
@@ -60,6 +93,7 @@ export const PerCaseJudge = ({ step, answers, setAnswers, domainColor, hint, onH
                 );
               })}
             </div>
+            )}
             {step.reasonOptions && (hasJudgment || step.reasonAlwaysVisible) && (
               <ChipGroup
                 label={step.reasonLabel || "이유"}
@@ -72,7 +106,7 @@ export const PerCaseJudge = ({ step, answers, setAnswers, domainColor, hint, onH
                 domainColor={domainColor}
               />
             )}
-            {step.planOptions && hasJudgment &&
+            {step.planOptions && (hasJudgment || step.planAlwaysVisible) &&
               (!step.planShowForJudgments || step.planShowForJudgments.includes(ca.judgment)) && (
               <ChipGroup
                 label={step.planLabel || "어떻게 할까요?"}
@@ -123,12 +157,45 @@ export const PerCaseJudge = ({ step, answers, setAnswers, domainColor, hint, onH
                 />
               </div>
             )}
+            </div>
           </div>
         );
       })}
     </div>
   );
 };
+
+// ─── case_info_cards ─────────────────────────────────────────────
+export const CaseInfoCards = ({ step, domainColor, hint, onHintClick }) => (
+  <div className="animate-slide-up" style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(12px, 3vw, 16px)' }}>
+    <StepHeader step={step} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />
+    {(step.cases || []).map((c, idx) => (
+      <div key={c.id} className="v3-card" style={{ marginBottom: 0, padding: 0, overflow: 'hidden' }}>
+        {c.image && (
+          <img src={c.image} alt={c.title} style={{ width: '100%', aspectRatio: '16/9', objectFit: 'cover', display: 'block' }} />
+        )}
+        <div style={{ padding: 'clamp(12px, 3vw, 16px)' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '8px' }}>
+            <span style={{ background: domainColor, color: '#fff', borderRadius: '20px', padding: '2px 10px', fontSize: '0.72rem', fontWeight: 800, flexShrink: 0 }}>
+              사례 {idx + 1}
+            </span>
+            <span style={{ fontWeight: 800, fontSize: 'clamp(0.9rem, 2.8vw, 1rem)', color: '#1e293b', wordBreak: 'keep-all' }}>
+              {c.title}
+            </span>
+          </div>
+          <div style={{ fontSize: 'clamp(0.82rem, 2.4vw, 0.9rem)', color: '#475569', lineHeight: 1.65, wordBreak: 'keep-all' }}>
+            {c.description}
+          </div>
+          {c.note && (
+            <div style={{ marginTop: '10px', padding: '8px 12px', backgroundColor: '#f0fdf4', borderRadius: '8px', border: '1.5px solid #86efac', fontSize: 'clamp(0.78rem, 2.2vw, 0.84rem)', color: '#15803d', fontWeight: 700, wordBreak: 'keep-all' }}>
+              {c.note}
+            </div>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+);
 
 // ─── chat_display ───────────────────────────────────────────────
 export const ChatDisplay = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {

@@ -1,10 +1,11 @@
 import React from 'react';
 import { ClassifyCards, MultiSelectChips, PerCardTags, MultiFreeText, FreeText } from './sj/listModes';
-import { PerCaseJudge, ChatDisplay, BubbleSelectCorrect, MatchSelect } from './sj/judgeModes';
+import { PerCaseJudge, ChatDisplay, BubbleSelectCorrect, MatchSelect, CaseInfoCards } from './sj/judgeModes';
 import { SampleFullCarousel, MonitorCarousel, PerResponseJudgeCarousel } from './sj/sampleCarousels';
 import { FilteredReasonCarousel, FilteredPlanCarousel } from './sj/filteredCarousels';
 import { ClassifyCarousel, CaseCarouselReason } from './sj/classifyModes';
 import { ClothingGridWithRec, StarRatingCarousel, RecommendationGrid } from './sj/clothingModes';
+import { CaseJudgeCarousel } from './sj/caseJudgeCarousel';
 
 /**
  * SJRenderer — Statement & Judgement renderer.
@@ -29,7 +30,9 @@ const MODE_MAP = {
   filtered_reason_select: FilteredReasonCarousel,
   filtered_plan_text: FilteredPlanCarousel,
   case_carousel_reason: CaseCarouselReason,
+  case_judge_carousel: CaseJudgeCarousel,
   free_text: FreeText,
+  case_info_cards: CaseInfoCards,
 };
 
 const SJRenderer = (props) => {

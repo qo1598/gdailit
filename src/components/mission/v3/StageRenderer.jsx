@@ -517,8 +517,19 @@ const StageRenderer = ({
         const selectedCount = Object.values(ans).filter(v => v.selected).length;
         return selectedCount > 0 ? `틀린 말풍선 ${selectedCount}개 찾음` : '이상한 답 없음';
       }
+      if (step.uiMode === 'case_info_cards') {
+        return `${(step.cases || []).length}개 사례 살펴봄`;
+      }
       if (step.uiMode === 'per_case_judge') {
         if (!ans || Object.keys(ans).length === 0) return '—';
+        if (!step.judgmentOptions && step.reasonOptions) {
+          const count = (step.cases || []).filter(c => (ans[c.id]?.reasons?.length > 0)).length;
+          return count > 0 ? `${count}개 사례 원인 선택` : '—';
+        }
+        if (!step.judgmentOptions && step.planOptions) {
+          const count = (step.cases || []).filter(c => (ans[c.id]?.plans?.length > 0)).length;
+          return count > 0 ? `${count}개 사례 개선안 선택` : '—';
+        }
         const groups = step.judgmentOptions || [];
         const parts = (step.cases || []).map(c => {
           const ca = ans[c.id] || {};
@@ -592,6 +603,42 @@ const StageRenderer = ({
         if (answered.length === 0) return '—';
         const firstText = ans[answered[0].id];
         return firstText.length > 35 ? firstText.slice(0, 35) + '…' : firstText;
+      }
+      if (step.uiMode === 'case_judge_carousel') {
+        const cases = step.cases || [];
+        // 옵션이 없는 순수 보기 단계
+        if (!step.judgmentOptions && !step.reasonOptions && !step.fairnessOptions && !step.allowText) {
+          return `${cases.length}개 장면 살펴봄`;
+        }
+        if (!ans || Object.keys(ans).filter(k => k !== '_idx').length === 0) return '—';
+        const parts = cases.map(c => {
+          const ca = ans[c.id] || {};
+          const caseLabel = c.title.replace('사례 ', '').split(' ·')[0];
+          // judgmentOptions + reasonOptions 모두 있는 경우 함께 표시
+          if (step.judgmentOptions) {
+            const label = step.judgmentOptions.find(o => o.id === ca.judgment)?.label;
+            if (!label) return null;
+            const reasonPart = (step.reasonOptions && ca.reasons?.length > 0) ? ` (영향 ${ca.reasons.length}개)` : '';
+            return `${caseLabel}: ${label}${reasonPart}`;
+          }
+          if (step.reasonOptions && ca.reasons?.length) {
+            return `${caseLabel}: ${ca.reasons.length}개 선택`;
+          }
+          if (step.fairnessOptions) {
+            const label = step.fairnessOptions.find(o => o.id === ca.fairness)?.label;
+            return label ? `${caseLabel}: ${label}` : null;
+          }
+          if (step.allowText && ca.text?.trim()) {
+            const short = ca.text.trim();
+            return `${caseLabel}: ${short.length > 20 ? short.slice(0, 20) + '…' : short}`;
+          }
+          return null;
+        }).filter(Boolean);
+        return parts.join(' · ') || '—';
+      }
+      if (step.uiMode === 'free_text') {
+        if (!ans?.trim()) return '—';
+        return ans.length > 50 ? ans.slice(0, 50) + '…' : ans;
       }
       return '—';
     };
