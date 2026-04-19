@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { CheckCircle2, ClipboardList, Lightbulb, X } from 'lucide-react';
 import TaskStepRenderer from './TaskStepRenderer';
+import { deriveCases } from './deriveCases';
 import DictionaryText from '../../DictionaryText';
 import DictionaryModal from '../../DictionaryModal';
 import {
@@ -12,6 +13,223 @@ import {
 } from './MissionIcons';
 
 const INTRO_ICONS = [IntroThinkingIcon, IntroDiscoverIcon, IntroDetectiveIcon];
+
+// V4: 시나리오 헤더 — 학생 역할/목표/산출물 명시
+const ScenarioHeader = ({ scenario, domainColor }) => {
+  if (!scenario) return null;
+  return (
+    <div style={{
+      display: 'flex',
+      alignItems: 'center',
+      gap: '10px',
+      padding: 'clamp(10px, 3vw, 12px) clamp(12px, 3vw, 14px)',
+      borderRadius: '14px',
+      background: `linear-gradient(135deg, ${domainColor}14, ${domainColor}06)`,
+      border: `1.5px solid ${domainColor}33`,
+      marginBottom: 'clamp(10px, 3vw, 14px)'
+    }}>
+      <div style={{
+        flexShrink: 0,
+        padding: '4px 10px',
+        borderRadius: '999px',
+        background: domainColor,
+        color: '#fff',
+        fontSize: 'clamp(0.7rem, 2vw, 0.78rem)',
+        fontWeight: 900,
+        whiteSpace: 'nowrap'
+      }}>
+        {scenario.role}
+      </div>
+      <div style={{ minWidth: 0, flex: 1 }}>
+        <div style={{ fontSize: 'clamp(0.8rem, 2.4vw, 0.88rem)', fontWeight: 800, color: '#1e293b', lineHeight: 1.35, wordBreak: 'keep-all' }}>
+          {scenario.goal}
+        </div>
+        {scenario.artifactType && (
+          <div style={{ fontSize: 'clamp(0.7rem, 2vw, 0.76rem)', color: '#64748b', marginTop: '2px', fontWeight: 700 }}>
+            산출물: {scenario.artifactType}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
+
+// V4: artifact.template의 {stepN} 토큰을 답안으로 채워 미리보기 문장 생성
+function renderArtifactPreview(template, answers, steps) {
+  if (!template) return null;
+  return template.replace(/\{(\w+)\}/g, (_, key) => {
+    // 하위 필드 토큰: {stepN_person} / {stepN_reasons} (person_reason_select)
+    //              / {stepN_proposals} (case_judge_carousel: 사례별 서술을 문장형으로 연결)
+    const subField = key.match(/^(step\d+)_(person|reasons|proposals)$/);
+    if (subField) {
+      const [, stepKey, field] = subField;
+      const stepAns = answers[stepKey];
+      const step = steps?.find(s => s.id === stepKey);
+      if (!stepAns || !step) return '___';
+      if (step.uiMode === 'person_reason_select') {
+        if (field === 'person') {
+          const p = (step.personOptions || []).find(o => o.id === stepAns.person);
+          return p?.description || p?.label || '___';
+        }
+        if (field === 'reasons') {
+          const labels = (step.reasonOptions || [])
+            .filter(r => (stepAns.reasons || []).includes(r.id))
+            .map(r => r.label);
+          return labels.join(', ') || '___';
+        }
+      }
+      if (field === 'proposals' && step.uiMode === 'case_judge_carousel') {
+        const parts = (step.cases || []).map(c => {
+          const ca = stepAns[c.id] || {};
+          const txt = (ca.text || '').trim().replace(/[.。!?！？]\s*$/u, '');
+          if (!txt) return null;
+          const raw = (c.title || c.id).split('·').pop().trim();
+          return `${raw}의 경우 ${txt}`;
+        }).filter(Boolean);
+        return parts.length ? parts.join(', ') : '___';
+      }
+      return '___';
+    }
+    // 계산 토큰: {stepN_<judge>_count} 또는 {stepN_non_<judge>_count}
+    const computed = key.match(/^(step\d+)_(non_)?([a-zA-Z]+)_count$/);
+    if (computed) {
+      const [, stepKey, negate, judgeId] = computed;
+      const stepAns = answers[stepKey];
+      if (!stepAns || typeof stepAns !== 'object') return '0';
+      const matches = (v) => {
+        if (typeof v === 'string') return v === judgeId;
+        if (typeof v === 'number') {
+          // star_rating_carousel: 값이 양수 별점이면 'rated'에 대응
+          if (judgeId === 'rated') return v > 0;
+          return false;
+        }
+        if (v && typeof v === 'object') {
+          if (v.judge === judgeId || v.judgment === judgeId || v.fairness === judgeId) return true;
+          // bubble_select_correct: { selected: true } → 'strange'/'selected' 에 대응
+          if ((judgeId === 'strange' || judgeId === 'selected') && v.selected === true) return true;
+          // yesno_quiz: [{ question_id, answer }] → 'answered'에 대응
+          if (judgeId === 'answered' && (v.answer === true || v.answer === false)) return true;
+          // case_carousel_reason: { reasons: [...] } → 'case'에 대응 (이유 1개 이상 선택된 사례)
+          if (judgeId === 'case' && Array.isArray(v.reasons) && v.reasons.length > 0) return true;
+        }
+        return false;
+      };
+      const exists = (v) => {
+        if (v == null || v === '') return false;
+        if (typeof v === 'string') return true;
+        if (typeof v === 'number') return v > 0;
+        if (typeof v === 'object') {
+          if (v.judge != null || v.judgment != null || v.fairness != null || v.selected === true) return true;
+          if (v.answer === true || v.answer === false) return true;
+          if (Array.isArray(v.reasons) && v.reasons.length > 0) return true;
+          if (typeof v.text === 'string' && v.text.trim()) return true;
+        }
+        return false;
+      };
+      const count = Object.values(stepAns).filter(v => negate ? (exists(v) && !matches(v)) : matches(v)).length;
+      return String(count);
+    }
+    const val = answers[key];
+    if (val == null || val === '') return `___`;
+    const step = steps?.find(s => s.id === key);
+
+    // 1) 단일 선택(string id) — 옵션 라벨로 치환 우선
+    if (typeof val === 'string') {
+      if (step?.options) {
+        const opt = step.options.find(o => o.id === val);
+        if (opt) return opt.label;
+      }
+      if (val === 'other') {
+        const otherText = answers[`${key}_other_text`];
+        if (otherText?.trim()) return otherText.trim();
+      }
+      return val.trim() || '___';
+    }
+
+    // 2) 다중 선택(string[])
+    if (Array.isArray(val)) {
+      if (step?.options) {
+        const labels = step.options.filter(o => val.includes(o.id)).map(o => o.label);
+        return labels.join(', ') || '___';
+      }
+      if (step?.chips) {
+        const labels = step.chips.filter(c => val.includes(c.id)).map(c => c.label);
+        return labels.join(', ') || '___';
+      }
+      return val.join(', ');
+    }
+
+    // 3) 객체 — photo_or_card_select / per_case_judge 등
+    if (typeof val === 'object') {
+      // person_reason_select: { person, reasons } → "설명 (이유1, 이유2)"
+      if (step?.uiMode === 'person_reason_select') {
+        const p = (step.personOptions || []).find(o => o.id === val.person);
+        if (!p) return '___';
+        const reasonLabels = (step.reasonOptions || [])
+          .filter(r => (val.reasons || []).includes(r.id))
+          .map(r => r.label);
+        const who = p.description || p.label;
+        return reasonLabels.length ? `${who} (${reasonLabels.join(', ')})` : who;
+      }
+      // case_judge_carousel: 사례별 응답 → 사례 제목: 라벨 형태로 요약
+      if (step?.uiMode === 'case_judge_carousel') {
+        const cases = step.cases || [];
+        const parts = cases.map(c => {
+          const ca = val[c.id] || {};
+          const short = (c.title || c.id).split('·')[0].trim();
+          if (step.judgmentOptions && ca.judgment) {
+            const lbl = step.judgmentOptions.find(o => o.id === ca.judgment)?.label;
+            const extra = (step.reasonOptions && ca.reasons?.length)
+              ? ` · ${ca.reasons.map(rid => step.reasonOptions.find(r => r.id === rid)?.label).filter(Boolean).join(', ')}`
+              : '';
+            return lbl ? `${short}: ${lbl}${extra}` : null;
+          }
+          if (step.reasonOptions && ca.reasons?.length) {
+            const labels = ca.reasons.map(rid => step.reasonOptions.find(r => r.id === rid)?.label).filter(Boolean);
+            return labels.length ? `${short}: ${labels.join(', ')}` : null;
+          }
+          if (step.fairnessOptions && ca.fairness) {
+            const lbl = step.fairnessOptions.find(o => o.id === ca.fairness)?.label;
+            return lbl ? `${short}: ${lbl}` : null;
+          }
+          if (step.allowText && ca.text?.trim()) {
+            const t = ca.text.trim();
+            return `${short}: ${t.length > 24 ? t.slice(0, 24) + '…' : t}`;
+          }
+          return null;
+        }).filter(Boolean);
+        return parts.length ? parts.join(' · ') : '___';
+      }
+      // per_case_judge (텍스트 전용): { caseId: { text } } → "N개 사례 작성"
+      if (step?.uiMode === 'per_case_judge' && step?.allowText && !step?.judgmentOptions) {
+        const count = Object.values(val).filter(v => v?.text?.trim()).length;
+        return count ? `${count}개 사례에 개선 제안을 작성했고,` : '___';
+      }
+      // per_case_judge: { caseId: { judgment, reasons } } → "X개 붙임, Y개 확인 후" 형태로 요약
+      if ((step?.uiMode === 'per_case_judge' || step?.uiMode === 'card_drop_board') && step?.judgmentOptions) {
+        const counts = {};
+        Object.values(val).forEach(v => {
+          const j = v?.judgment;
+          if (j) counts[j] = (counts[j] || 0) + 1;
+        });
+        const parts = step.judgmentOptions
+          .filter(opt => counts[opt.id])
+          .map(opt => `${counts[opt.id]}개 ${opt.label}`);
+        if (parts.length) return parts.join(', ');
+        return '___';
+      }
+      if (val.value && typeof val.value === 'string') {
+        const card = step?.cardOptions?.find(c => c.id === val.value);
+        if (card) return card.label;
+        if (val.type === 'photo') return '내가 찍은 사진';
+        return val.value;
+      }
+      return '___';
+    }
+
+    return String(val);
+  });
+}
 
 /**
  * StageRenderer - Renders the content for each stage.
@@ -242,6 +460,129 @@ const StageRenderer = ({
     );
   }
 
+  // ─── SCENARIO ─────────────────────────────────────────────────
+  if (stage === 'scenario') {
+    const sc = gradeSpec.scenario || {};
+    return (
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px, 3.5vw, 18px)', padding: '4px 0' }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '8px', padding: '0 2px' }}>
+          <div style={{ width: '4px', height: '20px', borderRadius: '2px', backgroundColor: domainColor, flexShrink: 0 }} />
+          <h2 style={{ fontSize: 'clamp(1rem, 3.5vw, 1.2rem)', fontWeight: 900, color: '#1e293b', margin: 0 }}>
+            미션 상황 살펴보기
+          </h2>
+        </div>
+
+        {sc.image && (
+          <div style={{
+            width: '100%',
+            borderRadius: '18px',
+            overflow: 'hidden',
+            border: `1.5px solid ${domainColor}33`,
+            boxShadow: '0 6px 18px rgba(15,23,42,0.08)',
+            background: '#fff'
+          }}>
+            <img
+              src={sc.image}
+              alt={sc.context || '미션 상황'}
+              style={{ display: 'block', width: '100%', height: 'auto' }}
+            />
+          </div>
+        )}
+
+        <div className="v3-card" style={{
+          display: 'flex',
+          flexDirection: 'column',
+          gap: 'clamp(10px, 2.5vw, 12px)',
+          padding: 'clamp(16px, 4vw, 20px)'
+        }}>
+          {sc.role && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px', flexWrap: 'wrap' }}>
+              <span style={{
+                padding: '4px 10px',
+                borderRadius: '999px',
+                background: domainColor,
+                color: '#fff',
+                fontSize: 'clamp(0.72rem, 2vw, 0.8rem)',
+                fontWeight: 900
+              }}>
+                내 역할: {sc.role}
+              </span>
+              {sc.artifactType && (
+                <span style={{
+                  padding: '4px 10px',
+                  borderRadius: '999px',
+                  background: `${domainColor}1a`,
+                  color: domainColor,
+                  fontSize: 'clamp(0.72rem, 2vw, 0.8rem)',
+                  fontWeight: 900
+                }}>
+                  완성할 것: {sc.artifactType}
+                </span>
+              )}
+            </div>
+          )}
+
+          {sc.goal && (
+            <div>
+              <div style={{
+                fontSize: 'clamp(0.68rem, 2vw, 0.75rem)',
+                fontWeight: 900,
+                color: '#94a3b8',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                marginBottom: '4px'
+              }}>
+                목표
+              </div>
+              <div style={{
+                fontSize: 'clamp(0.98rem, 3vw, 1.1rem)',
+                fontWeight: 800,
+                color: '#1e293b',
+                lineHeight: 1.5,
+                wordBreak: 'keep-all'
+              }}>
+                <DictionaryText text={sc.goal} onWordClick={openVocab} />
+              </div>
+            </div>
+          )}
+
+          {sc.context && (
+            <div>
+              <div style={{
+                fontSize: 'clamp(0.68rem, 2vw, 0.75rem)',
+                fontWeight: 900,
+                color: '#94a3b8',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                marginBottom: '4px'
+              }}>
+                상황
+              </div>
+              <div style={{
+                padding: 'clamp(10px, 2.5vw, 12px) clamp(12px, 3vw, 14px)',
+                backgroundColor: '#f8fafc',
+                borderRadius: '12px',
+                fontSize: 'clamp(0.9rem, 2.8vw, 1rem)',
+                color: '#475569',
+                lineHeight: 1.65,
+                wordBreak: 'keep-all'
+              }}>
+                <DictionaryText text={sc.context} onWordClick={openVocab} />
+              </div>
+            </div>
+          )}
+        </div>
+
+        <DictionaryModal
+          isOpen={vocabModal.open}
+          word={vocabModal.word}
+          definition={vocabModal.definition}
+          onClose={closeVocab}
+        />
+      </div>
+    );
+  }
+
   // ─── TASK ──────────────────────────────────────────────────────
   if (stage === 'task') {
     const hint = currentStep?.hint;
@@ -251,6 +592,7 @@ const StageRenderer = ({
     };
     return (
       <>
+        <ScenarioHeader scenario={gradeSpec.scenario} domainColor={domainColor} />
         <TaskStepRenderer
           step={currentStep}
           gradeSpec={gradeSpec}
@@ -349,6 +691,16 @@ const StageRenderer = ({
 
     const getAnswerDisplay = (step) => {
       const ans = answers[step.id];
+      // 뷰 전용 모드: 응답이 없어도 살펴본 것으로 간주
+      if (step.uiMode === 'case_view_carousel') {
+        return `${(step.cases || []).length}개 사례 살펴봄`;
+      }
+      if (step.uiMode === 'case_info_cards') {
+        return `${(step.cases || []).length}개 사례 살펴봄`;
+      }
+      if (step.uiMode === 'image_view') {
+        return '그림 관찰 완료';
+      }
       if (!ans) return '—';
 
       if (step.uiMode === 'choice_cards') {
@@ -364,7 +716,12 @@ const StageRenderer = ({
         return found ? found.label : '—';
       }
       if (step.uiMode === 'photo_or_card_select') {
-        return ans.type === 'photo' ? '사진으로 찾음' : '—';
+        if (ans.type === 'photo') return '내가 찍은 사진';
+        if (ans.type === 'card') {
+          const card = (step.cardOptions || []).find(c => c.id === ans.value);
+          return card ? card.label : '—';
+        }
+        return '—';
       }
       if (step.uiMode === 'image_view') {
         return '그림 관찰 완료';
@@ -490,9 +847,10 @@ const StageRenderer = ({
       if (step.uiMode === 'person_reason_select') {
         if (!ans?.person) return '—';
         const personOpt = (step.personOptions || []).find(p => p.id === ans.person);
+        const personText = personOpt?.description || personOpt?.label || ans.person;
         const reasons = (step.reasonOptions || []).filter(r => (ans.reasons || []).includes(r.id));
         const reasonText = reasons.map(r => r.label).join(', ');
-        return reasonText ? `${personOpt?.label || ans.person} · ${reasonText}` : personOpt?.label || ans.person;
+        return reasonText ? `${personText} · ${reasonText}` : personText;
       }
       // ─── SJ uiModes ───
       if (step.uiMode === 'classify_cards' || step.uiMode === 'classify_cards_carousel') {
@@ -520,18 +878,19 @@ const StageRenderer = ({
       if (step.uiMode === 'case_info_cards') {
         return `${(step.cases || []).length}개 사례 살펴봄`;
       }
-      if (step.uiMode === 'per_case_judge') {
+      if (step.uiMode === 'per_case_judge' || step.uiMode === 'card_drop_board') {
         if (!ans || Object.keys(ans).length === 0) return '—';
+        const pcjCases = deriveCases(step, gradeSpec, answers);
         if (!step.judgmentOptions && step.reasonOptions) {
-          const count = (step.cases || []).filter(c => (ans[c.id]?.reasons?.length > 0)).length;
+          const count = pcjCases.filter(c => (ans[c.id]?.reasons?.length > 0)).length;
           return count > 0 ? `${count}개 사례 원인 선택` : '—';
         }
         if (!step.judgmentOptions && step.planOptions) {
-          const count = (step.cases || []).filter(c => (ans[c.id]?.plans?.length > 0)).length;
+          const count = pcjCases.filter(c => (ans[c.id]?.plans?.length > 0)).length;
           return count > 0 ? `${count}개 사례 개선안 선택` : '—';
         }
         const groups = step.judgmentOptions || [];
-        const parts = (step.cases || []).map(c => {
+        const parts = pcjCases.map(c => {
           const ca = ans[c.id] || {};
           if (!ca.judgment) return null;
           const label = groups.find(g => g.id === ca.judgment)?.label || ca.judgment;
@@ -581,6 +940,17 @@ const StageRenderer = ({
         const count = Object.values(ans).filter(v => v?.trim()).length;
         return `${count}개 계획 작성 완료`;
       }
+      if (step.uiMode === 'followup_question_carousel') {
+        if (!ans || typeof ans !== 'object' || Array.isArray(ans)) return '—';
+        const branch = step.branch || {};
+        const sourceStep = gradeSpec?.steps?.find(s => s.id === branch.sourceStepId);
+        const sourceAns = answers?.[branch.sourceStepId] || {};
+        const selectedIds = (sourceStep?.aiBubbles || [])
+          .filter(b => !!sourceAns[b.id]?.selected)
+          .map(b => b.id);
+        const count = selectedIds.filter(id => typeof ans[id] === 'string' && ans[id].trim()).length;
+        return count > 0 ? `${count}개 확인 질문 작성` : '—';
+      }
       // ─── E-3-M uiModes ───
       if (step.uiMode === 'clothing_grid_with_rec') {
         return ans?.confirmed ? '옷 20개 확인 완료' : '—';
@@ -601,8 +971,29 @@ const StageRenderer = ({
         const qs = step.questions || [];
         const answered = qs.filter(q => ans?.[q.id]?.trim());
         if (answered.length === 0) return '—';
-        const truncate = (t) => (t.length > 35 ? t.slice(0, 35) + '…' : t);
-        return answered.map((q, i) => `${i + 1}. ${truncate(ans[q.id].trim())}`).join('\n');
+        const firstText = ans[answered[0].id];
+        return firstText.length > 35 ? firstText.slice(0, 35) + '…' : firstText;
+      }
+      if (step.uiMode === 'case_carousel_reason') {
+        if (!ans || typeof ans !== 'object') return '—';
+        const cases = step.cases || [];
+        const reasonOpts = step.reasonOptions || [];
+        const parts = cases.map(c => {
+          const ca = ans[c.id] || {};
+          const rs = ca.reasons || [];
+          if (rs.length === 0) return null;
+          const caseLabel = (c.title || c.id).split(' ').slice(0, 2).join(' ');
+          const labels = rs.map(rid => {
+            if (rid === 'other' && ca.otherText?.trim()) {
+              const t = ca.otherText.trim();
+              return `기타(${t.length > 10 ? t.slice(0, 10) + '…' : t})`;
+            }
+            return reasonOpts.find(r => r.id === rid)?.label || rid;
+          });
+          return `${caseLabel}: ${labels.join(', ')}`;
+        }).filter(Boolean);
+        if (parts.length === 0) return '—';
+        return parts.length <= 2 ? parts.join(' · ') : `${parts.length}개 사례 이유 선택`;
       }
       if (step.uiMode === 'case_judge_carousel') {
         const cases = step.cases || [];
@@ -643,6 +1034,9 @@ const StageRenderer = ({
       return '—';
     };
 
+    const artifactText = renderArtifactPreview(gradeSpec.submit?.artifact?.template, answers, gradeSpec.steps);
+    const artifactType = gradeSpec.scenario?.artifactType;
+
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px, 4vw, 20px)', padding: '4px 0' }}>
         <div style={{ textAlign: 'center', padding: '8px 0' }}>
@@ -667,6 +1061,33 @@ const StageRenderer = ({
           </p>
         </div>
 
+        {artifactText && (
+          <div className="v3-card" style={{
+            background: `linear-gradient(135deg, ${domainColor}10, ${domainColor}03)`,
+            border: `2px solid ${domainColor}55`
+          }}>
+            <div style={{
+              fontSize: 'clamp(0.65rem, 2vw, 0.75rem)',
+              fontWeight: 900,
+              color: domainColor,
+              textTransform: 'uppercase',
+              letterSpacing: '0.08em',
+              marginBottom: '10px'
+            }}>
+              {artifactType ? `${artifactType} 미리보기` : '내가 만든 결과'}
+            </div>
+            <div style={{
+              fontSize: 'clamp(1rem, 3.2vw, 1.15rem)',
+              fontWeight: 800,
+              color: '#1e293b',
+              lineHeight: 1.55,
+              wordBreak: 'keep-all'
+            }}>
+              {artifactText}
+            </div>
+          </div>
+        )}
+
         <div className="v3-card">
           <div style={{
             fontSize: 'clamp(0.65rem, 2vw, 0.75rem)',
@@ -684,7 +1105,7 @@ const StageRenderer = ({
                 <span style={{ fontSize: 'clamp(0.75rem, 2.5vw, 0.85rem)', fontWeight: 700, color: '#94a3b8', display: 'block', marginBottom: '3px' }}>
                   {summaryLabels?.[step.id] || step.title}
                 </span>
-                <span style={{ fontSize: 'clamp(0.95rem, 3vw, 1.05rem)', fontWeight: 800, color: '#1e293b', whiteSpace: 'pre-line' }}>
+                <span style={{ fontSize: 'clamp(0.95rem, 3vw, 1.05rem)', fontWeight: 800, color: '#1e293b' }}>
                   {getAnswerDisplay(step)}
                 </span>
                 <div style={{ height: '1px', backgroundColor: '#f1f5f9', marginTop: '10px' }} />
@@ -698,6 +1119,8 @@ const StageRenderer = ({
 
   // ─── COMPLETE ──────────────────────────────────────────────────
   if (stage === 'complete') {
+    const completeArtifact = renderArtifactPreview(gradeSpec.submit?.artifact?.template, answers, gradeSpec.steps);
+    const completeArtifactType = gradeSpec.scenario?.artifactType;
     return (
       <div style={{
         display: 'flex',
@@ -734,6 +1157,25 @@ const StageRenderer = ({
             {gradeSpec.submit.message}
           </p>
         </div>
+        {completeArtifact && (
+          <div className="v3-card" style={{
+            background: `linear-gradient(135deg, ${domainColor}10, ${domainColor}03)`,
+            border: `2px solid ${domainColor}55`,
+            maxWidth: '420px',
+            width: '100%',
+            textAlign: 'left'
+          }}>
+            <div style={{
+              fontSize: '0.7rem', fontWeight: 900, color: domainColor,
+              textTransform: 'uppercase', letterSpacing: '0.08em', marginBottom: '8px'
+            }}>
+              {completeArtifactType || '내가 만든 결과'}
+            </div>
+            <div style={{ fontSize: 'clamp(1rem, 3.2vw, 1.1rem)', fontWeight: 800, color: '#1e293b', lineHeight: 1.55, wordBreak: 'keep-all' }}>
+              {completeArtifact}
+            </div>
+          </div>
+        )}
         <button
           onClick={() => navigate('/')}
           style={{

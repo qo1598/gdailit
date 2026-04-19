@@ -31,7 +31,7 @@ export const E4_V3 = {
             {
               id: "case_a",
               title: "사례 A — 말하면 반응하는 AI 장난감",
-              image: "/e4l_case_a.png",
+              image: "/images/e4l/e4l_case_a.png",
               description: "두 아이가 같은 AI 장난감에 말을 걸고 있어요.",
               personA: { label: "어린이 A", status: "✅ 바로 반응해요!" },
               personB: { label: "어린이 B", status: "❓ 여러 번 말해야 해요." }
@@ -39,7 +39,7 @@ export const E4_V3 = {
             {
               id: "case_b",
               title: "사례 B — 얼굴을 보고 문이 열리는 장치",
-              image: "/e4l_case_b.png",
+              image: "/images/e4l/e4l_case_b.png",
               description: "두 사람이 얼굴 인식으로 문을 열려고 해요.",
               personA: { label: "사람 A", status: "✅ 문이 열려요!" },
               personB: { label: "사람 B", status: "❓ 잘 인식이 안 돼요." }
@@ -47,7 +47,7 @@ export const E4_V3 = {
             {
               id: "case_c",
               title: "사례 C — 목소리를 듣고 노래를 틀어 주는 AI 스피커",
-              image: "/e4l_case_c.png",
+              image: "/images/e4l/e4l_case_c.png",
               description: "두 사람이 AI 스피커에 노래를 틀어 달라고 해요.",
               personA: { label: "사람 A", status: "✅ 바로 노래가 나와요!" },
               personB: { label: "사람 B", status: "❓ 잘 알아듣지 못해요." }
@@ -153,7 +153,7 @@ export const E4_V3 = {
             {
               id: "face_recognition",
               title: "사례 1 · 학교 출입 얼굴 인식",
-              image: "/e4m_case1_face.png",
+              image: "/images/e4m/e4m_case1_face.png",
               description: "학교 출입구에 얼굴을 보고 문을 열어주는 AI 장치가 있어요. 학생 A는 바로 들어가지만, 학생 B는 여러 번 시도해야 해서 늦게 들어가요.",
               userA: { id: "user_a", label: "학생 A", status: "얼굴이 바로 인식돼서 문이 열려요." },
               userB: { id: "user_b", label: "학생 B", status: "여러 번 시도해야 문이 열려요." }
@@ -161,7 +161,7 @@ export const E4_V3 = {
             {
               id: "voice_recognition",
               title: "사례 2 · 숙제 찾기 학습 앱",
-              image: "/e4m_case2_voice.png",
+              image: "/images/e4m/e4m_case2_voice.png",
               description: "학습 앱에 말로 숙제를 찾을 수 있어요. 학생 A는 바로 원하는 숙제를 찾지만, 학생 B는 말이 다르게 인식되어 엉뚱한 화면이 나와요.",
               userA: { id: "user_a", label: "학생 A", status: "말하면 바로 원하는 숙제를 찾아줘요." },
               userB: { id: "user_b", label: "학생 B", status: "말이 다르게 인식되어 엉뚱한 화면이 나와요." }
@@ -169,7 +169,7 @@ export const E4_V3 = {
             {
               id: "auto_reading",
               title: "사례 3 · 글을 읽어 주는 앱",
-              image: "/e4m_case3_reading.png",
+              image: "/images/e4m/e4m_case3_reading.png",
               description: "글을 읽어 주는 앱이 있어요. 학생 A는 내용을 편하게 듣지만, 학생 B는 속도가 맞지 않아 중요한 내용을 놓쳐요.",
               userA: { id: "user_a", label: "학생 A", status: "내용을 편하게 따라가며 들을 수 있어요." },
               userB: { id: "user_b", label: "학생 B", status: "속도가 맞지 않아 중요한 내용을 놓쳐요." }
@@ -192,7 +192,7 @@ export const E4_V3 = {
             {
               id: "face_recognition",
               title: "사례 1 · 학교 출입 얼굴 인식",
-              image: "/e4m_case1_face.png",
+              image: "/images/e4m/e4m_case1_face.png",
               description: "같은 출입 장치인데 학생 A는 바로 들어가고, 학생 B는 여러 번 시도해야 해요.",
               userA: { id: "user_a", label: "학생 A", status: "바로 들어가요." },
               userB: { id: "user_b", label: "학생 B", status: "여러 번 시도해야 해요." }
@@ -200,7 +200,7 @@ export const E4_V3 = {
             {
               id: "voice_recognition",
               title: "사례 2 · 숙제 찾기 학습 앱",
-              image: "/e4m_case2_voice.png",
+              image: "/images/e4m/e4m_case2_voice.png",
               description: "같은 앱인데 학생 A의 말은 바로 인식되고, 학생 B의 말은 자주 다르게 인식돼요.",
               userA: { id: "user_a", label: "학생 A", status: "바로 찾아줘요." },
               userB: { id: "user_b", label: "학생 B", status: "엉뚱한 화면이 나와요." }
@@ -208,7 +208,7 @@ export const E4_V3 = {
             {
               id: "auto_reading",
               title: "사례 3 · 글을 읽어 주는 앱",
-              image: "/e4m_case3_reading.png",
+              image: "/images/e4m/e4m_case3_reading.png",
               description: "같은 읽기 앱인데 학생 A는 편하게 듣고, 학생 B는 속도가 안 맞아 내용을 놓쳐요.",
               userA: { id: "user_a", label: "학생 A", status: "편하게 들어요." },
               userB: { id: "user_b", label: "학생 B", status: "내용을 놓쳐요." }
@@ -234,7 +234,7 @@ export const E4_V3 = {
             {
               id: "face_recognition",
               title: "사례 1 · 학교 출입 얼굴 인식",
-              image: "/e4m_case1_face.png",
+              image: "/images/e4m/e4m_case1_face.png",
               description: "학생 B는 여러 번 시도해야 문이 열려요.",
               userA: { id: "user_a", label: "학생 A", status: "얼굴이 바로 인식돼서 문이 열려요." },
               userB: { id: "user_b", label: "학생 B", status: "여러 번 시도해야 문이 열려요." }
@@ -242,7 +242,7 @@ export const E4_V3 = {
             {
               id: "voice_recognition",
               title: "사례 2 · 숙제 찾기 학습 앱",
-              image: "/e4m_case2_voice.png",
+              image: "/images/e4m/e4m_case2_voice.png",
               description: "학생 B는 말이 다르게 인식되어 엉뚱한 화면이 나와요.",
               userA: { id: "user_a", label: "학생 A", status: "말하면 바로 원하는 숙제를 찾아줘요." },
               userB: { id: "user_b", label: "학생 B", status: "말이 다르게 인식되어 엉뚱한 화면이 나와요." }
@@ -250,7 +250,7 @@ export const E4_V3 = {
             {
               id: "auto_reading",
               title: "사례 3 · 글을 읽어 주는 앱",
-              image: "/e4m_case3_reading.png",
+              image: "/images/e4m/e4m_case3_reading.png",
               description: "학생 B는 속도가 맞지 않아 중요한 내용을 놓쳐요.",
               userA: { id: "user_a", label: "학생 A", status: "내용을 편하게 따라가며 들을 수 있어요." },
               userB: { id: "user_b", label: "학생 B", status: "속도가 맞지 않아 중요한 내용을 놓쳐요." }
@@ -304,7 +304,7 @@ export const E4_V3 = {
             {
               id: "scene1_gate",
               title: "장면 1 · 입장 확인 게이트",
-              image: "/e4h_scene1_gate.png",
+              image: "/images/e4h/e4h_scene1_gate.png",
               description: "얼굴을 확인해 빠르게 입장하는 AI 게이트가 있어요.",
               userA: { id: "user_a", label: "방문객 A", status: "얼굴이 바로 인식돼서 게이트가 열려요." },
               userB: { id: "user_b", label: "방문객 B", status: "여러 번 멈추고 다시 확인해야 해요." }
@@ -312,7 +312,7 @@ export const E4_V3 = {
             {
               id: "scene2_recommendation",
               title: "장면 2 · 놀이기구 추천 화면",
-              image: "/e4h_scene2_recommendation.png",
+              image: "/images/e4h/e4h_scene2_recommendation.png",
               description: "공원 앱이 '지금 너에게 잘 맞는 놀이기구'를 추천해 줘요.",
               userA: { id: "user_a", label: "방문객 A", status: "다양한 놀이기구가 추천돼요." },
               userB: { id: "user_b", label: "방문객 B", status: "비슷한 것만 계속 추천돼요." }
@@ -320,7 +320,7 @@ export const E4_V3 = {
             {
               id: "scene3_kiosk",
               title: "장면 3 · 길찾기 안내 키오스크",
-              image: "/e4h_scene3_kiosk.png",
+              image: "/images/e4h/e4h_scene3_kiosk.png",
               description: "AI 길찾기 키오스크가 가장 빠른 길을 알려줘요.",
               userA: { id: "user_a", label: "방문객 A", status: "원하는 장소를 쉽게 찾아요." },
               userB: { id: "user_b", label: "방문객 B", status: "질문했는데 엉뚱한 안내를 받아 더 돌아가게 돼요." }
@@ -328,7 +328,7 @@ export const E4_V3 = {
             {
               id: "scene4_performance",
               title: "장면 4 · 공연 자막·음성 안내",
-              image: "/e4h_scene4_performance.png",
+              image: "/images/e4h/e4h_scene4_performance.png",
               description: "공연장에 AI 자막과 음성 안내 서비스가 있어요.",
               userA: { id: "user_a", label: "방문객 A", status: "내용을 잘 따라가며 즐길 수 있어요." },
               userB: { id: "user_b", label: "방문객 B", status: "자막이 이상하게 나오거나 음성 안내가 잘 맞지 않아 내용을 놓쳐요." }
@@ -353,7 +353,7 @@ export const E4_V3 = {
             {
               id: "scene1_gate",
               title: "장면 1 · 입장 확인 게이트",
-              image: "/e4h_scene1_gate.png",
+              image: "/images/e4h/e4h_scene1_gate.png",
               description: "방문객 B는 여러 번 멈추고 다시 확인해야 해요.",
               userA: { id: "user_a", label: "방문객 A", status: "바로 입장해요." },
               userB: { id: "user_b", label: "방문객 B", status: "여러 번 시도해야 해요." }
@@ -361,7 +361,7 @@ export const E4_V3 = {
             {
               id: "scene2_recommendation",
               title: "장면 2 · 놀이기구 추천 화면",
-              image: "/e4h_scene2_recommendation.png",
+              image: "/images/e4h/e4h_scene2_recommendation.png",
               description: "방문객 B에게는 비슷한 것만 계속 추천돼요.",
               userA: { id: "user_a", label: "방문객 A", status: "다양하게 추천받아요." },
               userB: { id: "user_b", label: "방문객 B", status: "비슷한 추천만 반복돼요." }
@@ -369,7 +369,7 @@ export const E4_V3 = {
             {
               id: "scene3_kiosk",
               title: "장면 3 · 길찾기 안내 키오스크",
-              image: "/e4h_scene3_kiosk.png",
+              image: "/images/e4h/e4h_scene3_kiosk.png",
               description: "방문객 B는 엉뚱한 안내를 받아 더 돌아가요.",
               userA: { id: "user_a", label: "방문객 A", status: "정확한 안내를 받아요." },
               userB: { id: "user_b", label: "방문객 B", status: "엉뚱한 안내를 받아요." }
@@ -377,7 +377,7 @@ export const E4_V3 = {
             {
               id: "scene4_performance",
               title: "장면 4 · 공연 자막·음성 안내",
-              image: "/e4h_scene4_performance.png",
+              image: "/images/e4h/e4h_scene4_performance.png",
               description: "방문객 B는 자막이나 안내가 맞지 않아 내용을 놓쳐요.",
               userA: { id: "user_a", label: "방문객 A", status: "내용을 잘 따라가요." },
               userB: { id: "user_b", label: "방문객 B", status: "내용을 놓쳐요." }
@@ -410,7 +410,7 @@ export const E4_V3 = {
             {
               id: "scene1_gate",
               title: "장면 1 · 입장 확인 게이트",
-              image: "/e4h_scene1_gate.png",
+              image: "/images/e4h/e4h_scene1_gate.png",
               description: "AI 게이트가 한 방문객은 바로 통과시키고, 다른 방문객은 여러 번 확인하게 해요.",
               userA: { id: "user_a", label: "방문객 A", status: "바로 입장해요." },
               userB: { id: "user_b", label: "방문객 B", status: "여러 번 시도해야 해요." }
@@ -418,7 +418,7 @@ export const E4_V3 = {
             {
               id: "scene2_recommendation",
               title: "장면 2 · 놀이기구 추천 화면",
-              image: "/e4h_scene2_recommendation.png",
+              image: "/images/e4h/e4h_scene2_recommendation.png",
               description: "같은 앱인데 한 방문객에게는 다양하게, 다른 방문객에게는 비슷하게만 추천해요.",
               userA: { id: "user_a", label: "방문객 A", status: "다양하게 추천받아요." },
               userB: { id: "user_b", label: "방문객 B", status: "비슷한 추천만 반복돼요." }
@@ -426,7 +426,7 @@ export const E4_V3 = {
             {
               id: "scene3_kiosk",
               title: "장면 3 · 길찾기 안내 키오스크",
-              image: "/e4h_scene3_kiosk.png",
+              image: "/images/e4h/e4h_scene3_kiosk.png",
               description: "같은 키오스크인데 한 방문객은 정확한 안내를, 다른 방문객은 엉뚱한 안내를 받아요.",
               userA: { id: "user_a", label: "방문객 A", status: "정확한 안내를 받아요." },
               userB: { id: "user_b", label: "방문객 B", status: "엉뚱한 안내를 받아요." }
@@ -434,7 +434,7 @@ export const E4_V3 = {
             {
               id: "scene4_performance",
               title: "장면 4 · 공연 자막·음성 안내",
-              image: "/e4h_scene4_performance.png",
+              image: "/images/e4h/e4h_scene4_performance.png",
               description: "같은 공연인데 한 방문객은 자막이 잘 맞고, 다른 방문객은 자막이나 안내가 잘 맞지 않아요.",
               userA: { id: "user_a", label: "방문객 A", status: "내용을 잘 따라가요." },
               userB: { id: "user_b", label: "방문객 B", status: "내용을 놓쳐요." }
@@ -461,7 +461,7 @@ export const E4_V3 = {
             {
               id: "scene1_gate",
               title: "장면 1 · 입장 확인 게이트",
-              image: "/e4h_scene1_gate.png",
+              image: "/images/e4h/e4h_scene1_gate.png",
               description: "방문객 B는 같은 게이트에서 계속 더 오래 기다려야 해요.",
               userA: { id: "user_a", label: "방문객 A", status: "바로 입장해요." },
               userB: { id: "user_b", label: "방문객 B", status: "여러 번 시도해야 해요." }
@@ -469,7 +469,7 @@ export const E4_V3 = {
             {
               id: "scene2_recommendation",
               title: "장면 2 · 놀이기구 추천 화면",
-              image: "/e4h_scene2_recommendation.png",
+              image: "/images/e4h/e4h_scene2_recommendation.png",
               description: "방문객 B는 새로운 놀이기구를 추천받을 기회가 적어요.",
               userA: { id: "user_a", label: "방문객 A", status: "다양하게 추천받아요." },
               userB: { id: "user_b", label: "방문객 B", status: "비슷한 추천만 반복돼요." }
@@ -477,7 +477,7 @@ export const E4_V3 = {
             {
               id: "scene3_kiosk",
               title: "장면 3 · 길찾기 안내 키오스크",
-              image: "/e4h_scene3_kiosk.png",
+              image: "/images/e4h/e4h_scene3_kiosk.png",
               description: "방문객 B는 잘못된 안내 때문에 시간을 낭비하게 돼요.",
               userA: { id: "user_a", label: "방문객 A", status: "정확한 안내를 받아요." },
               userB: { id: "user_b", label: "방문객 B", status: "엉뚱한 안내를 받아요." }
@@ -485,7 +485,7 @@ export const E4_V3 = {
             {
               id: "scene4_performance",
               title: "장면 4 · 공연 자막·음성 안내",
-              image: "/e4h_scene4_performance.png",
+              image: "/images/e4h/e4h_scene4_performance.png",
               description: "방문객 B는 공연 내용을 충분히 즐기지 못하게 돼요.",
               userA: { id: "user_a", label: "방문객 A", status: "내용을 잘 따라가요." },
               userB: { id: "user_b", label: "방문객 B", status: "내용을 놓쳐요." }
@@ -506,28 +506,28 @@ export const E4_V3 = {
             {
               id: "scene1_gate",
               title: "장면 1 · 입장 확인 게이트",
-              image: "/e4h_scene1_gate.png",
+              image: "/images/e4h/e4h_scene1_gate.png",
               description: "AI 게이트가 방문객마다 다른 결과를 보여줘요.",
 
             },
             {
               id: "scene2_recommendation",
               title: "장면 2 · 놀이기구 추천 화면",
-              image: "/e4h_scene2_recommendation.png",
+              image: "/images/e4h/e4h_scene2_recommendation.png",
               description: "앱이 방문객마다 다른 범위로 추천해줘요.",
 
             },
             {
               id: "scene3_kiosk",
               title: "장면 3 · 길찾기 안내 키오스크",
-              image: "/e4h_scene3_kiosk.png",
+              image: "/images/e4h/e4h_scene3_kiosk.png",
               description: "키오스크가 방문객마다 다른 정확도의 안내를 해줘요.",
 
             },
             {
               id: "scene4_performance",
               title: "장면 4 · 공연 자막·음성 안내",
-              image: "/e4h_scene4_performance.png",
+              image: "/images/e4h/e4h_scene4_performance.png",
               description: "AI 자막·안내 서비스가 방문객마다 다르게 작동해요.",
 
             }

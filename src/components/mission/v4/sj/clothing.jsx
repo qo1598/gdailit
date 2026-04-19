@@ -7,7 +7,7 @@ export const CLOTHING_TAG_LABEL = {
   summer: '여름', winter: '겨울', allseason: '사계절'
 };
 
-const computeClothingTagCounts = (ratings, clothingItems) => {
+export const computeClothingTopPrefs = (ratings, clothingItems) => {
   const tagCounts = {};
   Object.entries(ratings).forEach(([itemId, rating]) => {
     if (rating >= 4) {
@@ -15,49 +15,26 @@ const computeClothingTagCounts = (ratings, clothingItems) => {
       if (item) item.tags.forEach(tag => { tagCounts[tag] = (tagCounts[tag] || 0) + 1; });
     }
   });
-  return tagCounts;
-};
-
-export const computeClothingTopPrefs = (ratings, clothingItems) => {
-  const tagCounts = computeClothingTagCounts(ratings, clothingItems);
   return Object.entries(tagCounts).sort((a, b) => b[1] - a[1]).map(([tag]) => tag);
 };
 
-export const TOP_PREFS_DISPLAY_COUNT = 5;
-
-const GARMENT_TAGS = new Set(['tshirt', 'pants', 'skirt', 'hoodie', 'hat', 'shoes']);
-
-export const computeClothingTasteTags = (ratings, clothingItems) => {
-  const tagCounts = computeClothingTagCounts(ratings, clothingItems);
-  return Object.entries(tagCounts)
-    .filter(([tag]) => !GARMENT_TAGS.has(tag))
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, TOP_PREFS_DISPLAY_COUNT);
-};
-
-export const computeClothingRecommendations = (ratings, clothingItems, _recommendationRules, count = 3) => {
-  const tasteTags = computeClothingTasteTags(ratings, clothingItems);
-  const weightMap = Object.fromEntries(tasteTags);
-  const highlyRatedIds = new Set(
-    Object.entries(ratings).filter(([, r]) => r >= 4).map(([id]) => id)
-  );
-
-  const scored = clothingItems
-    .filter(item => !highlyRatedIds.has(item.id))
-    .map(item => {
-      const matched = item.tags.filter(t => weightMap[t]);
-      const score = matched.reduce((s, t) => s + weightMap[t], 0);
-      return { id: item.id, score, matchCount: matched.length };
-    })
-    .sort((a, b) => (b.matchCount - a.matchCount) || (b.score - a.score));
-
-  const result = scored.filter(x => x.score > 0).slice(0, count).map(x => x.id);
-  if (result.length < count) {
-    for (const item of clothingItems) {
-      if (result.length >= count) break;
-      if (!result.includes(item.id) && !highlyRatedIds.has(item.id)) result.push(item.id);
-    }
+export const computeClothingRecommendations = (ratings, clothingItems, recommendationRules, count = 3) => {
+  const topPrefs = computeClothingTopPrefs(ratings, clothingItems);
+  const highlyRatedIds = Object.entries(ratings).filter(([_, r]) => r >= 4).map(([id]) => id);
+  let candidateIds = [];
+  for (const pref of topPrefs) {
+    (recommendationRules[pref]?.items || []).forEach(id => {
+      if (!candidateIds.includes(id)) candidateIds.push(id);
+    });
+    if (candidateIds.length >= count * 2) break;
   }
+  const notHighly = candidateIds.filter(id => !highlyRatedIds.includes(id));
+  let result = notHighly.length >= count
+    ? notHighly.slice(0, count)
+    : [...notHighly, ...candidateIds.filter(id => !notHighly.includes(id))].slice(0, count);
+  clothingItems.forEach(item => {
+    if (!result.includes(item.id) && result.length < count) result.push(item.id);
+  });
   return result.slice(0, count);
 };
 
@@ -130,48 +107,31 @@ export const ClothingIllustration = ({ type, colorHex, size = 48 }) => {
   return shapes[type] || shapes.tshirt;
 };
 
-export const ClothingItemCard = ({ item, domainColor, compact = false, highlightTags }) => {
-  const highlightSet = highlightTags instanceof Set ? highlightTags : new Set(highlightTags || []);
-  return (
+export const ClothingItemCard = ({ item, domainColor, compact = false }) => (
+  <div style={{
+    backgroundColor: '#fff', borderRadius: compact ? '10px' : '12px',
+    border: '2px solid #e2e8f0', overflow: 'hidden', display: 'flex', flexDirection: 'column'
+  }}>
     <div style={{
-      backgroundColor: '#fff', borderRadius: compact ? '10px' : '12px',
-      border: '2px solid #e2e8f0', overflow: 'hidden', display: 'flex', flexDirection: 'column'
+      backgroundColor: item.colorHex ? `${item.colorHex}22` : '#f1f5f9',
+      display: 'flex', alignItems: 'center', justifyContent: 'center',
+      height: compact ? 'clamp(54px, 13vw, 68px)' : 'clamp(70px, 17vw, 88px)',
     }}>
+      <ClothingIllustration type={getClothingType(item.tags)} colorHex={item.colorHex} size={compact ? 36 : 48} />
+    </div>
+    <div style={{ padding: compact ? '4px 6px 6px' : '7px 10px 9px' }}>
       <div style={{
-        backgroundColor: item.colorHex ? `${item.colorHex}22` : '#f1f5f9',
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        height: compact ? 'clamp(54px, 13vw, 68px)' : 'clamp(70px, 17vw, 88px)',
+        fontSize: compact ? 'clamp(0.58rem, 1.5vw, 0.66rem)' : 'clamp(0.72rem, 2vw, 0.8rem)',
+        fontWeight: 800, color: '#1e293b', marginBottom: '2px', lineHeight: 1.3, wordBreak: 'keep-all'
       }}>
-        <ClothingIllustration type={getClothingType(item.tags)} colorHex={item.colorHex} size={compact ? 36 : 48} />
+        {item.name}
       </div>
-      <div style={{ padding: compact ? '4px 6px 6px' : '7px 10px 9px' }}>
-        <div style={{
-          fontSize: compact ? 'clamp(0.58rem, 1.5vw, 0.66rem)' : 'clamp(0.72rem, 2vw, 0.8rem)',
-          fontWeight: 800, color: '#1e293b', marginBottom: '3px', lineHeight: 1.3, wordBreak: 'keep-all'
-        }}>
-          {item.name}
-        </div>
-        <div style={{
-          fontSize: compact ? 'clamp(0.48rem, 1.15vw, 0.54rem)' : 'clamp(0.58rem, 1.4vw, 0.64rem)',
-          fontWeight: 600, lineHeight: 1.35,
-          display: 'flex', flexWrap: 'wrap', gap: compact ? '2px' : '3px'
-        }}>
-          {item.tags.map(t => {
-            const matched = highlightSet.has(t);
-            return (
-              <span key={t} style={{
-                color: matched && domainColor ? domainColor : '#94a3b8',
-                fontWeight: matched ? 800 : 600,
-                backgroundColor: matched && domainColor ? domainColor + '18' : 'transparent',
-                padding: matched ? '0 4px' : '0',
-                borderRadius: '4px'
-              }}>
-                #{CLOTHING_TAG_LABEL[t] || t}
-              </span>
-            );
-          })}
-        </div>
+      <div style={{
+        fontSize: compact ? 'clamp(0.5rem, 1.2vw, 0.56rem)' : 'clamp(0.6rem, 1.5vw, 0.66rem)',
+        color: '#94a3b8', fontWeight: 600, lineHeight: 1.4
+      }}>
+        {item.tags.slice(0, 2).map(t => `#${CLOTHING_TAG_LABEL[t] || t}`).join(' ')}
       </div>
     </div>
-  );
-};
+  </div>
+);

@@ -8,6 +8,8 @@ import Login from './components/Login';
 import Discussion from './components/Discussion';
 import Admin from './components/Admin';
 import MissionRunner from './components/mission/v3/MissionRunner';
+import MissionRunnerV4 from './components/mission/v4/MissionRunner';
+import { MISSIONS_V4 } from './data/missionsV4/index.js';
 import { supabase } from './supabaseClient';
 import './index.css';
 
@@ -616,8 +618,28 @@ const V3_MISSIONS = new Set(['M-3', 'C-2', 'D-1', 'E-1', 'E-2', 'E-3', 'E-4']);
 
 function MissionOrV3(props) {
   const params = useParams();
+  if (MISSIONS_V4[params.missionId]) return <MissionRunnerV4 userId={props.userId} />;
   if (V3_MISSIONS.has(params.missionId)) return <MissionRunner userId={props.userId} />;
   return <Mission {...props} />;
+}
+
+// V4 미션 진입점 — /mission-v4/:missionId/:gradeGroup
+// 등록되지 않은 미션 ID는 안내 문구 표시
+function MissionV4Gate({ userId }) {
+  const { missionId } = useParams();
+  if (!MISSIONS_V4[missionId]) {
+    return (
+      <div style={{ padding: 32, textAlign: 'center' }}>
+        <h2 style={{ fontSize: '1.25rem', fontWeight: 'bold', marginBottom: 12 }}>
+          V4 미션 준비 중
+        </h2>
+        <p style={{ color: '#64748b' }}>
+          {missionId} 의 V4 버전은 아직 등록되지 않았습니다.
+        </p>
+      </div>
+    );
+  }
+  return <MissionRunnerV4 userId={userId} />;
 }
 
 // 학년 → 학년군 파싱 (1-2학년: 'lower' / 3-4학년: 'middle' / 5-6학년: 'upper')
@@ -840,6 +862,7 @@ function AppContent() {
           <Routes>
             <Route path="/" element={userId ? <Dashboard missions={missions} refresh={fetchProgress} justAttended={false} setJustAttended={() => { }} gradeGroup={gradeGroup} isTestAccount={userId.startsWith('test')} /> : <Login onLogin={handleLogin} />} />
             <Route path="/mission/:missionId/:gradeGroup" element={userId ? <MissionOrV3 userId={userId} schoolId={schoolId} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
+            <Route path="/mission-v4/:missionId/:gradeGroup" element={userId ? <MissionV4Gate userId={userId} /> : <Login onLogin={handleLogin} />} />
             <Route path="/minigame" element={userId ? <MiniGame userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
             <Route path="/discussion" element={userId ? <Discussion userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
             <Route path="/profile" element={userId ? <Profile userId={userId} userName={userName} fragments={fragments} setFragments={setFragments} avatarConfig={avatarConfig} setAvatarConfig={setAvatarConfig} onLogout={handleLogout} /> : <Login onLogin={handleLogin} />} />

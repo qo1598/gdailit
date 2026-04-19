@@ -4,7 +4,6 @@ import { StepHeader } from './shared';
 import {
   CLOTHING_TAG_LABEL,
   computeClothingTopPrefs,
-  computeClothingTasteTags,
   computeClothingRecommendations,
   getClothingType,
   ClothingIllustration,
@@ -233,9 +232,7 @@ export const RecommendationGrid = ({ step, gradeSpec, answers, setAnswers, domai
   const rules = gradeSpec?.recommendationRules || {};
   const count = step.recommendationCount || 3;
 
-  const tasteTags = computeClothingTasteTags(ratings, items);
-  const topPrefs = tasteTags.map(([tag]) => tag);
-  const tasteSet = new Set(topPrefs);
+  const topPrefs = computeClothingTopPrefs(ratings, items);
   const recIds = computeClothingRecommendations(ratings, items, rules, count);
   const recItems = recIds.map(id => items.find(i => i.id === id)).filter(Boolean);
 
@@ -249,7 +246,7 @@ export const RecommendationGrid = ({ step, gradeSpec, answers, setAnswers, domai
             분석된 취향
           </div>
           <div style={{ fontSize: 'clamp(0.92rem, 2.8vw, 1.02rem)', fontWeight: 800, color: domainColor, wordBreak: 'keep-all' }}>
-            {topPrefs.map(t => `#${CLOTHING_TAG_LABEL[t] || t}`).join(' ')}
+            {topPrefs.slice(0, 3).map(t => `#${CLOTHING_TAG_LABEL[t] || t}`).join(' ')}
           </div>
         </div>
       )}
@@ -286,21 +283,8 @@ export const RecommendationGrid = ({ step, gradeSpec, answers, setAnswers, domai
                 <div style={{ fontSize: 'clamp(0.68rem, 1.9vw, 0.78rem)', fontWeight: 800, color: '#1e293b', marginBottom: '3px', lineHeight: 1.3, wordBreak: 'keep-all' }}>
                   {item.name}
                 </div>
-                <div style={{ fontSize: 'clamp(0.55rem, 1.4vw, 0.62rem)', fontWeight: 600, display: 'flex', flexWrap: 'wrap', gap: '3px' }}>
-                  {item.tags.map(t => {
-                    const matched = tasteSet.has(t);
-                    return (
-                      <span key={t} style={{
-                        color: matched ? domainColor : '#94a3b8',
-                        fontWeight: matched ? 800 : 600,
-                        backgroundColor: matched ? domainColor + '18' : 'transparent',
-                        padding: matched ? '1px 5px' : '1px 0',
-                        borderRadius: '4px'
-                      }}>
-                        #{CLOTHING_TAG_LABEL[t] || t}
-                      </span>
-                    );
-                  })}
+                <div style={{ fontSize: 'clamp(0.55rem, 1.4vw, 0.62rem)', color: '#94a3b8', fontWeight: 600 }}>
+                  {item.tags.slice(0, 2).map(t => `#${CLOTHING_TAG_LABEL[t] || t}`).join(' ')}
                 </div>
               </div>
             </div>

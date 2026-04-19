@@ -148,7 +148,7 @@ export const E2_V3 = {
           ],
           reasonOptions: [
             { id: "wrong_fact", label: "사실이 틀렸어요" },
-            { id: "not_proven", label: "증명되지 않은 것을 사실처럼 말했어요" }
+            { id: "not_proven", label: "확인되지 않은 것을 사실처럼 말했어요" }
           ],
           validation: { required: true }
         },
@@ -236,7 +236,7 @@ export const E2_V3 = {
           filterJudgments: ["revise", "verify"],
           reasonOptions: [
             { id: "wrong_fact", label: "사실이 틀렸어요" },
-            { id: "not_proven", label: "증명되지 않은 것을 사실처럼 말했어요" },
+            { id: "not_proven", label: "확인되지 않은 것을 사실처럼 말했어요" },
             { id: "partly_wrong", label: "맞는 부분도 있지만 틀린 부분도 있어요" },
             { id: "no_source", label: "출처나 근거가 없어요" },
             { id: "misleading", label: "사실처럼 들리지만 확인이 필요해요" },
