@@ -6,6 +6,7 @@ import { FilteredReasonCarousel, FilteredPlanCarousel, FollowUpQuestionCarousel 
 import { ClassifyCarousel, CaseCarouselReason } from './sj/classifyModes';
 import { ClothingGridWithRec, StarRatingCarousel, RecommendationGrid } from './sj/clothingModes';
 import { CaseJudgeCarousel } from './sj/caseJudgeCarousel';
+import { CaseViewCarousel } from './td/selectModes';
 
 /**
  * SJRenderer — Statement & Judgement renderer.
@@ -28,6 +29,7 @@ const MODE_MAP = {
   followup_question_carousel: FollowUpQuestionCarousel,
   case_carousel_reason: CaseCarouselReason,
   case_judge_carousel: CaseJudgeCarousel,
+  case_view_carousel: CaseViewCarousel,
   free_text: FreeText,
 };
 

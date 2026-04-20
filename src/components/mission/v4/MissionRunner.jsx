@@ -491,6 +491,66 @@ const MissionRunnerV4 = ({ userId }) => {
         return false;
       }
     }
+    // C영역 신규
+    if (step.uiMode === 'ai_option_picker') {
+      if (step.selectable === false) {
+        // 뷰 전용: 후보만 생성되어 있으면 통과
+        const meta = answers[step.id + '_meta'];
+        if (step.validation?.required !== false && !(meta?.options?.length > 0)) {
+          setUiState(prev => ({ ...prev, validationError: 'AI에게 후보를 먼저 요청해주세요.' }));
+          return false;
+        }
+      } else if (step.validation?.required !== false && (typeof answer !== 'string' || !answer.trim())) {
+        setUiState(prev => ({ ...prev, validationError: '후보를 고르거나 직접 써서 확정해주세요.' }));
+        return false;
+      }
+    }
+    if (step.uiMode === 'option_adopt_hold') {
+      if (answer?.adopt_index == null || answer?.hold_index == null) {
+        setUiState(prev => ({ ...prev, validationError: '채택안과 보류안을 각각 하나씩 골라주세요.' }));
+        return false;
+      }
+      if (!(answer.adopt_reason || '').trim() || !(answer.hold_reason || '').trim()) {
+        setUiState(prev => ({ ...prev, validationError: '채택안과 보류안의 이유를 모두 써주세요.' }));
+        return false;
+      }
+    }
+    if (step.uiMode === 'ai_chat_turn') {
+      if (step.validation?.required !== false && !answer?.aiResponse?.trim()) {
+        setUiState(prev => ({ ...prev, validationError: 'AI에게 질문을 보내 답변을 받아주세요.' }));
+        return false;
+      }
+      if (step.applyInputLabel && !answer?.apply?.trim()) {
+        setUiState(prev => ({ ...prev, validationError: 'AI 제안을 어떻게 반영할지 작성해주세요.' }));
+        return false;
+      }
+    }
+    if (step.uiMode === 'free_text_with_refs') {
+      if (step.validation?.required !== false && (typeof answer !== 'string' || !answer.trim())) {
+        setUiState(prev => ({ ...prev, validationError: '마지막 문장을 직접 써주세요.' }));
+        return false;
+      }
+      const min = step.validation?.minLength;
+      if (min && typeof answer === 'string' && answer.trim().length < min) {
+        setUiState(prev => ({ ...prev, validationError: `${min}자 이상 써주세요.` }));
+        return false;
+      }
+    }
+    if (step.uiMode === 'sentence_pick_with_reason') {
+      if (!answer?.pickedStepId) {
+        setUiState(prev => ({ ...prev, validationError: '가장 남기고 싶은 문장을 하나 골라주세요.' }));
+        return false;
+      }
+      if (step.validation?.required !== false && !(answer.reason || '').trim()) {
+        setUiState(prev => ({ ...prev, validationError: '그 문장을 고른 이유를 써주세요.' }));
+        return false;
+      }
+      const min = step.validation?.minLength;
+      if (min && (answer.reason || '').trim().length < min) {
+        setUiState(prev => ({ ...prev, validationError: `이유를 ${min}자 이상 써주세요.` }));
+        return false;
+      }
+    }
     return true;
   };
 

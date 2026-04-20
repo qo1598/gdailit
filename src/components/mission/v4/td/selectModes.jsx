@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Check, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getIcon } from '../MissionIcons';
 import { StepHeader, SelectionHint } from './shared';
+import { getC1Icon } from '../icons/c1Icons';
 
 function shuffleOnce(arr) {
   const a = [...arr];
@@ -315,9 +316,15 @@ export const SingleSelectCards = ({ step, answers, setAnswers, domainColor, hint
                 position: 'relative'
               }}
             >
-              <span style={{ fontSize: 'clamp(28px, 8vw, 40px)', lineHeight: 1 }}>
-                {TOPIC_ICONS[option.id] || '📌'}
-              </span>
+              {(() => {
+                const svgIcon = getC1Icon(option.id, Math.min(56, window.innerWidth * 0.14));
+                if (svgIcon) return <div style={{ lineHeight: 0 }}>{svgIcon}</div>;
+                return (
+                  <span style={{ fontSize: 'clamp(28px, 8vw, 40px)', lineHeight: 1 }}>
+                    {TOPIC_ICONS[option.id] || option.emoji || '📌'}
+                  </span>
+                );
+              })()}
               <span style={{
                 fontSize: 'clamp(0.9rem, 3vw, 1.05rem)', fontWeight: 800,
                 color: isActive ? '#1e293b' : '#64748b', textAlign: 'center'

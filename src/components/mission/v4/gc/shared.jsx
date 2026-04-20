@@ -130,6 +130,104 @@ export const GeneratedImageResult = ({ imageUrl, label, domainColor }) => (
   </div>
 );
 
+// ─── 이전 단계 맥락 패널 ──────────────────────────────────────────
+// branch.sourceStepId (string) 또는 step.contextStepIds (array) 로 지정된
+// 이전 단계들의 응답을 요약해 보여준다. uiMode별로 포맷을 달리한다.
+export const PrevContextPanel = ({ step, gradeSpec, answers, domainColor }) => {
+  if (!gradeSpec) return null;
+  const ids = step.contextStepIds
+    || (step.branch?.sourceStepId ? [step.branch.sourceStepId] : []);
+  if (ids.length === 0) return null;
+
+  const blocks = ids.map(id => {
+    const src = gradeSpec.steps?.find(s => s.id === id);
+    const ans = answers?.[id];
+    if (!src || ans == null) return null;
+    const title = src.title?.replace(/^STEP\s*\d+\s*·\s*/i, '').trim() || src.id;
+
+    // ai_chat_turn
+    if (src.uiMode === 'ai_chat_turn' && typeof ans === 'object') {
+      const rows = [];
+      if (ans.input) rows.push({ k: '내 질문', v: ans.input });
+      if (ans.aiResponse) rows.push({ k: 'AI 제안', v: ans.aiResponse });
+      if (ans.apply) rows.push({ k: '내가 반영한 점', v: ans.apply });
+      return { id, title, rows };
+    }
+
+    // multi_free_text
+    if (src.uiMode === 'multi_free_text' && typeof ans === 'object') {
+      const rows = (src.questions || [])
+        .map(q => ({ k: q.text.split('(')[0].trim().replace(/[?？]$/, ''), v: ans[q.id] }))
+        .filter(r => r.v && String(r.v).trim());
+      return { id, title, rows };
+    }
+
+    // chips / array
+    if (Array.isArray(ans) && src.chips) {
+      const labels = src.chips.filter(c => ans.includes(c.id)).map(c => c.label);
+      if (labels.length === 0) return null;
+      return { id, title, rows: [{ k: null, v: labels.join(', ') }] };
+    }
+
+    if (typeof ans === 'string' && ans.trim()) {
+      return { id, title, rows: [{ k: null, v: ans }] };
+    }
+
+    return null;
+  }).filter(Boolean);
+
+  if (blocks.length === 0) return null;
+
+  return (
+    <div style={{
+      padding: 'clamp(12px, 3vw, 14px)',
+      borderRadius: '14px',
+      background: `${domainColor}08`,
+      border: `1.5px dashed ${domainColor}55`,
+      display: 'flex', flexDirection: 'column', gap: '12px'
+    }}>
+      <div style={{
+        fontSize: 'clamp(0.7rem, 2vw, 0.76rem)', fontWeight: 900,
+        color: domainColor, letterSpacing: '0.08em', textTransform: 'uppercase'
+      }}>
+        이전 단계에서 내가 쓴 내용
+      </div>
+      {blocks.map(b => (
+        <div key={b.id} style={{
+          padding: '10px 12px', background: '#fff',
+          borderRadius: '10px', border: '1px solid #e2e8f0'
+        }}>
+          <div style={{
+            fontSize: 'clamp(0.74rem, 2.2vw, 0.8rem)', fontWeight: 800,
+            color: '#475569', marginBottom: '6px'
+          }}>
+            {b.title}
+          </div>
+          {b.rows.map((r, i) => (
+            <div key={i} style={{ marginTop: i === 0 ? 0 : '6px' }}>
+              {r.k && (
+                <div style={{
+                  fontSize: 'clamp(0.68rem, 2vw, 0.74rem)', fontWeight: 800,
+                  color: '#94a3b8', marginBottom: '2px'
+                }}>
+                  {r.k}
+                </div>
+              )}
+              <div style={{
+                fontSize: 'clamp(0.82rem, 2.5vw, 0.9rem)',
+                color: '#1e293b', lineHeight: 1.55,
+                whiteSpace: 'pre-wrap', wordBreak: 'keep-all'
+              }}>
+                {r.v}
+              </div>
+            </div>
+          ))}
+        </div>
+      ))}
+    </div>
+  );
+};
+
 // ─── 공통: 생성 에러 메시지 ────────────────────────────────────────
 export const GenerateError = ({ error, onRetry }) => {
   if (!error) return null;

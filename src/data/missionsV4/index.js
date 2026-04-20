@@ -7,12 +7,14 @@ import { E1_V4 } from './E-1.js';
 import { E2_V4 } from './E-2.js';
 import { E3_V4 } from './E-3.js';
 import { E4_V4 } from './E-4.js';
+import { C1_V4 } from './C-1.js';
 
 export const MISSIONS_V4 = {
   "E-1": E1_V4,
   "E-2": E2_V4,
   "E-3": E3_V4,
   "E-4": E4_V4,
+  "C-1": C1_V4,
 };
 
 export default MISSIONS_V4;

@@ -59,6 +59,22 @@ function renderArtifact(artifact, answers, steps) {
       const count = Object.values(stepAns).filter(v => negate ? (exists(v) && !matches(v)) : matches(v)).length;
       return String(count);
     }
+    // 서브필드 토큰: {stepN_field} — multi_free_text·ai_chat_turn 등 객체 답의 하위 필드
+    if (answers[key] == null) {
+      const sub = key.match(/^(step\d+)_(\w+)$/);
+      if (sub) {
+        const [, stepKey, field] = sub;
+        const parent = answers[stepKey];
+        if (parent && typeof parent === 'object') {
+          const sv = parent[field];
+          if (sv != null) {
+            if (typeof sv === 'string') return sv;
+            if (Array.isArray(sv)) return sv.join(', ');
+            return String(sv);
+          }
+        }
+      }
+    }
     const val = answers[key];
     if (val == null) return `[${key}]`;
     if (typeof val === 'string') return val;

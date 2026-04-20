@@ -28,6 +28,7 @@ const TaskStepRenderer = ({ step, gradeSpec, answers, setAnswers, domainColor, h
       return (
         <GCRenderer
           step={step}
+          gradeSpec={gradeSpec}
           answers={answers}
           setAnswers={setAnswers}
           domainColor={domainColor}

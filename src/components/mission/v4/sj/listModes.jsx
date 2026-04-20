@@ -1,5 +1,6 @@
 import React from 'react';
 import { StepHeader, ChipGroup, BranchReferencePanel } from './shared';
+import { PrevContextPanel } from '../gc/shared';
 
 // ─── classify_cards ─────────────────────────────────────────────
 export const ClassifyCards = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
@@ -203,15 +204,17 @@ export const PerCardTags = ({ step, answers, setAnswers, domainColor, hint, onHi
 };
 
 // ─── multi_free_text ──────────────────────────────────────────────
-export const MultiFreeText = ({ step, answers, setAnswers, domainColor, hint, onHintClick }) => {
+export const MultiFreeText = ({ step, gradeSpec, answers, setAnswers, domainColor, hint, onHintClick }) => {
   const answer = answers[step.id] || {};
   const questions = step.questions || [];
   const placeholders = step.placeholders || [];
+  const rowsPerField = step.rowsPerField || 3;
   const answeredCount = questions.filter(q => answer[q.id]?.trim()).length;
 
   return (
     <div className="animate-slide-up" style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(12px, 3vw, 16px)' }}>
       <StepHeader step={step} domainColor={domainColor} hint={hint} onHintClick={onHintClick} />
+      <PrevContextPanel step={step} gradeSpec={gradeSpec} answers={answers} domainColor={domainColor} />
       {questions.map((q, i) => (
         <div key={q.id} className="v3-card" style={{ marginBottom: 0 }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', gap: '8px', marginBottom: '10px' }}>
@@ -233,7 +236,7 @@ export const MultiFreeText = ({ step, answers, setAnswers, domainColor, hint, on
             placeholder={placeholders[i] || '여기에 답을 써보세요.'}
             value={answer[q.id] || ''}
             onChange={e => setAnswers(prev => ({ ...prev, [step.id]: { ...(prev[step.id] || {}), [q.id]: e.target.value } }))}
-            rows={3}
+            rows={rowsPerField}
             style={{
               width: '100%', padding: '10px 14px', borderRadius: '10px',
               border: `2px solid ${answer[q.id]?.trim() ? domainColor : '#e2e8f0'}`,

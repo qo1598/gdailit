@@ -90,6 +90,15 @@ function renderArtifactPreview(template, answers, steps) {
       }
       return '___';
     }
+    // 제네릭 하위 필드: { [field]: string } 구조 (multi_free_text, ai_chat_turn 등)
+    const genericSub = key.match(/^(step\d+)_(\w+)$/);
+    if (genericSub) {
+      const [, stepKey, field] = genericSub;
+      const v = answers[stepKey];
+      if (v && typeof v === 'object' && !Array.isArray(v) && typeof v[field] === 'string' && v[field].trim()) {
+        return v[field].trim();
+      }
+    }
     // 계산 토큰: {stepN_<judge>_count} 또는 {stepN_non_<judge>_count}
     const computed = key.match(/^(step\d+)_(non_)?([a-zA-Z]+)_count$/);
     if (computed) {
@@ -802,8 +811,8 @@ const StageRenderer = ({
         return ans.length > 40 ? ans.slice(0, 40) + '…' : ans;
       }
       if (step.uiMode === 'single_select_cards') {
-        const TOPIC_LABEL = { animal: '동물', cooking: '요리', vehicle: '탈것' };
-        return TOPIC_LABEL[ans] || ans || '—';
+        const opt = (step.options || []).find(o => o.id === ans);
+        return opt?.label || ans || '—';
       }
       if (step.uiMode === 'yesno_quiz') {
         if (!ans || !ans.length) return '—';
@@ -1030,6 +1039,42 @@ const StageRenderer = ({
       if (step.uiMode === 'free_text') {
         if (!ans?.trim()) return '—';
         return ans.length > 50 ? ans.slice(0, 50) + '…' : ans;
+      }
+      // C영역 신규
+      if (step.uiMode === 'ai_option_picker') {
+        if (step.selectable === false) {
+          const meta = answers[step.id + '_meta'];
+          const count = meta?.options?.length || 0;
+          if (count === 0) return 'AI 후보 생성 전';
+          const firstLine = (meta.options[0] || '').split('\n')[0].slice(0, 40);
+          return `AI 줄거리 후보 ${count}개 — ${firstLine}…`;
+        }
+        if (typeof ans !== 'string' || !ans.trim()) return '—';
+        return ans.length > 50 ? ans.slice(0, 50) + '…' : ans;
+      }
+      if (step.uiMode === 'option_adopt_hold') {
+        if (ans?.adopt_index == null && ans?.hold_index == null) return '—';
+        const parts = [];
+        if (ans.adopt_index != null) parts.push(`채택 후보 ${ans.adopt_index + 1}`);
+        if (ans.hold_index != null) parts.push(`보류 후보 ${ans.hold_index + 1}`);
+        return parts.join(' · ') || '—';
+      }
+      if (step.uiMode === 'ai_chat_turn') {
+        const resp = ans?.aiResponse?.trim();
+        if (!resp) return '—';
+        return resp.length > 50 ? resp.slice(0, 50) + '…' : resp;
+      }
+      if (step.uiMode === 'free_text_with_refs') {
+        if (typeof ans !== 'string' || !ans.trim()) return '—';
+        return ans.length > 50 ? ans.slice(0, 50) + '…' : ans;
+      }
+      if (step.uiMode === 'sentence_pick_with_reason') {
+        const text = ans?.pickedText?.trim();
+        const reason = ans?.reason?.trim();
+        if (!text && !reason) return '—';
+        const shortText = text ? (text.length > 30 ? text.slice(0, 30) + '…' : text) : '';
+        const shortReason = reason ? (reason.length > 30 ? reason.slice(0, 30) + '…' : reason) : '';
+        return shortText && shortReason ? `"${shortText}" · ${shortReason}` : (shortText || shortReason);
       }
       return '—';
     };
