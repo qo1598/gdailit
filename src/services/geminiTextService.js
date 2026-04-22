@@ -1,4 +1,5 @@
 import { GoogleGenAI } from "@google/genai";
+import { logAiInteraction } from './aiLogger.js';
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 const MODEL = "gemini-2.5-flash-lite";
@@ -18,6 +19,8 @@ export async function generateText({
   mode = 'completion',
   maxTokens = 500,
   temperature = 0.8,
+  // 로깅용 (선택)
+  _log = null,  // { userId, sessionId, missionCode, stepId, attempt }
 }) {
   if (!userPrompt?.trim()) throw new Error("userPrompt가 비어 있어요.");
 
@@ -28,8 +31,46 @@ export async function generateText({
     ...(systemPrompt ? { systemInstruction: { parts: [{ text: systemPrompt }] } } : {}),
   };
 
-  const res = await ai.models.generateContent({ model: MODEL, contents, config });
-  const text = res?.text ?? res?.candidates?.[0]?.content?.parts?.map(p => p.text).filter(Boolean).join("") ?? "";
+  const t0 = Date.now();
+  let text = '';
+  let fallbackUsed = false;
+
+  try {
+    const res = await ai.models.generateContent({ model: MODEL, contents, config });
+    text = res?.text ?? res?.candidates?.[0]?.content?.parts?.map(p => p.text).filter(Boolean).join("") ?? "";
+    if (!text.trim()) throw new Error("응답이 비어 있어요.");
+  } catch (err) {
+    fallbackUsed = true;
+    if (_log) {
+      await logAiInteraction({
+        ..._log,
+        provider: 'gemini-text',
+        modelName: MODEL,
+        systemPrompt,
+        userPrompt,
+        aiResponse: null,
+        responseType: mode,
+        latencyMs: Date.now() - t0,
+        fallbackUsed: true,
+      });
+    }
+    throw err;
+  }
+
+  if (_log) {
+    await logAiInteraction({
+      ..._log,
+      provider: 'gemini-text',
+      modelName: MODEL,
+      systemPrompt,
+      userPrompt,
+      aiResponse: text,
+      responseType: mode,
+      latencyMs: Date.now() - t0,
+      fallbackUsed,
+    });
+  }
+
   if (!text.trim()) throw new Error("응답이 비어 있어요.");
 
   if (mode === 'options_list') {

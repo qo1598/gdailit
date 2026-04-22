@@ -11,6 +11,8 @@ import MissionRunner from './components/mission/v3/MissionRunner';
 import MissionRunnerV4 from './components/mission/v4/MissionRunner';
 import { MISSIONS_V4 } from './data/missionsV4/index.js';
 import { supabase } from './supabaseClient';
+import { retryBackup } from './services/eventLogger.js';
+import TeacherDashboard from './components/teacher/TeacherDashboard.jsx';
 import './index.css';
 
 // We mock the status for the pilot here
@@ -736,6 +738,8 @@ function AppContent() {
     localStorage.removeItem('gradeGroup');
   };
   // 페이지 로드 시 세션 복원
+  React.useEffect(() => { retryBackup(); }, []);
+
   React.useEffect(() => {
     const restoreSession = () => {
       const savedUserId = localStorage.getItem('userId');
@@ -867,6 +871,7 @@ function AppContent() {
             <Route path="/discussion" element={userId ? <Discussion userId={userId} schoolId={schoolId} gradeGroup={gradeGroup} userName={userName} setFragments={setFragments} onReward={handleReward} /> : <Login onLogin={handleLogin} />} />
             <Route path="/profile" element={userId ? <Profile userId={userId} userName={userName} fragments={fragments} setFragments={setFragments} avatarConfig={avatarConfig} setAvatarConfig={setAvatarConfig} onLogout={handleLogout} /> : <Login onLogin={handleLogin} />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/teacher" element={<TeacherDashboard raterId={userId || 'teacher'} />} />
           </Routes>
         )}
       </main>

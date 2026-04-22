@@ -152,11 +152,13 @@ export async function submitMissionV4({ userId, gradeSpec, mission, answers, sta
     completed: true,
   };
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from('mission_submissions_v4')
-    .upsert([row], { onConflict: 'user_id,mission_code' });
+    .upsert([row], { onConflict: 'user_id,mission_code' })
+    .select('id')
+    .single();
 
   if (error) throw error;
 
-  return row;
+  return { ...row, submissionId: data?.id ?? null };
 }

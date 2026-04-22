@@ -16,7 +16,6 @@ export const C1_V4 = {
     code: "C-1",
     title: "AI와 아이디어 만들기",
     domain: "Creating",
-    ksa: { K: ["K1.3"], S: ["Creativity"], A: ["Innovative"] }
   },
 
   grades: {
@@ -28,6 +27,7 @@ export const C1_V4 = {
     lower: {
       cardCode: "C-1-L",
       performanceType: "GC",
+      ksa: { K: ["K1.3"], S: ["Creativity"], A: ["Innovative"] },
       description: "AI와 번갈아 문장을 이어 쓰며 그림책 한 장면을 완성하는 미션이에요.",
 
       scenario: {
@@ -181,6 +181,7 @@ export const C1_V4 = {
     middle: {
       cardCode: "C-1-M",
       performanceType: "GC",
+      ksa: { K: ["K1.3"], S: ["Creativity", "Collaboration"], A: ["Innovative"] },
       description: "AI가 제안한 줄거리를 비교·선택하고, 내 말로 짧은 이야기를 완성하는 미션이에요.",
 
       scenario: {
@@ -306,6 +307,7 @@ export const C1_V4 = {
     upper: {
       cardCode: "C-1-H",
       performanceType: "GC",
+      ksa: { K: ["K1.3", "K5.3"], S: ["Creativity", "Collaboration"], A: ["Responsible"] },
       description: "AI와 플롯을 확장하되 작품의 주제와 판단은 내가 결정하고, AI 도움 범위와 자기 기여를 성찰하는 미션이에요.",
 
       scenario: {

@@ -15,8 +15,7 @@ export const E3_V4 = {
   meta: {
     code: "E-3",
     title: "왜 나한테 이걸 보여줄까?",
-    domain: "Engaging",
-    ksa: { K: ["K1.1", "K5.1"], S: ["Self and Social Awareness"], A: ["Curious"] }
+    domain: "Engaging"
   },
 
   grades: {
@@ -28,6 +27,7 @@ export const E3_V4 = {
     lower: {
       cardCode: "E-3-L",
       performanceType: "TD",
+      ksa: { K: ["K1.1"], S: ["Self and Social Awareness"], A: ["Curious"] },
       description: "추천 화면을 보고, 내 대답과 추천 결과의 관계를 생각하는 미션이에요.",
 
       scenario: {
@@ -190,6 +190,8 @@ export const E3_V4 = {
           question: "왜 이런 추천이 나왔다고 생각하나요?",
           hint: "내가 어떤 질문에 어떻게 답했는지 떠올려 보세요.",
           uiMode: "free_text",
+          // 이전 선택(step2 응답)을 화면 상단에 요약 표시해 맥락 유지
+          branch: { sourceStepId: "step2", mode: "showSummary" },
           placeholder: "예: 귀엽고 집에서 키울 수 있는 동물을 좋아해서요.",
           validation: { required: true }
         }
@@ -213,6 +215,7 @@ export const E3_V4 = {
     middle: {
       cardCode: "E-3-M",
       performanceType: "SJ",
+      ksa: { K: ["K1.1", "K5.1"], S: ["Self and Social Awareness"], A: ["Curious"] },
       description: "쇼핑몰 옷에 별점을 주고, 내 평가가 추천 결과에 어떻게 반영되는지 살펴보는 미션이에요.",
 
       scenario: {
@@ -276,8 +279,8 @@ export const E3_V4 = {
         {
           id: "step1",
           title: "STEP 1 · 옷 보기",
-          question: "쇼핑몰에 옷 20개가 있어요. 어떤 옷이 있는지 살펴보세요.",
-          hint: "상단에 AI 추천 TOP 3가 있고, 아래에 전체 20개 옷이 있어요. 다음 단계에서 별점을 줄 거예요.",
+          question: "쇼핑몰에 옷 20개가 있어요. 고르지 않아도 돼요, 어떤 옷이 있는지 구경만 해보세요.",
+          hint: "지금은 그냥 살펴보는 단계예요. 상단에 AI 추천 TOP 3가 있고, 아래에 전체 옷 목록이 있어요. 별점은 다음 단계에서 줄 거예요.",
           uiMode: "clothing_grid_with_rec",
           initialRecommendedIds: ["cloth_01", "cloth_03", "cloth_11"],
           validation: { required: false }
@@ -309,6 +312,8 @@ export const E3_V4 = {
           question: "추천 결과를 보고 아래 질문에 답해 보세요.",
           hint: "정답이 없어요. 솔직하게 생각을 써보세요.",
           uiMode: "multi_free_text",
+          // 이전 별점 결과(step2)를 화면 상단에 요약 표시해 맥락 유지
+          branch: { sourceStepId: "step2", mode: "showSummary" },
           questions: [
             { id: "q1", text: "내가 어떤 특징의 옷을 좋아한 것 같나요?" },
             { id: "q2", text: "AI가 추천한 옷은 내가 높게 평가한 옷과 무엇이 비슷한가요?" },
@@ -346,6 +351,7 @@ export const E3_V4 = {
     upper: {
       cardCode: "E-3-H",
       performanceType: "SJ",
+      ksa: { K: ["K1.1", "K5.1"], S: ["Self and Social Awareness"], A: ["Curious"] },
       description: "추천 사례를 분석하고, 추천의 장점과 한계를 판단하며, 더 주도적으로 활용하는 방법을 생각해보는 미션이에요.",
 
       scenario: {
@@ -376,9 +382,9 @@ export const E3_V4 = {
           hint: "내가 전에 본 것과 추천된 것 사이의 공통점을 찾아보세요. 추천은 내가 어떻게 앱을 사용했는지를 바탕으로 이어져요.",
           uiMode: "case_carousel_reason",
           reasonOptions: [
-            { id: "similar_topic", label: "이전에 본 것과 주제가 비슷해서" },
-            { id: "frequency_time", label: "자주·오래 봐서" },
-            { id: "selection_pattern", label: "비슷한 것을 반복해서 골라서" },
+            { id: "similar_topic",     label: "이전에 본 것과 내용·주제가 비슷해서",       desc: "예: 강아지 영상을 봤더니 고양이 영상도 추천됨" },
+            { id: "frequency_time",    label: "같은 종류를 자주 또는 오래 봐서",            desc: "예: 게임 영상을 매일 오래 보니 계속 게임 영상이 나옴" },
+            { id: "selection_pattern", label: "비슷한 것을 반복해서 직접 골라서 클릭해서", desc: "예: 흰 운동화만 계속 눌렀더니 흰 운동화만 추천됨" },
             { id: "other", label: "기타" }
           ],
           cases: [
@@ -432,14 +438,16 @@ export const E3_V4 = {
             { id: "convenient", label: "원하는 것을 편하게 찾을 수 있었어요" }
           ],
           planShowForJudgments: ["helpful", "both"],
-          planLabel: "좋은 점은?",
+          planLabel: "좋은 점은? (여러 개 선택 가능)",
+          planMulti: true,
           limitationOptions: [
             { id: "similar_only", label: "비슷한 것만 계속 보게 됐어요" },
             { id: "miss_new", label: "새로운 정보나 선택지를 놓쳤어요" },
             { id: "narrow_view", label: "생각이나 관심이 한쪽으로 쏠렸어요" }
           ],
           limitationShowForJudgments: ["careful", "both"],
-          limitationLabel: "아쉬운 점은?",
+          limitationLabel: "아쉬운 점은? (여러 개 선택 가능)",
+          limitationMulti: true,
           cases: [
             {
               id: "case_1",

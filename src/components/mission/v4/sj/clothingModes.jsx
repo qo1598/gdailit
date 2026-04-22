@@ -37,7 +37,7 @@ export const ClothingGridWithRec = ({ step, gradeSpec, answers, setAnswers, doma
         <div style={{ fontSize: 'clamp(0.68rem, 1.9vw, 0.75rem)', fontWeight: 900, color: '#94a3b8', marginBottom: '8px', textTransform: 'uppercase', letterSpacing: '0.06em' }}>
           전체 상품 (20개)
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 'clamp(6px, 1.5vw, 10px)' }}>
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(68px, 1fr))', gap: 'clamp(6px, 1.5vw, 10px)' }}>
           {items.map(item => <ClothingItemCard key={item.id} item={item} domainColor={domainColor} compact />)}
         </div>
       </div>

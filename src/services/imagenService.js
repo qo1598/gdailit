@@ -1,6 +1,8 @@
 import { GoogleGenAI } from "@google/genai";
+import { logAiInteraction } from './aiLogger.js';
 
 const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+const IMAGEN_MODEL = "imagen-4.0-fast-generate-001";
 const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 /**
@@ -69,17 +71,54 @@ function buildImagenPrompt(studentPrompt, taskType, mode = 'detailed') {
  * @param {'simple'|'detailed'|'expert'} [mode='detailed']
  * @returns {Promise<string>} data:image/png;base64,...
  */
-export async function generateImage(studentPrompt, taskType, mode = 'detailed') {
+export async function generateImage(
+  studentPrompt,
+  taskType,
+  mode = 'detailed',
+  _log = null,  // { userId, sessionId, missionCode, stepId, attempt }
+) {
   const fullPrompt = buildImagenPrompt(studentPrompt, taskType, mode);
+  const t0 = Date.now();
 
-  const response = await ai.models.generateImages({
-    model: "imagen-4.0-fast-generate-001",
-    prompt: fullPrompt,
-    config: { numberOfImages: 1 }
-  });
+  try {
+    const response = await ai.models.generateImages({
+      model: IMAGEN_MODEL,
+      prompt: fullPrompt,
+      config: { numberOfImages: 1 }
+    });
 
-  const imageBytes = response.generatedImages?.[0]?.image?.imageBytes;
-  if (!imageBytes) throw new Error("이미지를 생성하지 못했어요. 다시 시도해주세요.");
+    const imageBytes = response.generatedImages?.[0]?.image?.imageBytes;
+    if (!imageBytes) throw new Error("이미지를 생성하지 못했어요. 다시 시도해주세요.");
 
-  return `data:image/png;base64,${imageBytes}`;
+    const dataUrl = `data:image/png;base64,${imageBytes}`;
+
+    if (_log) {
+      await logAiInteraction({
+        ..._log,
+        provider: 'gemini-image',
+        modelName: IMAGEN_MODEL,
+        userPrompt: fullPrompt,
+        aiResponse: dataUrl,
+        responseType: 'image_url',
+        latencyMs: Date.now() - t0,
+        fallbackUsed: false,
+      });
+    }
+
+    return dataUrl;
+  } catch (err) {
+    if (_log) {
+      await logAiInteraction({
+        ..._log,
+        provider: 'gemini-image',
+        modelName: IMAGEN_MODEL,
+        userPrompt: fullPrompt,
+        aiResponse: null,
+        responseType: 'image_url',
+        latencyMs: Date.now() - t0,
+        fallbackUsed: true,
+      });
+    }
+    throw err;
+  }
 }

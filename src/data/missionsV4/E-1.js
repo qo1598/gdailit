@@ -13,8 +13,7 @@ export const E1_V4 = {
   meta: {
     code: "E-1",
     title: "생활 속 AI 찾기",
-    domain: "Engaging",
-    ksa: { K: ["K1.4"], S: ["Self and Social Awareness"], A: ["Curious"] }
+    domain: "Engaging"
   },
 
   grades: {
@@ -26,6 +25,7 @@ export const E1_V4 = {
     lower: {
       cardCode: "E-1-L",
       performanceType: "TD",
+      ksa: { K: ["K1.4"], S: ["Self and Social Awareness"], A: ["Curious"] },
       description: "생활 속에서 AI가 들어 있는 것을 찾아보는 미션이에요.",
 
       scenario: {
@@ -37,9 +37,9 @@ export const E1_V4 = {
       },
 
       intro: [
-        { text: "집에서 로봇청소기가 움직이거나, 휴대전화가 내 얼굴을 알아보는 것을 본 적이 있나요?\n어떤 앱은 내가 좋아할 만한 영상을 골라 보여주기도 해요.", emoji: "🤔" },
-        { text: "이렇게 우리 주변에는 사람을 도와주는 똑똑한 기술이 숨어 있어요.\n이런 기술 가운데에는 AI가 들어 있는 것도 있어요.", emoji: "🌟" },
-        { text: "오늘은 내가 직접 AI 탐정단원이 되어 생활 속 AI를 찾아볼 거예요.\n과연 어디에 AI가 숨어 있을까요? 하나씩 찾아봅시다!", emoji: "🔍" }
+        { text: "집에서 스스로 움직이는 청소기나, 내 얼굴을 알아보는 휴대전화를 본 적 있나요?", emoji: "🤔" },
+        { text: "우리 주변에는 스스로 생각하고 도와주는 기술이 숨어 있어요.\n그 안에는 AI가 들어 있을 수 있어요!", emoji: "🌟" },
+        { text: "오늘은 AI 탐정단원이 되어 숨어 있는 AI를 찾아봅시다!", emoji: "🔍" }
       ],
 
       coreUnderstanding: [
@@ -56,13 +56,17 @@ export const E1_V4 = {
           hint: "AI는 스스로 생각하거나 판단하는 기계예요. 내가 직접 버튼을 누르지 않아도 혼자서 움직이거나 결정하면 AI일 가능성이 높아요!",
           uiMode: "choice_cards",
           options: [
-            { id: "robot_vacuum",    label: "로봇청소기", emoji: "🤖", isAI: true  },
-            { id: "voice_assistant", label: "음성 비서",  emoji: "🎙️", isAI: true  },
+            { id: "robot_vacuum",    label: "로봇청소기", desc: "스스로 돌아다니며 청소해요", emoji: "🤖", isAI: true  },
+            { id: "voice_assistant", label: "음성 비서",  desc: "말을 알아듣고 대답해요",     emoji: "🎙️", isAI: true  },
             { id: "recommend_feed",  label: "추천 영상",  emoji: "📱", isAI: true  },
             { id: "face_unlock",     label: "얼굴 인식",  emoji: "👁️", isAI: true  },
             { id: "calculator",      label: "계산기",     emoji: "🔢", isAI: false },
             { id: "lamp",            label: "전등",       emoji: "💡", isAI: false }
           ],
+          feedback: {
+            onCorrect: "맞아요! AI는 스스로 판단하거나 알아보는 기능이 있어요.",
+            onWrong: "다시 생각해 보세요. AI는 버튼을 누르지 않아도 혼자 움직이거나 알아보는 기계예요."
+          },
           validation: { minSelections: 1 }
         },
         {
@@ -135,6 +139,7 @@ export const E1_V4 = {
     middle: {
       cardCode: "E-1-M",
       performanceType: "TD",
+      ksa: { K: ["K1.4"], S: ["Self and Social Awareness"], A: ["Curious"] },
       description: "생활 속에서 AI가 들어 있는 기기나 앱을 찾고, 어떤 일을 하는지 설명하는 미션이에요.",
 
       scenario: {
@@ -215,7 +220,7 @@ export const E1_V4 = {
           question: "왜 이걸 AI라고 생각했나요? 기사의 핵심 한 문장을 써보세요.",
           hint: "어떤 점 때문에 AI라고 생각했는지 짧게 한 문장으로 써보세요!",
           uiMode: "free_text",
-          placeholder: "예: 내가 누르지 않아도 알아서 추천해 줘요.",
+          placeholder: "예: 내가 누르지 않아도 알아서 추천해 줘요.\n예: 내 얼굴을 보고 스스로 잠금을 풀어줘요.\n예: 말을 알아듣고 원하는 음악을 틀어줘요.",
           validation: { required: true }
         },
         {
@@ -248,6 +253,7 @@ export const E1_V4 = {
     upper: {
       cardCode: "E-1-H",
       performanceType: "SJ",
+      ksa: { K: ["K1.4"], S: ["Critical Thinking"], A: ["Curious"] },
       description: "생활 속 여러 기술을 AI가 있는지 없는지 구별하고, 판단 기준을 설명하는 미션이에요.",
 
       scenario: {

@@ -40,7 +40,6 @@ export const E4_V4 = {
     code: "E-4",
     title: "모두에게 똑같이 잘할까?",
     domain: "Engaging",
-    ksa: { K: ["K2.5", "K5.4"], S: ["Critical Thinking"], A: ["Empathetic"] }
   },
 
   grades: {
@@ -52,6 +51,7 @@ export const E4_V4 = {
     lower: {
       cardCode: "E-4-L",
       performanceType: "TD",
+      ksa: { K: ["K2.5"], S: ["Self and Social Awareness"], A: ["Empathetic"] },
       description: "같은 AI 기술도 사람에 따라 다르게 느껴질 수 있음을 알아보는 미션이에요.",
 
       scenario: {
@@ -65,7 +65,7 @@ export const E4_V4 = {
       intro: [
         { text: "어떤 AI는 사람의 얼굴이나 목소리, 말하기 방법을 알아보고 반응해요.\n그런데 같은 기술을 써도 어떤 사람에게는 잘 되고, 어떤 사람에게는 잘 안 될 때가 있어요." },
         { text: "그래서 같은 AI 기술이라도 모두에게 똑같이 편하거나 똑같이 잘 맞는 것은 아닐 수 있어요.\n누군가에게는 쉬운 기술이 다른 사람에게는 어렵게 느껴질 수도 있어요." },
-        { text: "오늘은 같은 기술을 서로 다른 사람이 사용할 때 어떤 점이 다를지 살펴볼 거예요.\n그리고 누가 더 어려울 수 있는지, 왜 그렇게 생각하는지, 어떻게 하면 둘 다 더 잘 쓸 수 있을지 생각해 볼 거예요." }
+        { text: "오늘은 같은 기술을 서로 다른 사람이 사용할 때 어떤 점이 다를지 살펴볼 거예요.\n그리고 누가 더 어려울 수 있는지, 왜 그렇게 생각하는지, 어떻게 하면 모두 더 잘 쓸 수 있을지 생각해 볼 거예요." }
       ],
 
       coreUnderstanding: [
@@ -95,14 +95,10 @@ export const E4_V4 = {
           hint: "그림에서 한 사람은 쉽게 되고, 다른 사람은 어렵게 느끼는 부분을 찾아보세요.",
           uiMode: "choice_cards",
           options: [
-            { id: "recognized_right_away", label: "한 사람은 바로 반응이 됐어요",       emoji: "⚡" },
-            { id: "needs_retry",           label: "한 사람은 여러 번 해야 했어요",       emoji: "🔁" },
-            { id: "same_device",           label: "두 사람이 서로 다른 기계를 사용했어요", emoji: "📱" },
-            { id: "easy_use",              label: "한 사람은 쉽게 사용했어요",           emoji: "😊" },
-            { id: "hard_use",              label: "한 사람은 다시 시도하고 있었어요",     emoji: "😟" },
-            { id: "same_place",            label: "두 사람이 서로 다른 장소에 있었어요",  emoji: "📍" },
-            { id: "no_response",           label: "기계가 한 사람에게는 반응하지 않았어요", emoji: "❌" },
-            { id: "clothes_differ",        label: "두 사람의 옷 색깔이 달랐어요",        emoji: "👕" }
+            { id: "recognized_right_away", label: "한 사람은 바로 반응이 됐어요",           emoji: "⚡" },
+            { id: "needs_retry",           label: "한 사람은 여러 번 해야 했어요",           emoji: "🔁" },
+            { id: "easy_use",              label: "한 사람은 쉽게 사용했어요",               emoji: "😊" },
+            { id: "no_response",           label: "기계가 한 사람에게는 반응하지 않았어요",   emoji: "❌" }
           ],
           validation: { minSelections: 1 }
         },
@@ -118,12 +114,10 @@ export const E4_V4 = {
           ],
           randomizeReasons: true,
           reasonOptions: [
-            { id: "not_recognized",    label: "기계가 잘 알아듣지 못해서" },
-            { id: "needs_retry",       label: "여러 번 해도 잘 안 돼서" },
-            { id: "hard_to_use",       label: "사용하는 방법이 더 불편해 보여서" },
-            { id: "system_not_fit",    label: "한 사람에게는 더 잘 맞지 않는 것 같아서" },
-            { id: "different_place",   label: "두 사람이 다른 장소에 있어서" },
-            { id: "clothes_different", label: "두 사람의 옷이 달라서" }
+            { id: "not_recognized", label: "기계가 잘 알아듣지 못해서" },
+            { id: "needs_retry",    label: "여러 번 해도 잘 안 돼서" },
+            { id: "hard_to_use",    label: "사용하는 방법이 더 불편해 보여서" },
+            { id: "system_not_fit", label: "한 사람에게는 더 잘 맞지 않는 것 같아서" }
           ],
           validation: { required: true }
         },
@@ -182,6 +176,7 @@ export const E4_V4 = {
     middle: {
       cardCode: "E-4-M",
       performanceType: "SJ",
+      ksa: { K: ["K2.5", "K5.4"], S: ["Critical Thinking"], A: ["Empathetic"] },
       description: "AI 사용 사례를 보고 누가 더 어렵거나 불리할 수 있는지 찾고, 이유와 공정성을 생각해보는 미션이에요.",
 
       scenario: {
@@ -268,8 +263,8 @@ export const E4_V4 = {
         {
           id: "step4",
           title: "STEP 4 · 더 공정하게 바꾸는 방법 쓰기",
-          question: "각 사례에서 AI 서비스를 더 공정하게 바꾸려면 어떻게 해야 할까요?",
-          hint: "대체 입력, 사람 확인, 다양한 사례 반영, 안내 개선 등을 한두 문장으로 써보세요.",
+          question: "STEP 3에서 고른 이유를 바탕으로, 각 사례의 AI 서비스를 더 공정하게 바꾸려면 어떻게 해야 할까요?",
+          hint: "STEP 3에서 고른 이유가 왜 생겼는지 생각해보고, 그것을 해결하는 방법을 한두 문장으로 써보세요.",
           // case_judge_carousel + allowText → 사례별 개선 제안이 카드 단위로 실제 저장/표시됨
           uiMode: "case_judge_carousel",
           branch: { sourceStepId: "step1", mode: "filter" },
@@ -288,7 +283,7 @@ export const E4_V4 = {
           question: "AI가 모두에게 공정한 기술이 되기 위해서는 어떻게 해야 할까요?",
           hint: "AI를 만드는 사람, 사용하는 사람 모두의 역할을 생각해 보세요. 정해진 답은 없어요.",
           uiMode: "free_text",
-          placeholder: "내 생각을 자유롭게 써보세요.\n예) 다양한 사람들의 목소리와 얼굴을 AI가 더 많이 학습해야 한다고 생각해요.",
+          placeholder: "아래 문장 중 하나를 골라 빈칸을 채워보세요.\n\n\"AI가 모두에게 공정한 기술이 되려면, ___도 잘 사용할 수 있어야 해요. 그래서 ___하면 좋겠어요.\"\n\n\"지금 AI는 ___한 학생에게 불편할 수 있어요. 그래서 ___한 방법이 더 필요해요.\"",
           validation: { required: true }
         }
       ],
@@ -318,6 +313,7 @@ export const E4_V4 = {
     upper: {
       cardCode: "E-4-H",
       performanceType: "SJ",
+      ksa: { K: ["K2.5", "K5.4"], S: ["Critical Thinking"], A: ["Empathetic"] },
       description: "놀이공원 AI 장면을 보며 누가 불리한 결과를 겪는지, 그 영향과 공정성을 비판적으로 판단하는 미션이에요.",
 
       scenario: {
@@ -380,8 +376,8 @@ export const E4_V4 = {
         {
           id: "step3",
           title: "STEP 3 · 누가 어떤 영향을 받나요?",
-          question: "각 장면에서 더 불리한 결과를 겪는 사람이 받을 수 있는 영향을 골라보세요.",
-          hint: "그 사람 입장이 되어 생각해 보세요. 여러 영향이 겹칠 수 있어요.",
+          question: "STEP 2에서 찾은 신호를 바탕으로, 각 장면에서 더 불리한 결과를 겪는 사람과 그 영향을 골라보세요.",
+          hint: "방금 찾은 문제 신호가 있는 쪽이 누구인지 생각해 보세요. 여러 영향이 겹칠 수 있어요.",
           uiMode: "case_judge_carousel",
           branch: { sourceStepId: "step1", mode: "filter" },
           judgmentLabel: "더 불리한 결과를 겪는 사람은?",
@@ -454,7 +450,7 @@ export const E4_V4 = {
           question: "모두를 위한 AI 기술이 되기 위해서는 어떤 과정이 필요할지 최종 의견을 3~5문장으로 정리해봐요.",
           hint: "오늘 본 장면들에서 공통으로 중요했던 점은 무엇이었나요? 자문위원으로서 운영팀에게 어떤 조언을 하겠어요?",
           uiMode: "free_text",
-          placeholder: "예) AI가 편리해 보여도 모두에게 똑같이 공정한지 생각해야 해요.\n예) 나에게는 편리한 AI가 다른 사람에게는 불편할 수 있다는 것을 알아야해요.\n예) 다양한 사람들의 데이터로 학습하고, 대안 방법도 함께 제공해야 해요.",
+          placeholder: "예) 다양한 사람들의 데이터로 학습하고, 이용하기 어려운 사람을 위한 대안 방법도 함께 제공해야 해요.\n\n[포함하면 좋은 내용]\n• 문제가 생기는 이유 (예: 데이터 편향, 설계 한계)\n• 개선 방법 (예: 대안 입력, 사람이 직접 확인)\n• 앞으로 AI를 볼 때 필요한 태도",
           validation: { required: true }
         }
       ],

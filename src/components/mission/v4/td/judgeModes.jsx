@@ -35,6 +35,7 @@ export const JudgeQaCards = ({ step, answers, setAnswers, domainColor, hint, onH
                     onClick={() => setJudge(card.id, opt.id)}
                     style={{
                       flex: 1, padding: 'clamp(8px, 2vw, 11px)', borderRadius: '12px',
+                      minHeight: '44px',
                       border: `2px solid ${isSelected ? accent : '#e2e8f0'}`,
                       backgroundColor: isSelected ? accent + '18' : '#f8fafc',
                       color: isSelected ? accent : '#64748b',
@@ -156,6 +157,7 @@ export const JudgeQaCarousel = ({ step, answers, setAnswers, domainColor, hint, 
                 style={{
                   flex: 1,
                   padding: 'clamp(10px, 2.5vw, 13px)',
+                  minHeight: '44px',
                   borderRadius: '12px',
                   border: `2px solid ${isSelected ? accent : '#e2e8f0'}`,
                   backgroundColor: isSelected ? accent + '18' : '#f8fafc',

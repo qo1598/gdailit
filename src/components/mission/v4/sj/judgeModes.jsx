@@ -84,6 +84,7 @@ export const PerCaseJudge = ({ step, gradeSpec, answers, setAnswers, domainColor
                     style={{
                       flex: 1,
                       padding: 'clamp(8px, 2vw, 11px)',
+                      minHeight: '44px',
                       borderRadius: '12px',
                       border: `2px solid ${isSelected ? domainColor : '#e2e8f0'}`,
                       backgroundColor: isSelected ? domainColor + '18' : '#f8fafc',
@@ -346,6 +347,7 @@ export const BubbleSelectCorrect = ({ step, answers, setAnswers, domainColor, hi
               onClick={() => toggleBubble(bubble.id)}
               style={{
                 width: '100%', padding: 'clamp(7px, 2vw, 10px)',
+                minHeight: '44px',
                 borderRadius: '10px',
                 border: `2px solid ${isSelected ? '#ef4444' : '#e2e8f0'}`,
                 backgroundColor: isSelected ? '#fef2f2' : '#f8fafc',

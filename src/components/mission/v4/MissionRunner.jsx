@@ -5,6 +5,8 @@ import { submitMissionV4 } from '../../../lib/submitMissionV4.js';
 import MissionShell from './MissionShell';
 import StageRenderer from './StageRenderer';
 import { deriveCases } from './deriveCases';
+import { initSession, logEvent, endSession } from '../../../services/eventLogger.js';
+import PostMissionSelfEval from './PostMissionSelfEval.jsx';
 
 /**
  * V4 MissionRunner — 시나리오 기반 수행평가 엔진.
@@ -27,11 +29,27 @@ const MissionRunnerV4 = ({ userId }) => {
   const [slideIndex, setSlideIndex] = useState(0);
   const [answers, setAnswers] = useState({});
   const [startedAt] = useState(() => new Date().toISOString());
+  const [submissionId, setSubmissionId] = useState(null);
   const [uiState, setUiState] = useState({
     loading: false,
     error: null,
     validationError: null
   });
+
+  // ── 연구 로깅: 세션 초기화 ────────────────────────────────────
+  useEffect(() => {
+    try { initSession(userId, missionId, gradeBand); } catch (_) {}
+    return () => { try { endSession(); } catch (_) {} };
+  }, []);
+
+  // ── 연구 로깅: stage 진입 ─────────────────────────────────────
+  const prevStageRef = useRef(null);
+  useEffect(() => {
+    try {
+      logEvent('stage_enter', { from: prevStageRef.current, to: stage }, null, stage);
+      prevStageRef.current = stage;
+    } catch (_) {}
+  }, [stage]);
 
   // ── 최소 머무름 시간 ──────────────────────────────────────────
   const [dwellRemaining, setDwellRemaining] = useState(0);
@@ -57,8 +75,12 @@ const MissionRunnerV4 = ({ userId }) => {
 
   useEffect(() => {
     if (stage !== 'task') return;
+    document.querySelector('.v3-content-stage')?.scrollTo({ top: 0, behavior: 'smooth' });
     const stepId = gradeSpec?.steps[stepIndex]?.id;
-    if (stepId) taskStepEnteredAt.current[stepId] = Date.now();
+    if (stepId) {
+      taskStepEnteredAt.current[stepId] = Date.now();
+      try { logEvent('step_enter', { step_id: stepId }, stepId, 'task'); } catch (_) {}
+    }
   }, [stage, stepIndex]);
 
   const recordTaskStepTime = () => {
@@ -67,6 +89,7 @@ const MissionRunnerV4 = ({ userId }) => {
     if (stepId && taskStepEnteredAt.current[stepId]) {
       const elapsed = Math.round((Date.now() - taskStepEnteredAt.current[stepId]) / 1000);
       setTimeSpent(prev => ({ ...prev, [stepId]: elapsed }));
+      try { logEvent('step_exit', { step_id: stepId, duration_sec: elapsed }, stepId, 'task'); } catch (_) {}
     }
   };
 
@@ -75,6 +98,7 @@ const MissionRunnerV4 = ({ userId }) => {
 
   const handleHintUsed = (stepId) => {
     setHintUsed(prev => ({ ...prev, [stepId]: true }));
+    try { logEvent('hint_open', { step_id: stepId }, stepId, 'task'); } catch (_) {}
   };
 
   // Clear validation error whenever stage/step/answer changes
@@ -584,7 +608,13 @@ const MissionRunnerV4 = ({ userId }) => {
       return;
     }
     if (stage === 'task') {
-      if (!validateCurrentStep()) return;
+      if (!validateCurrentStep()) {
+        try {
+          const stepId = gradeSpec?.steps[stepIndex]?.id;
+          logEvent('validation_fail', { step_id: stepId }, stepId, 'task');
+        } catch (_) {}
+        return;
+      }
       recordTaskStepTime();
       if (stepIndex < totalSteps - 1) {
         setStepIndex(prev => prev + 1);
@@ -633,9 +663,11 @@ const MissionRunnerV4 = ({ userId }) => {
 
   const handleSubmit = async () => {
     setUiState(prev => ({ ...prev, loading: true, error: null }));
+    try { logEvent('mission_submit', { mission_code: missionId, grade_band: gradeBand }, null, 'submit'); } catch (_) {}
     try {
-      await submitMissionV4({ userId, gradeSpec, mission, answers, startedAt, hintUsed, timeSpent });
-      setStage('complete');
+      const result = await submitMissionV4({ userId, gradeSpec, mission, answers, startedAt, hintUsed, timeSpent });
+      setSubmissionId(result?.submissionId ?? null);
+      setStage('self_eval');
     } catch (err) {
       console.error('[V3] Submit failed:', err);
       setUiState(prev => ({ ...prev, error: err.message }));
@@ -643,6 +675,19 @@ const MissionRunnerV4 = ({ userId }) => {
       setUiState(prev => ({ ...prev, loading: false }));
     }
   };
+
+  if (stage === 'self_eval') {
+    return (
+      <PostMissionSelfEval
+        missionCode={missionId}
+        gradeBand={gradeBand}
+        ksa={gradeSpec.ksa}
+        submissionId={submissionId}
+        userId={userId}
+        onComplete={() => setStage('complete')}
+      />
+    );
+  }
 
   return (
     <MissionShell

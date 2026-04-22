@@ -125,6 +125,7 @@ export const CaseJudgeCarousel = ({ step, answers, setAnswers, domainColor, hint
                       onClick={() => setField(c.id, 'judgment', opt.id)}
                       style={{
                         flex: 1, padding: 'clamp(9px, 2.5vw, 12px)',
+                        minHeight: '44px',
                         borderRadius: '12px',
                         border: `2px solid ${isSelected ? domainColor : '#e2e8f0'}`,
                         backgroundColor: isSelected ? domainColor + '18' : '#f8fafc',
@@ -173,6 +174,7 @@ export const CaseJudgeCarousel = ({ step, answers, setAnswers, domainColor, hint
                       onClick={() => setField(c.id, 'fairness', opt.id)}
                       style={{
                         flex: 1, padding: 'clamp(8px, 2vw, 11px)',
+                        minHeight: '44px',
                         borderRadius: '12px',
                         border: `2px solid ${isSelected ? '#ef4444' : '#e2e8f0'}`,
                         backgroundColor: isSelected ? '#fef2f2' : '#f8fafc',
