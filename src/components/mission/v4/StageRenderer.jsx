@@ -90,6 +90,22 @@ function renderArtifactPreview(template, answers, steps) {
       }
       return '___';
     }
+    // prompt_builder slots → 완성 문장 치환: {stepN_prompt}
+    const promptSlot = key.match(/^(step\d+)_prompt$/);
+    if (promptSlot) {
+      const [, stepKey] = promptSlot;
+      const stepAns = answers[stepKey];
+      const step = steps?.find(s => s.id === stepKey);
+      if (step?.uiMode === 'prompt_builder' && step.slots && step.promptTemplate && stepAns) {
+        let text = step.promptTemplate;
+        for (const slot of step.slots) {
+          const chosen = slot.options.find(o => o.id === stepAns[slot.id]);
+          text = text.replace(`{${slot.id}}`, chosen ? chosen.label : '___');
+        }
+        return text;
+      }
+      return '___';
+    }
     // 제네릭 하위 필드: { [field]: string } 구조 (multi_free_text, ai_chat_turn 등)
     const genericSub = key.match(/^(step\d+)_(\w+)$/);
     if (genericSub) {
@@ -170,6 +186,25 @@ function renderArtifactPreview(template, answers, steps) {
 
     // 3) 객체 — photo_or_card_select / per_case_judge 등
     if (typeof val === 'object') {
+      // defect_select: { markers: [...] } → 오류 유형 나열
+      if (step?.uiMode === 'defect_select' && val.markers) {
+        const cats = step.defectCategories || [];
+        const labels = val.markers.map(m => cats.find(c => c.id === m.category)?.label).filter(Boolean);
+        return labels.length > 0 ? labels.join(', ') : `${val.markers.length}개 표시`;
+      }
+      // defect_reason: { reason_0, reason_1, ... } → 이유 나열
+      if (step?.uiMode === 'defect_reason') {
+        const reasons = Object.entries(val).filter(([k, v]) => k.startsWith('reason_') && v?.trim()).map(([, v]) => v);
+        return reasons.length > 0 ? reasons.join(' / ') : '___';
+      }
+      // prompt_single_input: { _revisedPrompt, _generatedImage } → 프롬프트 전체 표시
+      if (step?.uiMode === 'prompt_single_input' && val._revisedPrompt) {
+        return `"${val._revisedPrompt}"`;
+      }
+      // prompt_with_conditions: { _revisedPrompt, _conditions, _generatedImage }
+      if (step?.uiMode === 'prompt_with_conditions' && val._revisedPrompt) {
+        return `"${val._revisedPrompt}"`;
+      }
       // person_reason_select: { person, reasons } → "설명 (이유1, 이유2)"
       if (step?.uiMode === 'person_reason_select') {
         const p = (step.personOptions || []).find(o => o.id === val.person);
@@ -736,9 +771,19 @@ const StageRenderer = ({
         return '그림 관찰 완료';
       }
       if (step.uiMode === 'defect_select') {
-        if (!ans || ans.length === 0) return '—';
-        const types = (step.defectTypes || []).filter(d => ans.includes(d.id));
-        return types.map(d => d.label).join(', ') || `${ans.length}개 선택`;
+        const markers = ans?.markers || (Array.isArray(ans) ? ans : []);
+        if (markers.length === 0) return '—';
+        const cats = step.defectCategories || step.defectTypes || [];
+        const labels = markers.map(m => {
+          const cat = cats.find(c => c.id === (m.category || m));
+          return cat?.label;
+        }).filter(Boolean);
+        return labels.length > 0 ? labels.join(', ') : `${markers.length}개 선택`;
+      }
+      if (step.uiMode === 'defect_reason') {
+        if (!ans || typeof ans !== 'object') return '—';
+        const reasons = Object.entries(ans).filter(([k, v]) => k.startsWith('reason_') && v?.trim()).map(([, v]) => v.length > 20 ? v.slice(0, 20) + '…' : v);
+        return reasons.length > 0 ? reasons.join(' / ') : '—';
       }
       if (step.uiMode === 'image_compare_ab') {
         if (!ans?.image) return '—';
@@ -753,9 +798,9 @@ const StageRenderer = ({
         return `${taskMap[ans.task_type] || ans.task_type} · "${ans.prompt_initial || ''}"`;
       }
       if (step.uiMode === 'prompt_with_conditions') {
-        if (!ans?.prompt_detailed) return '—';
-        const preview = ans.prompt_detailed.length > 30 ? ans.prompt_detailed.slice(0, 30) + '…' : ans.prompt_detailed;
-        return `"${preview}"`;
+        const prompt = ans?._revisedPrompt || ans?.prompt_detailed || '';
+        if (!prompt.trim()) return '—';
+        return `"${prompt}"`;
       }
       if (step.uiMode === 'text_compare_ab') {
         if (!ans?.choice) return '—';
@@ -764,14 +809,21 @@ const StageRenderer = ({
         return reasons.length > 0 ? `${choiceLabel} · ${reasons.map(r => r.label).join(', ')}` : choiceLabel;
       }
       if (step.uiMode === 'prompt_builder') {
+        if (step.slots && step.promptTemplate) {
+          let text = step.promptTemplate;
+          for (const slot of step.slots) {
+            const chosen = slot.options.find(o => o.id === ans[slot.id]);
+            text = text.replace(`{${slot.id}}`, chosen ? chosen.label : '___');
+          }
+          return `"${text}"`;
+        }
         if (!ans?.full_text) return '—';
-        const preview = ans.full_text.length > 35 ? ans.full_text.slice(0, 35) + '…' : ans.full_text;
-        return `"${preview}"`;
+        return `"${ans.full_text}"`;
       }
       if (step.uiMode === 'prompt_single_input') {
-        if (!ans?.prompt_revised) return '—';
-        const preview = ans.prompt_revised.length > 35 ? ans.prompt_revised.slice(0, 35) + '…' : ans.prompt_revised;
-        return `"${preview}"`;
+        const prompt = ans?._revisedPrompt || ans?.prompt_revised || '';
+        if (!prompt.trim()) return '—';
+        return `"${prompt}"`;
       }
       if (step.uiMode === 'result_compare_final') {
         if (!ans?.best) return '—';
@@ -1081,6 +1133,10 @@ const StageRenderer = ({
 
     const artifactText = renderArtifactPreview(gradeSpec.submit?.artifact?.template, answers, gradeSpec.steps);
     const artifactType = gradeSpec.scenario?.artifactType;
+    const generatedImage = gradeSpec.steps
+      ?.filter(s => s.uiMode === 'prompt_builder')
+      .map(s => answers[s.id]?._generatedImage)
+      .find(Boolean);
 
     return (
       <div style={{ display: 'flex', flexDirection: 'column', gap: 'clamp(14px, 4vw, 20px)', padding: '4px 0' }}>
@@ -1130,6 +1186,19 @@ const StageRenderer = ({
             }}>
               {artifactText}
             </div>
+            {generatedImage && (
+              <img
+                src={generatedImage}
+                alt="AI 생성 이미지"
+                style={{
+                  width: '100%',
+                  borderRadius: '12px',
+                  marginTop: '14px',
+                  aspectRatio: '1/1',
+                  objectFit: 'cover'
+                }}
+              />
+            )}
           </div>
         )}
 

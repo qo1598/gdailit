@@ -7,11 +7,8 @@ import { ClassifyCarousel, CaseCarouselReason } from './sj/classifyModes';
 import { ClothingGridWithRec, StarRatingCarousel, RecommendationGrid } from './sj/clothingModes';
 import { CaseJudgeCarousel } from './sj/caseJudgeCarousel';
 import { CaseViewCarousel } from './td/selectModes';
+import { ImageView, DefectSelect, DefectReason, PromptSingleInput, PromptWithConditions } from './sj/imageModes';
 
-/**
- * SJRenderer — Statement & Judgement renderer.
- * Dispatches to uiMode-specific components in ./sj/.
- */
 const MODE_MAP = {
   classify_cards_carousel: ClassifyCarousel,
   multi_select_chips: MultiSelectChips,
@@ -31,6 +28,11 @@ const MODE_MAP = {
   case_judge_carousel: CaseJudgeCarousel,
   case_view_carousel: CaseViewCarousel,
   free_text: FreeText,
+  image_view: ImageView,
+  defect_select: DefectSelect,
+  defect_reason: DefectReason,
+  prompt_single_input: PromptSingleInput,
+  prompt_with_conditions: PromptWithConditions,
 };
 
 const SJRenderer = (props) => {

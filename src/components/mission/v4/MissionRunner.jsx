@@ -164,14 +164,24 @@ const MissionRunnerV4 = ({ userId }) => {
       }
     }
     if (step.uiMode === 'defect_select') {
-      if (!answer || answer.length < (step.validation?.minSelections || 1)) {
-        setUiState(prev => ({ ...prev, validationError: '이상한 부분을 1개 이상 선택해주세요.' }));
+      const markers = answer?.markers || [];
+      const minMarkers = step.minMarkers || 2;
+      const categorized = markers.filter(m => m.category).length;
+      if (categorized < minMarkers) {
+        setUiState(prev => ({ ...prev, validationError: `이상한 부분을 ${minMarkers}개 이상 표시하고 유형을 선택해주세요.` }));
         return false;
       }
-      if (answer.includes('other_error') && !answers[`${step.id}_other_text`]?.trim()) {
-        setUiState(prev => ({ ...prev, validationError: '기타 내용을 직접 적어주세요!' }));
+    }
+    if (step.uiMode === 'defect_reason') {
+      const sourceMarkers = answers[step.branch?.sourceStepId]?.markers || [];
+      const allFilled = sourceMarkers.every((_, i) => answer?.[`reason_${i}`]?.trim());
+      if (!allFilled) {
+        setUiState(prev => ({ ...prev, validationError: '모든 오류에 이유를 적어주세요.' }));
         return false;
       }
+    }
+    if (step.uiMode === 'image_view') {
+      return true;
     }
     if (step.uiMode === 'image_compare_ab') {
       if (!answer?.image) {
@@ -198,12 +208,14 @@ const MissionRunnerV4 = ({ userId }) => {
       }
     }
     if (step.uiMode === 'prompt_with_conditions') {
-      if (!answer?.prompt_detailed?.trim()) {
-        setUiState(prev => ({ ...prev, validationError: '자세한 프롬프트를 입력해주세요.' }));
+      const prompt = answer?._revisedPrompt || answer?.prompt_detailed || '';
+      const minLen = step.validation?.minLength || 20;
+      if (!prompt.trim() || prompt.trim().length < minLen) {
+        setUiState(prev => ({ ...prev, validationError: `프롬프트를 ${minLen}자 이상 작성해주세요.` }));
         return false;
       }
-      if (!answer?.output_detailed) {
-        setUiState(prev => ({ ...prev, validationError: 'AI 결과 보기 버튼을 눌러주세요.' }));
+      if (!answer?._generatedImage && !answer?.output_detailed) {
+        setUiState(prev => ({ ...prev, validationError: 'AI에게 그림을 요청해주세요.' }));
         return false;
       }
     }
@@ -222,24 +234,43 @@ const MissionRunnerV4 = ({ userId }) => {
       }
     }
     if (step.uiMode === 'prompt_builder') {
-      const filledCount = (step.fields || []).filter(f => answer?.[f.id]?.trim()).length;
-      if (filledCount < (step.validation?.minFields || 3)) {
-        setUiState(prev => ({ ...prev, validationError: `요소를 ${step.validation?.minFields || 3}개 이상 채워주세요.` }));
-        return false;
-      }
-      if (!answer?.output_revised) {
-        setUiState(prev => ({ ...prev, validationError: 'AI 결과 보기 버튼을 눌러주세요.' }));
-        return false;
+      if (step.slots) {
+        const filledCount = step.slots.filter(s => answer?.[s.id]).length;
+        const minRequired = step.validation?.minFields || step.slots.length;
+        if (filledCount < minRequired) {
+          setUiState(prev => ({ ...prev, validationError: `빈칸을 ${minRequired - filledCount}개 더 채워주세요.` }));
+          return false;
+        }
+        if (answer?._phase !== 'generate') {
+          setAnswers(prev => ({ ...prev, [step.id]: { ...prev[step.id], _phase: 'generate' } }));
+          setUiState(prev => ({ ...prev, validationError: null }));
+          return false;
+        }
+        if (step.showGeneratedResult && !answer?._generatedImage) {
+          setUiState(prev => ({ ...prev, validationError: 'AI에게 그림을 요청해주세요!' }));
+          return false;
+        }
+      } else {
+        const filledCount = (step.fields || []).filter(f => answer?.[f.id]?.trim()).length;
+        if (filledCount < (step.validation?.minFields || 3)) {
+          setUiState(prev => ({ ...prev, validationError: `요소를 ${step.validation?.minFields || 3}개 이상 채워주세요.` }));
+          return false;
+        }
+        if (!answer?.output_revised) {
+          setUiState(prev => ({ ...prev, validationError: 'AI 결과 보기 버튼을 눌러주세요.' }));
+          return false;
+        }
       }
     }
     if (step.uiMode === 'prompt_single_input') {
+      const prompt = answer?._revisedPrompt || answer?.prompt_revised || '';
       const minLen = step.validation?.minLength || 20;
-      if (!answer?.prompt_revised?.trim() || answer.prompt_revised.trim().length < minLen) {
+      if (!prompt.trim() || prompt.trim().length < minLen) {
         setUiState(prev => ({ ...prev, validationError: `프롬프트를 ${minLen}자 이상 직접 작성해주세요.` }));
         return false;
       }
-      if (!answer?.output_revised) {
-        setUiState(prev => ({ ...prev, validationError: 'AI 결과 보기 버튼을 눌러주세요.' }));
+      if (!answer?._generatedImage && !answer?.output_revised) {
+        setUiState(prev => ({ ...prev, validationError: 'AI에게 그림을 요청해주세요.' }));
         return false;
       }
     }
