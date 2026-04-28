@@ -108,27 +108,38 @@ export const SelectionHint = ({ count, mode, chosenImage, chosenReason }) => {
 };
 
 // ─── 공통: 생성된 이미지 카드 ────────────────────────────────────
-export const GeneratedImageResult = ({ imageUrl, label, domainColor }) => (
-  <div className="animate-slide-up" style={{
-    borderRadius: '16px', overflow: 'hidden',
-    border: `2px solid ${domainColor}40`,
-    boxShadow: `0 6px 20px ${domainColor}18`
-  }}>
-    <div style={{
-      padding: 'clamp(10px, 3vw, 12px) clamp(12px, 3.5vw, 16px)',
-      backgroundColor: `${domainColor}0E`
-    }}>
-      <span style={{ fontSize: 'clamp(0.72rem, 2.2vw, 0.8rem)', fontWeight: 900, color: domainColor, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
-        AI가 만든 이미지 · {label}
-      </span>
-    </div>
-    <img
-      src={imageUrl}
-      alt={`AI 생성 이미지 - ${label}`}
-      style={{ width: '100%', display: 'block', aspectRatio: '1/1', objectFit: 'cover' }}
-    />
-  </div>
-);
+export const GeneratedImageResult = ({ imageUrl, label, domainColor }) => {
+  const [modalOpen, setModalOpen] = React.useState(false);
+  return (
+    <>
+      <div className="animate-slide-up" style={{
+        borderRadius: '16px', overflow: 'hidden',
+        border: `2px solid ${domainColor}40`,
+        boxShadow: `0 6px 20px ${domainColor}18`,
+        cursor: 'pointer',
+      }} onClick={() => setModalOpen(true)}>
+        <div style={{
+          padding: 'clamp(10px, 3vw, 12px) clamp(12px, 3.5vw, 16px)',
+          backgroundColor: `${domainColor}0E`,
+          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        }}>
+          <span style={{ fontSize: 'clamp(0.72rem, 2.2vw, 0.8rem)', fontWeight: 900, color: domainColor, textTransform: 'uppercase', letterSpacing: '0.06em' }}>
+            AI가 만든 이미지 · {label}
+          </span>
+          <span style={{ fontSize: 'clamp(0.68rem, 1.8vw, 0.75rem)', color: '#94a3b8', fontWeight: 600 }}>
+            터치하면 크게 보기
+          </span>
+        </div>
+        <img
+          src={imageUrl}
+          alt={`AI 생성 이미지 - ${label}`}
+          style={{ width: '100%', display: 'block', aspectRatio: '1/1', objectFit: 'cover' }}
+        />
+      </div>
+      {modalOpen && <ImageModal src={imageUrl} onClose={() => setModalOpen(false)} />}
+    </>
+  );
+};
 
 // ─── 이전 단계 맥락 패널 ──────────────────────────────────────────
 // branch.sourceStepId (string) 또는 step.contextStepIds (array) 로 지정된

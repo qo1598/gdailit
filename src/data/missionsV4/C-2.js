@@ -294,7 +294,7 @@ export const C2_V4 = {
 
     // =====================================================================
     // C-2-H | 고학년 (5~6학년)
-    // 역할: 전시 홍보물 아트디렉터 | 산출물: 오류 분석서 + 프롬프트 추정 + 개선 프롬프트
+    // 역할: 전시 홍보물 아트디렉터 | 산출물: 오류 분석서 + 프롬프트 역추정 + 개선 프롬프트
     // =====================================================================
     upper: {
       cardCode: "C-2-H",
@@ -306,80 +306,75 @@ export const C2_V4 = {
         role: "전시 홍보물 아트디렉터",
         goal: "실패한 이미지의 원인을 역추정하고, 목적·대상·스타일을 담은 개선 프롬프트를 설계한다.",
         context: "학교 전시 홍보 배너 이미지를 AI로 만들었는데, 행사 목적과 맞지 않거나 시각적 오류가 섞여 있어요. 아트디렉터는 단순히 '이상하다'고 끝내지 않고, 어떤 잘못된 요청이 이런 결과를 만들었을지 추정하고, 더 정확한 프롬프트를 설계해야 해요.",
-        artifactType: "오류 분석서 + 프롬프트 추정 + 개선 프롬프트",
+        artifactType: "오류 분석서 + 프롬프트 역추정 + 개선 프롬프트",
         image: "/images/c2h/scenario.png"
       },
 
       intro: [
-        { text: "전시 홍보 배너 이미지가 나왔는데\n문제가 여러 개 있어요.", emoji: "🎨" },
+        { text: "학교 전시 홍보 배너 이미지가 나왔는데\n문제가 여러 개 섞여 있어요.", emoji: "🎨" },
         { text: "아트디렉터는 결과만 보고 끝내지 않아요.\n어떤 잘못된 요청이 이런 결과를 만들었는지 역추정해야 해요.", emoji: "🔎" },
         { text: "그다음, 목적·대상·스타일을 모두 담은\n더 정확한 프롬프트를 설계합니다.", emoji: "📝" }
       ],
 
       coreUnderstanding: [
-        { id: 1, question: "왜 이런 활동을 해보는 것이 중요할까요?", answer: "생성형 AI 결과를 잘 쓰려면 결과를 보고 다시 프롬프트를 설계하는 역량이 필요해요." },
-        { id: 2, question: "이 활동에서는 어떤 점을 잘 살펴보아야 할까요?", answer: "목적 적합성, 시각적 오류, 스타일 일관성, 정보 전달 적합성을 모두 봐야 해요." },
-        { id: 3, question: "이 점을 생각하지 않으면 어떤 문제가 생길 수 있을까요?", answer: "결과가 왜 잘못되었는지 모르기 때문에 같은 실수를 반복하게 돼요." }
+        { id: 1, question: "왜 이런 활동을 해보는 것이 중요할까요?", answer: "AI 결과를 잘 쓰려면 '왜 이렇게 나왔을까'를 분석하고 프롬프트를 다시 설계하는 역량이 필요해요." },
+        { id: 2, question: "이 활동에서는 어떤 점을 잘 살펴보아야 할까요?", answer: "시각적 오류뿐 아니라 행사 목적에 맞는지, 정보 전달이 되는지, 스타일이 일관적인지도 봐야 해요." },
+        { id: 3, question: "이 점을 생각하지 않으면 어떤 문제가 생길 수 있을까요?", answer: "결과가 왜 잘못되었는지 모르기 때문에 같은 실수를 반복하고, 더 나은 결과를 얻을 수 없어요." }
       ],
 
       steps: [
         {
           id: "step1",
-          title: "STEP 1 · 문제 이미지 분석",
-          question: "이 이미지의 문제점을 클릭으로 표시하고, 각 유형을 분류하세요.",
-          hint: "시각적 오류만 보지 말고, 전달 목적 측면(행사 정보가 전달되는지)도 함께 점검하세요. 3개 이상 찾아야 해요.",
+          title: "STEP 1 · 홍보 배너 오류 분석",
+          question: "AI가 만든 전시 홍보 배너에서 문제점을 클릭으로 표시하고, 유형을 분류하세요.",
+          hint: "시각적 오류, 스타일 불일치, 행사 목적과의 거리, 핵심 정보 전달 문제를 모두 살펴보세요. 3개 이상 찾아야 해요.",
           uiMode: "defect_select",
-          imageUrl: "/images/c2m/picnic_defect.png",
+          imageUrl: "/images/c2h/banner_defect.png",
           defectCategories: [
-            { id: "visual_error",   label: "시각적 오류",       description: "인체·자연·물리 오류" },
-            { id: "style_issue",    label: "스타일 일관성 문제", description: "요소 간 스타일이 다름" },
-            { id: "purpose_gap",    label: "목적 부합성 문제",   description: "행사 목적과 거리가 있음" },
-            { id: "info_delivery",  label: "정보 전달 문제",     description: "핵심 정보가 불분명함" }
+            { id: "visual_error",   label: "시각적 오류",       description: "인체·자연·물리 법칙 오류" },
+            { id: "style_issue",    label: "스타일 불일치",     description: "요소 간 화풍·톤이 다름" },
+            { id: "purpose_gap",    label: "목적 부합성 문제",   description: "전시 행사 목적과 거리가 있음" },
+            { id: "info_delivery",  label: "정보 전달 문제",     description: "핵심 정보가 불분명하거나 누락됨" }
           ],
           minMarkers: 3,
           maxMarkers: 8,
           allowText: true,
-          textPlaceholder: "문제의 구체적 이유를 짧게 써보세요",
+          textPlaceholder: "이 부분이 왜 문제인지 짧게 써보세요",
           validation: { required: true }
         },
         {
           id: "step2",
           title: "STEP 2 · 잘못된 프롬프트 역추정",
-          question: "이런 결과가 나오게 된 원래 프롬프트는 어떤 모습이었을까요? 4가지 관점에서 추정해보세요.",
-          hint: "프롬프트가 너무 막연했는지, 스타일 조건이 빠졌는지, 제외 조건이 없었는지 등을 생각하며 추정하세요.",
-          uiMode: "multi_free_text",
-          branch: { sourceStepId: "step1", mode: "highlight" },
+          question: "이 그림을 보면서, AI에게 어떤 요청을 했길래 이런 결과가 나왔을지 추정해보세요.",
+          hint: "그림의 문제점을 하나씩 떠올리면서 '어떤 말이 빠졌길래 이렇게 됐을까?'를 생각해보세요.",
+          uiMode: "image_carousel_text",
+          imageUrl: "/images/c2h/banner_defect.png",
           questions: [
-            { id: "vagueness",     text: "[추정 1] 요청이 얼마나 막연했을까?" },
-            { id: "missing_style", text: "[추정 2] 어떤 스타일 조건이 빠졌을까?" },
-            { id: "no_exclude",   text: "[추정 3] 어떤 제외 조건이 없었을까?" },
-            { id: "inferred_prompt", text: "[종합 추정] 원래 프롬프트를 한 문장으로 복원하면?" }
-          ],
-          placeholders: [
-            "예: \"아이들이 로봇이랑 노는 그림\" 정도로 아주 막연했을 것 같아요.",
-            "예: '그림자는 자연스럽게', '비례는 현실적으로' 같은 조건이 없었을 거예요.",
-            "예: '태양은 하나만', '공중에 뜬 물체 없이' 같은 제외 조건이 빠졌을 거예요.",
-            "예: \"아이들과 로봇이 공원에서 피크닉하는 그림\" 정도였을 것 같아요."
+            { id: "vagueness",      text: "AI에게 요청할 때, 어떻게 말했길래 이런 그림이 나왔을까요? 빠진 정보가 무엇인지 생각해보세요." },
+            { id: "missing_style",  text: "그림의 스타일이나 분위기에 대해 어떤 말을 안 해줬길래 이렇게 됐을까요? (예: 그림체, 색감, 톤)" },
+            { id: "no_exclude",     text: "'이건 넣지 마'라고 말해줬어야 할 것들이 있나요? 안 넣었으면 좋았을 것들을 떠올려보세요." },
+            { id: "inferred_prompt", text: "그렇다면 원래 AI에게 한 요청은 어떤 문장이었을 것 같나요? 한 문장으로 추정해서 써보세요." }
           ],
           validation: { required: true, minAnswered: 4 }
         },
         {
           id: "step3",
           title: "STEP 3 · 개선 기준 세우기",
-          question: "아트디렉터로서 새 프롬프트가 갖춰야 할 기준을 세워요.",
-          hint: "대상, 분위기, 필수 요소, 제외 요소를 분명히 쓰세요.",
+          question: "아트디렉터로서, 새 프롬프트가 갖춰야 할 기준을 항목별로 정리하세요.",
+          hint: "대상, 분위기, 필수 요소, 제외 요소를 분명히 구분해서 쓰세요.",
           uiMode: "multi_free_text",
+          branch: { sourceStepId: "step2", mode: "highlight" },
           questions: [
             { id: "audience",     text: "누구를 위한 홍보물인가?" },
-            { id: "mood",         text: "어떤 분위기여야 하는가?" },
+            { id: "mood",         text: "어떤 분위기·색감이어야 하는가?" },
             { id: "must_include", text: "꼭 들어가야 할 요소 3가지" },
             { id: "must_exclude", text: "절대 피해야 할 요소 2가지" }
           ],
           placeholders: [
             "예: 초등학생과 학부모 관람객",
-            "예: 밝고 따뜻하며 안전한 느낌",
-            "예: 자연스러운 인체 비례, 일관된 그림자, 행사 주제(환경 보호) 연상 요소",
-            "예: 공중에 뜬 물체, 손가락 수 오류"
+            "예: 밝고 따뜻하며, 전시 주제가 느껴지는 색감",
+            "예: 자연스러운 인체 비례, 일관된 일러스트 화풍, 전시 주제(과학·환경 등) 연상 요소",
+            "예: 공중에 뜬 물체, 손가락 수 오류, AI가 넣은 깨진 텍스트"
           ],
           validation: { required: true, minAnswered: 4 }
         },
@@ -390,44 +385,49 @@ export const C2_V4 = {
           hint: "대상·장면·스타일·금지 조건이 모두 들어가야 해요. 구체적이고 검증 가능하게 쓰세요.",
           uiMode: "prompt_with_conditions",
           branch: { sourceStepId: "step3", mode: "highlight" },
-          originalPrompt: "아이들이 로봇이랑 노는 그림 그려줘",
-          originalImageUrl: "/images/c2m/picnic_defect.png",
+          originalPrompt: "학교 전시회 포스터 그려줘",
+          originalImageUrl: "/images/c2h/banner_defect.png",
           conditionFields: [
-            { id: "target",   label: "대상",         placeholder: "예: 초등학생과 가족" },
-            { id: "mood",     label: "분위기",       placeholder: "예: 밝고 따뜻한" },
-            { id: "include",  label: "필수 요소",    placeholder: "예: 자연스러운 인체 비례, 환경 보호 연상 요소" },
-            { id: "exclude",  label: "제외 요소",    placeholder: "예: 공중에 뜬 물체, 손가락 수 오류" }
+            { id: "target",   label: "대상"},
+            { id: "mood",     label: "분위기·스타일"},
+            { id: "include",  label: "필수 요소"},
+            { id: "exclude",  label: "제외 요소"}
           ],
           showSideBySide: true,
           aiCall: {
             provider: "gemini-image",
             mode: "image_gen",
-            systemPrompt: "Create a professional, child-friendly poster illustration for an elementary school exhibition. Ensure anatomical accuracy, consistent lighting, and realistic physics. Style: clean vector cartoon, warm colors, clear composition.",
+            systemPrompt: "Create a professional, child-friendly banner illustration for an elementary school exhibition. Ensure anatomical accuracy, consistent art style, realistic lighting and physics. Style: clean vector illustration, warm inviting colors, clear composition, no text or letters in image.",
             userPromptTemplate: "{revisedPrompt}",
             outputSchema: "image_url",
             retryPolicy: { maxRetries: 2, onFail: "show_fallback" },
             fallback: {
-              imageUrl: "/images/c2m/picnic_good.png"
+              imageUrl: "/images/c2h/banner_good.png"
             }
           },
-          placeholder: "예: 초등학생과 가족이 관람할 환경 보호 전시 홍보 포스터. 공원에서 두 아이와 친근한 로봇이 함께 피크닉을 하는 장면. 스타일은 밝은 색의 벡터 카툰, 인체 비례 자연스럽게, 태양은 하늘에 하나, 동물과 사물은 모두 땅이나 자연스러운 위치에 있을 것. 손가락은 다섯 개로 정확히. 공중에 뜬 물체, 녹는 듯한 형태, 중복된 자연 요소는 제외.",
+          placeholder: "예: 초등학생과 학부모가 관람할 학교 과학 전시 홍보 배너. 넓은 전시장 안에서 아이 둘이 로봇 전시물을 신기하게 구경하는 장면. 스타일은 밝은 파스텔 톤의 벡터 일러스트, 인체 비례 자연스럽게, 그림자 방향 일관되게, 전시 소품(망원경·지구본 등)이 바닥이나 선반 위에 자연스럽게 놓여 있을 것. 손가락은 다섯 개로 정확히. 이미지 안에 글자 삽입 금지, 공중에 뜬 물체 금지, 사실적 인물 사진 스타일 금지.",
           validation: { required: true, minLength: 100 }
         },
         {
           id: "step5",
           title: "STEP 5 · 개선 효과 분석",
-          question: "재생성된 결과가 STEP 3 기준을 얼마나 만족했는지 분석해보세요.",
-          hint: "기준별로 '충족 / 부분 충족 / 미충족'을 판단하고 짧게 근거를 써보세요.",
-          uiMode: "free_text",
+          question: "AI가 새로 만든 그림이 내가 세운 기준에 얼마나 잘 맞는지, 별점으로 평가하고 이유를 써보세요.",
+          hint: "각 기준을 하나씩 살펴보면서, 잘 된 점과 아쉬운 점을 떠올려보세요.",
+          uiMode: "criteria_star_rating",
           branch: { sourceStepId: "step4", mode: "highlight" },
-          placeholder: "예: 대상 적합성은 충족(초등학생이 공감할 친근한 장면), 분위기도 충족(밝고 따뜻함), 시각적 오류는 대부분 해결됨(손가락·태양·비례). 다만 환경 보호 주제가 더 선명히 드러나면 좋겠음 — 다음 반복에서 '분리수거함'이나 '나무 심기' 요소를 추가할 수 있겠음.",
-          validation: { required: true, minLength: 60 }
+          criteria: [
+            { id: "audience_fit",    label: "보는 사람에게 맞는 그림인가요?",    placeholder: "예: 초등학생이 좋아할 밝고 친근한 장면이어서 잘 맞아요." },
+            { id: "mood_style",      label: "분위기와 스타일이 잘 됐나요?",      placeholder: "예: 따뜻한 파스텔 톤인데, 일부 색이 너무 진해서 조금 아쉬워요." },
+            { id: "visual_accuracy", label: "그림에 이상한 부분은 없나요?",       placeholder: "예: 손가락 수는 맞는데, 그림자 방향이 아직 조금 어색해요." },
+            { id: "theme_delivery",  label: "전시 주제가 잘 느껴지나요?",         placeholder: "예: 과학 전시 느낌이 약해서, 실험 도구나 별자리 요소가 더 있으면 좋겠어요." }
+          ],
+          validation: { required: true }
         }
       ],
 
       submit: {
         title: "개선 프롬프트 설계 완료!",
-        message: "아트디렉터로서 결과를 역추정하고, 체계적인 개선 프롬프트를 설계했어요.",
+        message: "아트디렉터로서 AI 결과의 원인을 역추정하고, 체계적인 개선 프롬프트를 설계해 실제로 더 나은 결과를 이끌어냈어요.",
         summaryLabels: {
           step1: "오류 분석",
           step2: "프롬프트 역추정",
@@ -437,7 +437,7 @@ export const C2_V4 = {
         },
         artifact: {
           bindingKey: "c_2_h_prompt_design",
-          template: "[오류 분석]\n{step1}\n\n[역추정 프롬프트]\n{step2_inferred_prompt}\n\n[개선 프롬프트]\n{step4_revisedPrompt}\n\n[효과 분석]\n{step5}"
+          template: "AI가 만든 전시 홍보 배너에서 {step1} 등의 문제를 발견했어요. 원래 프롬프트는 \"{step2_inferred_prompt}\" 정도였을 것으로 추정했어요. 아트디렉터로서 기준을 세운 뒤 \"{step4_revisedPrompt}\"(으)로 개선 프롬프트를 설계해 AI에게 다시 요청했어요."
         }
       }
     }

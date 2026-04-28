@@ -7,7 +7,7 @@ import { ClassifyCarousel, CaseCarouselReason } from './sj/classifyModes';
 import { ClothingGridWithRec, StarRatingCarousel, RecommendationGrid } from './sj/clothingModes';
 import { CaseJudgeCarousel } from './sj/caseJudgeCarousel';
 import { CaseViewCarousel } from './td/selectModes';
-import { ImageView, DefectSelect, DefectReason, PromptSingleInput, PromptWithConditions } from './sj/imageModes';
+import { ImageView, DefectSelect, DefectReason, PromptSingleInput, PromptWithConditions, ImageCarouselText, CriteriaStarRating } from './sj/imageModes';
 
 const MODE_MAP = {
   classify_cards_carousel: ClassifyCarousel,
@@ -33,6 +33,8 @@ const MODE_MAP = {
   defect_reason: DefectReason,
   prompt_single_input: PromptSingleInput,
   prompt_with_conditions: PromptWithConditions,
+  image_carousel_text: ImageCarouselText,
+  criteria_star_rating: CriteriaStarRating,
 };
 
 const SJRenderer = (props) => {

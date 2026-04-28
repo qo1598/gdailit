@@ -111,8 +111,10 @@ function renderArtifactPreview(template, answers, steps) {
     if (genericSub) {
       const [, stepKey, field] = genericSub;
       const v = answers[stepKey];
-      if (v && typeof v === 'object' && !Array.isArray(v) && typeof v[field] === 'string' && v[field].trim()) {
-        return v[field].trim();
+      if (v && typeof v === 'object' && !Array.isArray(v)) {
+        // _revisedPrompt 등 _ prefix 필드도 지원
+        const val = v[field] ?? v[`_${field}`];
+        if (typeof val === 'string' && val.trim()) return val.trim();
       }
     }
     // 계산 토큰: {stepN_<judge>_count} 또는 {stepN_non_<judge>_count}
@@ -204,6 +206,30 @@ function renderArtifactPreview(template, answers, steps) {
       // prompt_with_conditions: { _revisedPrompt, _conditions, _generatedImage }
       if (step?.uiMode === 'prompt_with_conditions' && val._revisedPrompt) {
         return `"${val._revisedPrompt}"`;
+      }
+      // multi_free_text: { questionId: "text", ... } → 답변 나열
+      if (step?.uiMode === 'multi_free_text') {
+        const qs = step.questions || [];
+        const parts = qs.map(q => val[q.id]?.trim()).filter(Boolean);
+        return parts.length ? parts.join(' / ') : '___';
+      }
+      // image_carousel_text: { questionId: "text", ... } → 답변 나열
+      if (step?.uiMode === 'image_carousel_text') {
+        const qs = step.questions || [];
+        const parts = qs.map(q => val[q.id]?.trim()).filter(Boolean);
+        return parts.length ? parts.join(' / ') : '___';
+      }
+      // criteria_star_rating: { criterionId: { rating, reason }, ... } → 기준별 요약
+      if (step?.uiMode === 'criteria_star_rating') {
+        const crit = step.criteria || [];
+        const starLabel = ['', '★', '★★', '★★★', '★★★★', '★★★★★'];
+        const parts = crit.map(c => {
+          const d = val[c.id];
+          if (!d?.rating) return null;
+          const reason = d.reason?.trim();
+          return `${c.label} ${starLabel[d.rating]}${reason ? ` — ${reason}` : ''}`;
+        }).filter(Boolean);
+        return parts.length ? parts.join(' · ') : '___';
       }
       // person_reason_select: { person, reasons } → "설명 (이유1, 이유2)"
       if (step?.uiMode === 'person_reason_select') {
@@ -857,6 +883,27 @@ const StageRenderer = ({
         const tag = (step.tags || []).find(t => t.id === ans.tag);
         const parts = [tag?.label, ans.text].filter(Boolean);
         return parts.join(' · ') || '—';
+      }
+      if (step.uiMode === 'multi_free_text' || step.uiMode === 'image_carousel_text') {
+        if (!ans || typeof ans !== 'object') return '—';
+        const qs = step.questions || [];
+        const parts = qs.map(q => {
+          const v = ans[q.id]?.trim();
+          if (!v) return null;
+          return v.length > 30 ? v.slice(0, 30) + '…' : v;
+        }).filter(Boolean);
+        return parts.length ? parts.join(' / ') : '—';
+      }
+      if (step.uiMode === 'criteria_star_rating') {
+        if (!ans || typeof ans !== 'object') return '—';
+        const crit = step.criteria || [];
+        const starLabel = ['', '★', '★★', '★★★', '★★★★', '★★★★★'];
+        const parts = crit.map(c => {
+          const d = ans[c.id];
+          if (!d?.rating) return null;
+          return `${c.label} ${starLabel[d.rating]}`;
+        }).filter(Boolean);
+        return parts.length ? parts.join(' · ') : '—';
       }
       if (step.uiMode === 'free_text') {
         if (!ans || !ans.trim()) return '—';
