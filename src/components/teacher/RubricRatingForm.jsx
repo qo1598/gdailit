@@ -7,11 +7,15 @@ import {
   computeTotal,
   getLevelLabel,
 } from '../../data/rubrics/e_domain_rubric.js';
+import { C_RUBRICS, C_AXIS_NAMES } from '../../data/rubrics/c_domain_rubric.js';
 
-const AXIS_COLORS = { A: '#6366f1', B: '#10b981', C: '#f59e0b', D: '#ef4444' };
+const ALL_RUBRICS = { ...E_RUBRICS, ...C_RUBRICS };
+const AXIS_COLORS = { A: '#6366f1', B: '#10b981', C: '#f59e0b', D: '#ef4444', E: '#8b5cf6' };
 
 export default function RubricRatingForm({ submission, raterId, onSaved, onCancel }) {
-  const rubric = E_RUBRICS[submission.mission_code];
+  const rubric = ALL_RUBRICS[submission.mission_code];
+  const isC = submission.mission_code?.startsWith('C-');
+  const axisNames = isC ? C_AXIS_NAMES : AXIS_NAMES;
   const [scores, setScores] = useState({});  // { A: { a1: 2, a2: 3 }, B: { b1: 1 }, ... }
   const [comment, setComment] = useState('');
   const [saving, setSaving] = useState(false);
@@ -134,7 +138,7 @@ export default function RubricRatingForm({ submission, raterId, onSaved, onCance
                 fontSize: '0.8rem', fontWeight: 700,
               }}>{axis}</span>
               <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#374151' }}>
-                {AXIS_NAMES[axis]}
+                {axisNames[axis]}
               </span>
               <span style={{ fontSize: '0.75rem', color: '#9ca3af', marginLeft: 'auto' }}>
                 가중치 {Math.round((weights[axis] || 0) * 100)}%

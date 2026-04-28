@@ -1,9 +1,10 @@
-import { writeFileSync } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-const API_KEY = 'AIzaSyB_DpGROvouKlHh7K61Wl-DlswHk-yC_RQ';
+const env = readFileSync(join(__dirname, '..', '.env'), 'utf8');
+const API_KEY = env.match(/VITE_GEMINI_API_KEY=(.+)/)?.[1]?.trim();
 const MODEL = 'gemini-3.1-flash-image-preview';
 
 const scenes = [

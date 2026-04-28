@@ -5,6 +5,7 @@ import { PhotoUpload } from './td/photoMode';
 import { YesNoQuiz, RecommendationReveal } from './td/recommendationModes';
 import { PerCaseJudge } from './sj/judgeModes';
 import { CardDropBoard } from './td/cardDropBoard';
+import { PromptBuilder } from './td/promptBuilder';
 
 export { computeRecommendation } from './td/recommendationModes';
 
@@ -25,6 +26,7 @@ const MODE_MAP = {
   person_reason_select: PersonReasonSelect,
   per_case_judge: PerCaseJudge,
   card_drop_board: CardDropBoard,
+  prompt_builder: PromptBuilder,
 };
 
 const TDRenderer = ({ gradeSpec, ...props }) => {
